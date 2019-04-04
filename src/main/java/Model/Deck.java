@@ -4,9 +4,13 @@ import java.util.ArrayList;
 
 public abstract class Deck {
 
-    Shuffle();
+    void Shuffle(){
 
-    ShuffleBack(ArrayList<Card>);
+    }
+
+    void ShuffleBack(ArrayList<Card> deck){
+
+    }
 
 
 

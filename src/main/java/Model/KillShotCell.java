@@ -14,7 +14,7 @@ public class KillShotCell {
 
     }
 
-    public void setDamage(int){
+    public void setDamage(int i){
 
     }
 

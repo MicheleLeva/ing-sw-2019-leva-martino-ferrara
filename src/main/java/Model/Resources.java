@@ -4,42 +4,42 @@ import java.util.ArrayList;
 
 public class Resources {
 
-    private ArrayList<Weapon> availableWeapon;
+    private ArrayList<WeaponCard> availableWeapon;
 
     private Ammo availableAmmo;
 
     private Ammo allAmmo;
 
-    private ArrayList<PowerUp> availablePowerUp;
+    private ArrayList<PowerUpCard> availablePowerUp;
 
     public Resources(){
-        availableWeapon = new ArrayList<Weapon>(3);
+        availableWeapon = new ArrayList<WeaponCard>(3);
         availableAmmo = new Ammo();
         allAmmo = new Ammo();
-        availablePowerUp = new ArrayList<PowerUp>(3);
+        availablePowerUp = new ArrayList<PowerUpCard>(3);
     }
 
     public boolean checkAmmo(int red , int blue , int yellow){
-
+        return true;
     }
 
     public void addAmmo(AmmoCard ammoCard){
 
     }
 
-    public void addWeapon(Weapon weapon){
+    public void addWeapon(WeaponCard weapon){
 
     }
 
-    public void addPowerUp(PowerUp powerUp){
+    public void addPowerUp(PowerUpCard powerUp){
 
     }
 
-    public void removeWeapon(Weapon weapon){
+    public void removeWeapon(WeaponCard weapon){
 
     }
 
-    public void removePowerUp(PowerUp powerUp){
+    public void removePowerUp(PowerUpCard powerUp){
 
     }
 

@@ -7,8 +7,11 @@ public class GameBoard {
     private KillShotCell[] killShotTrack;
     private Player doubleKiller;
 
+    private Map ourMap;
+    private ArrayList<Player> Players;
+
     public ArrayList<WeaponCard> weaponDeck;
-    public ArrayList<AmmoCard> weaponDeck;
+    public ArrayList<AmmoCard> ammoDeck;
     public ArrayList<PowerUpCard> powerUpDeck;
 
     private void GameBoard() {
@@ -17,6 +20,7 @@ public class GameBoard {
     }
 
     public Map getMap() {
+        return ourMap;
 
     }
 
@@ -30,12 +34,14 @@ public class GameBoard {
 
     }
 
-    public void SetDoubleKiller(Player) {
+    public void SetDoubleKiller(Player p) {
 
 
     }
 
     public Player getDoubleKiller() {
+
+        return Players.get(0);
 
 
     }

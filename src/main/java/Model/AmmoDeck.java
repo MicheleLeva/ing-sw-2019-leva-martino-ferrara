@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public class AmmoDeck extends Deck {
 
-    private ArrayList<AmmoCard>;
+    private ArrayList<AmmoCard> deck;
 }

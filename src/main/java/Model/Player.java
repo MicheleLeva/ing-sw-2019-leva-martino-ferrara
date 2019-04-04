@@ -6,7 +6,7 @@ public class Player {
 
     private final Color playerColor;
 
-    private final PlayerBoard playerBoard;
+    private PlayerBoard playerBoard;
 
     private void init(){
         playerBoard = new PlayerBoard(playerColor);

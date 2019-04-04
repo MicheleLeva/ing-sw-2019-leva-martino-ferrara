@@ -6,6 +6,7 @@ public class Square implements MapElement{
     private int squareIndexColumn;
 
     public Color getSquareColor(){
+        return squareColor;
 
     };
     public void setSquareColor(Color col){
@@ -13,7 +14,7 @@ public class Square implements MapElement{
     }
 
     public MapElement getSide(Direction dir){
-
+        return null;
     }
 
     public void setSide(Direction dir, MapElement elem){
@@ -21,7 +22,7 @@ public class Square implements MapElement{
     }
 
     public int getSquareRow(){
-
+        return 1;
     }
 
     public void setSquareRow(int row){
@@ -29,7 +30,7 @@ public class Square implements MapElement{
     }
 
     public int getSquareColumn(){
-
+        return 1;
     }
 
     public void setSquareColumn(int col){
