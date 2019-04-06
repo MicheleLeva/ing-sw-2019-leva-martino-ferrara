@@ -2,9 +2,7 @@ package utils;
 
 import model.events.Message;
 
-public interface Observer {
+public interface Observer<T> {
 
-    static void update(Message T){
-
-    };
+    void update(T message);
 }

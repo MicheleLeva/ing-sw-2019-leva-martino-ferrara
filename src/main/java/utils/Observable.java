@@ -2,20 +2,29 @@ package utils;
 
 import model.Model;
 import model.events.Message;
+import java.util.ArrayList;
 
-public class Observable {
+public class Observable<T> {
 
-    Observable observer;
+    private final ArrayList<Observer<T>> observers = new ArrayList<Observer<T>>();
 
-    static void register(Observer observer){
-
+    public void register(Observer observer){
+        synchronized (observers){
+            observers.add(observer);
+        }
     }
 
-    static void deregister(Observer observer){
-
+    public void deregister(Observer observer){
+        synchronized(observers){
+            observers.remove(observer);
+        }
     }
 
-    protected static void notify(Message T){
-
+    protected void notify(T message){
+        synchronized(observers){
+            for (Observer<T> observer : observers){
+                observer.update(message);
+            }
+        }
     }
 }

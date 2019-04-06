@@ -1,18 +1,36 @@
 package view;
 
 import model.events.*;
-import model.player_package.Player;
+import model.player_package.PlayerColor;
+import utils.Observable;
+import utils.Observer;
 
-public class View {
+public class View extends Observable<PlayerMove> implements Observer<Message>{
 
-    private Player player;
+    private final PlayerColor playerColor;
 
+    public View (PlayerColor playerColor){
+        this.playerColor = playerColor;
+    }
+
+    @Override
     public void update(Message message){
 
+        if (this.playerColor == message.getPlayerColor()){
+            System.out.println(message.toPlayer());
+        }
+
+        else{
+            System.out.println(message.toOthers());
+        }
+    }
+
+    public PlayerColor getPlayerColor(){
+        return playerColor;
     }
 
     public void showAvailableActions(){
-
+        
     }
 
     public void chooseMove(PlayerMove playerMove){
@@ -23,23 +41,5 @@ public class View {
 
     }
 
-    private void printMessage(RunMessage runMessage){
 
-    }
-
-    private void printMessage(ShootMessage shootMessage){
-
-    }
-
-    private void printMessage(GrabMessage grabMessage){
-
-    }
-
-    private void printMessage(ShowCardsMessage showCardsMessage){
-
-    }
-
-    private void printMessage(ReloadMessage reloadMessage){
-
-    }
 }
