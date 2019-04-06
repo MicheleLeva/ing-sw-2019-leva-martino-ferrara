@@ -1,19 +1,18 @@
 package model;
 
-import model.player_package.Player;
+
+import model.player_package.PlayerColor;
+
 
 public class TurnManager {
-    private int currentPlayer;
 
-    public static void changeCurrentPlayer(){
+    private static PlayerColor currentPlayerColor;
 
+    public static void changeCurrentPlayer(PlayerColor playerColor){
+        currentPlayerColor = playerColor;
     }
 
-    public static void nextPlayer(){
-
-    }
-
-    public static boolean isPlayerTurn(Player player){
-        return true;
+    public static boolean isPlayerTurn(PlayerColor playerColor){
+        return currentPlayerColor == playerColor;
     }
 }

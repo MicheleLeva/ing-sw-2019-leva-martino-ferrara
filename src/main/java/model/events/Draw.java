@@ -1,13 +1,12 @@
 package model.events;
 
-import model.cards.Deck;
+import model.player_package.PlayerColor;
+import view.View;
 
 public class Draw extends PlayerMove{
 
-    private Deck deck;
-
-    public Deck getDeck(){
-        return null;
+    public Draw(PlayerColor playerColor , View view){
+        super(playerColor , view);
     }
 
 }

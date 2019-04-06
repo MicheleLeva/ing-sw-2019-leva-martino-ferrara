@@ -1,23 +1,24 @@
 package model.events;
 
-import model.player_package.Player;
+import model.Model;
+import model.player_package.PlayerColor;
 import view.View;
 
 public abstract class PlayerMove {
 
-    private Player player;
+    private PlayerColor playerColor;
 
     private View view;
 
-    public void PlayerMove(Player player, View view){
-
+    public PlayerMove(View view){
+        this.playerColor = view.getPlayerColor();
+        this.view = view;
     }
 
-    protected Player getPlayer(){
-        return null;
+    public View getView(){
+        return this.view;
     }
 
-    protected View getView(){
-        return null;
-    }
+    public abstract void performMove(Model model);
+
 }

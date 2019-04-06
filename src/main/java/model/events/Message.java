@@ -1,23 +1,39 @@
 package model.events;
 
 import model.GameBoard;
-import model.player_package.Player;
+import model.player_package.PlayerColor;
 import model.player_package.PlayerBoard;
 
 public abstract class Message {
 
     private GameBoard gameBoard;
-    private Player player;
+    private PlayerColor playerColor;
+    private String playerName;
 
-    public void moveMessage(Player player, PlayerBoard playerBoard){
-
+    public Message (PlayerColor playerColor , String playerName){
+        this.playerColor = playerColor;
+        this.playerName = playerName;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Message(PlayerColor playerColor, String playerName , GameBoard gameBoard){
+        this(playerColor , playerName);
+        this.gameBoard = gameBoard;
     }
 
-    public GameBoard getPlayerBoard() {
+    public PlayerColor getPlayerColor() {
+        return playerColor;
+    }
+
+    public GameBoard getGameBoard() {
         return gameBoard;
     }
+
+    public String getPlayerName(){
+        return playerName;
+    }
+
+    public abstract String toPlayer();
+
+    public abstract String toOthers();
+
 }
