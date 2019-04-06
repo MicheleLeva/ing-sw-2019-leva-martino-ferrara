@@ -6,15 +6,15 @@ public class KillShotTrack {
 
     private ArrayList<Skull> killShotTrack;
 
-    public KillShotTrack KillShotTrack(int skulls){
-        return null;
+    public KillShotTrack(int skulls){
+
     }
 
     public ArrayList<Skull> getKillShotTrack(){
-        return null;
+        return killShotTrack;
     }
 
-    public void removeSkull(){
+    public void removeSkull(){//
 
     }
 }

@@ -1,6 +1,6 @@
 package model.adrenaline_exceptions;
 
-public class WallException extends Exception {
+public class WallException extends RuntimeException {
     public WallException(String message){
         super(message);
     }

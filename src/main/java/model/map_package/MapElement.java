@@ -1,5 +1,10 @@
 package model.map_package;
 
-public abstract class MapElement {
+import model.player_package.Figure;
+
+public interface MapElement {
+    MapElement enter(Figure figure);
+
+
 
 }
