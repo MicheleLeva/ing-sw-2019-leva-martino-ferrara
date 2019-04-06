@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.Deck;
+import model.cards.Deck;
 
 public class Draw extends PlayerMove{
 

@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.Weapon;
+import model.cards.Weapon;
 
 public class Reload extends PlayerMove {
 

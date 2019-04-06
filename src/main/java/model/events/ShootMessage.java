@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.Weapon;
+import model.cards.Weapon;
 import model.player_package.Player;
 
 public class ShootMessage extends PlayerMove {

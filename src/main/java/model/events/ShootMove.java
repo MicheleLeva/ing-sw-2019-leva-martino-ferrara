@@ -1,7 +1,7 @@
 package model.events;
 
-import model.Cards.PowerUp;
-import model.Cards.Weapon;
+import model.cards.PowerUp;
+import model.cards.Weapon;
 import model.player_package.Player;
 
 public class ShootMove extends PlayerMove{

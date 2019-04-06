@@ -1,6 +1,6 @@
 package model.player_package;
 
-import model.Cards.Weapon;
+import model.cards.Weapon;
 import model.events.PlayerMove;
 import model.map_package.Square;
 

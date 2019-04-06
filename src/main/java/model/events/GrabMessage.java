@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.Card;
+import model.cards.Card;
 
 public class GrabMessage {
 

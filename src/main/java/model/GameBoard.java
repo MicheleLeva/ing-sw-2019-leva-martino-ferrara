@@ -1,6 +1,6 @@
 package model;
 
-import model.Cards.Deck;
+import model.cards.Deck;
 import model.map_package.Map;
 
 public class GameBoard {
