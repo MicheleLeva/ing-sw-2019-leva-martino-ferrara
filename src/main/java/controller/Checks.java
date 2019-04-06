@@ -1,7 +1,7 @@
 package controller;
 
 import model.Ammo;
-import model.Cards.Card;
+import model.cards.Card;
 import model.player_package.Player;
 
 public class Checks {

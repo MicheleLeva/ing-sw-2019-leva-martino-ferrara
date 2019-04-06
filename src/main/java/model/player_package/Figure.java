@@ -8,10 +8,14 @@ public class Figure {
     private Square position;
 
     public Square getPosition(){
-        return null;
+        return position;
     }
 
-    public void setPosition(Square square){
+    public void setPosition(Square position) {
+        this.position = position;
+    }
 
+    public Figure(Square square){
+        this.position = square;
     }
 }

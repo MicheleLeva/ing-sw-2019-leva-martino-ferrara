@@ -1,7 +1,7 @@
 package model.map_package;
 
-import model.Cards.AmmoCard;
-import model.Cards.Weapon;
+import model.cards.AmmoCard;
+import model.cards.Weapon;
 
 import java.util.HashMap;
 

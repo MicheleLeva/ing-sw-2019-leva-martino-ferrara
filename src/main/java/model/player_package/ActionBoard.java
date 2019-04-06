@@ -1,8 +1,16 @@
 package model.player_package;
 
+import java.util.ArrayList;
+
 public class ActionBoard {
 
     private int actionCounter;
+    private ArrayList<Action> actions;
+
+    public ActionBoard(int actionCounter, ArrayList<Action> actions){
+        this.actionCounter = actionCounter;
+        this.actions = actions;
+    }
 
     public void useAction1(){
 
@@ -21,10 +29,10 @@ public class ActionBoard {
     }
 
     public int getActionCounter(){
-        return 1;
+        return actionCounter;
     }
 
-    public void setActionCounter(int actionCounter){
-
+    public void setActionCounter(int actCounter){
+        actionCounter = actCounter;
     }
 }

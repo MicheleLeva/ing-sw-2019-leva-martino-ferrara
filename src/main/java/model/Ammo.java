@@ -1,6 +1,6 @@
 package model;
 
-import model.Cards.AmmoColor;
+import model.cards.AmmoColor;
 
 import java.util.HashMap;
 
@@ -33,5 +33,6 @@ public class Ammo {
     }
 
     public Ammo(int red, int blue, int yellow){
+
     }
 }

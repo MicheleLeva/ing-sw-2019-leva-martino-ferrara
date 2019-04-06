@@ -4,7 +4,7 @@ import model.Model;
 import model.events.*;
 import view.View;
 
-public class Controller {
+public class Controller{
 
     private Model model;
     private View view;

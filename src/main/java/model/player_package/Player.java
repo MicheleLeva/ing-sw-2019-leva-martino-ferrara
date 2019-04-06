@@ -1,31 +1,53 @@
 package model.player_package;
 
 public class Player {
-    private String playerName;
-    private PlayerColor playerColor;
 
-    public void Player(String name, PlayerColor color){
+    private final String playerName;
+    private final PlayerColor playerColor;
+    private final Resources resources;
+    private final PlayerBoard playerBoard;
+    private ActionBoard actionBoard;
+    private final Figure figure;
+    private Score score;
 
+    public Player(String name, PlayerColor color, Resources res, PlayerBoard pboard, Figure fig){
+        playerName = name;
+        playerColor = color;
+        resources = res;
+        playerBoard = pboard;
+        figure = fig;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
     }
 
     public PlayerBoard getPlayerBoard(){
-        return null;
+        return playerBoard;
     }
 
     public ActionBoard getActionBoard(){
-        return null;
+        return actionBoard;
     }
 
     public Figure getFigure(){
-        return null;
+        return figure;
     }
 
     public Resources getResources(){
-        return null;
+        return resources;
     }
 
     public PlayerColor getPlayerColor(){
         return playerColor;
+    }
+
+    public void setActionBoard(ActionBoard actionBoard) {
+        this.actionBoard = actionBoard;
     }
 
     public void drawAmmoCard(){

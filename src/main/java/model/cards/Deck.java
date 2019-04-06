@@ -1,9 +1,9 @@
-package model.Cards;
+package model.cards;
 
 
 public abstract class Deck {
 
-    protected Card drawStatic(){
+    protected Card draw(){
         return null;
     }
 

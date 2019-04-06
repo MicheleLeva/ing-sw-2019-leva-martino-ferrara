@@ -1,21 +1,32 @@
 package model.player_package;
 
 import model.Ammo;
-import model.Cards.PowerUp;
-import model.Cards.Weapon;
+import model.cards.PowerUp;
+import model.cards.Weapon;
 
 import java.util.ArrayList;
 
 public class Resources {
-    private Ammo allAmmo;
-    private Ammo availableAmmo;
+    private final Ammo allAmmo;
+    private final Ammo availableAmmo;
+    private final ArrayList<Weapon> weapons;
+    private final ArrayList<PowerUp> powerUps;
+
+    public Resources(Ammo allAmmo, Ammo availableAmmo, ArrayList<Weapon> weapons, ArrayList<PowerUp> powerUps){
+        this.allAmmo = allAmmo;
+        this.availableAmmo = availableAmmo;
+        this.weapons = weapons;
+        this. powerUps = powerUps;
+    }
+
+
 
     public ArrayList<Weapon> showWeapon(){
-        return null;
+        return weapons;
     }
 
     public ArrayList<PowerUp> showPowerUp(){
-        return null;
+        return powerUps;
     }
 
     public Ammo getAllAmmo(){
