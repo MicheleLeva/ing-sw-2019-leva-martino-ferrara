@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.PowerUp;
+import model.cards.PowerUp;
 import model.Model;
 import view.View;
 

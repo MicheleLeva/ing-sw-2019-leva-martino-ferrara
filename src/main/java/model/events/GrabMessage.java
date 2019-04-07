@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.Card;
+import model.cards.Card;
 import model.GameBoard;
 import model.player_package.PlayerColor;
 ;

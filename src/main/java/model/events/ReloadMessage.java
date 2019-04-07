@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.Weapon;
+import model.cards.Weapon;
 import model.player_package.PlayerColor;
 
 public class ReloadMessage extends Message {
@@ -17,7 +17,7 @@ public class ReloadMessage extends Message {
 
     @Override
     public String toPlayer(){
-        return ("You have reloaded " +weapon.toString())
+        return ("You have reloaded " +weapon.toString());
     }
 
     @Override

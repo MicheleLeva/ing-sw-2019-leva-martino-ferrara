@@ -1,6 +1,6 @@
 package model.events;
 
-import model.Cards.Weapon;
+import model.cards.Weapon;
 import model.GameBoard;
 import model.player_package.DamageCounter;
 import model.player_package.PlayerColor;

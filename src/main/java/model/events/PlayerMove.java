@@ -15,6 +15,11 @@ public abstract class PlayerMove {
         this.view = view;
     }
 
+    public PlayerMove(PlayerColor playerColor, View view){
+        this.view = view;
+        this.playerColor = playerColor;
+    }
+
     public View getView(){
         return this.view;
     }
