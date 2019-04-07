@@ -33,16 +33,18 @@ public class Controller implements Observer<PlayerMove> {
         }
 
         catch(IllegalOpponentException e){
-            move.getView().reportError("You cannot shoot to the player");
-        }
+                move.getView().reportError("You cannot shoot to the player");
+            }
 
         catch(EmptySquareException e){
-            move.getView().reportError("This square is empty");
-        }
+                move.getView().reportError("This square is empty");
+            }
 
         catch(InsufficientAmmoException e){
-            move.getView().reportError("Insufficient Ammo");
-        }
+                move.getView().reportError("Insufficient Ammo");
+            }
+
+
 
     }
     public void update(PlayerMove move){

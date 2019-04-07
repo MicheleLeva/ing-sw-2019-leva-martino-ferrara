@@ -9,7 +9,7 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
 
     private final PlayerColor playerColor;
 
-    public View (PlayerColor playerColor){
+    public View(PlayerColor playerColor){
         this.playerColor = playerColor;
     }
 

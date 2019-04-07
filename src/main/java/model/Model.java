@@ -1,9 +1,10 @@
 package model;
 
-import model.Cards.PowerUp;
-import model.Cards.Weapon;
+import model.cards.PowerUp;
+import model.cards.Weapon;
 import model.events.Message;
 import model.map_package.Direction;
+import model.player_package.Figure;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
 import java.util.HashMap;
@@ -27,7 +28,8 @@ public class Model extends Observable<Message> {
 
     public void performRun(PlayerColor playerColor , Direction direction){
         Player player = getPlayer(playerColor);
-        player.getFigure().setPosition(player.getFigure().getPosition().enter());
+        Figure figure = player.getFigure();
+        player.getFigure().setPosition(player.getFigure().getPosition().enter(figure));
     }
 
     public void performShoot(PlayerColor shooterColor, PlayerColor opponentColor, Weapon weapon, PowerUp powerUp){

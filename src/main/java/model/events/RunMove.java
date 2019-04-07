@@ -20,7 +20,7 @@ public class RunMove extends PlayerMove {
 
     @Override
     public void performMove(Model model){
-        model.
+
     }
 
 }

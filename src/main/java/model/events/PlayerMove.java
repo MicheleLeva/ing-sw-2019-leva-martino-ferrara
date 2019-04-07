@@ -1,6 +1,10 @@
 package model.events;
 
 import model.Model;
+import model.adrenaline_exceptions.EmptySquareException;
+import model.adrenaline_exceptions.IllegalOpponentException;
+import model.adrenaline_exceptions.InsufficientAmmoException;
+import model.adrenaline_exceptions.WallException;
 import model.player_package.PlayerColor;
 import view.View;
 
@@ -24,6 +28,6 @@ public abstract class PlayerMove {
         return this.view;
     }
 
-    public abstract void performMove(Model model);
+    public abstract void performMove(Model model) throws IllegalOpponentException, EmptySquareException, InsufficientAmmoException;
 
 }
