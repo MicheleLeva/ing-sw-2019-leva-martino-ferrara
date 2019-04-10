@@ -1,6 +1,7 @@
 package model.events;
 
 import model.Model;
+import model.adrenaline_exceptions.WallException;
 import model.map_package.Direction;
 import view.View;
 
@@ -19,7 +20,7 @@ public class RunMove extends PlayerMove {
     }
 
     @Override
-    public void performMove(Model model){
+    public void performMove(Model model) throws WallException {
 
     }
 

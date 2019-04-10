@@ -1,23 +1,18 @@
 package model;
 
-import model.cards.Deck;
+import model.cards.AmmoCard;
+import model.cards.PowerUp;
+import model.cards.Weapon;
 import model.map_package.Map;
+import model.player_package.PlayerColor;
 
 public class GameBoard {
 
-    public void addSkulls(int skulls){
+    private KillShotTrack killShotTrack;
+    private Decks decks;
+    private Map map;
 
-    }
-
-    public void addPowerUpDeck(Deck powerUpDeck){
-
-    }
-
-    public void addWeaponDeck(Deck weaponDeck){
-
-    }
-
-    public void addAmmoDeck(Deck ammoDeck){
+    public void addToken(PlayerColor playerColor, int tokenNumber){
 
     }
 
@@ -31,5 +26,21 @@ public class GameBoard {
 
     public void setMap(Map map){
 
+    }
+
+    public KillShotTrack getKillShotTrack(){
+        return killShotTrack;
+    }
+
+    public Weapon removeWeapon(){
+        return null;
+    }
+
+    public PowerUp removePowerUp(){
+        return null;
+    }
+
+    public AmmoCard removeAmmoCard(){
+        return null;
     }
 }

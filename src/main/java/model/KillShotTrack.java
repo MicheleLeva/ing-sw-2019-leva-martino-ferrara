@@ -1,20 +1,30 @@
 package model;
 
+import model.player_package.PlayerColor;
+
 import java.util.ArrayList;
 
 public class KillShotTrack {
 
-    private ArrayList<Skull> killShotTrack;
+    private KillShotCell[] killShotTrack;
 
-    public KillShotTrack(int skulls){
 
+    public KillShotTrack(int size){
+        KillShotCell[] killShotTrack = new KillShotCell[size];
+        for  (int i=0; i<size; i++){
+            killShotTrack[i] = new KillShotCell();
+        }
     }
 
-    public ArrayList<Skull> getKillShotTrack(){
+    public KillShotCell[] getKillShotTrack(){
         return killShotTrack;
     }
 
-    public void removeSkull(){//
-
+    public void removeSkull(PlayerColor playerColor, int tokenNumber){
+        for (int i=0; i<killShotTrack.length; i++){
+            if (killShotTrack[i].isSkull()) {
+                killShotTrack[i] = new KillShotCell(playerColor, tokenNumber);
+            }
+        }
     }
 }

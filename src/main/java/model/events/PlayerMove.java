@@ -28,6 +28,6 @@ public abstract class PlayerMove {
         return this.view;
     }
 
-    public abstract void performMove(Model model) throws IllegalOpponentException, EmptySquareException, InsufficientAmmoException;
+    public abstract void performMove(Model model) throws WallException, IllegalOpponentException, EmptySquareException, InsufficientAmmoException;
 
 }

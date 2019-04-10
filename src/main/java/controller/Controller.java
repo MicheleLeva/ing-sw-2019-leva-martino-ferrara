@@ -44,7 +44,9 @@ public class Controller implements Observer<PlayerMove> {
                 move.getView().reportError("Insufficient Ammo");
             }
 
+        catch(Exception e){
 
+        }
 
     }
     public void update(PlayerMove move){
