@@ -12,7 +12,7 @@ import utils.Observable;
 
 public class Model extends Observable<Message> {
 
-    private final HashMap<PlayerColor , Player> players = new HashMap<PlayerColor , Player>();
+    private final HashMap<PlayerColor , Player> players = new HashMap<>();
 
     private GameBoard gameBoard;
 
@@ -29,7 +29,7 @@ public class Model extends Observable<Message> {
     public void performRun(PlayerColor playerColor , Direction direction){
         Player player = getPlayer(playerColor);
         Figure figure = player.getFigure();
-        player.getFigure().setPosition(player.getFigure().getPosition().enter(figure));
+        player.getFigure().setPosition(player.getFigure().getPosition().enter());
     }
 
     public void performShoot(PlayerColor shooterColor, PlayerColor opponentColor, Weapon weapon, PowerUp powerUp){
