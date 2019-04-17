@@ -1,0 +1,20 @@
+{"map":[
+
+  {"NORTH":"wall","SOUTH":"square","WEST":"wall","EAST":"door","color":"RED","isSpawn":false},
+  {"NORTH":"wall","SOUTH":"door","WEST":"door","EAST":"square","color":"BLUE","isSpawn":false},
+  {"NORTH":"wall","SOUTH":"door","WEST":"square","EAST":"door","color":"BLUE","isSpawn":true},
+  {"NORTH":"wall","SOUTH":"door","WEST":"door","EAST":"wall","color":"GREEN","isSpawn":false} ,
+
+  {"NORTH":"square","SOUTH":"door","WEST":"wall","EAST":"wall","color":"RED","isSpawn":true},
+  {"NORTH":"door","SOUTH":"door","WEST":"wall","EAST":"wall","color":"PURPLE","isSpawn":false},
+  {"NORTH":"door","SOUTH":"square","WEST":"wall","EAST":"square","color":"YELLOW","isSpawn":false},
+  {"NORTH":"door","SOUTH":"square","WEST":"square","EAST":"wall","color":"YELLOW","isSpawn":false},
+
+  {"NORTH":"door","SOUTH":"wall","WEST":"wall","EAST":"square","color":"WHITE","isSpawn":false},
+  {"NORTH":"door","SOUTH":"wall","WEST":"square","EAST":"door","color":"WHITE","isSpawn":false},
+  {"NORTH":"square","SOUTH":"wall","WEST":"door","EAST":"square","color":"YELLOW","isSpawn":false},
+  {"NORTH":"square","SOUTH":"wall","WEST":"square","EAST":"wall","color":"YELLOW","isSpawn":true}
+
+]
+
+}
