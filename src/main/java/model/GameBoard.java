@@ -9,11 +9,19 @@ import model.player_package.PlayerColor;
 public class GameBoard {
 
     private KillShotTrack killShotTrack;
-    private Decks decks;
     private Map map;
+    private Decks decks;
 
+
+
+    public GameBoard(int playersNumber, int KillShotCellsNumber){
+        this.killShotTrack = new KillShotTrack(KillShotCellsNumber);
+        this.map = new Map(playersNumber);
+        this.decks = new Decks();
+
+    }
     public void addToken(PlayerColor playerColor, int tokenNumber){
-
+    this.killShotTrack.removeSkull(playerColor, tokenNumber);
     }
 
     public void setSpawnWeapon(){
@@ -24,12 +32,17 @@ public class GameBoard {
 
     }
 
-    public void setMap(Map map){
+    public KillShotTrack getKillShotTrack(){
 
+        return this.killShotTrack;
     }
 
-    public KillShotTrack getKillShotTrack(){
-        return killShotTrack;
+    public Map getMap(){
+        return this.map;
+    }
+
+    public Decks getDecks(){
+        return this.decks;
     }
 
     public Weapon removeWeapon(){

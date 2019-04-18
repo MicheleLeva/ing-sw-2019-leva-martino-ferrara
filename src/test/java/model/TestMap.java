@@ -1,3 +1,5 @@
+package model;
+
 import model.map_package.Direction;
 import model.map_package.Map;
 import model.map_package.Square;

@@ -1,3 +1,5 @@
+package model;
+
 import model.map_package.Door;
 import model.map_package.Square;
 import org.junit.Before;

@@ -1,3 +1,5 @@
+package model;
+
 import model.adrenaline_exceptions.WallException;
 import model.map_package.Wall;
 import org.junit.Test;

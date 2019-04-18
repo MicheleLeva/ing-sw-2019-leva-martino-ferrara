@@ -1,3 +1,5 @@
+package model;
+
 import model.map_package.*;
 import org.junit.Before;
 import org.junit.Test;

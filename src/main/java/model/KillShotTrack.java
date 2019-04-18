@@ -10,10 +10,12 @@ public class KillShotTrack {
 
 
     public KillShotTrack(int size){
-        KillShotCell[] killShotTrack = new KillShotCell[size];
-        for  (int i=0; i<size; i++){
-            killShotTrack[i] = new KillShotCell();
-        }
+
+            killShotTrack = new KillShotCell[size];
+            for (int i = 0; i < size; i++) {
+                killShotTrack[i] = new KillShotCell();
+            }
+
     }
 
     public KillShotCell[] getKillShotTrack(){
@@ -24,6 +26,7 @@ public class KillShotTrack {
         for (int i=0; i<killShotTrack.length; i++){
             if (killShotTrack[i].isSkull()) {
                 killShotTrack[i] = new KillShotCell(playerColor, tokenNumber);
+                break;
             }
         }
     }
