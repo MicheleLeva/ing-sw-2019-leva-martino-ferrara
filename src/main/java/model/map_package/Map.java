@@ -94,4 +94,9 @@ public class Map {
     public Square[][] getMap(){
         return map;
     }
+
+    public Square getSquareFromCoordinates(int x, int y){
+        return map[x][y].enter();
+    }
 }
+
