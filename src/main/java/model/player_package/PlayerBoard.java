@@ -6,10 +6,10 @@ public class PlayerBoard {
     private final MarkCounter markCounter;
     private final Points points;
 
-    public PlayerBoard(DamageCounter damageCounter, MarkCounter markCounter, Points points ){
-        this.damageCounter = damageCounter;
-        this.markCounter = markCounter;
-        this.points = points;
+    public PlayerBoard(){
+        this.damageCounter = new DamageCounter();
+        this.markCounter = new MarkCounter();
+        this.points = new Points();
     }
 
     public DamageCounter getDamageCounter(){
@@ -19,4 +19,21 @@ public class PlayerBoard {
     public MarkCounter getMarkCounter(){
         return markCounter;
     }
+
+    public Points getPoints() {
+        return points;
+    }
+
+  /*  public void addMarks(PlayerColor color, int marks){
+        markCounter.addMarks(color, marks);
+    }
+
+    public void addDamage(PlayerColor color){
+        damageCounter.addDamage(color);
+
+    }
+
+    public void removeHighestPoint(){
+        points.removeHighestPoint();
+   }*/
 }

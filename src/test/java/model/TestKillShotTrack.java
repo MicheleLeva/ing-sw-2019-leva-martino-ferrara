@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 public class TestKillShotTrack {
 
-    KillShotTrack killShotTrackTest;
+    private KillShotTrack killShotTrackTest;
     @Before
     public void initKillShotTrack(){
         killShotTrackTest = new KillShotTrack(8);

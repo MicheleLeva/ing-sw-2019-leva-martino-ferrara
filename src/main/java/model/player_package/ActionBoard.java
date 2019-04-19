@@ -7,9 +7,17 @@ public class ActionBoard {
     private int actionCounter;
     private ArrayList<Action> actions;
 
-    public ActionBoard(int actionCounter, ArrayList<Action> actions){
-        this.actionCounter = actionCounter;
-        this.actions = actions;
+    public ActionBoard(){
+        this.actionCounter = 0;
+        this.actions = new ArrayList<>();
+    }
+
+    public ArrayList<Action> getActions(){
+        return actions;
+    }
+
+    public void addActions(Action action){
+        actions.add(action);
     }
 
     public void useAction1(){

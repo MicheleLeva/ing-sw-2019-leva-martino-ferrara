@@ -6,19 +6,17 @@ import java.util.ArrayList;
 public class DamageCounter {
 
     private ArrayList<PlayerColor> damage;
-    private Player player;
 
-    public DamageCounter(ArrayList<PlayerColor> damage, Player player){
-        this.damage = damage;
-        this.player = player;
-    }
 
-    public void addDamage(int damage){
+    public DamageCounter(){
+        this.damage = new ArrayList<>();
 
     }
 
-    public Player getPlayer() {
-        return player;
+    public void addDamage(PlayerColor damage){
+        this.damage.add(damage);
+
+
     }
 
     public void clearDamage(){
@@ -26,10 +24,11 @@ public class DamageCounter {
     }
 
     public ArrayList<PlayerColor> getDamageCounter(){
-        return damage;
+        return this.damage;
     }
 
     public void changeDamageCounterState(){
+
 
     }
 

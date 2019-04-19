@@ -12,21 +12,29 @@ public class Resources {
     private final ArrayList<Weapon> weapons;
     private final ArrayList<PowerUp> powerUps;
 
-    public Resources(Ammo allAmmo, Ammo availableAmmo, ArrayList<Weapon> weapons, ArrayList<PowerUp> powerUps){
-        this.allAmmo = allAmmo;
-        this.availableAmmo = availableAmmo;
-        this.weapons = weapons;
-        this. powerUps = powerUps;
+    public Resources(){
+        this.allAmmo = new Ammo(2,2,2);
+        this.availableAmmo = new Ammo(1,1,1);
+        weapons = new ArrayList<>();
+        powerUps = new ArrayList<>();
     }
 
 
 
-    public ArrayList<Weapon> showWeapon(){
+    public ArrayList<Weapon> showWeapons(){
         return weapons;
     }
 
-    public ArrayList<PowerUp> showPowerUp(){
+    public ArrayList<PowerUp> showPowerUps(){
         return powerUps;
+    }
+
+    public void addWeapon(Weapon weapon){
+        this.weapons.add(weapon);
+    }
+
+    public void addPowerUp(PowerUp powerUp){
+        this.powerUps.add(powerUp);
     }
 
     public Ammo getAllAmmo(){
@@ -37,19 +45,31 @@ public class Resources {
         return availableAmmo;
     }
 
-    public void addAmmo(int red, int blue, int yellow){
+    public void addToAllAmmo(int red, int blue, int yellow){
+
+        allAmmo.setRed(red);
+        allAmmo.setBlue(blue);
+        allAmmo.setYellow(yellow);
 
     }
 
-    public void addAvailableAmmo(int red, int blue, int yellow){
+    public void addToAvailableAmmo(int red, int blue, int yellow){
 
+        availableAmmo.setRed(red);
+        availableAmmo.setBlue(blue);
+        availableAmmo.setYellow(yellow);
     }
 
     public void removeFromAllAmmo(int red, int blue, int yellow){
+        allAmmo.setRed(-red);
+        allAmmo.setBlue(-blue);
+        allAmmo.setYellow(-yellow);
 
     }
 
     public void removeFromAvailableAmmo(int red, int blue, int yellow){
-
+        availableAmmo.setRed(-red);
+        availableAmmo.setBlue(-blue);
+        availableAmmo.setYellow(-yellow);
     }
 }

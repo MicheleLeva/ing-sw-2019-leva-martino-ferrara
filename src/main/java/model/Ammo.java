@@ -8,31 +8,43 @@ public class Ammo {
 
     private HashMap<AmmoColor, Integer> ammo;
 
+
+    public Ammo(int red, int blue, int yellow){
+        ammo = new HashMap<>();
+        ammo.put(AmmoColor.RED, 0);
+        ammo.put(AmmoColor.BLUE, 0);
+        ammo.put(AmmoColor.YELLOW, 0);
+        setRed(red);
+        setBlue(blue);
+        setYellow(yellow);
+
+    }
+
     public int getRed(){
-        return 0;
+        return ammo.get(AmmoColor.RED);
     }
 
     public int getYellow(){
-        return 0;
+        return ammo.get(AmmoColor.YELLOW);
     }
 
     public int getBlue(){
-        return 0;
+        return ammo.get(AmmoColor.BLUE);
     }
 
-    public void setRed(){
-
+    public void setRed(int number){
+        ammo.put(AmmoColor.RED, ammo.get(AmmoColor.RED) + number);
     }
 
-    public void setYellow(){
-
-    }
-
-    public void setBlue(){
+    public void setBlue(int number){
+        ammo.put(AmmoColor.BLUE, ammo.get(AmmoColor.BLUE) + number);
 
     }
 
-    public Ammo(int red, int blue, int yellow){
-
+    public void setYellow(int number){
+        ammo.put(AmmoColor.YELLOW, ammo.get(AmmoColor.YELLOW) + number);
     }
+
+
+
 }

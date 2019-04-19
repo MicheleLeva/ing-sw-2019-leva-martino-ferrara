@@ -33,7 +33,7 @@ public class Model extends Observable<Message> {
 
     public void performRun(PlayerColor playerColor){
         Player player = getPlayer(playerColor);
-        player.getFigure().setPosition(player.getFigure().getPosition().enter());
+        player.setPosition(player.getPosition().enter());
     }
 
     public void performShoot(PlayerColor shooterColor, PlayerColor opponentColor, Weapon weapon, PowerUp powerUp){

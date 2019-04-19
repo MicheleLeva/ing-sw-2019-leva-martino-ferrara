@@ -1,4 +1,4 @@
-package model;
+package model.map_package;
 
 import model.map_package.*;
 import org.junit.Before;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 public class TestSquare {
-    Square squareTest;
+    private Square squareTest;
     @Before
     public void initSquare(){
         squareTest = new Square();

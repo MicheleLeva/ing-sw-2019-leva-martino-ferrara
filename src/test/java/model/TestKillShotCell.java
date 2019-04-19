@@ -9,8 +9,8 @@ import static org.junit.Assert.*;
 
 public class TestKillShotCell {
 
-    KillShotCell emptyKillShotCell;
-    KillShotCell fullKillShotCell;
+    private KillShotCell emptyKillShotCell;
+    private KillShotCell fullKillShotCell;
 
 
 

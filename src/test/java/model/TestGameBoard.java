@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class TestGameBoard {
 
-    GameBoard gameBoardTest;
+    private GameBoard gameBoardTest;
 
 
     @Before

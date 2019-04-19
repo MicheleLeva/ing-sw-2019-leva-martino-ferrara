@@ -1,4 +1,4 @@
-package model;
+package model.map_package;
 
 import model.map_package.Direction;
 import model.map_package.Map;
@@ -14,7 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class TestMap {
-    Map map;
+    private Map map;
 
     @Before
     public void initMap() throws IOException, ParseException {

@@ -19,7 +19,7 @@ public abstract class Action {
 
     }
 
-    protected Object grab(Square location){
+    protected Object grab(){
         return null;
     }
 

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestDecks {
-    Decks decksTest;
+    private Decks decksTest;
 
     @Before
     public void initDecks(){

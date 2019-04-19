@@ -1,33 +1,33 @@
 package model.player_package;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MarkCounter {
 
-    private ArrayList<PlayerColor> mark;
-    private Player player;
+    private HashMap<PlayerColor, Integer> markList;
 
-    public MarkCounter(ArrayList<PlayerColor> mark, Player player){
+    public MarkCounter(){
 
-        this.mark = mark;
-        this.player = player;
+        this.markList = new HashMap<>();
 
     }
 
-    public Player getPlayer() {
-        return player;
+
+    public void addMarks(PlayerColor color, int marks){
+        if(markList.containsKey(color))
+            markList.put(color, markList.get(color) + marks);
+        else
+            markList.put(color, marks);
+
     }
 
-    public void addMark(int mark){
-
+    public void clearMarks(PlayerColor color){
+        markList.put(color, 0);
     }
 
-    public void clearMark(){
-        mark.clear();
-    }
-
-    public ArrayList<PlayerColor> getMarkCounter(){
-        return mark;
+    public HashMap<PlayerColor, Integer> getMarkCounter(){
+        return markList;
     }
 
     public boolean checkMarkValidity(){

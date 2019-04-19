@@ -4,7 +4,12 @@ public class Score {
 
     private int score;
 
+    public Score(){
+        score = 0;
+    }
+
     public void addScore(int i){
+        score = score + i;
 
     }
 
@@ -13,7 +18,4 @@ public class Score {
 
     }
 
-    public  Score(int score){
-        this.score = score;
-    }
 }

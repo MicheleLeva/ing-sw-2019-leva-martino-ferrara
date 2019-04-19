@@ -1,5 +1,7 @@
 package model.player_package;
 
+import model.map_package.Square;
+
 public class Player {
 
     private final String playerName;
@@ -7,24 +9,38 @@ public class Player {
     private final Resources resources;
     private final PlayerBoard playerBoard;
     private ActionBoard actionBoard;
-    private final Figure figure;
+    //private final Figure figure;
     private Score score;
+    private Square position;
 
-    public Player(String name, PlayerColor color, Resources res, PlayerBoard pboard, Figure fig){
+
+    public Player(String name, PlayerColor color){
         playerName = name;
         playerColor = color;
-        resources = res;
-        playerBoard = pboard;
-        figure = fig;
+        resources = new Resources();
+        playerBoard = new PlayerBoard();
+        actionBoard = new ActionBoard();
+        score = new Score();
+        position = new Square();
+       // figure = fig;
+    }
+
+    public String getName(){
+
+        return playerName;
     }
 
     public Score getScore() {
         return score;
     }
 
-    public void setScore(Score score) {
-        this.score = score;
+    public void addScore(int score){
+        this.score.addScore(score);
     }
+
+   // public void setScore(Score score) {
+    //    this.score = score;
+    //}
 
     public PlayerBoard getPlayerBoard(){
         return playerBoard;
@@ -34,9 +50,9 @@ public class Player {
         return actionBoard;
     }
 
-    public Figure getFigure(){
-        return figure;
-    }
+   // public Figure getFigure(){
+   //     return figure;
+    //}
 
     public Resources getResources(){
         return resources;
@@ -48,6 +64,14 @@ public class Player {
 
     public void setActionBoard(ActionBoard actionBoard) {
         this.actionBoard = actionBoard;
+    }
+
+    public Square getPosition(){
+        return position;
+    }
+
+    public void setPosition(Square square){
+        position = square;
     }
 
     public void drawAmmoCard(){
