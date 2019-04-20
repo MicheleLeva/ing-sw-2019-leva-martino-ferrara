@@ -15,10 +15,14 @@ public class Square implements MapElement {
     private SquareColor color;
     //private Weapon[] weapons;
     //private AmmoCard ammo;
+    private int squareRow;
+    private int squareColumn;
 
-    public Square(){
+
+    public Square(int row, int column){
         sides = new HashMap<Direction,MapElement>();
-
+        squareRow = row;
+        squareColumn = column;
     }
 
 
@@ -68,6 +72,14 @@ public class Square implements MapElement {
     public void setSide(Direction direction, MapElement element){
 
         sides.put(direction, element);
+    }
+
+    public int getSquareRow(){
+        return squareRow;
+    }
+
+    public int getSquareColumn(){
+        return squareColumn;
     }
 
     @Override

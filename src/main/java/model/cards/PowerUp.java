@@ -1,7 +1,14 @@
 package model.cards;
 
-public class PowerUp extends Card{
+import model.player_package.Player;
 
-    protected AmmoColor color;
+public abstract class PowerUp extends Card{
+
+    protected AmmoColor cost;
+
+
+    public void usePowerUp(Player player, Player opponent){
+
+    }
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+
 import model.cards.PowerUp;
 import model.cards.Weapon;
 import model.events.Message;
@@ -98,5 +99,86 @@ public class Model extends Observable<Message> {
         }
         return null;
     }
+
+    //Metodo che ritorna una lista dei giocatori
+    //visibili a partire da uno square dato
+    public ArrayList<Player> getVisiblePlayers(Square square){
+        ArrayList<Player> visiblePlayers = new ArrayList<>();
+        for(Player player : players.values()) {
+
+            if (player.getPosition().getColor() == square.getColor())
+                visiblePlayers.add(player);
+            else
+                for (Direction direction : Direction.values()) {
+                    if (    square.getSide(direction) instanceof Door &&
+                            getSquareFromDir(square, direction).getColor() == player.getPosition().getColor())
+
+                            visiblePlayers.add(player);
+                }
+        }
+        return visiblePlayers;
+    }
+
+    //Metodo che ritorna una lista dei giocatori
+    //a distanza 0 o 1 da uno square dato
+    /*public ArrayList<Player> getPlayersAtDistance1(Square square){
+        ArrayList<Player> playersAtDistance1 = new ArrayList<>();
+        for(Player player : players.values()) {
+            for(Direction direction : Direction.values()){
+                if(    !(square.getSide(direction) instanceof Wall) &&
+                        player.getPosition() == square.getSide(direction).enter()) {
+
+                        playersAtDistance1.add(player);
+                }
+
+                if(square == player.getPosition())
+                    playersAtDistance1.add(player);
+
+            }
+        }
+        return playersAtDistance1;
+    }*/
+
+    //Metodo che ritorna una lista di giocatori
+    //a distanza variabile dallo square scelto
+    public ArrayList<Player> getPlayersAtDistance(int distance, Square square){
+        ArrayList<Player> playersAtDistance = new ArrayList<>();
+        for(Player player : players.values()) {
+            if(runnableSquare(distance, square).contains(player.getPosition())){
+                playersAtDistance.add(player);
+            }
+        }
+        return playersAtDistance;
+
+    }
+
+    //Metodo che ritorna una lista dei giocatori
+    //lungo le direzioni cardinali dello square
+    //dato
+    public ArrayList<Player> getPlayersInCardinalDirection(Square square){
+        ArrayList<Player> playersInCardinalDirection = new ArrayList<>();
+        for(Player player : players.values()) {
+            if( player.getPosition().getSquareRow() == square.getSquareRow() ||
+                    player.getPosition().getSquareColumn() == square.getSquareColumn()){
+                playersInCardinalDirection.add(player);
+            }
+        }
+       return playersInCardinalDirection;
+    }
+
+    //Metodo che ritorna una lista dei giocatori
+    //NON visibili a partire da uno square dato
+    public ArrayList<Player> getNonVisiblePlayers(Square square){
+        ArrayList<Player> nonVisiblePlayers = new ArrayList<>();
+
+        for(Player player : players.values()) {
+
+            if(!(getVisiblePlayers(square).contains(player)))
+                nonVisiblePlayers.add(player);
+        }
+        return nonVisiblePlayers;
+
+    }
+
 
 }

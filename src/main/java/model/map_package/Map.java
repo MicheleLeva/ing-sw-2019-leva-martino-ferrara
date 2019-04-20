@@ -40,7 +40,7 @@ public class Map {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                map[i][j] = new Square();
+                map[i][j] = new Square(i,j);
             }
         }
         int k=0;
