@@ -8,20 +8,20 @@ import view.View;
 
 public class RunMove extends PlayerMove {
 
-    private final Direction direction;
+    private final int x;
+    private final int y;
 
-    public RunMove(View view , Direction direction){
+    public RunMove(View view , int x, int y) {
         super(view);
-        this.direction = direction;
+        this.x = x;
+        this.y = y;
     }
 
-    public Direction getDirection() {
-        return direction;
+    public int getX() {
+        return x;
     }
 
-    @Override
-    public void performMove(Model model) throws WallException {
-
+    public int getY() {
+        return y;
     }
-
 }

@@ -18,8 +18,8 @@ public class GameBoard {
         this.killShotTrack = new KillShotTrack(KillShotCellsNumber);
         this.map = new Map(playersNumber);
         this.decks = new Decks();
-
     }
+
     public void addToken(PlayerColor playerColor, int tokenNumber){
     this.killShotTrack.removeSkull(playerColor, tokenNumber);
     }

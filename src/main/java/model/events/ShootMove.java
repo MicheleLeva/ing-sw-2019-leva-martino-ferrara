@@ -2,7 +2,6 @@ package model.events;
 
 import model.cards.PowerUp;
 import model.cards.Weapon;
-import model.Model;
 import model.player_package.PlayerColor;
 import view.View;
 
@@ -31,7 +30,5 @@ public class ShootMove extends PlayerMove{
         return powerUp;
     }
 
-    @Override
-    public void performMove(Model mode){
-    }
+
 }

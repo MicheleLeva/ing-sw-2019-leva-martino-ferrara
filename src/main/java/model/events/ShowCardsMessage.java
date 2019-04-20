@@ -1,9 +1,36 @@
 package model.events;
 
-import model.cards.Card;
+import model.cards.PowerUp;
+import model.cards.Weapon;
+import model.player_package.PlayerColor;
 
-public class ShowCardsMessage {
+import java.util.ArrayList;
 
-    private Card card;
+public class ShowCardsMessage extends Message{
+
+    private ArrayList<PowerUp> powerUps;
+    private ArrayList<Weapon> weapons;
+
+    public ShowCardsMessage(PlayerColor playerColor , String playerName, ArrayList<PowerUp> powerUps, ArrayList<Weapon> weapons){
+        super(playerColor, playerName);
+        this.powerUps = powerUps;
+        this.weapons = weapons;
+    }
+
+    @Override
+    public String toPlayer(){
+        String temp = "";
+        for (PowerUp powerUp : powerUps)
+            temp = temp.concat(powerUp.toString() + " \n\n");
+        for (Weapon weapon : weapons)
+            temp = temp.concat(weapon.toString() + " \n\n");
+
+        return ("The cards in your hand are:\n" + temp);
+    }
+
+    @Override
+    public String toOthers(){
+        return (getPlayerName() +" is watching their cards" );
+    }
 
 }

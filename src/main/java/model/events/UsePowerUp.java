@@ -1,23 +1,17 @@
 package model.events;
 
-import model.cards.PowerUp;
-import model.Model;
 import view.View;
 
 public class UsePowerUp extends PlayerMove{
 
-    private final PowerUp powerUp;
+    private final int index;
 
-    public UsePowerUp(View view , PowerUp powerUp){
+    public UsePowerUp(View view , int index){
         super(view);
-        this.powerUp = powerUp;
+        this.index = index;
     }
 
-    public PowerUp getPowerUp(){
-        return powerUp;
-    }
-
-    @Override
-    public void performMove(Model model){
+    public int getIndex() {
+        return index;
     }
 }
