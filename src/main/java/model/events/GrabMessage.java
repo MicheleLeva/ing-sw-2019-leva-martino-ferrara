@@ -1,15 +1,13 @@
 package model.events;
 
 import model.cards.Card;
-import model.GameBoard;
 import model.player_package.PlayerColor;
-;
 public class GrabMessage extends Message {
 
     private final Card card;
 
-    public GrabMessage(PlayerColor playerColor , String playerName , GameBoard gameBoard , Card card){
-        super(playerColor , playerName , gameBoard);
+    public GrabMessage(PlayerColor playerColor , String playerName , Card card){
+        super(playerColor , playerName);
         this.card = card;
     }
 

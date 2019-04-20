@@ -1,6 +1,5 @@
 package model.player_package;
 
-
 import model.map_package.Square;
 
 public class Player {
@@ -13,7 +12,6 @@ public class Player {
 
     private Score score;
     private Square position;
-
 
 
     public Player(String name, PlayerColor color){
@@ -85,6 +83,10 @@ public class Player {
 
     public void drawPowerUpCard(){
 
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 
 }

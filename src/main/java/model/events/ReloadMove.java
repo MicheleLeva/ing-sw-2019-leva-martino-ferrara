@@ -1,24 +1,17 @@
 package model.events;
 
-import model.cards.Weapon;
-import model.Model;
 import view.View;
 
 public class ReloadMove extends PlayerMove {
 
-    private final Weapon weapon;
+    private final int index;
 
-    public ReloadMove(View view , Weapon weapon){
+    public ReloadMove(View view , int index){
         super(view);
-        this.weapon = weapon;
+        this.index = index;
     }
 
-    public Weapon getWeapon(){
-        return weapon;
-    }
-
-    @Override
-    public void performMove(Model model){
-
+    public int getIndex() {
+        return index;
     }
 }

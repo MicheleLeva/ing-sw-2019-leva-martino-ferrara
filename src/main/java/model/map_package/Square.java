@@ -14,7 +14,7 @@ public class Square implements MapElement {
     public boolean isSpawn;
     private SquareColor color;
     //private Weapon[] weapons;
-    //private AmmoCard ammo;
+    private AmmoCard ammo;
     private int squareRow;
     private int squareColumn;
 
@@ -34,9 +34,9 @@ public class Square implements MapElement {
     //    return weapons;
     //}
 
-    //public AmmoCard getAmmoCard(){
-    //    return ammo;
-    //}
+    public AmmoCard getAmmoCard(){
+        return ammo;
+    }
 
     /* public void setWeapon(Weapon weapon){
 

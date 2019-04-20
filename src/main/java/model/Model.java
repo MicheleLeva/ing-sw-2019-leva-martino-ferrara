@@ -1,12 +1,17 @@
 package model;
 
-
+import model.adrenaline_exceptions.EmptySquareException;
+import model.adrenaline_exceptions.IllegalOpponentException;
+import model.adrenaline_exceptions.InsufficientAmmoException;
+import model.cards.AmmoCard;
 import model.cards.PowerUp;
 import model.cards.Weapon;
+import model.events.DrawMessage;
 import model.events.Message;
+import model.events.RunMessage;
+import model.events.ShowCardsMessage;
 import model.map_package.Direction;
 import model.map_package.*;
-import model.player_package.Figure;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
 
@@ -32,17 +37,45 @@ public class Model extends Observable<Message> {
         return players.get(playerColor);
     }
 
-    public void performRun(PlayerColor playerColor){
+    public void performRun(PlayerColor playerColor, int x, int y){
         Player player = getPlayer(playerColor);
-        player.setPosition(player.getPosition().enter());
+        player.setPosition(gameBoard.getMap().getSquareFromCoordinates(x,y));
+        notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
     }
 
-    public void performShoot(PlayerColor shooterColor, PlayerColor opponentColor, Weapon weapon, PowerUp powerUp){
-
+    public void performShoot(PlayerColor shooterColor, PlayerColor opponentColor, Weapon weapon, PowerUp powerUp) throws IllegalOpponentException {
+        //Need weapon cards
+        //notify
     }
 
-    public void performGrab(PlayerColor playerColor){
+    public void performGrab(PlayerColor playerColor) throws EmptySquareException {
+        Player player = getPlayer(playerColor);
 
+        if (player.getPosition().getAmmoCard() !=null){
+            AmmoCard ammoCard = player.getPosition().getAmmoCard();
+            //Need ammo cards
+        }else throw new EmptySquareException();
+        //notify
+    }
+
+    public void performReload(PlayerColor playerColor, int index) throws InsufficientAmmoException {
+        //Need weapon cards
+    }
+
+    public void performDraw(PlayerColor playerColor){
+        Player player = getPlayer(playerColor);
+        PowerUp drawnCard = gameBoard.getDecks().drawPowerUp();
+        player.getResources().addPowerUp(drawnCard);
+        notify(new DrawMessage(playerColor, player.getPlayerName(), drawnCard));
+    }
+
+    public void performUsePowerUp(PlayerColor playerColor, int index){
+        //Need powerup cards
+    }
+
+    public void performShowCards(PlayerColor playerColor){
+        Player player = getPlayer(playerColor);
+        notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(), player.getResources().showWeapons()));
     }
 
     public Model(ArrayList<Player> playersList, int skulls){
@@ -81,7 +114,7 @@ public class Model extends Observable<Message> {
             }
         }
 
-        LinkedHashSet<Square> hashSet = new LinkedHashSet<>(squares);
+        LinkedHashSet<Square> hashSet = new LinkedHashSet<>(squares); //converting to hashset to remove duplicates
 
         return new ArrayList<>(hashSet);
 

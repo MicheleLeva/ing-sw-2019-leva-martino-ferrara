@@ -1,6 +1,5 @@
 package model.events;
 
-import model.Model;
 import model.player_package.PlayerColor;
 import view.View;
 
@@ -10,8 +9,5 @@ public class ShowCards extends PlayerMove{
         super(playerColor , view);
     }
 
-    @Override
-    public void performMove(Model model){
 
-    }
 }

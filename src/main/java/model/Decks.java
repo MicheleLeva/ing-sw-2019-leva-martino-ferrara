@@ -15,6 +15,8 @@ public class Decks {
     private ArrayList<PowerUp> discardedPowerUpDeck;
     private ArrayList<AmmoCard> discardedAmmoCardDeck;
 
+    private Random rand = new Random();
+
 
     public Decks(){
         weaponsDeck = new ArrayList<>();
@@ -25,8 +27,9 @@ public class Decks {
 
     }
 
+
+
     public Weapon drawWeapon(){
-        Random rand = new Random();
         if(weaponsDeck.size()>0)
             return weaponsDeck.remove(rand.nextInt(weaponsDeck.size()));
         else
@@ -35,19 +38,18 @@ public class Decks {
     }
 
     public PowerUp drawPowerUp(){
-        Random rand = new Random();
 
         if(powerUpDeck.size() > 0){
         return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
         }
         else
             powerUpDeck = new ArrayList(discardedPowerUpDeck);
-            discardedPowerUpDeck.clear();
-            return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
+        discardedPowerUpDeck.clear();
+        return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
+
     }
 
     public AmmoCard drawAmmoCard(){
-        Random rand = new Random();
 
         if(ammoCardDeck.size() > 0){
             return ammoCardDeck.remove(rand.nextInt(ammoCardDeck.size()));

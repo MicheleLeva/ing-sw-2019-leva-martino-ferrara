@@ -2,7 +2,6 @@ package model.events;
 
 import model.cards.Weapon;
 import model.GameBoard;
-import model.player_package.DamageCounter;
 import model.player_package.PlayerColor;
 
 public class ShootMessage extends Message {
@@ -12,7 +11,7 @@ public class ShootMessage extends Message {
     private final String opponentName;
 
     public ShootMessage(PlayerColor shooterColor , String shooterName , PlayerColor opponentColor , String opponentName , Weapon weapon , GameBoard gameBoard){
-        super(shooterColor , shooterName , gameBoard );
+        super(shooterColor , shooterName);
         this.weapon = weapon;
         this.opponentColor = opponentColor;
         this.opponentName = opponentName;
