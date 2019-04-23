@@ -16,8 +16,10 @@ public class TestDamageCounter {
 
     @Test
     public void testDamageCounter(){
-        damageCounterTest.addDamage(PlayerColor.YELLOW);
-        damageCounterTest.addDamage(PlayerColor.GREEN);
+        int damage1 = 4;
+        int damage2 = 6;
+        damageCounterTest.addDamage(PlayerColor.YELLOW, damage1);
+        damageCounterTest.addDamage(PlayerColor.GREEN, damage2);
         assertEquals(PlayerColor.YELLOW,damageCounterTest.getDamageCounter().get(0));
         assertEquals(PlayerColor.GREEN,damageCounterTest.getDamageCounter().get(1));
         damageCounterTest.clearDamage();

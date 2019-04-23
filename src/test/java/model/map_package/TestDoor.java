@@ -13,7 +13,9 @@ public class TestDoor {
     private Square nextSquare;
     @Before
     public void squareInit() {
-        nextSquare = new Square();
+        int row = 1;
+        int column = 3;
+        nextSquare = new Square(row, column);
         doorTest = new Door(nextSquare);
     }
 

@@ -31,7 +31,9 @@ public class TestPlayer {
     public void testModifiers() {
         playerTest.addScore(3);
         assertEquals(3,playerTest.getScore().getScore());
-        Square square = new Square();
+        int row = 1;
+        int column = 2;
+        Square square = new Square(row, column);
         playerTest.setPosition(square);
         assertEquals(square,playerTest.getPosition());
 
