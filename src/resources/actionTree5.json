@@ -1,0 +1,24 @@
+{"child" : [
+  {"type" : "shoot" , "child" : []},
+  {"type" : "grab" , "child" : []},
+  {"type" : "recharge" , "child" : [
+    {"type" : "shoot" , "child" : []}
+  ]},
+  {"type" : "run" ,"child" : [
+    {"type" : "grab" , "child" : []},
+    {"type" : "shoot" , "child" : []},
+    {"type" : "recharge" , "child" : [
+      {"type" : "shoot" , "child" : []}
+    ]},
+    {"type" : "run" , "child" : [
+      {"type" : "grab" , "child" : []},
+      {"type" : "shoot" , "child" : []},
+      {"type" : "recharge" , "child" : [
+        {"type" : "shoot" , "child" : []}
+      ]},
+      {"type" : "run" , "child" : [
+        {"type" : "grab" , "child" : []}
+      ]}
+    ]}
+  ]}
+]}

@@ -1,0 +1,136 @@
+package model.player_package.action;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import java.util.List;
+
+public class ActionTree {
+    //Identificatore dell'albero
+    //1: albero normale
+    //2: albero con una azione potenziata
+    //3: albero con due azioni potenziate
+    //4: albero frenesia per giocatori dopo il 1°
+    //5: albero frenesia per giocatori prima del 1°
+    private final int ID;
+
+    private String path = null;
+    private Node<String> root = null; //Radice dell'albero
+    private Node<String> lastActionPerformed = null; //Ultima azione inserita
+    private Node<String> lastAction = null; //Ultima azione inserita, ma non ancora performata
+
+    public ActionTree(int ID){
+        this.ID = ID;
+        setPath();
+        parseActionTree();
+    }
+    //Imposta la destinazione del file JSON
+    private void setPath(){
+        switch (ID)
+        {
+            case 1:
+                path = "src/resources/actionTree1.json";
+                break;
+
+            case 2:
+                path = "src/resources/actionTree2.json";
+                break;
+
+            case 3:
+                path = "src/resources/actionTree3.json";
+                break;
+
+            case 4:
+                path = "src/resources/actionTree4.json";
+                break;
+
+            case 5:
+                path = "src/resources/actionTree5.json";
+                break;
+        }
+    }
+
+    private void buildTree(Node<String> parent , JSONObject obj){
+        JSONArray array = (JSONArray) obj.get("child");
+
+        if(!array.isEmpty())
+        {
+            for (int i = 0; i < array.size(); i++){
+                JSONObject obj1 = (JSONObject) array.get(i);
+
+                String type = obj1.get("type").toString();
+                Node<String> newNode = new Node<>(type);
+                parent.addChild(newNode);
+                buildTree(newNode , obj1);
+            }
+        }
+    }
+
+    private void parseActionTree(){
+        JSONParser parser = new JSONParser();
+
+        try{
+            Object obj = parser.parse(new FileReader(path));
+            JSONObject myJo = (JSONObject) obj;
+
+            root = new Node<String>("root");
+            root.setParent(null);
+            lastAction = lastActionPerformed = root;
+
+            buildTree(root , myJo);
+
+        }
+
+        catch(FileNotFoundException e ){
+            System.out.println(e);
+        }
+
+        catch(IOException e ){
+            System.out.println(e);
+        }
+
+        catch(ParseException e){
+            System.out.println(e);
+        }
+    }
+
+    public Node<String> getRoot(){
+        return root;
+    }
+    //Verifica che la mossa sia possibile
+    public boolean checkAction(char move){
+
+        List<Node<String>> children = lastAction.getChildren(); //Andrà messo lastActionPerformed al posto di LastAction
+
+        for (int i = 0; i < children.size(); i++){
+            String type = children.get(i).getData();
+            if (KeyMap.isValid(type , move)){
+                lastAction = children.get(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    //Se l'azione è stata eseguita, l'albero si aggiorna
+    public void updateAction(){
+        lastActionPerformed = lastAction;
+    }
+
+    public void printAvailableAction(){
+        lastAction.printChildren();
+    }
+
+    public boolean isFinished(){
+        return lastAction.getChildren().isEmpty(); //Andrà cambiato con lastactionperformed
+    }
+
+    /*public void printTree(){
+        root.printChildren();
+    }*/
+}

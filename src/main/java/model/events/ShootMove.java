@@ -5,11 +5,12 @@ import model.cards.Weapon;
 import model.player_package.PlayerColor;
 import view.View;
 
+
 public class ShootMove extends PlayerMove{
 
-    private PlayerColor opponentColor;
-    private PowerUp powerUp;
-    private Weapon weapon;
+    private final PlayerColor opponentColor;
+    private final PowerUp powerUp;
+    private final Weapon weapon;
 
     public ShootMove(View view , PlayerColor opponentColor , PowerUp powerUp , Weapon weapon){
         super(view);

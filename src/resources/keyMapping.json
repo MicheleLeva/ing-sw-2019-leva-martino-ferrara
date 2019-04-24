@@ -1,0 +1,10 @@
+{ "moveUp" : "W",
+  "moveDown" : "S",
+  "moveRight" :  "D",
+  "moveLeft" :  "A",
+  "grab" :  "E",
+  "shoot" : "F",
+  "recharge" :  "R",
+  "end" : "Z",
+  "usePowerUp" : "U"
+}

@@ -1,0 +1,12 @@
+{"child" : [
+  {"type" : "shoot" , "child" : []},
+  {"type" : "grab" , "child" : []},
+  {"type" : "run" , "child" : [
+    {"type" : "shoot" , "child" : []},
+    {"type" : "grab" , "child" : []},
+    {"type" : "run" , "child" : [
+      {"type" : "run" , "child" : []},
+      {"type" : "grab" , "child" : []}
+    ]}
+  ]}
+]}
