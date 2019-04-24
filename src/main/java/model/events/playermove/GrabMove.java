@@ -1,4 +1,4 @@
-package model.events;
+package model.events.playermove;
 
 import view.View;
 

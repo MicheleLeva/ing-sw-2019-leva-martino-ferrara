@@ -1,4 +1,4 @@
-package model.events;
+package model.events.message;
 
 import model.cards.Weapon;
 import model.player_package.PlayerColor;
@@ -11,6 +11,7 @@ public class ReloadMessage extends Message {
         super(playerColor , playerName);
         this.weapon = weapon;
     }
+
     public Weapon getWeapon() {
         return weapon;
     }

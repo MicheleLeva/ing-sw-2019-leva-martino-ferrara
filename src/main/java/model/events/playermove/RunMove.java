@@ -1,8 +1,5 @@
-package model.events;
+package model.events.playermove;
 
-import model.Model;
-import model.adrenaline_exceptions.WallException;
-import model.map_package.Direction;
 import view.View;
 
 

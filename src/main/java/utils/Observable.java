@@ -1,7 +1,5 @@
 package utils;
 
-import model.Model;
-import model.events.Message;
 import java.util.ArrayList;
 
 public class Observable<T> {

@@ -1,4 +1,4 @@
-package model.events;
+package model.events.message;
 
 import model.player_package.PlayerColor;
 

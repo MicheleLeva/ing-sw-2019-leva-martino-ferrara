@@ -1,8 +1,7 @@
 package model.player_package;
 
 import model.cards.Weapon;
-import model.events.PlayerMove;
-import model.map_package.Square;
+import model.events.playermove.PlayerMove;
 
 public abstract class Action {
 

@@ -6,10 +6,10 @@ import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.cards.AmmoCard;
 import model.cards.PowerUp;
 import model.cards.Weapon;
-import model.events.DrawMessage;
-import model.events.Message;
-import model.events.RunMessage;
-import model.events.ShowCardsMessage;
+import model.events.message.DrawMessage;
+import model.events.message.Message;
+import model.events.message.RunMessage;
+import model.events.message.ShowCardsMessage;
 import model.map_package.Direction;
 import model.map_package.*;
 import model.player_package.Player;
@@ -91,6 +91,13 @@ public class Model extends Observable<Message> {
         }
 
         gameBoard = new GameBoard(playersList.size(), skulls);
+    }
+
+    public void addDamage(PlayerColor playerColor){
+        //addDamage
+        //controllo per la granata
+        //notify al player se c'è
+        //
     }
 
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare){

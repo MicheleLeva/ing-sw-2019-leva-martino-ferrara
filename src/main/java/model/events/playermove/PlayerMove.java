@@ -1,4 +1,4 @@
-package model.events;
+package model.events.playermove;
 
 import model.player_package.PlayerColor;
 import view.View;

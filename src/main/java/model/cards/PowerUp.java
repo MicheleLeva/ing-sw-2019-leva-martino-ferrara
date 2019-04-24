@@ -7,7 +7,7 @@ public abstract class PowerUp extends Card{
     protected AmmoColor cost;
 
 
-    public void usePowerUp(Player player, Player opponent){
+    public void usePowerUp(){
 
     }
 

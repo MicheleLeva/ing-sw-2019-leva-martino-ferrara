@@ -1,12 +1,12 @@
-package model.events;
+package model.events.playermove;
 
 import view.View;
 
-public class UsePowerUp extends PlayerMove{
+public class PowerUpMove extends PlayerMove{
 
     private final int index;
 
-    public UsePowerUp(View view , int index){
+    public PowerUpMove(View view , int index){
         super(view);
         this.index = index;
     }
