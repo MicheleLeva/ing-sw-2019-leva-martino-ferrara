@@ -75,7 +75,7 @@ public class Model extends Observable<Message> {
 
     public void performShowCards(PlayerColor playerColor){
         Player player = getPlayer(playerColor);
-        notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(), player.getResources().showWeapons()));
+        //notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(), player.getResources().showWeapons()));
     }
 
     public Model(ArrayList<Player> playersList, int skulls){
@@ -127,7 +127,7 @@ public class Model extends Observable<Message> {
 
     }
 
-    private static Square getSquareFromDir(Square square, Direction direction){
+    private static Square getSquareFromDir(Square square, Direction direction) throws NullPointerException{
 
         MapElement side = square.getSide(direction);
 

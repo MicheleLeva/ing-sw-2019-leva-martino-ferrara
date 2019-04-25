@@ -5,7 +5,7 @@ import view.View;
 
 public class ShowCardsMove extends PlayerMove{
 
-    private final int type;
+    private final int type; //specifica di quali carte vuole la stampa
 
     public int getType() {
         return type;

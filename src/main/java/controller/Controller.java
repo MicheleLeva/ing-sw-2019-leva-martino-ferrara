@@ -76,14 +76,14 @@ public class Controller implements Observer<PlayerMove> {
         }
 
         try{
-            model.performReload(move.getPlayerColor(), ((ReloadMove) move).getIndex());
+            model.performReload(move.getPlayerColor(), move.getIndex());
         }
         catch(InsufficientAmmoException e){
             move.getView().reportError("Insufficient Ammo");
         }
     }
 
-    public void update(ShowCardsMove move){ //potrebbe non servire più
+    public void update(ShowCardsMove move){
         model.performShowCards(move.getPlayerColor());
     }
 
