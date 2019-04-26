@@ -7,7 +7,7 @@ import model.player_package.PlayerColor;
 import java.util.ArrayList;
 
 
-public class GameManager { //cambiare nome in GameManager
+public class TurnManager { //cambiare nome in TurnManager
 
     private  ArrayList<Player> allPlayers; //In ordine
 
@@ -21,6 +21,8 @@ public class GameManager { //cambiare nome in GameManager
         return (currentPlayerColor == playerColor);
     }
 
+    private int currentTurnNumber;
+
     public Player getPlayerFromColor(PlayerColor playerColor){
         Player result = null;
 
@@ -32,15 +34,18 @@ public class GameManager { //cambiare nome in GameManager
         return result;
     }
 
-    public GameManager(ArrayList<Player> allPlayers){
+    public TurnManager(ArrayList<Player> allPlayers){
         this.allPlayers = allPlayers;
         currentPlayerColorIndex = 0;
         currentPlayerColor = allPlayers.get(0).getPlayerColor();
+        currentTurnNumber = 1;
     }
 
-    public  void changeCurrentPlayer(){
-        if (currentPlayerColorIndex == allPlayers.size()) //Ultimo giocatore in elenco
+    public synchronized void update(){
+        allPlayers.get(currentPlayerColorIndex).getActionTree().resetPerformedAction();
+        if (currentPlayerColorIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
         {
+            updateCurrentTurnNumber();
             currentPlayerColorIndex = 0;
             currentPlayerColor = allPlayers.get(0).getPlayerColor();
         }
@@ -59,4 +64,22 @@ public class GameManager { //cambiare nome in GameManager
     public boolean isGameOver(){
         return (gameOver);
     }
+
+    public PlayerColor getCurrentPlayerColor(){
+        return currentPlayerColor;
+    }
+
+    public int getCurrentTurnNumber(){
+        return currentTurnNumber;
+    }
+
+    private void updateCurrentTurnNumber(){
+        currentTurnNumber++;
+    }
+
+    public Player getCurrentPlayer(){
+        return allPlayers.get(currentPlayerColorIndex);
+    }
+
+
 }

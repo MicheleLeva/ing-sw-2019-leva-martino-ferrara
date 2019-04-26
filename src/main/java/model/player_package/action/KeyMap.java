@@ -28,6 +28,8 @@ public class KeyMap {
 
     private static char usePowerUp;
 
+    private static char showCards;
+
     private final static String defaultPath = "src/resources/keyMapping.json";
     //Metodo che legge la classe da File JSON
     public KeyMap(String path){
@@ -47,6 +49,7 @@ public class KeyMap {
 
             end = myJo.get("end").toString().charAt(0);
             usePowerUp = myJo.get("usePowerUp").toString().charAt(0);
+            showCards = myJo.get("showCards").toString().charAt(0);
         }
 
         catch(FileNotFoundException e ){
@@ -89,6 +92,37 @@ public class KeyMap {
 
     public static char getEnd(){
         return end;
+    }
+
+    public static char getShowCards(){
+        return showCards;
+    }
+
+    public static char getUsePowerUp(){
+        return usePowerUp;
+    }
+
+    public static String getCommandList(){
+        String result;
+        result = "Command List:\n";
+
+        String moveString;
+        moveString = "MoveUp: " +moveUp +" | ";
+        moveString = moveString + "MoveLeft: " +moveLeft +" | ";
+        moveString = moveString + "MoveDown: " +moveDown +" | ";
+        moveString = moveString + "MoveRight: " +moveRight +"\n";
+
+        String actionString;
+        actionString = "Grab: " +grab +" | ";
+        actionString = actionString +"Shoot: " +shoot +"\n";
+        actionString = actionString +"Use PowerUp: " +usePowerUp +" | ";
+        actionString = actionString +"Show Cards: " +showCards +"\n";
+        actionString = actionString +"End Action: " +end +"\n";
+
+        result = result + moveString + actionString;
+
+        return result;
+
     }
 
 }

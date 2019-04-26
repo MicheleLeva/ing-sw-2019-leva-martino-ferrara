@@ -27,9 +27,9 @@ public class Model extends Observable<Message> {
 
     private GameBoard gameBoard;
 
-    private final GameManager gameManager;
-
     private final TurnManager turnManager;
+
+    private final CurrentTurn currentTurn;
 
     public GameBoard getGameBoard(){
         return gameBoard;
@@ -88,15 +88,15 @@ public class Model extends Observable<Message> {
 
         gameBoard = new GameBoard(playersList.size(), skulls);
 
-        gameManager = new GameManager(playersList);
+        turnManager = new TurnManager(playersList);
 
-        turnManager = new TurnManager(this);
+        currentTurn = new CurrentTurn(this);
 
 
     }
 
-    public TurnManager getTurnManager(){
-        return (turnManager);
+    public CurrentTurn getCurrentTurn(){
+        return (currentTurn);
     }
 
     public void addDamage(PlayerColor playerColor){
@@ -106,8 +106,8 @@ public class Model extends Observable<Message> {
         //
     }
 
-    public GameManager getGameManager(){
-        return gameManager;
+    public TurnManager getTurnManager(){
+        return turnManager;
     }
 
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare){
@@ -291,6 +291,8 @@ public class Model extends Observable<Message> {
         printMessage(player.getPlayerColor() , toPlayer , toOthers);
     }
 
-
+    public void askTurnInput(){
+        notify (new AskTurnInputMessage())
+    }
 
 }
