@@ -18,7 +18,31 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
 
     @Override
     public void update(Message message){
-        //this method will never be called because of overloading
+        if (playerColor == message.getPlayerColor()){
+            System.out.println(message.toPlayer());
+        }
+
+        else{
+           System.out.println(message.toOthers());
+        }
+    }
+
+    public void reportError(String error){
+        System.out.println(error);
+    }
+
+    public void update(PowerUpDiscardMessage message){
+        if (playerColor == message.getPlayerColor()){
+            System.out.println(message.toPlayer());
+            discardPowerUp();
+        }
+        else
+            System.out.println(message.toOthers());
+    }
+
+    public void discardPowerUp(){
+        Scanner input = new Scanner(System.in);
+        notify (new DiscardPowerUpMove(this , input.nextInt()));
     }
 
     public void update(StartMessage message){
@@ -59,8 +83,13 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         }
     }
 
-    public void update(DrawMessage message){ //necessario?
-        printMessage(message);
+    public void update(DrawPowerUpMessage message){
+        if (this.playerColor == message.getPlayerColor()){
+            System.out.println(message.toPlayer());
+        }
+
+        else
+            System.out.println(message.toOthers());
     }
 
     public void update(GrabMessage message){
@@ -202,10 +231,4 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
 
 
     }
-
-    public void reportError(String error){
-
-    }
-
-
 }

@@ -1,6 +1,8 @@
 package model.player_package;
 
 import model.map_package.Square;
+import model.cards.*;
+import java.util.ArrayList;
 
 public class Player {
 
@@ -13,6 +15,7 @@ public class Player {
     private Score score;
     private Square position;
 
+    private boolean isFirst;
 
     public Player(String name, PlayerColor color){
         playerName = name;
@@ -81,8 +84,8 @@ public class Player {
 
     }
 
-    public void drawPowerUpCard(){
-
+    public void drawPowerUp(ArrayList<PowerUp> drawnPowerUp){
+        resources.addPowerUp(drawnPowerUp);
     }
 
     public String getPlayerName() {

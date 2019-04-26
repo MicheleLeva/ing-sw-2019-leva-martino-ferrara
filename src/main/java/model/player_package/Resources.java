@@ -10,31 +10,48 @@ public class Resources {
     private final Ammo allAmmo;
     private final Ammo availableAmmo;
     private final ArrayList<Weapon> weapons;
-    private final ArrayList<PowerUp> powerUps;
+    private final ArrayList<PowerUp> powerUp;
 
     public Resources(){
         this.allAmmo = new Ammo(2,2,2);
         this.availableAmmo = new Ammo(1,1,1);
         weapons = new ArrayList<>();
-        powerUps = new ArrayList<>();
+        powerUp = new ArrayList<>();
     }
 
 
+    public String showpowerUp(){
+        if (powerUp.isEmpty()){
+            return "No PowerUp";
+        }
+
+        String result="";
+
+        for (int i = 0; i < powerUp.size(); i++){
+            result = result + powerUp.get(i).toString();
+        }
+
+        return result;
+    }
+
+    public PowerUp removePowerUp(int index){
+        return powerUp.remove(index);
+    }
 
     public ArrayList<Weapon> showWeapons(){
         return weapons;
     }
 
-    public ArrayList<PowerUp> showPowerUps(){
-        return powerUps;
+    public ArrayList<PowerUp> getPowerUp(){
+        return powerUp;
     }
 
     public void addWeapon(Weapon weapon){
         this.weapons.add(weapon);
     }
 
-    public void addPowerUp(PowerUp powerUp){
-        this.powerUps.add(powerUp);
+    public void addPowerUp(ArrayList<PowerUp> powerUp){
+        this.powerUp.addAll(powerUp);
     }
 
     public Ammo getAllAmmo(){

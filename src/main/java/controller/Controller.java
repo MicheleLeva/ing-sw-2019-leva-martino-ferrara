@@ -1,11 +1,14 @@
 package controller;
 
 import model.Model;
-import model.TurnManager;
+import model.GameManager;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
+import model.cards.PowerUp;
 import model.events.playermove.*;
+import model.map_package.Square;
+import model.player_package.Player;
 import utils.Observer;
 
 public class Controller implements Observer<PlayerMove> {
@@ -20,6 +23,21 @@ public class Controller implements Observer<PlayerMove> {
         //this method will never be called because of overloading
     }
 
+   public void update(DiscardPowerUpMove move){
+        Player player = model.getGameManager().getPlayerFromColor(move.getView().getPlayerColor());
+        if (move.getNum() > player.getResources().getPowerUp().size() || move.getNum() <= 0){
+            move.getView().reportError("Not valid PowerUp. \nThe number must be between 1 and " +player.getResources().getPowerUp().size() +"\n");
+            move.getView().discardPowerUp();
+        }
+        else {
+            model.discardPowerUp(player , move.getNum()-1);
+        }
+
+   }
+
+    public void showPowerUp(ShowPowerUpMove move){
+        model.showPowerUp(move.getPlayerColor());
+    }
     public void update(StartMove move){
         if (move.getIndex() == 1){
             model.performShowCards(move.getPlayerColor());
@@ -33,7 +51,7 @@ public class Controller implements Observer<PlayerMove> {
     }
 
     public void update(RunMove move){
-        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+        if (!GameManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
@@ -42,7 +60,7 @@ public class Controller implements Observer<PlayerMove> {
     }
 
     public void update(GrabMove move){
-        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+        if (!GameManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
@@ -56,7 +74,7 @@ public class Controller implements Observer<PlayerMove> {
     }
 
     public void update(ShootMove move){
-        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+        if (!GameManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
@@ -70,7 +88,7 @@ public class Controller implements Observer<PlayerMove> {
     }
 
     public void update(ReloadMove move){
-        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+        if (!GameManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
@@ -88,7 +106,7 @@ public class Controller implements Observer<PlayerMove> {
     }
 
     public void update(PowerUpMove move){
-        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+        if (!GameManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
@@ -96,14 +114,14 @@ public class Controller implements Observer<PlayerMove> {
         model.performUsePowerUp(move.getPlayerColor(), move.getIndex());
     }
 
-    public void update(DrawMove move){ //serve davvero?
-        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+    /*public void update(DrawMove move){ //serve davvero?
+        if (!GameManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
 
         model.performDraw(move.getPlayerColor());
-    }
+    }*/
 
 
 }

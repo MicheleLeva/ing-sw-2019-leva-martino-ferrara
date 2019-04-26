@@ -2,6 +2,7 @@ package model.map_package;
 
 
 
+import model.cards.AmmoColor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -97,6 +98,22 @@ public class Map {
 
     public Square getSquareFromCoordinates(int x, int y){
         return map[x][y].enter();
+    }
+
+    public Square getSpawnSquare(AmmoColor ammoColor){
+
+        SquareColor squareColor = SquareColor.valueOf(ammoColor.toString());
+
+        Square result = null;
+
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 4; j++){
+                if (map[i][j].isSpawn && map[i][j].getColor() == squareColor){
+                    result = map[i][j];
+                }
+            }
+        }
+        return result;
     }
 }
 
