@@ -3,12 +3,21 @@ package model.events.message;
 import model.player_package.PlayerColor;
 
 
-public abstract class Message {
+public class Message {
 
     private PlayerColor playerColor;
     private String playerName;
 
-    public Message (PlayerColor playerColor , String playerName){
+    private  String toPlayer;
+    private  String toOthers;
+
+    public Message(PlayerColor playerColor , String toPlayer , String toOthers){
+        this.playerColor = playerColor;
+        this.toPlayer = toPlayer;
+        this.toOthers = toOthers;
+    }
+
+    protected Message (PlayerColor playerColor , String playerName){
         this.playerColor = playerColor;
         this.playerName = playerName;
     }
@@ -16,6 +25,11 @@ public abstract class Message {
     public Message(){
 
     }
+
+    public Message(PlayerColor playerColor){
+        this.playerColor = playerColor;
+    }
+
 
     public PlayerColor getPlayerColor() {
         return playerColor;
@@ -26,8 +40,12 @@ public abstract class Message {
         return playerName;
     }
 
-    public abstract String toPlayer();
+    public  String toPlayer(){
+        return toPlayer;
+    }
 
-    public abstract String toOthers();
+    public  String toOthers(){
+        return toOthers;
+    }
 
 }
