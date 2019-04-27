@@ -37,7 +37,6 @@ public class GameBoard {
         return this.killShotTrack;
     }
 
-
     public Map getMap(){
         return this.map;
     }

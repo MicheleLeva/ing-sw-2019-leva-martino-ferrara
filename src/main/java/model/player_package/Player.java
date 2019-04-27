@@ -1,10 +1,6 @@
 package model.player_package;
 
 import model.map_package.Square;
-import model.cards.*;
-import model.player_package.action.ActionTree;
-
-import java.util.ArrayList;
 
 public class Player {
 
@@ -14,12 +10,9 @@ public class Player {
     private final PlayerBoard playerBoard;
     private ActionBoard actionBoard;
 
-    private ActionTree actionTree;
-
     private Score score;
     private Square position;
 
-    private boolean isFirst;
 
     public Player(String name, PlayerColor color){
         playerName = name;
@@ -28,7 +21,6 @@ public class Player {
         playerBoard = new PlayerBoard();
         actionBoard = new ActionBoard();
         score = new Score();
-        actionTree = new ActionTree(1);
         //position = new Square();
     }
 
@@ -89,19 +81,12 @@ public class Player {
 
     }
 
-    public void drawPowerUp(ArrayList<PowerUp> drawnPowerUp){
-        resources.addPowerUp(drawnPowerUp);
+    public void drawPowerUpCard(){
+
     }
 
     public String getPlayerName() {
         return playerName;
     }
 
-    public boolean isFirst(){
-        return(isFirst);
-    }
-
-    public ActionTree getActionTree(){
-        return actionTree;
-    }
 }

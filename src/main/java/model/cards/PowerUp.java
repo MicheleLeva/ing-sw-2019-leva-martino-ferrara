@@ -8,9 +8,6 @@ public abstract class PowerUp extends Card{
     protected AmmoColor cost;
     protected String powerUpName;
 
-    public AmmoColor getCost(){
-        return cost;
-    }
 
     public void usePowerUp(PlayerColor playerColor){
 

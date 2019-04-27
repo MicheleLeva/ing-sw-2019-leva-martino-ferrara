@@ -4,12 +4,9 @@ import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.cards.AmmoCard;
-import model.cards.AmmoColor;
 import model.cards.PowerUp;
 import model.cards.Weapon;
 import model.events.message.*;
-import model.events.message.Message;
-import model.events.message.RunMessage;
 import model.map_package.Direction;
 import model.map_package.*;
 import model.player_package.Player;
@@ -27,9 +24,7 @@ public class Model extends Observable<Message> {
 
     private GameBoard gameBoard;
 
-    private final TurnManager turnManager;
-
-    private final CurrentTurn currentTurn;
+    private final TurnManager turnManager = new TurnManager();
 
     private static Model modelInstance = null;
 
@@ -110,6 +105,12 @@ public class Model extends Observable<Message> {
         //Need weapon cards
     }
 
+    public void performDraw(PlayerColor playerColor){
+        Player player = getPlayer(playerColor);
+        PowerUp drawnCard = gameBoard.getDecks().drawPowerUp();
+        player.getResources().addPowerUp(drawnCard);
+        notify(new DrawMessage(playerColor, player.getPlayerName(), drawnCard));
+    }
 
     public void performUsePowerUp(PlayerColor playerColor, int index){
         //Need powerup cards
@@ -145,16 +146,6 @@ public class Model extends Observable<Message> {
         }
 
         gameBoard = new GameBoard(playersList.size(), skulls);
-
-        turnManager = new TurnManager(playersList);
-
-        currentTurn = new CurrentTurn(this);
-
-
-    }
-
-    public CurrentTurn getCurrentTurn(){
-        return (currentTurn);
     }
 
     public void addDamage(PlayerColor playerColor){
@@ -162,10 +153,6 @@ public class Model extends Observable<Message> {
         //controllo per la granata
         //notify al player se c'è
         //
-    }
-
-    public TurnManager getTurnManager(){
-        return turnManager;
     }
 
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare){
@@ -195,7 +182,7 @@ public class Model extends Observable<Message> {
 
     }
 
-    private static Square getSquareFromDir(Square square, Direction direction) throws NullPointerException{
+    private static Square getSquareFromDir(Square square, Direction direction){
 
         MapElement side = square.getSide(direction);
 
@@ -288,69 +275,5 @@ public class Model extends Observable<Message> {
 
     }
 
-    public void drawPowerUp(Player player , int num){
-        ArrayList<PowerUp> drawnPowerUp = new ArrayList<>();
-        //Draw 'num' PowerUps
-        for (int i = 0; i < num; i++){
-            drawnPowerUp.add(gameBoard.getDecks().drawPowerUp());
-        }
-
-        player.drawPowerUp(drawnPowerUp);
-        notify(new DrawPowerUpMessage(player.getPlayerColor() , player.getPlayerName() , drawnPowerUp));
-    }
-
-    public void requestPowerUpDiscard(Player player){
-        String powerUpList = player.getResources().showpowerUp();
-        int num = player.getResources().getPowerUp().size();
-        if (num > 1)
-            notify(new PowerUpDiscardMessage(player.getPlayerColor() , player.getPlayerName() , powerUpList , num));
-        else{
-            discardPowerUp(player , 0);
-        }
-    }
-
-    public void discardPowerUp(Player player , int index){
-        PowerUp discardedPowerUp = player.getResources().removePowerUp(index);
-        gameBoard.getDecks().getDiscardedPowerUpDeck().add(discardedPowerUp);
-
-        String toPlayer = "You discarded " +discardedPowerUp.toString();
-        String toOthers = player.getName() +" discarded " +discardedPowerUp.toString();
-        printMessage(player.getPlayerColor() , toPlayer , toOthers);
-
-        spawnPlayer(player , discardedPowerUp.getCost());
-    }
-
-    public void showPowerUp(PlayerColor playerColor){
-
-    }
-
-    public void printMessage(PlayerColor playerColor , String toPlayer , String toOthers){
-        notify (new Message(playerColor , toPlayer , toOthers));
-    }
-
-    public void setPlayerPosition(Player player , Square square){
-        player.setPosition(square);
-        String toPlayer;
-        String toOthers;
-
-        toPlayer = "You just moved to " + square.toString();
-        toOthers = player.getName() +" just moved to " +square.toString();
-        printMessage(player.getPlayerColor() , toPlayer , toOthers);
-    }
-
-    public void spawnPlayer(Player player , AmmoColor ammoColor){
-        Square spawnSquare = gameBoard.getMap().getSpawnSquare(ammoColor);
-        player.setPosition(spawnSquare);
-        String toPlayer;
-        String toOthers;
-
-        toPlayer = "You just spawned at " + spawnSquare.toString();
-        toOthers = player.getName() +" just spawned at " +spawnSquare.toString();
-        printMessage(player.getPlayerColor() , toPlayer , toOthers);
-    }
-
-    public void askTurnInput(){
-        notify (new AskTurnInputMessage());
-    }
 
 }

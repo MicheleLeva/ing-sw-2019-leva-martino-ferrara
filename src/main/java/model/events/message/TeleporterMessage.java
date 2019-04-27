@@ -1,5 +1,6 @@
 package model.events.message;
 
+import model.events.message.Message;
 import model.player_package.PlayerColor;
 
 public class TeleporterMessage extends Message  {

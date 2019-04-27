@@ -24,43 +24,33 @@ public class ActionTree {
     private Node<String> lastActionPerformed = null; //Ultima azione inserita
     private Node<String> lastAction = null; //Ultima azione inserita, ma non ancora performata
 
-    private int actionCounter;
-    private int performedAction;
-
     public ActionTree(int ID){
         this.ID = ID;
-        performedAction = 0;
-        init();
+        setPath();
         parseActionTree();
     }
-
     //Imposta la destinazione del file JSON
-    private void init(){
+    private void setPath(){
         switch (ID)
         {
             case 1:
                 path = "src/resources/actionTree1.json";
-                actionCounter = 2;
                 break;
 
             case 2:
                 path = "src/resources/actionTree2.json";
-                actionCounter = 2;
                 break;
 
             case 3:
                 path = "src/resources/actionTree3.json";
-                actionCounter = 2;
                 break;
 
             case 4:
                 path = "src/resources/actionTree4.json";
-                actionCounter = 2;
                 break;
 
             case 5:
                 path = "src/resources/actionTree5.json";
-                actionCounter = 1;
                 break;
         }
     }
@@ -132,26 +122,15 @@ public class ActionTree {
         lastActionPerformed = lastAction;
     }
 
-    public String availableAction(){
-        String result = "Your available action: \n";
-        result = result +lastAction.showChildren();
-        result = result +"Action left: " +(actionCounter-performedAction) +"\n";
+    public void printAvailableAction(){
+        lastAction.printChildren();
     }
 
     public boolean isFinished(){
         return lastAction.getChildren().isEmpty(); //Andrà cambiato con lastactionperformed
     }
 
-    public void resetPerformedAction(){
-        performedAction = 0;
-    }
-
-    public boolean isEnd(){
-        return (performedAction == actionCounter);
-    }
-
-
+    /*public void printTree(){
+        root.printChildren();
+    }*/
 }
-
-
-
