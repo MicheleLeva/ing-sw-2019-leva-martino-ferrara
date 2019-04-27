@@ -9,32 +9,74 @@ import java.util.ArrayList;
 public class Resources {
     private final Ammo allAmmo;
     private final Ammo availableAmmo;
-    private final ArrayList<Weapon> weapons;
-    private final ArrayList<PowerUp> powerUps;
+    private final ArrayList<Weapon> weapon;
+    private final ArrayList<PowerUp> powerUp;
 
     public Resources(){
         this.allAmmo = new Ammo(2,2,2);
         this.availableAmmo = new Ammo(1,1,1);
-        weapons = new ArrayList<>();
-        powerUps = new ArrayList<>();
+        weapon = new ArrayList<>();
+        powerUp = new ArrayList<>();
     }
 
 
+    public String showpowerUp(){
+        if (powerUp.isEmpty()){
+            return "No PowerUp";
+        }
 
-    public ArrayList<Weapon> showWeapons(){
-        return weapons;
+        String result = "";
+
+        for (int i = 0; i < powerUp.size(); i++){
+            result = result + powerUp.get(i).toString() +" | ";
+        }
+
+        return result;
     }
 
-    public ArrayList<PowerUp> showPowerUps(){
-        return powerUps;
+    public PowerUp removePowerUp(int index){
+        return powerUp.remove(index);
+    }
+
+    public ArrayList<Weapon> getReloadableWeapon(){
+        ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
+        for (int i = 0; i< weapon.size(); i++){
+            if (!weapon.get(i).isReloaded()){
+                reloadableWeapon.add(weapon.get(i));
+            }
+        }
+
+        return reloadableWeapon;
+    }
+
+    public String showWeapon(){
+        if (weapon.isEmpty()){
+            return "No Weapon";
+        }
+
+        String result = "";
+
+        for (int i = 0; i < weapon.size(); i++){
+            result = result + weapon.get(i).toString() +" | ";
+        }
+
+        return result;
+    }
+
+    public String showAmmo(){
+        return ("Available Ammo:\n" +availableAmmo.toString());
+    }
+
+    public ArrayList<PowerUp> getPowerUp(){
+        return powerUp;
     }
 
     public void addWeapon(Weapon weapon){
-        this.weapons.add(weapon);
+        this.weapon.add(weapon);
     }
 
-    public void addPowerUp(PowerUp powerUp){
-        this.powerUps.add(powerUp);
+    public void addPowerUp(ArrayList<PowerUp> powerUp){
+        this.powerUp.addAll(powerUp);
     }
 
     public Ammo getAllAmmo(){

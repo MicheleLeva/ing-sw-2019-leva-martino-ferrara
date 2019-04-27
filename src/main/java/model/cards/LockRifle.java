@@ -9,7 +9,7 @@ import model.player_package.PlayerColor;
 import java.util.ArrayList;
 
 public class LockRifle extends Weapon {
-    /*
+
     String name;
     Ammo baseAmmo;
     Ammo optionalAmmo1;
@@ -18,7 +18,9 @@ public class LockRifle extends Weapon {
     int baseMarks;
     int optionalMarks1;
     ArrayList<Integer> visibility;
-    */
+    ArrayList<Integer> visibility1;
+    int targetsNumber[];
+
 
     public LockRifle(String name,Ammo baseAmmo,Ammo optionalAmmo1,int baseDamage,int optionalDamage1,int baseMarks,
                      int optionalMarks1,ArrayList<Integer> visibility,ArrayList<Integer> visibility1,int[] targetsNumber){
@@ -34,12 +36,24 @@ public class LockRifle extends Weapon {
         this.targetsNumber = targetsNumber;
     }
 
+    public int getBaseDamage() {
+        return baseDamage;
+    }
+
+    public int getBaseMarks() {
+        return baseMarks;
+    }
+
+    public Ammo getBaseCost(){
+        return null;
+    }
+
     public void useBaseWeapon(Player currentPlayer, ArrayList<Player> selectedTargets, Weapon weapon){
         for(Player target : selectedTargets){
             target.getPlayerBoard().getDamageCounter().addDamage(currentPlayer.getPlayerColor(),getBaseDamage());
             target.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
         }
-        currentPlayer.getResources().removeFromAvailableAmmo(weapon.getBaseCost());
+        //currentPlayer.getResources().removeFromAvailableAmmo(weapon.getBaseCost());
     }
 
     public void useOptionalWeapon1(Player currentPlayer, ArrayList<Player> selectedTargets, Weapon weapon){
@@ -47,7 +61,7 @@ public class LockRifle extends Weapon {
             target.getPlayerBoard().getDamageCounter().addDamage(currentPlayer.getPlayerColor(),getBaseDamage());
             target.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
         }
-        currentPlayer.getResources().removeFromAvailableAmmo(getOptionalCost1());
+        //currentPlayer.getResources().removeFromAvailableAmmo(getOptionalCost1());
     }
 
 

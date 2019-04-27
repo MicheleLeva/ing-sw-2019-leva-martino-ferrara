@@ -7,6 +7,8 @@ import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.events.playermove.TeleporterMove;
 import model.events.playermove.*;
+import model.player_package.Player;
+import model.player_package.action.KeyMap;
 import utils.Observer;
 
 public class Controller implements Observer<PlayerMove> {
@@ -21,6 +23,62 @@ public class Controller implements Observer<PlayerMove> {
         //this method will never be called because of overloading
     }
 
+   public void update(DiscardPowerUpMove move){
+        Player player = model.getTurnManager().getPlayerFromColor(move.getView().getPlayerColor());
+        if (move.getNum() > player.getResources().getPowerUp().size() || move.getNum() <= 0){
+            move.getView().reportError("Not valid PowerUp. \nThe number must be between 1 and " +player.getResources().getPowerUp().size() +"\n");
+            move.getView().discardPowerUp();
+        }
+        else {
+            model.discardPowerUp(player , move.getNum()-1);
+        }
+
+   }
+
+   public void update (InputMove move){
+       //Verifica input:
+       //1: input = show cards -> mostra carte
+       //2: input = usepowerUp -> verifica se ha powerUp, se può pagarli e se è il suo turno
+       //3: input == azione -> verifica se è valida e se può farla
+       char input = move.getInput();
+
+       if(input == KeyMap.getShowCards()){
+           //model.showCards(move.getPlayerColor());
+           return;
+       }
+
+       if (input == KeyMap.getUsePowerUp()){
+           return;
+       }
+
+       if (input == KeyMap.getEnd()){
+
+           if (model.getTurnManager().getCurrentPlayerColor() == move.getPlayerColor()) {
+               Player player = model.getTurnManager().getPlayerFromColor(move.getPlayerColor());
+               player.getActionTree().endAction();
+           }
+
+           else{
+               move.getView().reportError("It's not your turn.\n");
+           }
+
+           return;
+       }
+
+       move.getView().reportError("Not valid move.\n");
+
+
+
+
+
+
+
+
+   }
+
+    public void showPowerUp(ShowPowerUpMove move){
+        model.showPowerUp(move.getPlayerColor());
+    }
     public void update(StartMove move){
         if (move.getIndex() == 1){
             model.performShowCards(move.getPlayerColor());
@@ -77,14 +135,14 @@ public class Controller implements Observer<PlayerMove> {
         }
 
         try{
-            model.performReload(move.getPlayerColor(), ((ReloadMove) move).getIndex());
+            model.performReload(move.getPlayerColor(), move.getIndex());
         }
         catch(InsufficientAmmoException e){
             move.getView().reportError("Insufficient Ammo");
         }
     }
 
-    public void update(ShowCardsMove move){ //potrebbe non servire più
+    public void update(ShowCardsMove move){
         model.performShowCards(move.getPlayerColor());
     }
 
