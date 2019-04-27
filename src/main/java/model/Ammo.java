@@ -11,13 +11,15 @@ public class Ammo {
 
     public Ammo(int red, int blue, int yellow){
         ammo = new HashMap<>();
-        ammo.put(AmmoColor.RED, 0);
-        ammo.put(AmmoColor.BLUE, 0);
-        ammo.put(AmmoColor.YELLOW, 0);
-        setRed(red);
-        setBlue(blue);
-        setYellow(yellow);
+        ammo.put(AmmoColor.RED, red);
+        ammo.put(AmmoColor.BLUE, blue);
+        ammo.put(AmmoColor.YELLOW, yellow);
+    }
 
+    public Ammo(Ammo ammo){
+            addRed(ammo.getRed());
+            addBlue(ammo.getBlue());
+            addYellow(ammo.getYellow());
     }
 
 
@@ -34,17 +36,48 @@ public class Ammo {
         return ammo.get(AmmoColor.BLUE);
     }
 
-    public void setRed(int number){
-        ammo.put(AmmoColor.RED, ammo.get(AmmoColor.RED) + number);
+    public void addRed(int num){
+        int number = num + ammo.get(AmmoColor.RED);
+        ammo.put(AmmoColor.RED , number);
     }
 
-    public void setBlue(int number){
-        ammo.put(AmmoColor.BLUE, ammo.get(AmmoColor.BLUE) + number);
-
+    public void addBlue(int num){
+        int number = num + ammo.get(AmmoColor.BLUE);
+        ammo.put(AmmoColor.BLUE , number);
     }
 
-    public void setYellow(int number){
-        ammo.put(AmmoColor.YELLOW, ammo.get(AmmoColor.YELLOW) + number);
+    public void addYellow(int num){
+        int number = num + ammo.get(AmmoColor.BLUE);
+        ammo.put(AmmoColor.BLUE , number);
+    }
+
+    public void addAmmo(AmmoColor ammoColor){
+        switch(ammoColor){
+            case RED:
+                addRed(1);
+                break;
+            case BLUE:
+                addBlue(1);
+                break;
+            case YELLOW:
+                addYellow(1);
+                break;
+        }
+    }
+
+    public boolean isEnough(Ammo ammo){
+        return (getRed() >= ammo.getRed() && getBlue() >= ammo.getBlue() && getYellow() >= ammo.getYellow());
+    }
+
+    @Override
+    public String toString(){
+        String result;
+        String blue = "Blue: " +getBlue();
+        String red = "Red: " +getRed();
+        String yellow = "Yellow: " +getYellow();
+
+        result = blue +"\n" +red +"\n" +yellow;
+        return result;
     }
 
 

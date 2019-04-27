@@ -13,7 +13,9 @@ public class TurnManager { //cambiare nome in TurnManager
 
     private  static PlayerColor currentPlayerColor;
 
-    private  int currentPlayerColorIndex;
+    private  int currentPlayerIndex;
+
+    private PlayerColor lastPlayerColor; //Used for the frenzy turn
 
     private boolean gameOver = false;
 
@@ -36,24 +38,24 @@ public class TurnManager { //cambiare nome in TurnManager
 
     public TurnManager(ArrayList<Player> allPlayers){
         this.allPlayers = allPlayers;
-        currentPlayerColorIndex = 0;
+        currentPlayerIndex = 0;
         currentPlayerColor = allPlayers.get(0).getPlayerColor();
         currentTurnNumber = 1;
     }
 
     public synchronized void update(){
-        allPlayers.get(currentPlayerColorIndex).getActionTree().resetPerformedAction();
-        if (currentPlayerColorIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
+        allPlayers.get(currentPlayerIndex).getActionTree().resetPerformedAction();
+        if (currentPlayerIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
         {
             updateCurrentTurnNumber();
-            currentPlayerColorIndex = 0;
+            currentPlayerIndex = 0;
             currentPlayerColor = allPlayers.get(0).getPlayerColor();
         }
 
         else
         {
-            currentPlayerColorIndex++;
-            currentPlayerColor = allPlayers.get(currentPlayerColorIndex).getPlayerColor();
+            currentPlayerIndex++;
+            currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();
         }
     }
 
@@ -78,8 +80,15 @@ public class TurnManager { //cambiare nome in TurnManager
     }
 
     public Player getCurrentPlayer(){
-        return allPlayers.get(currentPlayerColorIndex);
+        return allPlayers.get(currentPlayerIndex);
     }
 
+    public PlayerColor getLastPlayerColor(){
+        return lastPlayerColor;
+    }
+
+    public void setGameOver(boolean gameOver){
+        this.gameOver = gameOver;
+    }
 
 }

@@ -22,13 +22,10 @@ public class StandardTurn extends Turn {
             //Mostra al giocatore le azioni disponibili
             getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), "");
             //Chiedi input
-            getModel().askTurnInput();
-            //Verifica input:
-            //1: input = show cards -> mostra carte
-            //2: input = usepowerUp -> verifica se ha powerUp, se può pagarli e se è il suo turno
-            //3: input == azione -> verifica se è valida e se può farla
-
-
+            getModel().askTurnInput(currentPlayerColor);
         }
+
+        getModel().endTurn(currentPlayer);
+
     }
 }

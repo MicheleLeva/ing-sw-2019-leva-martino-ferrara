@@ -132,7 +132,7 @@ public class ActionTree {
         lastActionPerformed = lastAction;
     }
 
-    public String availableAction(){
+    public String availableAction(){ //Modificare per mostrare tutte le combinazioni
         String result = "Your available action: \n";
         result = result +lastAction.showChildren();
         result = result +"Action left: " +(actionCounter-performedAction) +"\n";
@@ -150,6 +150,10 @@ public class ActionTree {
         return (performedAction == actionCounter);
     }
 
+    public void endAction(){
+        performedAction++;
+        lastAction = lastActionPerformed = root;
+    }
 
 }
 

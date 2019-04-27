@@ -8,6 +8,7 @@ import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.events.playermove.TeleporterMove;
 import model.events.playermove.*;
 import model.player_package.Player;
+import model.player_package.action.KeyMap;
 import utils.Observer;
 
 public class Controller implements Observer<PlayerMove> {
@@ -31,6 +32,47 @@ public class Controller implements Observer<PlayerMove> {
         else {
             model.discardPowerUp(player , move.getNum()-1);
         }
+
+   }
+
+   public void update (InputMove move){
+       //Verifica input:
+       //1: input = show cards -> mostra carte
+       //2: input = usepowerUp -> verifica se ha powerUp, se può pagarli e se è il suo turno
+       //3: input == azione -> verifica se è valida e se può farla
+       char input = move.getInput();
+
+       if(input == KeyMap.getShowCards()){
+           model.showCards(move.getPlayerColor());
+           return;
+       }
+
+       if (input == KeyMap.getUsePowerUp()){
+           return;
+       }
+
+       if (input == KeyMap.getEnd()){
+
+           if (model.getTurnManager().getCurrentPlayerColor() == move.getPlayerColor()) {
+               Player player = model.getTurnManager().getPlayerFromColor(move.getPlayerColor());
+               player.getActionTree().endAction();
+           }
+
+           else{
+               move.getView().reportError("It's not your turn.\n");
+           }
+
+           return;
+       }
+
+       move.getView().reportError("Not valid move.\n");
+
+
+
+
+
+
+
 
    }
 

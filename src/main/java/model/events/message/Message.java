@@ -17,7 +17,7 @@ public class Message {
         this.toOthers = toOthers;
     }
 
-    protected Message (PlayerColor playerColor , String playerName){
+    public Message (PlayerColor playerColor , String playerName){
         this.playerColor = playerColor;
         this.playerName = playerName;
     }

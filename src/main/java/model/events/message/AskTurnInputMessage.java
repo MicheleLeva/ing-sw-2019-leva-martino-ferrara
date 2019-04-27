@@ -9,8 +9,7 @@ public class AskTurnInputMessage extends Message {
 
     @Override
     public String toPlayer(){
-        String result;
-        result = "Choose a move: ";
+        return ("Choose a move: ");
     }
 
 

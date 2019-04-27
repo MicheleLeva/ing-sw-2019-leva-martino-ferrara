@@ -31,21 +31,6 @@ public class Model extends Observable<Message> {
 
     private final CurrentTurn currentTurn;
 
-    private static Model modelInstance = null;
-
-
-    private Model(){
-
-
-    }
-
-    public static Model getModelInstance(){
-        if(modelInstance == null)
-            modelInstance = new Model();
-        return modelInstance;
-
-    }
-
     public GameBoard getGameBoard(){
         return gameBoard;
     }
@@ -60,28 +45,9 @@ public class Model extends Observable<Message> {
         notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
     }
 
-    public void performShoot(PlayerColor shooterColor, ArrayList<PlayerColor> opponentsColor, Weapon weapon,int fireMode/*, PowerUp powerUp*/) throws IllegalOpponentException {
+    public void performShoot(PlayerColor shooterColor, PlayerColor opponentColor, Weapon weapon, PowerUp powerUp) throws IllegalOpponentException {
         //Need weapon cards
         //notify
-        ArrayList<Player> selected = new ArrayList<>();
-        Player shooter = getPlayer(shooterColor);
-        for(PlayerColor playercolor : opponentsColor )
-            selected.add(getPlayer(playercolor));
-        if (fireMode == 0)
-            weapon.useBaseWeapon(shooter,selected,weapon);
-        if (fireMode == 1)
-            weapon.useOptionalWeapon1(shooter,selected,weapon);
-        if (fireMode == 2)
-            weapon.useOptionalWeapon2(shooter,selected,weapon);
-
-        String resultString = "";
-        ArrayList<String> names= new ArrayList<>();
-        for (PlayerColor playerColor : opponentsColor)
-            names.add(getPlayer(playerColor).getName());
-        for(String name : names)
-            resultString = resultString.concat(name+", ");
-
-        notify(new ShootMessage(shooterColor,getPlayer(shooterColor).getName(),opponentsColor,resultString,weapon,gameBoard));
     }
 
     public void performGrab(PlayerColor playerColor) throws EmptySquareException {
@@ -92,18 +58,6 @@ public class Model extends Observable<Message> {
             //Need ammo cards
         }else throw new EmptySquareException();
         //notify
-    }
-
-    public void asktTeleporterCoordinates(){
-        notify(new TeleporterMessage());
-    }
-
-
-    public void performTeleporterMove(PlayerColor playerColor, int row, int column){
-        Player player = getPlayer(playerColor);
-        player.setPosition(gameBoard.getMap().getSquareFromCoordinates(row,column));
-        notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
-
     }
 
     public void performReload(PlayerColor playerColor, int index) throws InsufficientAmmoException {
@@ -117,20 +71,8 @@ public class Model extends Observable<Message> {
 
     public void performShowCards(PlayerColor playerColor){
         Player player = getPlayer(playerColor);
-        notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(),
-                player.getResources().showWeapons()));
+        //notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(), player.getResources().showWeapons()));
     }
-
-    public void performShowTargetsMove(PlayerColor playerColor,int weaponIndex,int fireModeIndex){
-
-        Player player = getPlayer(playerColor);
-        Weapon weapon = player.getResources().showWeapons().get(weaponIndex);
-        notify(new ShowTargetsMessage(weapon.getAvailableTargets(player.getPosition(),fireModeIndex),
-               weapon, weapon.getTargetsNumber()[fireModeIndex], fireModeIndex));
-
-    }
-
-
 
     public Model(ArrayList<Player> playersList, int skulls){
 
@@ -350,7 +292,7 @@ public class Model extends Observable<Message> {
     }
 
     public void askTurnInput(){
-        notify (new AskTurnInputMessage());
+        notify (new AskTurnInputMessage())
     }
 
 }

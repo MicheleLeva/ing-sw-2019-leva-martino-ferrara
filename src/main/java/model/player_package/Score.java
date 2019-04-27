@@ -4,6 +4,8 @@ public class Score {
 
     private int score;
 
+    private int numKillShot;
+
     public Score(){
         score = 0;
     }
@@ -16,6 +18,14 @@ public class Score {
     public int getScore(){
         return score;
 
+    }
+
+    public void addNumKillShot(){
+        numKillShot++;
+    }
+
+    public int getNumKillShot(){
+        return numKillShot;
     }
 
 }

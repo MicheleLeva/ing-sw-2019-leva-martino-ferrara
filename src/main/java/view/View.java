@@ -100,6 +100,18 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         notify(new ShowActionsMove(this));
     }
 
+    public void update(AskTurnInputMessage message){
+        if (playerColor == message.getPlayerColor()){
+            System.out.println(message.toPlayer());
+            input();
+        }
+    }
+
+    public void input(){
+        Scanner input = new Scanner(System.in);
+        notify(new InputMove(this , input.next().charAt(0)));
+    }
+
     public void update(PowerUpMessage message){
         printMessage(message);
         //InitMove per tornare a StartMessage?

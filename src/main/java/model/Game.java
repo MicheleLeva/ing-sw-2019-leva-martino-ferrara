@@ -1,5 +1,7 @@
 package model;
 
+import java.util.HashMap;
+
 public class Game {
 
     private final int gameID;
@@ -28,8 +30,10 @@ public class Game {
             currentTurn = model.getCurrentTurn().getTurn();
             currentTurn.notifyTurn();
             currentTurn.startTurn();
-            model.getTurnManager().update();
         }
+
+        //Calcolo punteggi
+        model.endGame();
     }
 
 
