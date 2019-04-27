@@ -13,6 +13,10 @@ public abstract class Weapon extends Card {
 
     }
 
+    public boolean isReloaded() {
+        return isReloaded;
+    }
+
     public void setIsReload(){
         isReloaded = true;
     }

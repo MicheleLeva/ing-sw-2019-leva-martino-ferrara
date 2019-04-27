@@ -43,7 +43,7 @@ public class Controller implements Observer<PlayerMove> {
        char input = move.getInput();
 
        if(input == KeyMap.getShowCards()){
-           model.showCards(move.getPlayerColor());
+           //model.showCards(move.getPlayerColor());
            return;
        }
 
@@ -119,13 +119,14 @@ public class Controller implements Observer<PlayerMove> {
             move.getView().reportError("It's not your turn");
             return;
         }
-
+        /*
         try{
-            model.performShoot(move.getPlayerColor(), move.getOpponentsColor(), move.getWeapon(),move.getFireMode()/*, move.getPowerUp()*/);
+            model.performShoot(move.getPlayerColor(), move.getWeapon(),move.getFireMode(), move.getPowerUp());
         }
         catch(IllegalOpponentException e){
             move.getView().reportError("You cannot shoot to the player");
         }
+        */
     }
 
     public void update(ReloadMove move){
@@ -170,7 +171,7 @@ public class Controller implements Observer<PlayerMove> {
             return;
         }
 
-        model.performTeleporterMove(move.getPlayerColor(),move.getRow(),move.getColumn());
+        //model.performTeleporterMove(move.getPlayerColor(),move.getRow(),move.getColumn());
     }
 
     public void update(ShowTargetsMove move){
@@ -178,6 +179,6 @@ public class Controller implements Observer<PlayerMove> {
             move.getView().reportError("It's not your turn");
             return;
         }
-        model.performShowTargetsMove(move.getPlayerColor(),move.getWeaponIndex(),move.getFireModeIndex());
+        //model.performShowTargetsMove(move.getPlayerColor(),move.getWeaponIndex(),move.getFireModeIndex());
     }
 }

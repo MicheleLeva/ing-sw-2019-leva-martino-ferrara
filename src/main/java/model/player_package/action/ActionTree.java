@@ -136,6 +136,7 @@ public class ActionTree {
         String result = "Your available action: \n";
         result = result +lastAction.showChildren();
         result = result +"Action left: " +(actionCounter-performedAction) +"\n";
+        return ""; //il metodo deve ritornare qualcosa
     }
 
     public boolean isFinished(){

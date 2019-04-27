@@ -16,7 +16,7 @@ public class FrenzyTurn extends Turn {
 
         //Start turn
 
-        getModel().endFrenzyTurn(currentPlayer);
+        //getModel().endFrenzyTurn(currentPlayer);
     }
 
     @Override

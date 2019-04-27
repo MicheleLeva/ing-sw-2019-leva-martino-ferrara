@@ -11,9 +11,9 @@ public class Teleporter extends PowerUp {
     }
 
     public void usePowerUp(PlayerColor playerColor){
-        Model model = Model.getModelInstance();
+        //Model model = Model.getModelInstance();
 
-        model.asktTeleporterCoordinates();
+        //model.asktTeleporterCoordinates();
 
 
     }
