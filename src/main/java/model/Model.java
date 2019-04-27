@@ -292,7 +292,7 @@ public class Model extends Observable<Message> {
     }
 
     public void askTurnInput(){
-        notify (new AskTurnInputMessage())
+        notify (new AskTurnInputMessage(PlayerColor.BLUE)); //playercolor blue placeholder
     }
 
 }

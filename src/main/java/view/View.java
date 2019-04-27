@@ -140,6 +140,7 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         notify(new ShowActionsMove(this));
     }
 
+    /*
     public void update (ShowCardsMessage message){
         printMessage(message);
         if (message.getType() == 1){ //vede tutte le carte
@@ -150,6 +151,7 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         }
 
     }
+    */
 
     public void printMessage(Message message){
         if (this.playerColor == message.getPlayerColor()){
@@ -179,10 +181,10 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         return playerColor;
     }
 
-    public void usePowerUp(int index){
+    public void usePowerUp(int index) {
         Scanner reader = new Scanner(System.in);
 
-        switch (index){
+        switch (index) {
             case 1: //Targeting Scope
                 //prima di chiamare questo powerup ha ricevuto la lista dei possibili giocatori a cui dare il marchio
                 System.out.println("Insert the number of the player to give a mark to:");
@@ -224,6 +226,8 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
                 //notify(new UsePowerUpMove(playeColor, this, type:5, newSquare);
                 reader.close();
                 break;
+        }
+    }
 
     public void requestShoot(){
         notify(new ShowCardsMove(playerColor,this,0));
