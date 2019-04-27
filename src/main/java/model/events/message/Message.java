@@ -13,6 +13,10 @@ public abstract class Message {
         this.playerName = playerName;
     }
 
+    public Message(){
+
+    }
+
     public PlayerColor getPlayerColor() {
         return playerColor;
     }

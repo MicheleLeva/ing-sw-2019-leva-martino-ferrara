@@ -20,7 +20,9 @@ public class Ammo {
 
     }
 
+
     public int getRed(){
+
         return ammo.get(AmmoColor.RED);
     }
 

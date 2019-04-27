@@ -1,15 +1,22 @@
 package model.cards;
 
-import model.map_package.Square;
-import model.player_package.Player;
+
+import model.Model;
+import model.player_package.PlayerColor;
 
 public class Teleporter extends PowerUp {
     public Teleporter(AmmoColor color){
+        powerUpName = "Teleporter";
         cost = color;
     }
 
-    public void usePowerUp(Player player, Square square){
-        player.setPosition(square);
+    public void usePowerUp(PlayerColor playerColor){
+        Model model = Model.getModelInstance();
+
+        model.asktTeleporterCoordinates();
+
 
     }
+
+
 }

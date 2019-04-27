@@ -21,7 +21,8 @@ public class TestDamageCounter {
         damageCounterTest.addDamage(PlayerColor.YELLOW, damage1);
         damageCounterTest.addDamage(PlayerColor.GREEN, damage2);
         assertEquals(PlayerColor.YELLOW,damageCounterTest.getDamageCounter().get(0));
-        assertEquals(PlayerColor.GREEN,damageCounterTest.getDamageCounter().get(1));
+        assertEquals(PlayerColor.YELLOW,damageCounterTest.getDamageCounter().get(3));
+        assertEquals(PlayerColor.GREEN,damageCounterTest.getDamageCounter().get(4));
         damageCounterTest.clearDamage();
         assertTrue(damageCounterTest.getDamageCounter().isEmpty());
     }

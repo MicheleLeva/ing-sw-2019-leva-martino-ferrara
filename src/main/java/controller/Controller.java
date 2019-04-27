@@ -5,6 +5,7 @@ import model.TurnManager;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
+import model.events.playermove.TeleporterMove;
 import model.events.playermove.*;
 import utils.Observer;
 
@@ -62,7 +63,7 @@ public class Controller implements Observer<PlayerMove> {
         }
 
         try{
-            model.performShoot(move.getPlayerColor(), move.getOpponentColor(), move.getWeapon(), move.getPowerUp());
+            model.performShoot(move.getPlayerColor(), move.getOpponentsColor(), move.getWeapon(),move.getFireMode()/*, move.getPowerUp()*/);
         }
         catch(IllegalOpponentException e){
             move.getView().reportError("You cannot shoot to the player");
@@ -105,5 +106,20 @@ public class Controller implements Observer<PlayerMove> {
         model.performDraw(move.getPlayerColor());
     }
 
+    public void update(TeleporterMove move){
+        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+            move.getView().reportError("It's not your turn");
+            return;
+        }
 
+        model.performTeleporterMove(move.getPlayerColor(),move.getRow(),move.getColumn());
+    }
+
+    public void update(ShowTargetsMove move){
+        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+            move.getView().reportError("It's not your turn");
+            return;
+        }
+        model.performShowTargetsMove(move.getPlayerColor(),move.getWeaponIndex(),move.getFireModeIndex());
+    }
 }

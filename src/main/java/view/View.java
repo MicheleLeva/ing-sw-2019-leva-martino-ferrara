@@ -1,11 +1,14 @@
 package view;
 
+import model.events.message.TeleporterMessage;
+import model.events.playermove.TeleporterMove;
 import model.events.message.*;
 import model.events.playermove.*;
 import model.player_package.PlayerColor;
 import utils.Observable;
 import utils.Observer;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class View extends Observable<PlayerMove> implements Observer<Message>{
@@ -50,6 +53,14 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         printMessage(message);
     }
 
+    public void update(TeleporterMessage message){
+        message.toPlayer();
+        Scanner scan = new Scanner(System.in);
+        int row = scan.nextInt();
+        int column = scan.nextInt();
+        notify(new TeleporterMove(this,row, column));
+    }
+
     public void update (ReloadMessage message){
         printMessage(message);
     }
@@ -76,6 +87,20 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         }
     }
 
+    public void update(ShowTargetsMessage message){
+        message.toPlayer();
+        message.toOthers();
+        ArrayList<PlayerColor> chosenTargets = new ArrayList<>();
+        int counter = message.getTargetsNumber();
+        while (counter>0){
+        Scanner scan = new Scanner(System.in);
+        int selected = scan.nextInt();
+        chosenTargets.add(message.getTargets().get(selected).getPlayerColor());
+        counter--;
+        }
+        notify(new ShootMove(this,chosenTargets,message.getWeapon(), message.getFireMode()));
+    }
+
     public PlayerColor getPlayerColor(){
         return playerColor;
     }
@@ -87,12 +112,16 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
     }
 
     public void requestShoot(){
-        //notify(new RequestShoot(this);
-        //Il model manda indietro le armi con gli indici.
-        //Si può fare? Come si comporta l'update in questo caso?
-        //Posso fare un update mentre la View aspetta un input del giocatore?
-        chooseMove(3);
+        notify(new ShowCardsMove(playerColor,this,0));
+
+
+        Scanner scan = new Scanner(System.in);
+        int weaponIndex = scan.nextInt();
+        int fireModeIndex = scan.nextInt();
+        notify(new ShowTargetsMove(this, weaponIndex,fireModeIndex));
     }
+
+
 
 
 
@@ -114,6 +143,7 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
                 break;
             case 3: //ShootMove
                 //ShootMove da cambiare, non può avere oggetti del model!
+
             case 4: //ReloadMove
                 System.out.println("Insert the number of the weapon to reload:");
                 int weapon = reader.nextInt();

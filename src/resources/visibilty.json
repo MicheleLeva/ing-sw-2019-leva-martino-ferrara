@@ -1,0 +1,6 @@
+{
+  "getVisiblePlayers": 0,
+  "getPlayersAtDistance": 1,
+  "getPlayersInCardinalDirections": 2,
+  "getNonVisiblePlayers": 3
+}
