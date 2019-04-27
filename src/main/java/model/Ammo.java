@@ -22,9 +22,7 @@ public class Ammo {
             addYellow(ammo.getYellow());
     }
 
-
     public int getRed(){
-
         return ammo.get(AmmoColor.RED);
     }
 

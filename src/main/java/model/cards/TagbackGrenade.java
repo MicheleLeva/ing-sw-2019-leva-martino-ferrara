@@ -6,7 +6,6 @@ import model.player_package.Player;
 public class TagbackGrenade extends PowerUp {
 
     public TagbackGrenade(AmmoColor color){
-        powerUpName = "TagbackGrenade";
         cost = color;
     }
 
