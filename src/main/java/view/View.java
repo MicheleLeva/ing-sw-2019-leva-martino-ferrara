@@ -1,14 +1,11 @@
 package view;
 
-import model.events.message.TeleporterMessage;
-import model.events.playermove.TeleporterMove;
 import model.events.message.*;
 import model.events.playermove.*;
 import model.player_package.PlayerColor;
 import utils.Observable;
 import utils.Observer;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class View extends Observable<PlayerMove> implements Observer<Message>{
@@ -117,14 +114,6 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         //InitMove per tornare a StartMessage?
     }
 
-    public void update(TeleporterMessage message){
-        message.toPlayer();
-        Scanner scan = new Scanner(System.in);
-        int row = scan.nextInt();
-        int column = scan.nextInt();
-        notify(new TeleporterMove(this,row, column));
-    }
-
     public void update (ReloadMessage message){
         printMessage(message);
         notify(new ShowActionsMove(this));
@@ -140,7 +129,6 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         notify(new ShowActionsMove(this));
     }
 
-    /*
     public void update (ShowCardsMessage message){
         printMessage(message);
         if (message.getType() == 1){ //vede tutte le carte
@@ -151,7 +139,6 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         }
 
     }
-    */
 
     public void printMessage(Message message){
         if (this.playerColor == message.getPlayerColor()){
@@ -163,28 +150,14 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         }
     }
 
-    public void update(ShowTargetsMessage message){
-        message.toPlayer();
-        message.toOthers();
-        ArrayList<PlayerColor> chosenTargets = new ArrayList<>();
-        int counter = message.getTargetsNumber();
-        while (counter>0){
-        Scanner scan = new Scanner(System.in);
-        int selected = scan.nextInt();
-        chosenTargets.add(message.getTargets().get(selected).getPlayerColor());
-        counter--;
-        }
-        notify(new ShootMove(this,chosenTargets,message.getWeapon(), message.getFireMode()));
-    }
-
     public PlayerColor getPlayerColor(){
         return playerColor;
     }
 
-    public void usePowerUp(int index) {
+    public void usePowerUp(int index){
         Scanner reader = new Scanner(System.in);
 
-        switch (index) {
+        switch (index){
             case 1: //Targeting Scope
                 //prima di chiamare questo powerup ha ricevuto la lista dei possibili giocatori a cui dare il marchio
                 System.out.println("Insert the number of the player to give a mark to:");
@@ -226,21 +199,9 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
                 //notify(new UsePowerUpMove(playeColor, this, type:5, newSquare);
                 reader.close();
                 break;
+
         }
     }
-
-    public void requestShoot(){
-        notify(new ShowCardsMove(playerColor,this,0));
-
-
-        Scanner scan = new Scanner(System.in);
-        int weaponIndex = scan.nextInt();
-        int fireModeIndex = scan.nextInt();
-        notify(new ShowTargetsMove(this, weaponIndex,fireModeIndex));
-    }
-
-
-
 
 
     public void chooseMove(int index){

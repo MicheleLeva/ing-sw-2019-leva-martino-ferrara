@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
+import org.omg.PortableServer.POA;
 import utils.Observable;
 
 public class Model extends Observable<Message> {
@@ -355,8 +356,114 @@ public class Model extends Observable<Message> {
         printMessage(player.getPlayerColor() , toPlayer , toOthers);
     }
 
-    public void askTurnInput(){
-        notify (new AskTurnInputMessage(PlayerColor.BLUE)); //playercolor blue placeholder
+    public void askTurnInput(PlayerColor playerColor){
+        notify (new AskTurnInputMessage(playerColor));
     }
 
+    public void showCards(PlayerColor playerColor){
+        Player player = turnManager.getPlayerFromColor(playerColor);
+        String powerUp = "PowerUp: " +player.getResources().showpowerUp();
+        String weapon = "Weapon: " +player.getResources().showWeapon();
+        String ammo = player.getResources().showAmmo();
+
+        String cards = powerUp +"\n" + weapon +"\n" +ammo +"\n";
+
+        notify(new Message(playerColor , cards , ""));
+
+    }
+
+    private boolean canRecharge(Player player){
+        ArrayList<Weapon> reloadableWeapon = player.getResources().getReloadableWeapon();
+        Ammo allAmmoAvailable = new Ammo(player.getResources().getAvailableAmmo());
+        ArrayList<PowerUp> powerUp = player.getResources().getPowerUp();
+
+        for (int i = 0; i < powerUp.size(); i++){
+            allAmmoAvailable.addAmmo(powerUp.get(i).getCost());
+        }
+
+        boolean result = false;
+
+        for (int i = 0; i < reloadableWeapon.size(); i++){
+            while (!result){
+                if (allAmmoAvailable.isEnough(reloadableWeapon.get(i).getReloadCost())){
+                    result = true;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public void endTurn(Player player){
+        //2 casi:
+         //1. piò ricaricare
+        //2: non può
+
+        if (canRecharge(player)){
+
+        }
+
+        String toPlayer;
+        String toOthers;
+        toPlayer = "Your turn has ended\n";
+        toOthers = player.getName() +"'s turn has ended\n";
+        notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
+        turnManager.update();
+
+    }
+
+    public void endFrenzyTurn(Player player){
+        String toPlayer;
+        String toOthers;
+        toPlayer = "Your frenzy turn has ended\n";
+        toOthers = player.getName() +"'s frenzy turn has ended\n";
+        notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
+
+        if(player.getPlayerColor() == turnManager.getLastPlayerColor()){
+            turnManager.setGameOver(true);
+        }
+
+        else{
+            turnManager.update();
+        }
+    }
+
+    public void endGame(){
+        //Calcolo classifica
+        //Notifica
+
+        ArrayList<Player> rank = new ArrayList<>();
+
+        ArrayList<Player> allPlayer = turnManager.getAllPlayers();
+
+        for (int i = 0; i < allPlayer.size(); i++){
+            addInRank(rank , allPlayer.get(i));
+        }
+
+
+    }
+
+    private void addInRank(ArrayList<Player> rank , Player player){
+        if (rank.isEmpty()){
+            rank.add(player);
+            return;
+        }
+        else{
+            for (int i = 0; i < rank.size(); i++){
+                if(player.getScore().getScore() > rank.get(i).getScore().getScore()){
+                    rank.add(i , player);
+                    return;
+                }
+
+                if(player.getScore() == rank.get(i).getScore()){
+                    if (player.getScore().getNumKillShot() > rank.get(i).getScore().getNumKillShot()){
+                        rank.add(i , player);
+                        return;
+                    }
+                }
+            }
+
+            rank.add(player);
+        }
+    }
 }

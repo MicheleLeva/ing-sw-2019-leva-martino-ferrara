@@ -22,10 +22,6 @@ public class Message {
         this.playerName = playerName;
     }
 
-    public Message(){
-
-    }
-
     public Message(PlayerColor playerColor){
         this.playerColor = playerColor;
     }

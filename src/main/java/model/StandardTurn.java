@@ -22,10 +22,10 @@ public class StandardTurn extends Turn {
             //Mostra al giocatore le azioni disponibili
             getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), "");
             //Chiedi input
-            //getModel().askTurnInput(currentPlayerColor);
+            getModel().askTurnInput(currentPlayerColor);
         }
 
-        //getModel().endTurn(currentPlayer);
+        getModel().endTurn(currentPlayer);
 
     }
 }

@@ -43,7 +43,7 @@ public class Controller implements Observer<PlayerMove> {
        char input = move.getInput();
 
        if(input == KeyMap.getShowCards()){
-           //model.showCards(move.getPlayerColor());
+           model.showCards(move.getPlayerColor());
            return;
        }
 
