@@ -33,6 +33,15 @@ public class Server {
 
     private boolean isTimerOn = false;
 
+    private Timer timer = new Timer();
+
+    public TimerTask turnTimerOff = new TimerTask() {
+        @Override
+        public void run() {
+            isTimerOn = false;
+        }
+    };
+
     /*
      * Deregistro una connessione
      */
@@ -95,17 +104,14 @@ public class Server {
     private void checkConnected(){
         if (waitingConnection.size()>2 && !isTimerOn){
             isTimerOn = true;
-            long startTime = System.currentTimeMillis();
-            long elapsedTime = 0L;
-
-            while (elapsedTime < 30*1000) {
-                if (waitingConnection.size() ==5 ){
+            timer.schedule(turnTimerOff, 1000*30);
+            while (isTimerOn) {
+                if (waitingConnection.size() == 5) {
                     createGame();
                     isTimerOn = false;
+                    timer.cancel();
                     return;
                 }
-                elapsedTime = (new Date()).getTime() - startTime;
-
             }
             createGame();
             isTimerOn = false;
@@ -119,7 +125,7 @@ public class Server {
             try {
                 Socket newSocket = serverSocket.accept(); //trovo il client
                 SocketClientConnection socketConnection = new SocketClientConnection(newSocket, this);
-                executor.submit(socketConnection); //Equivalente a new Thread(c).start();
+                executor.submit(socketConnection); //istanzio la connessione su un nuovo thread
             } catch (IOException e) {
                 System.out.println("Connection error!");
             }

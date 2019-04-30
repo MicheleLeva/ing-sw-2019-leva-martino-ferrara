@@ -13,7 +13,8 @@ public class RemoteView extends View {
             System.out.println("Received " + message);
             try{
                 String[] inputs = message.split(",");
-                //passa l'input alla view
+                //devo ricreare la playermove dall'input che arriva dal client
+                //faccio fare alla view la notify al controller
             }catch(IllegalArgumentException e){
                 clientConnection.asyncSend("Error!");
             }
