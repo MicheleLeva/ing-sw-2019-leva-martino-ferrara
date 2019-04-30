@@ -31,7 +31,6 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         System.out.println(error);
     }
 
-
     public void update(PowerUpDiscardMessage message){
         if (playerColor == message.getPlayerColor()){
             System.out.println(message.toPlayer());
@@ -130,7 +129,6 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         notify(new ShowActionsMove(this));
     }
 
-    /*
     public void update (ShowCardsMessage message){
         printMessage(message);
         if (message.getType() == 1){ //vede tutte le carte
@@ -141,7 +139,6 @@ public class View extends Observable<PlayerMove> implements Observer<Message>{
         }
 
     }
-    */
 
     public void printMessage(Message message){
         if (this.playerColor == message.getPlayerColor()){

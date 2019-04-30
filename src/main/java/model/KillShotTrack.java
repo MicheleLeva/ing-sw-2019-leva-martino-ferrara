@@ -8,7 +8,6 @@ public class KillShotTrack {
 
     private KillShotCell[] killShotTrack;
 
-    private int lastSkull;
 
     public KillShotTrack(int size){
 
@@ -17,8 +16,6 @@ public class KillShotTrack {
                 killShotTrack[i] = new KillShotCell();
             }
 
-            lastSkull = size -1;
-
     }
 
     public KillShotCell[] getKillShotTrack(){
@@ -26,13 +23,11 @@ public class KillShotTrack {
     }
 
     public void removeSkull(PlayerColor playerColor, int tokenNumber){
-        if (lastSkull > 0)
-            killShotTrack[lastSkull] = new KillShotCell(playerColor, tokenNumber);
-        lastSkull--;
-    }
-
-    public boolean isFrenzy(){
-        return(lastSkull == 0);
+        for (int i=0; i<killShotTrack.length; i++){
+            if (killShotTrack[i].isSkull()) {
+                killShotTrack[i] = new KillShotCell(playerColor, tokenNumber);
+                break;
+            }
+        }
     }
 }
-

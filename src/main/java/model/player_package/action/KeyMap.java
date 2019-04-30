@@ -125,4 +125,36 @@ public class KeyMap {
 
     }
 
+    public static boolean isShoot(char move){
+        return (shoot == move);
+    }
+
+    public static boolean isGrab(char move){
+        return (grab == move);
+    }
+
+    public static boolean isRun(char move){
+        return (move == moveRight || move == moveUp || move == moveDown || move == moveLeft);
+    }
+
+    public static boolean isRunUp(char move){
+        return (move == moveUp);
+    }
+
+    public static boolean isRunLeft(char move){
+        return (move == moveLeft);
+    }
+
+    public static boolean isRunDown(char move){
+        return (move == moveDown);
+    }
+
+    public static boolean isRunRight(char move){
+        return (move == moveRight);
+    }
+
+    public static boolean isRecharge(char move){
+        return (move == recharge);
+    }
+
 }

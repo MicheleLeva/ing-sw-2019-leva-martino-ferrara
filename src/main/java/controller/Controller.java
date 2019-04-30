@@ -6,7 +6,7 @@ import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.events.playermove.*;
-import model.player_package.Player;
+import model.player_package.*;
 import model.player_package.action.KeyMap;
 import utils.Observer;
 
@@ -64,16 +64,29 @@ public class Controller implements Observer<PlayerMove> {
            return;
        }
 
-       move.getView().reportError("Not valid move.\n");
+       try{
+           //Chiama un metodo che esegue l'azione scelta;
+           //Lancia NotExistingMoveException
+           //NoItemException
+           //IllegalSquareException
+           //...
+           ActionCreator actionCreator = new ActionCreator();
+           Action action = actionCreator.createAction(move.getInput());
+           action.perform(model , move.getPlayerColor());
+       }
+       catch(IllegalActionException e){
+           move.getView().reportError(e.getMessage());
+       }
+       catch(WallException e){
+           move.getView().reportError(e.getMessage());
+       }
+       catch(Exception e){} //Da mettere alla fine
+
+
+    }
 
 
 
-
-
-
-
-
-   }
 
     public void showPowerUp(ShowPowerUpMove move){
         model.showPowerUp(move.getPlayerColor());
@@ -120,7 +133,7 @@ public class Controller implements Observer<PlayerMove> {
         }
 
         try{
-            model.performShoot(move.getPlayerColor(), move.getOpponentColor(), move.getWeapon(), move.getPowerUp());
+            model.performShoot(move.getPlayerColor(), move.getOpponentsColor(), move.getWeapon(),move.getFireMode()/*, move.getPowerUp()*/);
         }
         catch(IllegalOpponentException e){
             move.getView().reportError("You cannot shoot to the player");
@@ -154,14 +167,29 @@ public class Controller implements Observer<PlayerMove> {
         model.performUsePowerUp(move.getPlayerColor(), move.getIndex());
     }
 
-    /*public void update(DrawMove move){ //serve davvero?
+    public void update(DrawMove move){ //serve davvero?
         if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
 
         model.performDraw(move.getPlayerColor());
-    }*/
+    }
 
+    public void update(TeleporterMove move){
+        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+            move.getView().reportError("It's not your turn");
+            return;
+        }
 
+        model.performTeleporterMove(move.getPlayerColor(),move.getRow(),move.getColumn());
+    }
+
+    public void update(ShowTargetsMove move){
+        if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
+            move.getView().reportError("It's not your turn");
+            return;
+        }
+        model.performShowTargetsMove(move.getPlayerColor(),move.getWeaponIndex(),move.getFireModeIndex());
+    }
 }

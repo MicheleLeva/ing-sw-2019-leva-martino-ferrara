@@ -1,0 +1,8 @@
+{ "name":"LOCK RIFLE",
+  "RED":0,"BLUE":2,"YELLOW": 0,
+  "RED1": 1,"BLUE1": 0,"YELLOW1": 0,
+  "MARKS": 1,
+  "MARKS1": 1,
+  "visibility": [0],
+  "alternativeVisibility":[0]
+}

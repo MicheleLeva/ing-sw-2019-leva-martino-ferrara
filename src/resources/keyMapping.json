@@ -1,11 +1,10 @@
 { "moveUp" : "W",
-  "moveLeft" :  "A",
   "moveDown" : "S",
   "moveRight" :  "D",
+  "moveLeft" :  "A",
   "grab" :  "E",
   "shoot" : "F",
   "recharge" :  "R",
-  "usePowerUp" : "U",
-  "showCards" : "M",
-  "end" : "Z"
+  "end" : "Z",
+  "usePowerUp" : "U"
 }

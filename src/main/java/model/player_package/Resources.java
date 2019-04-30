@@ -86,7 +86,7 @@ public class Resources {
     public Ammo getAvailableAmmo() {
         return availableAmmo;
     }
-    /*
+
     public void addToAllAmmo(int red, int blue, int yellow){
 
         allAmmo.setRed(red);
@@ -114,6 +114,10 @@ public class Resources {
         availableAmmo.setBlue(-blue);
         availableAmmo.setYellow(-yellow);
     }
-    */
 
+    public void removeFromAvailableAmmo(Ammo ammo){
+        availableAmmo.setRed(-ammo.getRed());
+        availableAmmo.setBlue(-ammo.getBlue());
+        availableAmmo.setYellow(-ammo.getYellow());
+    }
 }
