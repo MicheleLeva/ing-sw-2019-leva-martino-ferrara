@@ -1,6 +1,11 @@
 package model;
 
+import model.player_package.Player;
+import model.player_package.PlayerColor;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Game {
 
@@ -10,17 +15,14 @@ public class Game {
 
     private Turn currentTurn;
 
-    public Game(int gameID){
+    public Game(int gameID, Model model){
         this.gameID = gameID;
-        init();
+        init(model);
     }
 
-    private void init(){
-        //Inizializzazione, creazione model, passando lista giocatori.
-
-
-
-
+    private void init(Model model){
+        //Inizializzazione passando solo il model
+        this.model = model;
 
         startGame();
     }
