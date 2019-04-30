@@ -10,6 +10,7 @@ import model.cards.Weapon;
 import model.events.message.*;
 import model.events.message.Message;
 import model.events.message.RunMessage;
+import model.events.playermove.ShowCardsMove;
 import model.map_package.Direction;
 import model.map_package.*;
 import model.player_package.Player;
@@ -297,13 +298,15 @@ public class Model extends Observable<Message> {
 
     public void drawPowerUp(Player player , int num){
         ArrayList<PowerUp> drawnPowerUp = new ArrayList<>();
-        //Draw 'num' PowerUps
+        //Pesca 'num' powerUp
         for (int i = 0; i < num; i++){
             drawnPowerUp.add(gameBoard.getDecks().drawPowerUp());
         }
 
         player.drawPowerUp(drawnPowerUp);
+
         notify(new DrawPowerUpMessage(player.getPlayerColor() , player.getPlayerName() , drawnPowerUp));
+
     }
 
     public void requestPowerUpDiscard(Player player){
@@ -325,6 +328,12 @@ public class Model extends Observable<Message> {
         printMessage(player.getPlayerColor() , toPlayer , toOthers);
 
         spawnPlayer(player , discardedPowerUp.getCost());
+
+        if(turnManager.getCurrentTurnNumber() == 1){
+            notify();
+        }
+
+
     }
 
     public void showPowerUp(PlayerColor playerColor){
@@ -397,7 +406,7 @@ public class Model extends Observable<Message> {
     public void endTurn(Player player){
         //2 casi:
          //1. piò ricaricare
-        //2: non può
+        //2: non può      ricordarsi di notify
 
         if (canRecharge(player)){
 

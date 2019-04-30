@@ -11,7 +11,7 @@ public class StandardTurn extends Turn {
     }
 
     @Override
-    public void startTurn() {
+    public synchronized void startTurn() {
         PlayerColor currentPlayerColor = getModel().getTurnManager().getCurrentPlayerColor();
         Player currentPlayer = getModel().getTurnManager().getPlayerFromColor(currentPlayerColor);
 
@@ -26,6 +26,15 @@ public class StandardTurn extends Turn {
         }
 
         getModel().endTurn(currentPlayer);
+
+        while(!getModel().getTurnManager().isTurnEnded()){
+            try{
+                wait();
+            }
+            catch(InterruptedException e){
+
+            }
+        }
 
     }
 }

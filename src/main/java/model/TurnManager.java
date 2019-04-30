@@ -7,15 +7,15 @@ import model.player_package.PlayerColor;
 import java.util.ArrayList;
 
 
-public class TurnManager { //cambiare nome in TurnManager
+public class TurnManager {
 
-    private  ArrayList<Player> allPlayers; //In ordine
+    private  ArrayList<Player> allPlayers; //Lista di tutti i giocatori in ordine di turno
 
     private  static PlayerColor currentPlayerColor;
 
     private  int currentPlayerIndex;
 
-    private PlayerColor lastPlayerColor; //Used for the frenzy turn
+    private PlayerColor lastPlayerColor; //Ultimo giocatore della partita (usato per il turno frenesia)
 
     private boolean gameOver = false;
 
@@ -25,7 +25,11 @@ public class TurnManager { //cambiare nome in TurnManager
 
     private int currentTurnNumber;
 
-    public Player getPlayerFromColor(PlayerColor playerColor){
+    private boolean isFirstTurnEnded;
+
+    private boolean isTurnEnded;
+
+    public Player getPlayerFromColor(PlayerColor playerColor){ //Dato il colore, ritorna il giocatore corrispondente
         Player result = null;
 
         for (int i = 0; i < allPlayers.size(); i++){
@@ -49,14 +53,14 @@ public class TurnManager { //cambiare nome in TurnManager
         {
             updateCurrentTurnNumber();
             currentPlayerIndex = 0;
-            currentPlayerColor = allPlayers.get(0).getPlayerColor();
         }
 
         else
         {
             currentPlayerIndex++;
-            currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();
+
         }
+        currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();
     }
 
     public ArrayList<Player> getAllPlayers(){
@@ -91,4 +95,27 @@ public class TurnManager { //cambiare nome in TurnManager
         this.gameOver = gameOver;
     }
 
+    public boolean isFirstTurnEnded(){
+        return isFirstTurnEnded;
+    }
+
+    public boolean isTurnEnded(){
+        return isTurnEnded;
+    }
+
+    public void endFirstTurn(){
+        isFirstTurnEnded = true;
+    }
+
+    public  void startFirstTurn(){
+        isFirstTurnEnded = false;
+    }
+
+    public void endTurn(){
+        isTurnEnded = true;
+    }
+
+    public void startTurn(){
+        isTurnEnded = false;
+    }
 }

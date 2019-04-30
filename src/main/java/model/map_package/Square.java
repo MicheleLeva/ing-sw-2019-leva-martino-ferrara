@@ -25,7 +25,7 @@ public class Square implements MapElement {
         squareColumn = column;
     }
 
-
+    @Override
     public Square enter(){
         return this;
     }

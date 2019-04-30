@@ -1,5 +1,6 @@
 package model.player_package;
 
+import model.Model;
 import model.cards.Weapon;
 import model.events.playermove.PlayerMove;
 
@@ -25,4 +26,8 @@ public abstract class Action {
     protected void showAction(){
 
     }
+
+    //Cancellare tutti i metodi sopra
+
+    public abstract void perform(Model model , PlayerColor playerColor) throws Exception;
 }
