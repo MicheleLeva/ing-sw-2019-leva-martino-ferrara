@@ -5,9 +5,8 @@ import model.TurnManager;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
-import model.events.playermove.TeleporterMove;
 import model.events.playermove.*;
-import model.player_package.Player;
+import model.player_package.*;
 import model.player_package.action.KeyMap;
 import utils.Observer;
 
@@ -65,16 +64,29 @@ public class Controller implements Observer<PlayerMove> {
            return;
        }
 
-       move.getView().reportError("Not valid move.\n");
+       try{
+           //Chiama un metodo che esegue l'azione scelta;
+           //Lancia NotExistingMoveException
+           //NoItemException
+           //IllegalSquareException
+           //...
+           ActionCreator actionCreator = new ActionCreator();
+           Action action = actionCreator.createAction(move.getInput());
+           action.perform(model , move.getPlayerColor());
+       }
+       catch(IllegalActionException e){
+           move.getView().reportError(e.getMessage());
+       }
+       catch(WallException e){
+           move.getView().reportError(e.getMessage());
+       }
+       catch(Exception e){} //Da mettere alla fine
+
+
+    }
 
 
 
-
-
-
-
-
-   }
 
     public void showPowerUp(ShowPowerUpMove move){
         model.showPowerUp(move.getPlayerColor());

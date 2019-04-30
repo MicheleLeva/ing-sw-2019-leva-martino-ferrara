@@ -1,7 +1,5 @@
 package model;
 
-import java.util.HashMap;
-
 public class Game {
 
     private final int gameID;

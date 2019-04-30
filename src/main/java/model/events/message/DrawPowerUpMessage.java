@@ -13,7 +13,6 @@ public class DrawPowerUpMessage extends Message {
         this.powerUp = powerUp;
     }
 
-
     @Override
     public String toPlayer(){
         String result;

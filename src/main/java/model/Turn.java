@@ -16,12 +16,12 @@ public abstract class Turn {
         String toOthers = "";
 
         if(model.getTurnManager().getCurrentPlayer().isFirst()){
-            toPlayer = toOthers = "Turn number " + model.getTurnManager().getCurrentTurnNumber();
+            toPlayer = toOthers = "Turn number " + model.getTurnManager().getCurrentTurnNumber() +"\n";
         }
 
         String currentPlayerName = model.getTurnManager().getCurrentPlayer().getPlayerName();
-        toPlayer = toPlayer + "\nIt's your turn.\n";
-        toOthers = toOthers + "\nIt's " +currentPlayerName +"'s turn";
+        toPlayer = toPlayer + "It's your turn.\n";
+        toOthers = toOthers + "It's " +currentPlayerName +"'s turn";
 
         model.printMessage(model.getTurnManager().getCurrentPlayerColor() , toPlayer , toOthers);
     }

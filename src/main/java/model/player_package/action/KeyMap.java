@@ -28,6 +28,8 @@ public class KeyMap {
 
     private static char usePowerUp;
 
+    private static char showCards;
+
     private final static String defaultPath = "src/resources/keyMapping.json";
     //Metodo che legge la classe da File JSON
     public KeyMap(String path){
@@ -47,6 +49,7 @@ public class KeyMap {
 
             end = myJo.get("end").toString().charAt(0);
             usePowerUp = myJo.get("usePowerUp").toString().charAt(0);
+            showCards = myJo.get("showCards").toString().charAt(0);
         }
 
         catch(FileNotFoundException e ){
@@ -89,6 +92,69 @@ public class KeyMap {
 
     public static char getEnd(){
         return end;
+    }
+
+    public static char getShowCards(){
+        return showCards;
+    }
+
+    public static char getUsePowerUp(){
+        return usePowerUp;
+    }
+
+    public static String getCommandList(){
+        String result;
+        result = "Command List:\n";
+
+        String moveString;
+        moveString = "MoveUp: " +moveUp +" | ";
+        moveString = moveString + "MoveLeft: " +moveLeft +" | ";
+        moveString = moveString + "MoveDown: " +moveDown +" | ";
+        moveString = moveString + "MoveRight: " +moveRight +"\n";
+
+        String actionString;
+        actionString = "Grab: " +grab +" | ";
+        actionString = actionString +"Shoot: " +shoot +"\n";
+        actionString = actionString +"Use PowerUp: " +usePowerUp +" | ";
+        actionString = actionString +"Show Cards: " +showCards +"\n";
+        actionString = actionString +"End Action: " +end +"\n";
+
+        result = result + moveString + actionString;
+
+        return result;
+
+    }
+
+    public static boolean isShoot(char move){
+        return (shoot == move);
+    }
+
+    public static boolean isGrab(char move){
+        return (grab == move);
+    }
+
+    public static boolean isRun(char move){
+        return (move == moveRight || move == moveUp || move == moveDown || move == moveLeft);
+    }
+
+    public static boolean isRunUp(char move){
+        return (move == moveUp);
+    }
+
+    public static boolean isRunLeft(char move){
+        return (move == moveLeft);
+    }
+
+    public static boolean isRunDown(char move){
+        return (move == moveDown);
+    }
+
+    public static boolean isRunRight(char move){
+        return (move == moveRight);
+    }
+
+    public static boolean isRecharge(char move){
+        return (move == recharge);
     }
 
 }
