@@ -13,7 +13,7 @@ public class mainClass {
 
         do {
             System.out.println("Mosse disponibili:");
-            actionTree.printAvailableAction();
+            //actionTree.printAvailableAction();
             System.out.println("\nInserire mossa.");
             input = tastiera.nextLine().charAt(0);
 

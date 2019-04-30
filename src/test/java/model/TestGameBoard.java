@@ -3,6 +3,7 @@ package model;
 import model.GameBoard;
 import model.player_package.PlayerColor;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -25,7 +26,7 @@ public class TestGameBoard {
 
     }
 
-    @Test
+    @Test @Ignore
     public void testGameBoardActions(){
         gameBoardTest.addToken(PlayerColor.YELLOW, 2);
         assertEquals(PlayerColor.YELLOW, gameBoardTest.getKillShotTrack().getKillShotTrack()[0].getTokenColor());
