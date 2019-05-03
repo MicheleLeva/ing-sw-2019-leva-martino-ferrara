@@ -1,5 +1,7 @@
 package model.player_package;
 
+import model.Model;
+
 public class RunAndGrab extends Action{
 
     private Player player;
@@ -8,6 +10,14 @@ public class RunAndGrab extends Action{
 
     @Override
     public void showAction(){
+
+    }
+    //
+    //
+    //
+    //added temporarely to avoid error
+    @Override
+    public void perform(Model model, PlayerColor playerColor) throws Exception {
 
     }
 

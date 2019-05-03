@@ -32,8 +32,8 @@ public class PlayerBoard {
         damageCounter.addDamage(color);
 
     }
-
+*/
     public void removeHighestPoint(){
         points.removeHighestPoint();
-   }*/
+   }
 }

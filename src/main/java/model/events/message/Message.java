@@ -26,6 +26,9 @@ public class Message {
         this.playerColor = playerColor;
     }
 
+    public Message() {
+    }
+
 
     public PlayerColor getPlayerColor() {
         return playerColor;

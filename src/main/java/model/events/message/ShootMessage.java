@@ -4,24 +4,26 @@ import model.cards.Weapon;
 import model.GameBoard;
 import model.player_package.PlayerColor;
 
+import java.util.ArrayList;
+
 public class ShootMessage extends Message {
 
     private final Weapon weapon;
-    private final PlayerColor opponentColor;
+    private final ArrayList<PlayerColor> opponentsColor;
     private final String opponentName;
 
-    public ShootMessage(PlayerColor shooterColor , String shooterName , PlayerColor opponentColor , String opponentName , Weapon weapon , GameBoard gameBoard){
+    public ShootMessage(PlayerColor shooterColor , String shooterName , ArrayList<PlayerColor> opponentColor , String opponentName , Weapon weapon , GameBoard gameBoard){
         super(shooterColor , shooterName);
         this.weapon = weapon;
-        this.opponentColor = opponentColor;
+        this.opponentsColor = opponentColor;
         this.opponentName = opponentName;
     }
     public Weapon getWeapon() {
         return weapon;
     }
 
-    public PlayerColor getOpponentColor() {
-        return opponentColor;
+    public ArrayList<PlayerColor> getOpponentColor() {
+        return opponentsColor;
     }
 
     public String getOpponentName(){

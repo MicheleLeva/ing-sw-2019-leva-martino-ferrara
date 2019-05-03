@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class KillShotTrack {
 
     private KillShotCell[] killShotTrack;
+    private boolean isFrenzy;
 
 
     public KillShotTrack(int size){
@@ -29,5 +30,9 @@ public class KillShotTrack {
                 break;
             }
         }
+    }
+
+    public boolean isFrenzy(){
+        return this.isFrenzy;
     }
 }

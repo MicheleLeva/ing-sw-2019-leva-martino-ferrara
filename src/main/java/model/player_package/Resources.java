@@ -63,6 +63,16 @@ public class Resources {
         return result;
     }
 
+    public ArrayList<Weapon> showWeapons(){
+        ArrayList<Weapon> weapons = new ArrayList<>(weapon);
+        return weapons;
+    }
+
+    public ArrayList<PowerUp> showPowerUps(){
+        ArrayList<PowerUp> powerUps = new ArrayList<>(powerUp);
+        return powerUps;
+    }
+
     public String showAmmo(){
         return ("Available Ammo:\n" +availableAmmo.toString());
     }

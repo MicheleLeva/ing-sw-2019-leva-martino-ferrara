@@ -63,11 +63,11 @@ public class Run extends Action {
             dir = Direction.WEST;
         }
 
-        Square newSquare = currentSquare.getSide(dir);
+        MapElement newSquare = currentSquare.getSide(dir).enter();
 
         if (newSquare == null) throw new WallException();
 
-        currentPlayer.setPosition(newSquare);
+        currentPlayer.setPosition((Square)newSquare);
         //Stampa messaggi
         String toPlayer = "You moved to " +newSquare.toString();
         String toOthers = currentPlayer.getName() +" moved to " +newSquare.toString();

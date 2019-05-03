@@ -17,6 +17,19 @@ public class Decks {
 
     private Random rand = new Random();
 
+    private static Decks decksInstance = null;
+
+
+
+
+    public static Decks getDecksInstance(){
+        if(decksInstance == null)
+            decksInstance = new Decks();
+        return decksInstance;
+
+    }
+
+
 
     public Decks(){
         weaponsDeck = new ArrayList<>();

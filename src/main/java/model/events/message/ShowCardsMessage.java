@@ -10,11 +10,16 @@ public class ShowCardsMessage extends Message{
 
     private ArrayList<PowerUp> powerUps;
     private ArrayList<Weapon> weapons;
+    private int Type;
 
     public ShowCardsMessage(PlayerColor playerColor , String playerName, ArrayList<PowerUp> powerUps, ArrayList<Weapon> weapons){
         super(playerColor, playerName);
         this.powerUps = powerUps;
         this.weapons = weapons;
+    }
+
+    public int getType(){
+        return this.Type;
     }
 
     @Override

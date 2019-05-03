@@ -34,6 +34,8 @@ public class Controller implements Observer<PlayerMove> {
 
    }
 
+//missing InputMove
+/*
    public void update (InputMove move){
        //Verifica input:
        //1: input = show cards -> mostra carte
@@ -84,7 +86,7 @@ public class Controller implements Observer<PlayerMove> {
 
 
     }
-
+*/
 
 
 
@@ -166,7 +168,7 @@ public class Controller implements Observer<PlayerMove> {
 
         model.performUsePowerUp(move.getPlayerColor(), move.getIndex());
     }
-
+/*
     public void update(DrawMove move){ //serve davvero?
         if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
@@ -175,7 +177,7 @@ public class Controller implements Observer<PlayerMove> {
 
         model.performDraw(move.getPlayerColor());
     }
-
+*/
     public void update(TeleporterMove move){
         if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
@@ -192,4 +194,58 @@ public class Controller implements Observer<PlayerMove> {
         }
         model.performShowTargetsMove(move.getPlayerColor(),move.getWeaponIndex(),move.getFireModeIndex());
     }
+
+    //missing InputMove
+/*
+   public void update (InputMove move){
+       //Verifica input:
+       //1: input = show cards -> mostra carte
+       //2: input = usepowerUp -> verifica se ha powerUp, se può pagarli e se è il suo turno
+       //3: input == azione -> verifica se è valida e se può farla
+       char input = move.getInput();
+
+       if(input == KeyMap.getShowCards()){
+           model.showCards(move.getPlayerColor());
+           return;
+       }
+
+       if (input == KeyMap.getUsePowerUp()){
+           return;
+       }
+
+       if (input == KeyMap.getEnd()){
+
+           if (model.getTurnManager().getCurrentPlayerColor() == move.getPlayerColor()) {
+               Player player = model.getTurnManager().getPlayerFromColor(move.getPlayerColor());
+               player.getActionTree().endAction();
+           }
+
+           else{
+               move.getView().reportError("It's not your turn.\n");
+           }
+
+           return;
+       }
+
+       try{
+           //Chiama un metodo che esegue l'azione scelta;
+           //Lancia NotExistingMoveException
+           //NoItemException
+           //IllegalSquareException
+           //...
+           ActionCreator actionCreator = new ActionCreator();
+           Action action = actionCreator.createAction(move.getInput());
+           action.perform(model , move.getPlayerColor());
+       }
+       catch(IllegalActionException e){
+           move.getView().reportError(e.getMessage());
+       }
+       catch(WallException e){
+           move.getView().reportError(e.getMessage());
+       }
+       catch(Exception e){} //Da mettere alla fine
+
+
+    }
+*/
 }

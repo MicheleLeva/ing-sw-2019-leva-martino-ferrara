@@ -134,7 +134,10 @@ public class ActionTree {
 
     public String availableAction(){ //Modificare per mostrare tutte le combinazioni
         String result = "Your available action: \n";
-        result = result +lastAction.showChildren();
+ ////////////
+ ////////////       //showChildren() method not available
+ ///////////       //result = result +lastAction.showChildren();
+ ///////////
         result = result +"Action left: " +(actionCounter-performedAction) +"\n";
         return result;
     }

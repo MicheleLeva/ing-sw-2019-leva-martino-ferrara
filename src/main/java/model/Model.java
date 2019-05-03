@@ -25,13 +25,13 @@ import utils.Observable;
 
 public class Model extends Observable<Message> {
 
-    private final HashMap<PlayerColor , Player> players = new HashMap<>();
+    private final HashMap<PlayerColor, Player> players = new HashMap<>();
 
     private GameBoard gameBoard;
 
-    private final TurnManager turnManager;
+    private final TurnManager turnManager = null;
 
-    private final CurrentTurn currentTurn;
+    private final CurrentTurn currentTurn = null;
 
     private static Model modelInstance = null;
 
@@ -111,14 +111,14 @@ public class Model extends Observable<Message> {
     public void performReload(PlayerColor playerColor, int index) throws InsufficientAmmoException {
         //Need weapon cards
     }
-
+/*
     public void performDraw(PlayerColor playerColor){
         Player player = getPlayer(playerColor);
         PowerUp drawnCard = gameBoard.getDecks().drawPowerUp();
         player.getResources().addPowerUp(drawnCard);
         notify(new DrawMessage(playerColor, player.getPlayerName(), drawnCard));
     }
-
+*/
     public void performUsePowerUp(PlayerColor playerColor, int index){
         //Need powerup cards
     }
@@ -154,9 +154,9 @@ public class Model extends Observable<Message> {
 
         gameBoard = new GameBoard(playersList.size(), skulls);
 
-        turnManager = new TurnManager(playersList);
+        //turnManager = new TurnManager(playersList);
 
-        currentTurn = new CurrentTurn(this);
+        //currentTurn = new CurrentTurn(this);
 
 
     }
@@ -391,10 +391,10 @@ public class Model extends Observable<Message> {
         }
 
         boolean result = false;
-
+        //controlla nel ciclo while se getBaseCost è corretto
         for (int i = 0; i < reloadableWeapon.size(); i++){
             while (!result){
-                if (allAmmoAvailable.isEnough(reloadableWeapon.get(i).getReloadCost())){
+                if (allAmmoAvailable.isEnough(reloadableWeapon.get(i).getBaseCost())){
                     result = true;
                 }
             }

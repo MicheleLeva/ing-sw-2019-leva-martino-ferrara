@@ -34,6 +34,20 @@ public class Ammo {
         return ammo.get(AmmoColor.BLUE);
     }
 
+    public void setRed(int number){
+        ammo.put(AmmoColor.RED, ammo.get(AmmoColor.RED) + number);
+    }
+
+    public void setBlue(int number){
+        ammo.put(AmmoColor.BLUE, ammo.get(AmmoColor.BLUE) + number);
+
+    }
+
+    public void setYellow(int number){
+        ammo.put(AmmoColor.YELLOW, ammo.get(AmmoColor.YELLOW) + number);
+    }
+
+
     public void addRed(int num){
         int number = num + ammo.get(AmmoColor.RED);
         ammo.put(AmmoColor.RED , number);

@@ -30,9 +30,9 @@ public class TestResources {
 
     }
 
-    @Test @Ignore
+    @Test
     public void testAmmoModifiers(){
-        /*
+
         resourcesTest.addToAllAmmo(1,1,1);
         resourcesTest.addToAvailableAmmo(1,1,1);
 
@@ -56,7 +56,7 @@ public class TestResources {
         assertEquals(0,resourcesTest.getAvailableAmmo().getYellow());
 
 
-         */
+
 
     }
 }

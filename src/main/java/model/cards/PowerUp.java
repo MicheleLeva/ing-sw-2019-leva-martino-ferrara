@@ -11,4 +11,8 @@ public abstract class PowerUp extends Card{
 
     }
 
+    public AmmoColor getCost(){
+        return cost;
+    }
+
 }
