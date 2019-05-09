@@ -9,13 +9,18 @@ import model.events.playermove.*;
 import model.player_package.*;
 import model.player_package.action.KeyMap;
 import utils.Observer;
+import utils.ViewObserver;
 
-public class Controller implements Observer<PlayerMove> {
+public class Controller implements ViewObserver {
 
     private final Model model;
 
     public Controller(Model model){
         this.model = model;
+    }
+
+    public Model getModel(){
+        return model;
     }
 
     public void update(PlayerMove move){
