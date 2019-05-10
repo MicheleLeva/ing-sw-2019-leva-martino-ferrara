@@ -90,6 +90,12 @@ public class KeyMap {
         }
     }
 
+    public static boolean isValid(char move){
+        return(move == moveUp || move == moveDown || move == moveRight || move == moveLeft ||
+                move == grab || move == shoot || move == recharge ||
+                move == end || move == usePowerUp);
+    }
+
     public static char getEnd(){
         return end;
     }
@@ -155,6 +161,14 @@ public class KeyMap {
 
     public static boolean isRecharge(char move){
         return (move == recharge);
+    }
+
+    public static boolean isUsePowerUp(char move){
+        return (move == usePowerUp);
+    }
+
+    public static boolean isEnd(char move){
+        return (move == end);
     }
 
 }

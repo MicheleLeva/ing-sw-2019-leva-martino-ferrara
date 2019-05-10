@@ -5,6 +5,7 @@ import model.adrenaline_exceptions.WallException;
 import model.map_package.Direction;
 import model.map_package.MapElement;
 import model.map_package.Square;
+import model.map_package.Wall;
 import model.player_package.action.KeyMap;
 
 public class Run extends Action {
@@ -44,7 +45,7 @@ public class Run extends Action {
     public void perform(Model model , PlayerColor playerColor) throws WallException{
         Player currentPlayer = model.getPlayer(playerColor);
         Square currentSquare = currentPlayer.getPosition();
-        MapElement mapElement;
+
         Direction dir;
 
         if(KeyMap.isRunUp(direction)){
@@ -52,7 +53,7 @@ public class Run extends Action {
         }
 
         else if (KeyMap.isRunLeft(direction)){
-            dir = Direction.EAST;
+            dir = Direction.WEST;
         }
 
         else if(KeyMap.isRunDown(direction)){
@@ -60,19 +61,18 @@ public class Run extends Action {
         }
 
         else{
-            dir = Direction.WEST;
+            dir = Direction.EAST;
         }
 
-        MapElement newSquare = currentSquare.getSide(dir).enter();
+        Square newSquare = currentSquare.getSide(dir);
 
-        if (newSquare == null) throw new WallException();
-
-        currentPlayer.setPosition((Square)newSquare);
-        //Stampa messaggi
-        String toPlayer = "You moved to " +newSquare.toString();
-        String toOthers = currentPlayer.getName() +" moved to " +newSquare.toString();
-        model.printMessage(playerColor , toPlayer , toOthers);
-
-
+        if (newSquare == null){
+            throw new WallException();
+        }
+        else{
+            currentPlayer.setPosition(newSquare);
+            model.updateRun();
+            //richiedi di inserire nuova azione.
+        }
     }
 }

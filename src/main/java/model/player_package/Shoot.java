@@ -11,7 +11,7 @@ public class Shoot extends Action {
     }
     //implement method
     @Override
-    public void perform(Model model, PlayerColor playerColor) throws Exception {
+    public void perform(Model model, PlayerColor playerColor) {
 
     }
 

@@ -21,9 +21,10 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 
 import org.omg.PortableServer.POA;
+import utils.ControllerObservable;
 import utils.Observable;
 
-public class Model extends Observable<Message> {
+public class Model extends ControllerObservable {
 
     private final HashMap<PlayerColor, Player> players = new HashMap<>();
 
@@ -35,6 +36,7 @@ public class Model extends Observable<Message> {
 
     private static Model modelInstance = null;
 
+    private GameNotifier gameNotifier;
 
     private Model(){
 
@@ -474,5 +476,10 @@ public class Model extends Observable<Message> {
 
             rank.add(player);
         }
+    }
+
+    public void updateRun(){
+        Player currentPlayer = turnManager.getCurrentPlayer();
+        gameNotifier.notifyRun(currentPlayer.getPlayerName() , currentPlayer.getPosition().toString());
     }
 }

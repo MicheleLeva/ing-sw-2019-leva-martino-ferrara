@@ -4,7 +4,7 @@ import model.adrenaline_exceptions.IllegalActionException;
 import model.player_package.action.KeyMap;
 
 public class ActionCreator {
-    public Action createAction(char move) throws IllegalActionException{
+    public static Action createAction(char move) {
         if (KeyMap.isShoot(move)){
             return new Shoot();
         }
@@ -21,6 +21,10 @@ public class ActionCreator {
             return new Recharge();
         }
 
-        throw new IllegalActionException();
+        if (KeyMap.isUsePowerUp(move)){
+            return new UsePowerUp();
+        }
+
+        else return new EndAction();
     }
 }

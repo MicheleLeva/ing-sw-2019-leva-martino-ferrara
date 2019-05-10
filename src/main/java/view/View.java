@@ -3,12 +3,12 @@ package view;
 import model.events.message.*;
 import model.events.playermove.*;
 import model.player_package.PlayerColor;
-import utils.Observable;
-import utils.Observer;
+import utils.ControllerObservable;
+import utils.ModelObserver;
 
 import java.util.Scanner;
 
-public class View extends Observable<PlayerMove> implements Observer<Message>{
+public class View extends ControllerObservable implements ModelObserver{
 
     private final PlayerColor playerColor;
 

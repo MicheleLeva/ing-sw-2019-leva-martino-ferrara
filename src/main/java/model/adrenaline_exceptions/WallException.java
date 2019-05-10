@@ -5,6 +5,6 @@ public class WallException extends Exception {
         super(message);
     }
     public WallException(){
-        super("You cannot enter a wall");
+        super("You cannot enter a wall.\n");
     }
 }

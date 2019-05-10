@@ -6,6 +6,6 @@ public class EmptySquareException extends Exception {
     }
 
     public EmptySquareException(){
-        super("This square is empty");
+        super("You cannot grab from an empty square.\n");
     }
 }

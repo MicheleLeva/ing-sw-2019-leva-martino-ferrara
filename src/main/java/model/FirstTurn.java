@@ -18,15 +18,15 @@ public class FirstTurn extends StandardTurn{
 
         getModel().drawPowerUp(currentPlayer , 2);
         getModel().requestPowerUpDiscard(currentPlayer);
+        //getModel().getTurnManager().update();
 
         while(!getModel().getTurnManager().isFirstTurnEnded()){
-            try{
-                wait();
-            }
-            catch(InterruptedException e){
-            }
+
         }
+
 
         super.startTurn();
     }
+
+
 }
