@@ -565,4 +565,32 @@ public class Model extends ControllerObservable {
         PlayerColor opponentColor = opponent.getPlayerColor();
         gameNotifier.notifyNewton(playerName , opponentName , playerColor , opponentColor , newSquare);
     }
+
+    public void discardAmmo(Square square){
+        AmmoCard discardedAmmo = square.getAmmoCard();
+        square.removeAmmoCard();
+        gameBoard.getDecks().getDiscardedAmmoCardDeck().add(discardedAmmo);
+    }
+
+    public void drawPowerUp(PlayerColor playerColor , int num){
+        Player currentPlayer = getPlayer(playerColor);
+        ArrayList<PowerUp> drawnPowerUp = new ArrayList<>();
+        String powerUpList = "";
+        for (int i = 0; i < num; i++){
+            PowerUp powerUp = gameBoard.getDecks().drawPowerUp();
+            drawnPowerUp.add(powerUp);
+            powerUpList = powerUpList +powerUp.toString() +" ";
+        }
+        currentPlayer.getResources().addPowerUp(drawnPowerUp);
+
+
+        gameNotifier.notifyDrawPowerUp(playerColor , currentPlayer.getName() , powerUpList , num);
+
+    }
+
+    public void addAmmo(PlayerColor playerColor , Ammo ammo){
+        Player currentPlayer = getPlayer(playerColor);
+        currentPlayer.getResources().addAmmo(ammo);
+        gameNotifier.notifyDrawAmmo(playerColor , currentPlayer.getPlayerName() , ammo.toString());
+    }
 }

@@ -53,13 +53,12 @@ public class Decks {
     public PowerUp drawPowerUp(){
 
         if(powerUpDeck.size() > 0){
-        return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
+            return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
         }
         else
             powerUpDeck = new ArrayList(discardedPowerUpDeck);
-        discardedPowerUpDeck.clear();
-        return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
-
+            discardedPowerUpDeck.clear();
+            return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
     }
 
     public AmmoCard drawAmmoCard(){

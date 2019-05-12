@@ -4,6 +4,7 @@ import model.Model;
 import model.Turn;
 import model.TurnManager;
 import model.adrenaline_exceptions.EmptySquareException;
+import model.adrenaline_exceptions.MaxAmmoException;
 import model.adrenaline_exceptions.NoPowerUpException;
 import model.adrenaline_exceptions.WallException;
 import model.events.ActionEvent;
@@ -59,6 +60,9 @@ public class ActionController extends Controller implements ActionObserver {
         catch(EmptySquareException | WallException | NoPowerUpException e){
             view.reportError(e.getMessage());
             getModel().chooseAction(playerColor);
+        }
+        catch(MaxAmmoException e){
+            view.reportError(e.getMessage());
         }
         catch(Exception e){
         }

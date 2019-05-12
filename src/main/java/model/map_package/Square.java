@@ -98,4 +98,8 @@ public class Square implements MapElement {
     public int getID(){
         return ID;
     }
+
+    public void removeAmmoCard(){
+        ammo = null;
+    }
 }

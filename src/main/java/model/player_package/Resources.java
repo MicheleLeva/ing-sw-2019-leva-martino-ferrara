@@ -130,4 +130,9 @@ public class Resources {
         availableAmmo.setBlue(-ammo.getBlue());
         availableAmmo.setYellow(-ammo.getYellow());
     }
+
+    public void addAmmo(Ammo ammo){
+        allAmmo.remove(ammo);
+        availableAmmo.add(ammo);
+    }
 }

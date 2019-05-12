@@ -59,6 +59,41 @@ public class GameNotifier extends GameNotify {
                }
             }
         }
+
+    }
+    public void notifyDrawPowerUp(PlayerColor playerColor ,String playerName , String powerUpList , int num){
+        String toPlayer = "You drew: " +powerUpList +".\n";
+        String toOthers = playerName +" drew " +num +" powerup";
+        if(num > 1){
+            toOthers = toOthers +"s";
+        }
+        toOthers = toOthers +".\n";
+
+        for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
+            PlayerColor currentPlayerColor = entry.getKey();
+            if(currentPlayerColor == playerColor){
+                entry.getValue().update(new GenericMessage(toPlayer));
+            }
+            else{
+                entry.getValue().update(new GenericMessage(toOthers));
+            }
+        }
+    }
+
+    public void notifyDrawAmmo(PlayerColor playerColor , String playerName , String ammo){
+        String toPlayer = "You drew: \n";
+        String toOthers = playerName +" drew: \n";
+        toPlayer = toPlayer + ammo +".\n";
+        toOthers = toOthers +ammo +".\n";
+        for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
+            PlayerColor currentPlayerColor = entry.getKey();
+            if(currentPlayerColor == playerColor){
+                entry.getValue().update(new GenericMessage(toPlayer));
+            }
+            else{
+                entry.getValue().update(new GenericMessage(toOthers));
+            }
+        }
     }
 
 
