@@ -511,7 +511,8 @@ public class Model extends ControllerObservable {
 
     public void updateRun(){
         Player currentPlayer = turnManager.getCurrentPlayer();
-        gameNotifier.notifyRun(currentPlayer.getPlayerName() , currentPlayer.getPosition().toString());
+        PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
+        gameNotifier.notifyRun(currentPlayerColor , currentPlayer.getPlayerName() , currentPlayer.getPosition().toString());
     }
 
     public void updateAction(){

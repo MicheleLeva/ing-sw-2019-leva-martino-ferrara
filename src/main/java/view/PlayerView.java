@@ -18,7 +18,7 @@ public class PlayerView {
         actionView = new ActionView(playerColor , this);
         weaponView = new WeaponView(playerColor , this);
         powerUpView = new PowerUpView(playerColor , this);
-        gameView = new GameView(playerColor);
+        gameView = new GameView(playerColor , this);
     }
 
     public ActionView getActionView() {

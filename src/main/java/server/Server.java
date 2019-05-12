@@ -90,7 +90,7 @@ public class Server {
         Controller controller = new Controller(model);
 
         for (View v : playerViews){
-            model.register(v);
+            //model.register(v);
             v.register(controller);
         }
 

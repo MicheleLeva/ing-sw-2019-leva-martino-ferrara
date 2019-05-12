@@ -4,8 +4,7 @@ import model.player_package.PlayerColor;
 
 public class Teleporter extends PowerUp {
     public Teleporter(Model model , AmmoColor color){
-        super(model);
-        cost = color;
+        super(model , color);
     }
     @Override
     public void usePowerUp(PlayerColor playerColor){

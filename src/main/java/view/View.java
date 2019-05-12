@@ -42,7 +42,7 @@ public class View extends ControllerObservable implements ModelObserver{
 
     public void discardPowerUp(){
         Scanner input = new Scanner(System.in);
-        notify (new DiscardPowerUpMove(this , input.nextInt()));
+        //notify (new DiscardPowerUpMove(this , input.nextInt()));
     }
 
     public void update(StartMessage message){
@@ -51,13 +51,13 @@ public class View extends ControllerObservable implements ModelObserver{
         Scanner reader = new Scanner(System.in);
         int index = reader.nextInt();
         if (index == 1){ //chiedi di vedere tutte le carte, forse non necessario?
-            notify(new ShowCardsMove(playerColor, this, 1));
+            //notify(new ShowCardsMove(playerColor, this, 1));
         }
         if (index == 2){ //chiedi le azioni
-            notify(new ShowActionsMove(this));
+            //notify(new ShowActionsMove(this));
         }
         if (index == 3){ //chiedi i powerup
-            notify((new ShowCardsMove(playerColor, this, 2)));
+            //notify((new ShowCardsMove(playerColor, this, 2)));
         }
     }
 
@@ -94,7 +94,7 @@ public class View extends ControllerObservable implements ModelObserver{
 
     public void update(GrabMessage message){
         printMessage(message);
-        notify(new ShowActionsMove(this));
+        //notify(new ShowActionsMove(this));
     }
 
     public void update(AskTurnInputMessage message){
@@ -106,7 +106,7 @@ public class View extends ControllerObservable implements ModelObserver{
 
     public void input(){
         Scanner input = new Scanner(System.in);
-        notify(new InputMove(this , input.next().charAt(0)));
+        //notify(new InputMove(this , input.next().charAt(0)));
     }
 
     public void update(PowerUpMessage message){
@@ -116,17 +116,17 @@ public class View extends ControllerObservable implements ModelObserver{
 
     public void update (ReloadMessage message){
         printMessage(message);
-        notify(new ShowActionsMove(this));
+        //notify(new ShowActionsMove(this));
     }
 
     public void update (RunMessage message){
         printMessage(message);
-        notify(new ShowActionsMove(this));
+        //notify(new ShowActionsMove(this));
     }
 
     public void update (ShootMessage message){
         printMessage(message);
-        notify(new ShowActionsMove(this));
+        //notify(new ShowActionsMove(this));
     }
 
     public void update (ShowCardsMessage message){
@@ -214,28 +214,28 @@ public class View extends ControllerObservable implements ModelObserver{
                 int x = reader.nextInt();
                 System.out.println("Insert the chosen y coordinate:");
                 int y = reader.nextInt();
-                notify(new RunMove(this, x, y));
+                //notify(new RunMove(this, x, y));
                 reader.close();
                 break;
             case 2: //GrabMove
-                notify((new GrabMove(this)));
+                //notify((new GrabMove(this)));
                 break;
             case 3: //ShootMove
                 //ShootMove da cambiare, non può avere oggetti del model!
             case 4: //ReloadMove
                 System.out.println("Insert the number of the weapon to reload:");
                 int weapon = reader.nextInt();
-                notify(new ReloadMove(this, weapon));
+                //notify(new ReloadMove(this, weapon));
                 reader.close();
                 break;
             case 5: //PowerUpMove
                 System.out.println("Insert the number of the Power Up to use:");
                 int powerUp = reader.nextInt();
-                notify(new ReloadMove(this, powerUp));
+                //notify(new ReloadMove(this, powerUp));
                 reader.close();
                 break;
             case 6: //DrawMove (Il giocatore può decidere di pescare carte? Caso >3 carte in mano?)
-                notify((new DrawMove(playerColor, this)));
+                //notify((new DrawMove(playerColor, this)));
                 break;
         }
 

@@ -133,19 +133,19 @@ public class Controller implements ViewObserver {
         }
     }
 
-    public void update(ShootMove move){
+    /*public void update(ShootMove move){
         if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
 
         try{
-            model.performShoot(move.getPlayerColor(), move.getOpponentsColor(), move.getWeapon(),move.getFireMode()/*, move.getPowerUp()*/);
+            //model.performShoot(move.getPlayerColor(), move.getOpponentsColor(), move.getWeapon(),move.getFireMode() , move.getPowerUp());
         }
         catch(IllegalOpponentException e){
             move.getView().reportError("You cannot shoot to the player");
         }
-    }
+    }*/
 
     public void update(ReloadMove move){
         if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
@@ -192,13 +192,13 @@ public class Controller implements ViewObserver {
         model.performTeleporterMove(move.getPlayerColor(),move.getRow(),move.getColumn());
     }
 
-    public void update(ShowTargetsMove move){
+    /*public void update(ShowTargetsMove move){
         if (!TurnManager.isPlayerTurn(move.getView().getPlayerColor())){
             move.getView().reportError("It's not your turn");
             return;
         }
         model.performShowTargetsMove(move.getPlayerColor(),move.getWeaponIndex(),move.getFireModeIndex());
-    }
+    }*/
 
     //missing InputMove
 /*

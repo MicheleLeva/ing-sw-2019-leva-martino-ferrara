@@ -18,12 +18,12 @@ public class StandardTurn extends Turn {
         //Mostra al giocatore la lista comandi
         getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), "");
 
-        while (!currentPlayer.getActionTree().isEnd()) {
+        /*while (!currentPlayer.getActionTree().isEnd()) {
             //Mostra al giocatore le azioni disponibili
             getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), "");
             //Chiedi input
             getModel().askTurnInput(currentPlayerColor);
-        }
+        }*/
 
         getModel().endTurn(currentPlayer);
 
