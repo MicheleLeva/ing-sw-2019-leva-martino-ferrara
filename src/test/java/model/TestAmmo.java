@@ -35,9 +35,9 @@ public class TestAmmo {
 
 
 
-        assertEquals(5,ammoTest.getRed());
-        assertEquals(5,ammoTest.getBlue());
-        assertEquals(4,ammoTest.getYellow());
+        assertEquals(3,ammoTest.getRed());
+        assertEquals(2,ammoTest.getBlue());
+        assertEquals(3,ammoTest.getYellow());
 
 
 

@@ -60,20 +60,20 @@ public class Map {
                     JSONObject result1 = (JSONObject) myArray.get(k);
                     //System.out.println(result1+"/n");
                     if (result1.get("NORTH").equals("wall")) map[i][j].setSide(Direction.NORTH, null);
-                    if (result1.get("NORTH").equals("door")) map[i][j].setSide(Direction.NORTH, null);
+                    if (result1.get("NORTH").equals("door")) map[i][j].setSide(Direction.NORTH, map[i - 1][j]);
                     if (result1.get("NORTH").equals("square")) map[i][j].setSide(Direction.NORTH, map[i - 1][j]);
 
                     if (result1.get("SOUTH").equals("wall")) map[i][j].setSide(Direction.SOUTH, null);
-                    if (result1.get("SOUTH").equals("door")) map[i][j].setSide(Direction.SOUTH, null);
+                    if (result1.get("SOUTH").equals("door")) map[i][j].setSide(Direction.SOUTH, map[i + 1][j]);
                     //if(map[0][0].getSide(Direction.SOUTH) instanceof Door)System.out.println("door");
                     if (result1.get("SOUTH").equals("square")) map[i][j].setSide(Direction.SOUTH, map[i + 1][j]);
 
                     if (result1.get("WEST").equals("wall")) map[i][j].setSide(Direction.WEST, null);
-                    if (result1.get("WEST").equals("door")) map[i][j].setSide(Direction.WEST, null);
+                    if (result1.get("WEST").equals("door")) map[i][j].setSide(Direction.WEST, map[i][j - 1]);
                     if (result1.get("WEST").equals("square")) map[i][j].setSide(Direction.WEST, map[i][j - 1]);
 
-                    if (result1.get("EAST").equals("wall")) map[i][j].setSide(Direction.EAST,null);
-                    if (result1.get("EAST").equals("door")) map[i][j].setSide(Direction.EAST, null);
+                    if (result1.get("EAST").equals("wall")) map[i][j].setSide(Direction.EAST, null);
+                    if (result1.get("EAST").equals("door")) map[i][j].setSide(Direction.EAST, map[i][j + 1]);
                     if (result1.get("EAST").equals("square")) map[i][j].setSide(Direction.EAST, map[i][j + 1]);
 
                     if(result1.get("color").equals("null"));
