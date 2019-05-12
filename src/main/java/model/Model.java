@@ -4,6 +4,8 @@ import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.cards.*;
+import model.events.Event;
+import model.events.ShootEvent;
 import model.events.message.*;
 import model.events.message.Message;
 import model.events.message.RunMessage;
@@ -41,6 +43,8 @@ public class Model extends ControllerObservable {
 
     private Current current;
 
+    private WeaponNotifier weaponNotifier;
+
     private Model(){
 
 
@@ -51,6 +55,14 @@ public class Model extends ControllerObservable {
             modelInstance = new Model();
         return modelInstance;
 
+    }
+
+    public WeaponNotifier getWeaponNotifier(){
+        return weaponNotifier;
+    }
+
+    public GameNotifier getGameNotifier() {
+        return gameNotifier;
     }
 
     public GameBoard getGameBoard(){
@@ -64,10 +76,10 @@ public class Model extends ControllerObservable {
     public void performRun(PlayerColor playerColor, int x, int y){
         Player player = getPlayer(playerColor);
         player.setPosition(gameBoard.getMap().getSquareFromCoordinates(x,y));
-        notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
+        //notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
     }
 
-    public void performShoot(PlayerColor shooterColor, ArrayList<PlayerColor> opponentsColor, Weapon weapon,int fireMode/*, PowerUp powerUp*/) throws IllegalOpponentException {
+  /*  public void performShoot(PlayerColor shooterColor, ArrayList<PlayerColor> opponentsColor, Weapon weapon,int fireMode) throws IllegalOpponentException {
         //Need weapon cards
         //notify
         ArrayList<Player> selected = new ArrayList<>();
@@ -90,7 +102,7 @@ public class Model extends ControllerObservable {
 
         notify(new ShootMessage(shooterColor,getPlayer(shooterColor).getName(),opponentsColor,resultString,weapon,gameBoard));
     }
-
+*/
     public void performGrab(PlayerColor playerColor) throws EmptySquareException {
         Player player = getPlayer(playerColor);
 
@@ -102,14 +114,14 @@ public class Model extends ControllerObservable {
     }
 
     public void asktTeleporterCoordinates(){
-        notify(new TeleporterMessage());
+       // notify(new TeleporterMessage());
     }
 
 
     public void performTeleporterMove(PlayerColor playerColor, int row, int column){
         Player player = getPlayer(playerColor);
         player.setPosition(gameBoard.getMap().getSquareFromCoordinates(row,column));
-        notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
+       // notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
 
     }
 
@@ -130,10 +142,10 @@ public class Model extends ControllerObservable {
 
     public void performShowCards(PlayerColor playerColor){
         Player player = getPlayer(playerColor);
-        notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(),
-                player.getResources().showWeapons()));
+       // notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(),
+        //        player.getResources().showWeapons()));
     }
-
+/*
     public void performShowTargetsMove(PlayerColor playerColor,int weaponIndex,int fireModeIndex){
 
         Player player = getPlayer(playerColor);
@@ -142,7 +154,7 @@ public class Model extends ControllerObservable {
                weapon, weapon.getTargetsNumber()[fireModeIndex], fireModeIndex));
 
     }
-
+*/
 
 
     public Model(ArrayList<Player> playersList, int skulls){
@@ -223,16 +235,17 @@ public class Model extends ControllerObservable {
 
     //Metodo che ritorna una lista dei giocatori
     //visibili a partire da uno square dato
-    public ArrayList<Player> getVisiblePlayers(Square square){
+    public ArrayList<Player> getVisiblePlayers(Player currentPlayer){
+        Square square = currentPlayer.getPosition();
         ArrayList<Player> visiblePlayers = new ArrayList<>();
         for(Player player : players.values()) {
 
-            if (player.getPosition().getColor() == square.getColor())
+            if (player.getPosition().getColor() == square.getColor() && currentPlayer != player)
                 visiblePlayers.add(player);
             else
                 for (Direction direction : Direction.values()) {
-                    if (    square.getSide(direction) instanceof Door &&
-                            getSquareFromDir(square, direction).getColor() == player.getPosition().getColor())
+                    if (    square.getSide(direction).getColor()!=square.getColor() &&
+                            square.getSide(direction).getColor() == player.getPosition().getColor())
 
                             visiblePlayers.add(player);
                 }
@@ -288,13 +301,28 @@ public class Model extends ControllerObservable {
     }
 
     //Metodo che ritorna una lista dei giocatori
+    //nello stesso square
+
+    public ArrayList<Player> getPlayersInSameSquare(Player currentPlayer){
+        Square square = currentPlayer.getPosition();
+        ArrayList<Player> playersInSameSquare = new ArrayList<>();
+        for(Player player : players.values()) {
+            if(player.getPosition().getSquareRow() == square.getSquareRow() &&
+                    player.getPosition().getSquareColumn() == square.getSquareColumn() && currentPlayer != player){
+                playersInSameSquare.add(player);
+            }
+        }
+        return playersInSameSquare;
+    }
+
+    //Metodo che ritorna una lista dei giocatori
     //NON visibili a partire da uno square dato
-    public ArrayList<Player> getNonVisiblePlayers(Square square){
+    public ArrayList<Player> getNonVisiblePlayers(Player currentPlayer){
         ArrayList<Player> nonVisiblePlayers = new ArrayList<>();
 
         for(Player player : players.values()) {
 
-            if(!(getVisiblePlayers(square).contains(player)))
+            if(!(getVisiblePlayers(currentPlayer).contains(player)))
                 nonVisiblePlayers.add(player);
         }
         return nonVisiblePlayers;
@@ -310,15 +338,15 @@ public class Model extends ControllerObservable {
 
         player.drawPowerUp(drawnPowerUp);
 
-        notify(new DrawPowerUpMessage(player.getPlayerColor() , player.getPlayerName() , drawnPowerUp));
+        //notify(new DrawPowerUpMessage(player.getPlayerColor() , player.getPlayerName() , drawnPowerUp));
 
     }
 
     public void requestPowerUpDiscard(Player player){
         String powerUpList = player.getResources().showpowerUp();
         int num = player.getResources().getPowerUp().size();
-        if (num > 1)
-            notify(new PowerUpDiscardMessage(player.getPlayerColor() , player.getPlayerName() , powerUpList , num));
+        if (num > 1){}
+            //notify(new PowerUpDiscardMessage(player.getPlayerColor() , player.getPlayerName() , powerUpList , num));
         else{
             discardPowerUp(player , 0);
         }
@@ -346,7 +374,7 @@ public class Model extends ControllerObservable {
     }
 
     public void printMessage(PlayerColor playerColor , String toPlayer , String toOthers){
-        notify (new Message(playerColor , toPlayer , toOthers));
+        //notify (new Message(playerColor , toPlayer , toOthers));
     }
 
     public void setPlayerPosition(Player player , Square square){
@@ -371,7 +399,7 @@ public class Model extends ControllerObservable {
     }
 
     public void askTurnInput(PlayerColor playerColor){
-        notify (new AskTurnInputMessage(playerColor));
+        //notify (new AskTurnInputMessage(playerColor));
     }
 
     public void showCards(PlayerColor playerColor){
@@ -382,7 +410,7 @@ public class Model extends ControllerObservable {
 
         String cards = powerUp +"\n" + weapon +"\n" +ammo +"\n";
 
-        notify(new Message(playerColor , cards , ""));
+        //notify(new Message(playerColor , cards , ""));
 
     }
 
@@ -421,7 +449,7 @@ public class Model extends ControllerObservable {
         String toOthers;
         toPlayer = "Your turn has ended\n";
         toOthers = player.getName() +"'s turn has ended\n";
-        notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
+        //notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
         turnManager.update();
 
     }
@@ -431,7 +459,7 @@ public class Model extends ControllerObservable {
         String toOthers;
         toPlayer = "Your frenzy turn has ended\n";
         toOthers = player.getName() +"'s frenzy turn has ended\n";
-        notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
+        //notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
 
         if(player.getPlayerColor() == turnManager.getLastPlayerColor()){
             turnManager.setGameOver(true);
@@ -566,6 +594,47 @@ public class Model extends ControllerObservable {
         gameNotifier.notifyNewton(playerName , opponentName , playerColor , opponentColor , newSquare);
     }
 
+    public void showWeaponCards(PlayerColor playerColor){
+        String availableWeapons;
+        availableWeapons = getPlayer(playerColor).getResources().showWeapon();
+        weaponNotifier.showWeaponCards(playerColor , availableWeapons);
+    }
+
+    public void askAlternativeEffect(PlayerColor playerColor, Weapon weapon){
+        weaponNotifier.notifyAlternativeEffect(playerColor, weapon);
+    }
+
+    public void baseLockRifleTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
+        String opponentList = "";
+        for (int i = 0; i < availableTargets.size(); i++){
+            if(availableTargets.get(i).getPlayerColor() != playerColor){
+                current.addOpponent(availableTargets.get(i));
+                opponentList = opponentList +availableTargets.get(i).getPlayerName() +" ";
+            }
+        }
+        weaponNotifier.notifyBaseLockRifleTargets(playerColor,opponentList,targetsNumber);
+    }
+
+    public void optionalLockRifle1(PlayerColor playerColor, Weapon weapon){
+        weaponNotifier.optionalLockRifle1(playerColor, weapon);
+    }
+
+    public void optionalLockRifleTargets1(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
+        String opponentList = "";
+        for (int i = 0; i < availableTargets.size(); i++){
+            if(availableTargets.get(i).getPlayerColor() != playerColor){
+                current.addOpponent(availableTargets.get(i));
+                opponentList = opponentList + availableTargets.get(i).getPlayerName() +" ";
+            }
+        }
+        weaponNotifier.optionalLockRifleTargets1(playerColor,opponentList,targetsNumber);
+    }
+
+    public void notifyShoot(Player currentPlayer,ArrayList<Player> targets){
+        ArrayList<Player> allPlayers = turnManager.getAllPlayers();
+        gameNotifier.notifyShoot(currentPlayer,targets,allPlayers);
+    }
+
     public void discardAmmo(Square square){
         AmmoCard discardedAmmo = square.getAmmoCard();
         square.removeAmmoCard();
@@ -594,3 +663,5 @@ public class Model extends ControllerObservable {
         gameNotifier.notifyDrawAmmo(playerColor , currentPlayer.getPlayerName() , ammo.toString());
     }
 }
+
+

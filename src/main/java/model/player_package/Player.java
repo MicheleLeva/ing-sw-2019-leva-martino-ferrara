@@ -2,6 +2,7 @@ package model.player_package;
 
 import model.Decks;
 import model.cards.PowerUp;
+import model.cards.Weapon;
 import model.map_package.Square;
 import model.player_package.action.ActionTree;
 
@@ -19,6 +20,8 @@ public class Player {
     private Square position;
     private boolean isFirst;
     private ActionTree actionTree;
+    private Weapon selectedWeapon ;
+    private ArrayList<Player> baseAvailablePlayers;
 
     public Player(String name, PlayerColor color){
         playerName = name;
@@ -104,4 +107,13 @@ public class Player {
         return this.actionTree;
     }
 
+    public Weapon getSelectedWeapon(){
+        return selectedWeapon;
+    }
+
+    public void setSelectedWeapon(Weapon weapon){this.selectedWeapon = weapon;}
+
+    public ArrayList<Player> getBaseAvailablePlayers(){
+        return baseAvailablePlayers;
+    }
 }

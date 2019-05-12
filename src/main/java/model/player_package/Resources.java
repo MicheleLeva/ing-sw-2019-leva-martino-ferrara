@@ -49,6 +49,17 @@ public class Resources {
         return reloadableWeapon;
     }
 
+    public ArrayList<Weapon> getReloadedWeapon(){
+        ArrayList<Weapon> reloadedWeapon = new ArrayList<>();
+        for (int i = 0; i< weapon.size(); i++){
+            if (weapon.get(i).isReloaded()){
+                reloadedWeapon.add(weapon.get(i));
+            }
+        }
+
+        return reloadedWeapon;
+    }
+
     public String showWeapon(){
         if (weapon.isEmpty()){
             return "No Weapon";

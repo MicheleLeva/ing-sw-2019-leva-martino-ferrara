@@ -1,22 +1,25 @@
 package utils.notify;
 
+import model.player_package.PlayerColor;
 import utils.update.WeaponUpdate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WeaponNotify {
-    public final List<WeaponUpdate> listeners = new ArrayList();
+    public final Map<PlayerColor,WeaponUpdate> listeners = new HashMap<>();
 
-    public void register(WeaponUpdate observer){
+    public void register(PlayerColor playerColor,WeaponUpdate observer){
         synchronized (listeners){
-            listeners.add(observer);
+            listeners.put(playerColor,observer);
         }
     }
 
-    public void deregister(WeaponUpdate observer){
+    public void deregister(PlayerColor playerColor){
         synchronized (listeners){
-            listeners.remove(observer);
+            listeners.remove(playerColor);
         }
     }
 }

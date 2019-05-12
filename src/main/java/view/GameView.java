@@ -2,6 +2,7 @@ package view;
 
 import model.events.GenericMessage;
 import model.events.RunMessage;
+import model.events.ShootMessage;
 import model.player_package.PlayerColor;
 import utils.update.GameUpdate;
 
@@ -25,5 +26,10 @@ public class GameView implements GameUpdate {
     @Override
     public void update(GenericMessage genericMessage){
         view.printMessage(genericMessage.getMessage());
+    }
+
+    @Override
+    public void update(ShootMessage shootMessage) {
+        System.out.println(shootMessage.getMessage());
     }
 }

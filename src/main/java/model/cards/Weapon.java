@@ -12,22 +12,25 @@ public abstract class Weapon extends Card {
 
     protected boolean isReloaded;
     protected String name;
-    protected Ammo baseAmmo;
-    protected Ammo optionalAmmo1;
-    protected Ammo optionalAmmo2;
+    protected Ammo baseCost;
     protected int baseDamage;
-    protected int optionalDamage1;
-    protected int optionalDamage2;
     protected int baseMarks;
-    protected int optionalMarks1;
-    protected int optionalMarks2;
     protected ArrayList<Integer> visibility;
-    protected ArrayList<Integer> visibility1;
-    protected ArrayList<Integer> visibility2;
-    protected int[] targetsNumber;
+    protected int baseTargetsNumber;
+    private final Model model;
+    private String baseText;
 
     public void reload(){
 
+    }
+
+    public Weapon(String name, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,Model model){
+        this.name = name;
+        this.baseCost = baseCost;
+        this.baseDamage = baseDamage;
+        this.baseMarks = baseMarks;
+        this.baseTargetsNumber = baseTargetsNumber;
+        this.model = model;
     }
 
     public String getWeaponName(){
@@ -35,116 +38,33 @@ public abstract class Weapon extends Card {
     }
 
     public Ammo getBaseCost(){
-        return baseAmmo;
+        return baseCost;
     }
-
-    public Ammo getOptionalCost1(){
-        return optionalAmmo1;
-    }
-
-    public Ammo getOptionalCost2(){return optionalAmmo2;}
 
     public int getBaseDamage() {
         return baseDamage;
-    }
-
-    public int getOptionalDamage1() {
-        return optionalDamage1;
-    }
-
-    public int getOptionalDamage2() {
-        return optionalDamage2;
     }
 
     public int getBaseMarks() {
         return baseMarks;
     }
 
-    public int getOptionalMarks1() {
-        return optionalMarks1;
-    }
-
-    public int getOptionalMarks2() {
-        return optionalMarks2;
-    }
-
     public ArrayList<Integer> getVisibility() {
         return visibility;
     }
 
-    public ArrayList<Integer> getVisibility1() {
-        return visibility1;
+    public int getBaseTargetsNumber(){
+        return baseTargetsNumber;
     }
 
-    public ArrayList<Integer> getVisibility2() {
-        return visibility2;
-    }
+    public abstract void askBaseRequirements(Player currentPlayer);
 
-    public int[] getTargetsNumber() {
-        return targetsNumber;
-    }
+    public abstract void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets);
 
-    public ArrayList<Player> getAvailableTargets(Square square, int fireMode) {
-        ArrayList<Player> availableTargets = new ArrayList<>();
-        if(fireMode == 0) {
-            for (Integer integer : visibility) {
-                if (integer == 0)
-                    availableTargets.addAll(Model.getModelInstance().getVisiblePlayers(square));
-                if (integer == 1)
-                    availableTargets.addAll(Model.getModelInstance().getPlayersAtDistance(0, square));
-                if (integer == 2)
-                    availableTargets.addAll(Model.getModelInstance().getPlayersInCardinalDirection(square));
-                if (integer == 3)
-                    availableTargets.addAll(Model.getModelInstance().getNonVisiblePlayers(square));
+    public Model getModel(){return this.model;}
 
-            }
-        }
-
-            if(fireMode == 1) {
-                for (Integer integer : visibility1) {
-                    if (integer == 0)
-                        availableTargets.addAll(Model.getModelInstance().getVisiblePlayers(square));
-                    if (integer == 1)
-                        availableTargets.addAll(Model.getModelInstance().getPlayersAtDistance(0, square));
-                    if (integer == 2)
-                        availableTargets.addAll(Model.getModelInstance().getPlayersInCardinalDirection(square));
-                    if (integer == 3)
-                        availableTargets.addAll(Model.getModelInstance().getNonVisiblePlayers(square));
-
-                }
-            }
-
-                if(fireMode == 2) {
-                    for (Integer integer : visibility2) {
-                        if (integer == 0)
-                            availableTargets.addAll(Model.getModelInstance().getVisiblePlayers(square));
-                        if (integer == 1)
-                            availableTargets.addAll(Model.getModelInstance().getPlayersAtDistance(0, square));
-                        if (integer == 2)
-                            availableTargets.addAll(Model.getModelInstance().getPlayersInCardinalDirection(square));
-                        if (integer == 3)
-                            availableTargets.addAll(Model.getModelInstance().getNonVisiblePlayers(square));
-
-                    }
-        }
-
-        return availableTargets;
-    }
-
-    public void useBaseWeapon(Player currentPlayer, ArrayList<Player> selectedTargets, Weapon weapon){
-
-    }
-
-    public void useOptionalWeapon1(Player currentPlayer, ArrayList<Player> selectedTargets, Weapon weapon){
-
-    }
-
-    public void useOptionalWeapon2(Player currentPlayer, ArrayList<Player> selectedTargets,Weapon weapon){
-
-    }
-
-    public void showWeaponMessage(){
-
+    public String getBaseText(){
+        return baseText;
     }
 
     public void setIsReload(){
@@ -155,7 +75,6 @@ public abstract class Weapon extends Card {
         return isReloaded;
     }
 
-    public void shoot(Player opponent){
+    public abstract void start(Player player);
 
-    }
 }
