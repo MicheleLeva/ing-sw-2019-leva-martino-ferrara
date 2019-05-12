@@ -1,23 +1,22 @@
 package utils.notify;
 
+import model.player_package.PlayerColor;
 import utils.update.PowerUpUpdate;
-import utils.update.WeaponUpdate;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PowerUpNotify {
-    public final List<PowerUpUpdate> listeners = new ArrayList();
+    public final Map<PlayerColor , PowerUpUpdate> listeners = new HashMap();
 
-    public void register(PowerUpUpdate observer){
+    public void register(PlayerColor playerColor , PowerUpUpdate observer){
         synchronized (listeners){
-            listeners.add(observer);
+            listeners.put(playerColor , observer);
         }
     }
 
-    public void deregister(PowerUpUpdate observer){
+    public void deregister(PlayerColor playerColor){
         synchronized (listeners){
-            listeners.remove(observer);
+            listeners.remove(playerColor);
         }
     }
 }

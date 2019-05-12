@@ -72,7 +72,8 @@ public class Run extends Action {
         else{
             currentPlayer.setPosition(newSquare);
             model.updateRun();
-            //richiedi di inserire nuova azione.
+            model.updateAction();
+            model.updateTurn();
         }
     }
 }

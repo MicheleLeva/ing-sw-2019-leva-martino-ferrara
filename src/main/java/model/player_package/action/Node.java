@@ -45,10 +45,12 @@ public class Node<T> {
         System.out.println(data);
     }*/
 
-    public void printChildren(){
+    public String showChildren(){
+        String result = "";
         for (int i = 0; i< children.size(); i++){
-            System.out.print(children.get(i).data +" ");
+            result = result +children.get(i).data +" ";
         }
+        return result;
     }
 }
 

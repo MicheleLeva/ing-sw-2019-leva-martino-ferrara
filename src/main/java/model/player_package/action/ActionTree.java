@@ -115,7 +115,7 @@ public class ActionTree {
     //Verifica che la mossa sia possibile
     public boolean checkAction(char move){
 
-        List<Node<String>> children = lastAction.getChildren(); //Andrà messo lastActionPerformed al posto di LastAction
+        List<Node<String>> children = lastActionPerformed.getChildren(); //Andrà messo lastActionPerformed al posto di LastAction
 
         for (int i = 0; i < children.size(); i++){
             String type = children.get(i).getData();
@@ -129,35 +129,46 @@ public class ActionTree {
     }
     //Se l'azione è stata eseguita, l'albero si aggiorna
     public void updateAction(){
-        lastActionPerformed = lastAction;
+        if (isActionEnded()){
+            endAction();
+        }
+        else{
+            lastActionPerformed = lastAction;
+        }
     }
 
     public String availableAction(){ //Modificare per mostrare tutte le combinazioni
         String result = "Your available action: \n";
- ////////////
- ////////////       //showChildren() method not available
- ///////////       //result = result +lastAction.showChildren();
- ///////////
+        result = result +lastActionPerformed.showChildren();
         result = result +"Action left: " +(actionCounter-performedAction) +"\n";
         return result;
     }
 
-    public boolean isFinished(){
-        return lastAction.getChildren().isEmpty(); //Andrà cambiato con lastactionperformed
+    private boolean isActionEnded(){
+        return lastActionPerformed.getChildren().isEmpty();
     }
 
-    public void resetPerformedAction(){
+    public void resetAction(){
         performedAction = 0;
+        resetLastAction();
     }
 
-    public boolean isEnd(){
+    public boolean isTurnEnded(){
         return (performedAction == actionCounter);
+    }
+
+    private void resetLastAction(){
+        lastAction = lastActionPerformed = root;
     }
 
     public void endAction(){
         performedAction++;
-        lastAction = lastActionPerformed = root;
+        resetLastAction();
     }
+
+
+
+
 
 }
 

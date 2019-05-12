@@ -1,5 +1,7 @@
 package utils.update;
 
+import model.events.*;
+
 public interface ActionUpdate {
-    //void update();
+    void update(ChooseActionMessage chooseActionMessage);
 }

@@ -17,7 +17,7 @@ public class Square implements MapElement {
     private AmmoCard ammo;
     private int squareRow;
     private int squareColumn;
-
+    private int ID;
 
     public Square(int row, int column){
         sides = new HashMap<Direction,Square>();
@@ -93,5 +93,9 @@ public class Square implements MapElement {
         }
         else
             return (ammo == null);
+    }
+
+    public int getID(){
+        return ID;
     }
 }

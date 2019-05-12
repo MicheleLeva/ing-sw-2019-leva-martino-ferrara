@@ -56,20 +56,11 @@ public class ActionController extends Controller implements ActionObserver {
             action.perform(getModel() , playerColor);
         }
 
-        catch(EmptySquareException e){
+        catch(EmptySquareException | WallException | NoPowerUpException e){
             view.reportError(e.getMessage());
-            //richiedi di inserire azione dal model;
-        }
-        catch(WallException e){
-            view.reportError(e.getMessage());
-            //richiedi di inserire azione dal model;
-        }
-        catch(NoPowerUpException e){
-            view.reportError(e.getMessage());
+            getModel().chooseAction(playerColor);
         }
         catch(Exception e){
-            view.reportError(e.getMessage());
-            //richiedi di inserire azione dal model;
         }
     }
 }

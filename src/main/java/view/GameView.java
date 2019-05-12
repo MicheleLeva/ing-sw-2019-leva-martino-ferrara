@@ -1,14 +1,16 @@
 package view;
 
+import model.events.GenericMessage;
 import model.events.RunMessage;
 import model.player_package.PlayerColor;
 import utils.update.GameUpdate;
 
 public class GameView implements GameUpdate {
     private final PlayerColor playerColor;
-
-    public GameView(PlayerColor playerColor){
+    private final PlayerView view;
+    public GameView(PlayerColor playerColor , PlayerView view){
         this.playerColor = playerColor;
+        this.view = view;
     }
 
     public PlayerColor getPlayerColor(){
@@ -18,5 +20,10 @@ public class GameView implements GameUpdate {
     @Override
     public void update(RunMessage runMessage){
         System.out.println(runMessage.getMessage());
+    }
+
+    @Override
+    public void update(GenericMessage genericMessage){
+        view.printMessage(genericMessage.getMessage());
     }
 }

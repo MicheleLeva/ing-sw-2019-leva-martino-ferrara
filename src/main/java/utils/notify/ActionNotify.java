@@ -1,22 +1,24 @@
 package utils.notify;
 
+import model.player_package.PlayerColor;
 import utils.update.ActionUpdate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class ActionNotify {
-    public final List<ActionUpdate> listeners = new ArrayList();
+    public final Map<PlayerColor, ActionUpdate> listeners = new HashMap();
 
-    public void register(ActionUpdate observer) {
+    public void register(PlayerColor playerColor , ActionUpdate observer) {
         synchronized (listeners) {
-            listeners.add(observer);
+            listeners.put(playerColor , observer);
         }
     }
 
-    public void deregisyer(ActionUpdate observer) {
+    public void deregister(PlayerColor playerColor) {
         synchronized (listeners) {
-            listeners.remove(observer);
+            listeners.remove(playerColor);
         }
     }
 }

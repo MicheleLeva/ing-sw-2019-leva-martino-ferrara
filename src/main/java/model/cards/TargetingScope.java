@@ -1,17 +1,13 @@
 package model.cards;
-
-
-import model.player_package.Player;
+import model.adrenaline_exceptions.TargetingScopeException;
+import model.player_package.PlayerColor;
 
 public class TargetingScope  extends PowerUp{
-
-
     public TargetingScope(AmmoColor color){
         cost = color;
     }
-
-    public void usePowerUp(Player player, Player opponent){
-        opponent.getPlayerBoard().getDamageCounter().addDamage(player.getPlayerColor(), 1);
-
+    @Override
+    public void usePowerUp(PlayerColor playerColor) throws TargetingScopeException {
+        throw new TargetingScopeException();
     }
 }

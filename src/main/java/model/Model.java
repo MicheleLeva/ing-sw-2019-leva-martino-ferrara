@@ -3,10 +3,7 @@ package model;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
-import model.cards.AmmoCard;
-import model.cards.AmmoColor;
-import model.cards.PowerUp;
-import model.cards.Weapon;
+import model.cards.*;
 import model.events.message.*;
 import model.events.message.Message;
 import model.events.message.RunMessage;
@@ -37,6 +34,12 @@ public class Model extends ControllerObservable {
     private static Model modelInstance = null;
 
     private GameNotifier gameNotifier;
+
+    private PowerUpNotifier powerUpNotifier;
+
+    private ActionNotifier actionNotifier;
+
+    private Current current;
 
     private Model(){
 
@@ -481,5 +484,85 @@ public class Model extends ControllerObservable {
     public void updateRun(){
         Player currentPlayer = turnManager.getCurrentPlayer();
         gameNotifier.notifyRun(currentPlayer.getPlayerName() , currentPlayer.getPosition().toString());
+    }
+
+    public void updateAction(){
+        Player currentPlayer = turnManager.getCurrentPlayer();
+        currentPlayer.getActionTree().updateAction();
+    }
+
+    public void updateTurn() {
+        Player currentPlayer = turnManager.getCurrentPlayer();
+        if (currentPlayer.getActionTree().isTurnEnded()) {
+            //apre un thread che:
+            //chiedi ricarica
+            //sistema carte
+            //respawna giocatori morti
+            //resetta azioni giocatore corrente
+            //alla fine chiama endturn
+        }
+        else {
+            //chiedi azione al giocatore corrente
+        }
+    }
+
+    public void endTurn(){
+        //cambia giocatore
+        //notifica nuovo turno
+    }
+
+    public void choosePowerUp(PlayerColor playerColor){
+        String availablePowerUp;
+        availablePowerUp = getPlayer(playerColor).getResources().showpowerUp();
+        powerUpNotifier.choosePowerUp(playerColor , availablePowerUp);
+    }
+
+    public void useTeleporter(PlayerColor playerColor){
+        powerUpNotifier.chooseTeleporterSquare(playerColor);
+    }
+
+    public void notifyTeleporter(PlayerColor playerColor){
+        String playerName = getPlayer(playerColor).getPlayerName();
+        String newSquare = getPlayer(playerColor).getPosition().toString();
+        gameNotifier.notifyTeleporter(playerColor , playerName , newSquare);
+    }
+
+    public void chooseAction(PlayerColor playerColor){
+        actionNotifier.chooseAction(playerColor);
+    }
+
+    public Current getCurrent(){
+        return current;
+    }
+
+    public void useNewton(PlayerColor playerColor){
+        ArrayList <Player> allPLayers = turnManager.getAllPlayers();
+        String opponentList = "";
+        for (int i = 0; i < allPLayers.size(); i++){
+            if(allPLayers.get(i).getPlayerColor() != playerColor){
+                current.addOpponent(allPLayers.get(i));
+                opponentList = opponentList +allPLayers.get(i).getPlayerName() +" ";
+            }
+        }
+        powerUpNotifier.chooseNewtonOpponent(playerColor , opponentList);
+    }
+
+    public void chooseNewtonSquare(PlayerColor playerColor , Player opponent){
+        Square currentOpponentSquare = opponent.getPosition();
+        ArrayList<Square> possibleSquare = runnableSquare(2 , currentOpponentSquare);
+        current.setSquare(possibleSquare);
+        String squareList = "";
+        for (int i = 0; i < possibleSquare.size(); i++){
+            squareList = squareList +possibleSquare.get(i).getID() +" ";
+        }
+        powerUpNotifier.chooseNewtonSquare(playerColor , squareList);
+    }
+
+    public void notifyNewton(PlayerColor playerColor , Player opponent){
+        String playerName = getPlayer(playerColor).getPlayerName();
+        String opponentName = opponent.getName();
+        String newSquare = opponent.getPosition().toString();
+        PlayerColor opponentColor = opponent.getPlayerColor();
+        gameNotifier.notifyNewton(playerName , opponentName , playerColor , opponentColor , newSquare);
     }
 }
