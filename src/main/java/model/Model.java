@@ -65,6 +65,14 @@ public class Model extends ControllerObservable {
         return gameNotifier;
     }
 
+    public ActionNotifier getActionNotifier(){
+        return actionNotifier;
+    }
+
+    public PowerUpNotifier getPowerUpNotifier() {
+        return powerUpNotifier;
+    }
+
     public GameBoard getGameBoard(){
         return gameBoard;
     }

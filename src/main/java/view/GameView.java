@@ -1,6 +1,7 @@
 package view;
 
 import model.events.GenericMessage;
+import model.events.NameSetMessage;
 import model.events.RunMessage;
 import model.events.ShootMessage;
 import model.player_package.PlayerColor;
@@ -16,6 +17,13 @@ public class GameView implements GameUpdate {
 
     public PlayerColor getPlayerColor(){
         return playerColor;
+    }
+
+    @Override
+    public void update(NameSetMessage nameSetMessage){
+        view.printMessage(nameSetMessage.getMessage());
+        // il giocatore inserisce il nome che viene dato al translator per inoltrarlo
+        //notify NameSetEvent
     }
 
     @Override

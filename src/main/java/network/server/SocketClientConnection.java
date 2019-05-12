@@ -1,5 +1,7 @@
-package server;
+package network.server;
 
+import network.ClientConnection;
+import network.server.Server;
 import utils.Observable;
 
 import java.io.IOException;
@@ -34,7 +36,7 @@ public class SocketClientConnection extends Observable<String> implements Client
         try{
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            send("Welcome to the game! Insert your name:");
+            send("NameSetMessage,Insert your name!");
             String read = in.nextLine();
             name = read;
             server.addPlayer(this, name);
@@ -69,8 +71,8 @@ public class SocketClientConnection extends Observable<String> implements Client
     }
     */
 
-    public synchronized void closeConnection() { //mando messaggio al cliente e chiudo la connessione
-        send("The connection has been closed");
+    public synchronized void closeConnection() { //mando messaggio al network.client e chiudo la connessione
+        send("GenericMessage,The connection has been closed");
         try {
             socket.close();
         } catch (IOException e) {

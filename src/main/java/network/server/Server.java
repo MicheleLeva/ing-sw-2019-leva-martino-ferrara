@@ -1,12 +1,15 @@
-package server;
+package network.server;
 
+import controller.ActionController;
 import controller.Controller;
+import controller.PowerUpController;
+import controller.WeaponController;
 import model.Game;
 import model.Model;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
-import view.RemoteView;
-import view.View;
+import network.ClientConnection;
+import view.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -47,6 +50,7 @@ public class Server {
      */
 
     public synchronized void deregisterConnection(ClientConnection c) { //da cambiare per il nostro gioco
+        //todo
         //deregistra un pool?
         //deregistra un solo giocatore?
     }
@@ -65,34 +69,39 @@ public class Server {
         for (String key : keys){
             playingConnection.add(waitingConnection.get(key));
         }
-        List<View> playerViews= new ArrayList<>();
+        List<RemoteView> remoteViews= new ArrayList<>();
         ArrayList<Player> players= new ArrayList<>();
 
         players.add(new Player(keys.get(0), PlayerColor.BLUE));
-        playerViews.add(new RemoteView(PlayerColor.BLUE, playingConnection.get(0)));
+        remoteViews.add(new RemoteView(PlayerColor.BLUE, playingConnection.get(0)));
 
         players.add(new Player(keys.get(1), PlayerColor.GREEN));
-        playerViews.add(new RemoteView(PlayerColor.GREEN, playingConnection.get(1)));
+        remoteViews.add(new RemoteView(PlayerColor.GREEN, playingConnection.get(1)));
 
         players.add(new Player(keys.get(2), PlayerColor.PURPLE));
-        playerViews.add(new RemoteView(PlayerColor.PURPLE, playingConnection.get(2)));
+        remoteViews.add(new RemoteView(PlayerColor.PURPLE, playingConnection.get(2)));
 
         if (playingConnection.size()== 4){
             players.add(new Player(keys.get(3), PlayerColor.YELLOW));
-            playerViews.add(new RemoteView(PlayerColor.YELLOW, playingConnection.get(4)));
+            remoteViews.add(new RemoteView(PlayerColor.YELLOW, playingConnection.get(4)));
         }
         if (playingConnection.size()== 5){
             players.add(new Player(keys.get(4), PlayerColor.GREY));
-            playerViews.add(new RemoteView(PlayerColor.YELLOW, playingConnection.get(3)));
+            remoteViews.add(new RemoteView(PlayerColor.YELLOW, playingConnection.get(3)));
         }
 
         Model model = new Model(players, 8);
-        Controller controller = new Controller(model);
 
-        for (View v : playerViews){
-            //model.register(v);
-            v.register(controller);
+        for (RemoteView v : remoteViews){
+            model.getGameNotifier().register(v.getPlayerColor(), v);
+            model.getActionNotifier().register(v.getPlayerColor(), v);
+            model.getPowerUpNotifier().register(v.getPlayerColor(), v);
+            model.getWeaponNotifier().register(v.getPlayerColor(), v);
+            v.register(new ActionController(model));
+            v.register(new PowerUpController(model));
+            v.register(new WeaponController(model));
         }
+
 
         new Game(0, model);
         //inizializzo il gioco, da rivedere l'assegnazione del gameID
