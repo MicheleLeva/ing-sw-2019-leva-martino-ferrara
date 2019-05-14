@@ -58,4 +58,20 @@ public class WeaponNotifier extends WeaponNotify {
         listeners.get(playerColor).update(new OptionalThorTargetsMessage2(message,targetsNumber));
     }
 
+    public void askReload(PlayerColor playerColor , String reloadableWeapon){
+        String message = "Reloadable weapon: \n";
+        message = message +reloadableWeapon +"\n";
+        message = message +"Do you want to reload? [Y/N]\n";
+        listeners.get(playerColor).update(new AskReloadMessage(message));
+
+    }
+
+    public void requestWeaponReload(PlayerColor playerColor , String weapon , String ammo , String powerUp){
+        String message;
+        message = weapon;
+        message = message +"Available ammo: " +ammo +".\n";
+        message = message +"Available powerUp: " +powerUp +"\n";
+        listeners.get(playerColor).update(new WeaponReloadMessage(message));
+    }
+
 }
