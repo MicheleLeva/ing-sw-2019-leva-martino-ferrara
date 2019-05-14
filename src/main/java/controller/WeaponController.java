@@ -2,10 +2,7 @@ package controller;
 
 import model.Model;
 import model.TurnManager;
-import model.cards.Electroscythe;
-import model.cards.Weapon;
-import model.cards.WeaponAlternative;
-import model.cards.WeaponOptional1;
+import model.cards.*;
 import model.events.*;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
@@ -134,5 +131,43 @@ public class WeaponController extends Controller implements WeaponObserver {
                 getModel().updateTurn(); nel turno normale può scegliere se ricaricare o finire, nel frenesia ridecide l'azione
             }*/
         }
+    }
+
+    public void update(AlternativeHellionTargetsEvent event){
+        ArrayList<Player> selectedPlayers = new ArrayList<>();
+        Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+        for(Integer target : event.getSelectedTargets()){
+            selectedPlayers.add(getModel().getCurrent().getAvailableBaseTargets().get(target));
+        }
+        getModel().getCurrent().setSelectedBaseTargets(selectedPlayers);
+        Weapon weapon = currentPlayer.getSelectedWeapon();
+        ((WeaponAlternative)weapon).useAlternativeFireMode(currentPlayer,selectedPlayers);
+    }
+
+    public void update(OptionalThorEvent2 event){
+        Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+        Weapon weapon = currentPlayer.getSelectedWeapon();
+        int input = event.getInput();
+        if (input < 0 || input > 1){
+            String error;
+            error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().askAlternativeEffect(event.getPlayerColor(),weapon); //chiede di reinserire input
+        }
+        else if(input == 0)
+            getModel().notifyShoot(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
+        else
+            ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
+    }
+
+    public void update(OptionalThorTargetsEvent2 event){
+        ArrayList<Player> selectedPlayers = new ArrayList<>();
+        Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+        for(Integer target : event.getSelectedTargets()){
+            selectedPlayers.add(getModel().getCurrent().getAvailableOptionalTargets1().get(target));
+        }
+        getModel().getCurrent().setSelectedOptionalTargets1(selectedPlayers);
+        Weapon weapon = currentPlayer.getSelectedWeapon();
+        ((WeaponOptional2)weapon).useOptionalFireMode2(currentPlayer, selectedPlayers);
     }
 }

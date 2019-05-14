@@ -10,4 +10,7 @@ public interface WeaponUpdate {
     void update(OptionalLockRifleTargetsMessage1 optionalLockRifleTargetsMessage1);
     void update(AskReloadMessage askReloadMessage);
     void update(WeaponReloadMessage weaponReloadMessage);
+    void update(AlternativeHellionTargetsMessage alternativeHellionTargetsMessage);
+    void update(OptionalThorMessage2 optionalThorMessage2);
+    void update(OptionalThorTargetsMessage2 optionalThorTargetsMessage2);
 }

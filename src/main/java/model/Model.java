@@ -255,7 +255,6 @@ public class Model extends ControllerObservable {
                 for (Direction direction : Direction.values()) {
                     if (    square.getSide(direction).getColor()!=square.getColor() &&
                             square.getSide(direction).getColor() == player.getPosition().getColor())
-
                             visiblePlayers.add(player);
                 }
         }
@@ -284,7 +283,8 @@ public class Model extends ControllerObservable {
 
     //Metodo che ritorna una lista di giocatori
     //a distanza variabile dallo square scelto
-    public ArrayList<Player> getPlayersAtDistance(int distance, Square square){
+    public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer){
+        Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistance = new ArrayList<>();
         for(Player player : players.values()) {
             if(runnableSquare(distance, square).contains(player.getPosition())){
@@ -295,10 +295,24 @@ public class Model extends ControllerObservable {
 
     }
 
+    public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer){
+        Square square = currentPlayer.getPosition();
+        ArrayList<Player> playersAtDistanceMore = new ArrayList<>();
+        ArrayList<Player> temp = new ArrayList<>();
+        playersAtDistanceMore = getPlayersAtDistance(distance, currentPlayer);
+        temp = getPlayersAtDistance(distance-1,currentPlayer);
+        for(Player player : players.values()){
+            if(temp.contains(player))
+                playersAtDistanceMore.remove(player);
+        }
+        return playersAtDistanceMore;
+    }
+
     //Metodo che ritorna una lista dei giocatori
     //lungo le direzioni cardinali dello square
     //dato
-    public ArrayList<Player> getPlayersInCardinalDirection(Square square){
+    public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer){
+        Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInCardinalDirection = new ArrayList<>();
         for(Player player : players.values()) {
             if( player.getPosition().getSquareRow() == square.getSquareRow() ||
@@ -644,6 +658,32 @@ public class Model extends ControllerObservable {
             }
         }
         weaponNotifier.optionalLockRifleTargets1(playerColor,opponentList,targetsNumber);
+    }
+
+    public void AlternativeHellionTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
+        String opponentList = "";
+        for (int i = 0; i < availableTargets.size(); i++){
+            if(availableTargets.get(i).getPlayerColor() != playerColor){
+                current.addOpponent(availableTargets.get(i));
+                opponentList = opponentList +availableTargets.get(i).getPlayerName() +" ";
+            }
+        }
+        weaponNotifier.AlternativeHellionTargets(playerColor,opponentList,targetsNumber);
+    }
+
+    public void optionalThor2(PlayerColor playerColor, Weapon weapon){
+        weaponNotifier.optionalThor2(playerColor, weapon);
+    }
+
+    public void optionalThorTargets2(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
+        String opponentList = "";
+        for (int i = 0; i < availableTargets.size(); i++){
+            if(availableTargets.get(i).getPlayerColor() != playerColor){
+                current.addOpponent(availableTargets.get(i));
+                opponentList = opponentList + availableTargets.get(i).getPlayerName() +" ";
+            }
+        }
+        weaponNotifier.optionalThorTargets2(playerColor,opponentList,targetsNumber);
     }
 
     public void notifyShoot(Player currentPlayer,ArrayList<Player> targets){

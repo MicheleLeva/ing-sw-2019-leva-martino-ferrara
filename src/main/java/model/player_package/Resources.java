@@ -154,6 +154,19 @@ public class Resources {
         availableAmmo.add(ammo);
     }
 
+    public boolean enoughAmmo(Ammo ammo){
+        int tempRed = availableAmmo.getRed();
+        int tempBlue = availableAmmo.getBlue();
+        int tempYellow = availableAmmo.getYellow();
+        Ammo tempAmmo = new Ammo(tempRed,tempBlue,tempYellow);
+        if(ammo.getRed()-tempRed>=0 &&
+            ammo.getBlue()-tempBlue>=0 &&
+            ammo.getYellow()-tempYellow>=0)
+            return true;
+        else
+            return false;
+    }
+
     public ArrayList<Weapon> getReloadableWeapon(){
         return reloadableWeapon;
     }

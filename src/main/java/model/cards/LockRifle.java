@@ -22,19 +22,25 @@ public class LockRifle extends WeaponOptional1 {
     */
 
     public LockRifle(String name, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,
-                     int optionalMarks1, int baseTargetsNumber, int optionalTargetsNumber1,Model model) {
+                     int optionalMarks1, int baseTargetsNumber, int optionalTargetsNumber1,String baseText,String optionalText1,Model model) {
 
-        super(name,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model);
+        super(name,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,baseText,optionalText1,model);
+    }
+
+    public void start(Player player){
+        askBaseRequirements(player);
     }
 
     public void askBaseRequirements(Player currentPlayer){
         ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+        getModel().getCurrent().setAvailableBaseTargets(availableTargets);
         getModel().baseLockRifleTargets(currentPlayer.getPlayerColor(),availableTargets,this.getBaseTargetsNumber());
     }
 
 
     public void askOptionalRequirements1(Player currentPlayer){
         ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+        getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
         getModel().optionalLockRifleTargets1(currentPlayer.getPlayerColor(),availableTargets,this.getBaseTargetsNumber());
     }
 
@@ -44,7 +50,11 @@ public class LockRifle extends WeaponOptional1 {
             target.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
         }
         currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        getModel().optionalLockRifle1(currentPlayer.getPlayerColor(), this);
+        //controlla se ha abbastanza munizioni per effettuare opzionale
+        if(currentPlayer.getResources().enoughAmmo(this.getOptionalCost1()))
+            getModel().optionalLockRifle1(currentPlayer.getPlayerColor(), this);
+        else
+            getModel().notifyShoot(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){
@@ -56,7 +66,7 @@ public class LockRifle extends WeaponOptional1 {
         currentPlayer.getActionTree().endAction();
         ArrayList<Player> shotTargets = new ArrayList<>(getModel().getCurrent().getSelectedOptionalTargets1());
         shotTargets.addAll(getModel().getCurrent().getSelectedBaseTargets());
-        getModel().notifyShoot(currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
+        getModel().notifyShoot(currentPlayer,shotTargets);
     }
 
     public String getOptionalText1(){

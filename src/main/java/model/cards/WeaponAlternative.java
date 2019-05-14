@@ -12,14 +12,16 @@ public abstract class WeaponAlternative extends Weapon {
     protected int alternativeDamage;
     protected int alternativeMarks;
     protected int alternativeTargetsNumber;
+    protected String alternativeText;
 
     public WeaponAlternative(String name, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
-                             int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){
-        super(name,baseCost,baseDamage,baseMarks,baseTargetsNumber,model);
+                             int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,String baseText,String alternativeText, Model model){
+        super(name,baseCost,baseDamage,baseMarks,baseTargetsNumber,baseText,model);
         this.alternativeCost = alternativeCost;
         this.alternativeDamage = alternativeDamage;
         this.alternativeMarks = alternativeMarks;
         this.alternativeTargetsNumber = alternativeTargetsNumber;
+        this.alternativeText = alternativeText;
     }
 
     public Ammo getAlternativeCost() {
@@ -48,6 +50,8 @@ public abstract class WeaponAlternative extends Weapon {
     public abstract void askAlternativeRequirements(Player currentPlayer);
 
     public abstract void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets);
+
+
 
 }
 

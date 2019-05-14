@@ -14,8 +14,12 @@ public class Current {
     private ArrayList<Player> selectedBaseTargets = new ArrayList<>();
     private ArrayList<Player> availableBaseTargets = new ArrayList<>();
     private ArrayList<Player> selectedAlternativeTargets = new ArrayList<>();
+    private ArrayList<Player> availableAlternativeTargets = new ArrayList<>();
     private ArrayList<Player> selectedOptionalTargets1 = new ArrayList<>();
+    private ArrayList<Player> availableOptionalTargets1 = new ArrayList<>();
     private ArrayList<Player> selectedOptionalTargets2 = new ArrayList<>();
+    private ArrayList<Player> availableOptionalTargets2 = new ArrayList<>();
+
     private Weapon selectedWeapon = null;
     private ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
 
@@ -110,4 +114,32 @@ public class Current {
     public void setReloadableWeapon(ArrayList<Weapon> reloadableWeapon){
         this.reloadableWeapon = reloadableWeapon;
     }
+
+    public ArrayList<Player> getAvailableAlternativeTargets() {
+        return availableAlternativeTargets;
+    }
+
+    public void setAvailableAlternativeTargets(ArrayList<Player> availableAlternativeTargets) {
+        this.availableAlternativeTargets = availableAlternativeTargets;
+    }
+
+    public ArrayList<Player> getAvailableOptionalTargets1() {
+        return availableOptionalTargets1;
+    }
+
+    public void setAvailableOptionalTargets1(ArrayList<Player> availableOptionaleTargets1) {
+        this.availableOptionalTargets1 = availableOptionaleTargets1;
+    }
+
+    public ArrayList<Player> getAvailableOptionalTargets2() {
+        return availableOptionalTargets2;
+    }
+
+    public void setAvailableOptionalTargets2(ArrayList<Player> availableOptionalTargets2) {
+        this.availableOptionalTargets2 = availableOptionalTargets2;
+    }
+
+
+}
+
 }

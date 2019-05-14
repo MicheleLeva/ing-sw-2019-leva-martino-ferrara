@@ -3,6 +3,7 @@ package model;
 import model.cards.Weapon;
 import model.cards.WeaponAlternative;
 import model.cards.WeaponOptional1;
+import model.cards.WeaponOptional2;
 import model.events.*;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
@@ -40,19 +41,20 @@ public class WeaponNotifier extends WeaponNotify {
         listeners.get(playerColor).update(new OptionalLockRifleTargetsMessage1(message,targetsNumber));
     }
 
-    public void askReload(PlayerColor playerColor , String reloadableWeapon){
-        String message = "Reloadable weapon: \n";
-        message = message +reloadableWeapon +"\n";
-        message = message +"Do you want to reload? [Y/N]\n";
-        listeners.get(playerColor).update(new AskReloadMessage(message));
-
+    public void AlternativeHellionTargets(PlayerColor playerColor,String availableTargets,int targetsNumber){
+        String message ="Choose a target: \n";
+        message = message+availableTargets;
+        listeners.get(playerColor).update(new AlternativeHellionTargetsMessage(message,targetsNumber));
     }
 
-    public void requestWeaponReload(PlayerColor playerColor , String weapon , String ammo , String powerUp){
-        String message;
-        message = weapon;
-        message = message +"Available ammo: " +ammo +".\n";
-        message = message +"Available powerUp: " +powerUp +"\n";
-        listeners.get(playerColor).update(new WeaponReloadMessage(message));
+    public void optionalThor2(PlayerColor playerColor, Weapon weapon){
+        String message = "Use Optional1?:\n"+((WeaponOptional2)weapon).getOptionalText2();
+        listeners.get(playerColor).update(new OptionalThorMessage2(message));
+    }
+
+    public void optionalThorTargets2(PlayerColor playerColor,String availableTargets,int targetsNumber){
+        String message ="Choose a target: \n";
+        message = message+availableTargets;
+        listeners.get(playerColor).update(new OptionalThorTargetsMessage2(message,targetsNumber));
     }
 }

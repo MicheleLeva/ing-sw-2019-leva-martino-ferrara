@@ -5,7 +5,6 @@ import model.player_package.PlayerColor;
 import utils.observable.WeaponObservable;
 import utils.update.WeaponUpdate;
 
-import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 
 public class WeaponView extends WeaponObservable implements WeaponUpdate {
@@ -78,4 +77,35 @@ public class WeaponView extends WeaponObservable implements WeaponUpdate {
         view.printMessage(weaponReloadMessage.getMessage());
         listeners.forEach((l -> l.update(new WeaponReloadEvent(view , view.inputInt()))));
     }
+
+    public void update(AlternativeHellionTargetsMessage message){
+        ArrayList<Integer> selectedTargets = new ArrayList<>();
+        int counter = message.getTargetsNumber();
+        int selection;
+        while(counter>0){
+            selection = view.inputInt();
+            selectedTargets.add(selection);
+            counter--;
+        }
+        listeners.forEach(l -> l.update(new AlternativeHellionTargetsEvent(view,selectedTargets)));
+
+    }
+
+    public void update(OptionalThorMessage2 message){
+        view.printMessage(message.getMessage());
+        listeners.forEach(l -> l.update(new OptionalLockRifleEvent1(view,view.inputInt())));
+    }
+
+    public void update (OptionalThorTargetsMessage2 message){
+        ArrayList<Integer> selectedTargets = new ArrayList<>();
+        int counter = message.getTargetsNumber();
+        int selection;
+        while(counter>0){
+            selection = view.inputInt();
+            selectedTargets.add(selection);
+            counter--;
+        }
+        listeners.forEach(l -> l.update(new OptionalLockRifleTargetsEvent1(view,selectedTargets)));
+    }
+
 }

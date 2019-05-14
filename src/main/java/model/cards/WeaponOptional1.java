@@ -15,12 +15,13 @@ public abstract class WeaponOptional1 extends Weapon {
 
 
     public WeaponOptional1(String name, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,
-                           int optionalMarks1, int baseTargetsNumber, int optionalTargetsNumber1,Model model){
-        super(name,baseCost,baseDamage,baseMarks,baseTargetsNumber,model);
+                           int optionalMarks1, int baseTargetsNumber, int optionalTargetsNumber1,String baseText,String optionalText1,Model model){
+        super(name,baseCost,baseDamage,baseMarks,baseTargetsNumber,baseText,model);
         this.optionalDamage1= optionalDamage1;
         this.optionalCost1=optionalCost1;
         this.optionalMarks1=optionalMarks1;
         this.optionalTargetsNumber1= optionalTargetsNumber1;
+        this.optionalText1=optionalText1;
     }
 
     public Ammo getOptionalCost1() {
@@ -40,9 +41,7 @@ public abstract class WeaponOptional1 extends Weapon {
     }
 
     @Override
-    public void start(Player player) {
-        player.getSelectedWeapon().askBaseRequirements(player);
-    }
+    public abstract void start(Player player);
 
     public abstract void askOptionalRequirements1(Player currentPlayer);
 

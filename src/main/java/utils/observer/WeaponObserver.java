@@ -10,4 +10,7 @@ public interface WeaponObserver {
     void update(OptionalLockRifleTargetsEvent1 event);
     void update(ReloadEndTurnEvent reloadEndTurnEvent);
     void update(WeaponReloadEvent weaponReloadEvent);
+    void update(AlternativeHellionTargetsEvent event);
+    void update(OptionalThorEvent2 event);
+    void update(OptionalThorTargetsEvent2 event);
 }

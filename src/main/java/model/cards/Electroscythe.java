@@ -14,8 +14,8 @@ public class Electroscythe extends WeaponAlternative {
     String baseText;
 
     public Electroscythe(String name, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
-                         int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,Model model){
-        super(name,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
+                         int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,String baseText,String alternativeText,Model model){
+        super(name,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,baseText,alternativeText,model);
 
     }
 

@@ -24,12 +24,13 @@ public abstract class Weapon extends Card {
 
     }
 
-    public Weapon(String name, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,Model model){
+    public Weapon(String name, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,String baseText,Model model){
         this.name = name;
         this.baseCost = baseCost;
         this.baseDamage = baseDamage;
         this.baseMarks = baseMarks;
         this.baseTargetsNumber = baseTargetsNumber;
+        this.baseText = baseText;
         this.model = model;
     }
 
