@@ -57,4 +57,5 @@ public class WeaponNotifier extends WeaponNotify {
         message = message+availableTargets;
         listeners.get(playerColor).update(new OptionalThorTargetsMessage2(message,targetsNumber));
     }
+
 }
