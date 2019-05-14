@@ -1,5 +1,6 @@
 package model;
 
+import controller.Checks;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
@@ -531,20 +532,24 @@ public class Model extends ControllerObservable {
     public void updateTurn() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         if (currentPlayer.getActionTree().isTurnEnded()) {
-            //apre un thread che:
-            //chiedi ricarica
-            //sistema carte
-            //respawna giocatori morti
-            //resetta azioni giocatore corrente
-            //alla fine chiama endturn
+            ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
+            Ammo allAmmo = currentPlayer.getResources().getAllAmmo();
+            if(Checks.canReload(reloadableWeapon , allAmmo)){
+                //chiedi di ricaricare
+                askReloadEndTurn(currentPlayer.getPlayerColor());
+            }
+            else{
+                endTurn();
+            }
         }
         else {
-            //chiedi azione al giocatore corrente
+            chooseAction(currentPlayer.getPlayerColor());
         }
     }
 
-    public void endTurn(){
+    public void endTurn(){ //todo riempire metodo
         //cambia giocatore
+        //respawna giocatori morti
         //notifica nuovo turno
     }
 
@@ -565,7 +570,9 @@ public class Model extends ControllerObservable {
     }
 
     public void chooseAction(PlayerColor playerColor){
-        actionNotifier.chooseAction(playerColor);
+        Player currentPlayer = getPlayer(playerColor);
+        String availableAction = currentPlayer.getActionTree().availableAction();
+        actionNotifier.chooseAction(playerColor , availableAction);
     }
 
     public Current getCurrent(){
@@ -671,6 +678,25 @@ public class Model extends ControllerObservable {
         currentPlayer.getResources().addAmmo(ammo);
         gameNotifier.notifyDrawAmmo(playerColor , currentPlayer.getPlayerName() , ammo.toString());
     }
+
+    public void askReloadEndTurn(PlayerColor playerColor){
+        Player currentPlayer = getPlayer(playerColor);
+        String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
+        weaponNotifier.askReload(playerColor , reloadableWeapon);
+    }
+
+    public void requestWeaponReload(PlayerColor playerColor){
+        Player currentPlayer = getPlayer(playerColor);
+        ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
+        current.setReloadableWeapon(reloadableWeapon);
+        String reloadableWeaponList = currentPlayer.getResources().showReloadableWeapon();
+        String availableAmmoList = currentPlayer.getResources().getAvailableAmmo().toString();
+        String availablePowerUpList = currentPlayer.getResources().showpowerUp();
+
+        weaponNotifier.requestWeaponReload(playerColor , reloadableWeaponList , availableAmmoList , availablePowerUpList);
+    }
+
+
 }
 
 

@@ -11,12 +11,14 @@ public class Resources {
     private final Ammo availableAmmo;
     private final ArrayList<Weapon> weapon;
     private final ArrayList<PowerUp> powerUp;
+    private final ArrayList<Weapon> reloadableWeapon;
 
     public Resources(){
         this.allAmmo = new Ammo(2,2,2);
         this.availableAmmo = new Ammo(1,1,1);
         weapon = new ArrayList<>();
         powerUp = new ArrayList<>();
+        reloadableWeapon = new ArrayList<>();
     }
 
 
@@ -38,7 +40,7 @@ public class Resources {
         return powerUp.remove(index);
     }
 
-    public ArrayList<Weapon> getReloadableWeapon(){
+    /*public ArrayList<Weapon> getReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
         for (int i = 0; i< weapon.size(); i++){
             if (!weapon.get(i).isReloaded()){
@@ -47,7 +49,7 @@ public class Resources {
         }
 
         return reloadableWeapon;
-    }
+    }*/
 
     public ArrayList<Weapon> getReloadedWeapon(){
         ArrayList<Weapon> reloadedWeapon = new ArrayList<>();
@@ -101,6 +103,11 @@ public class Resources {
     }
 
     public Ammo getAllAmmo(){
+        Ammo allAmmo = new Ammo(this.availableAmmo);
+        for (int i = 0; i < powerUp.size(); i++){
+            allAmmo.addAmmo(powerUp.get(i).getCost());
+        }
+
         return allAmmo;
     }
 
@@ -145,5 +152,27 @@ public class Resources {
     public void addAmmo(Ammo ammo){
         allAmmo.remove(ammo);
         availableAmmo.add(ammo);
+    }
+
+    public ArrayList<Weapon> getReloadableWeapon(){
+        return reloadableWeapon;
+    }
+
+    public String showReloadableWeapon(){
+        String result = "";
+        for (int i = 0; i < reloadableWeapon.size(); i++){
+            Weapon currentWeapon = reloadableWeapon.get(i);
+            result = result +(i + 1) +". " +currentWeapon.toString() +" Reload Cost: " +currentWeapon.getBaseCost().toString() +".\n";
+        }
+        return result;
+    }
+
+    public String showPowerUp(){
+        String result = "";
+        for (int i = 0; i < powerUp.size(); i++){
+            PowerUp currentPowerUp = powerUp.get(i);
+            result = result +currentPowerUp.toString() +" Ammo: " +currentPowerUp.getCost().toString() +".\n";
+        }
+        return result;
     }
 }

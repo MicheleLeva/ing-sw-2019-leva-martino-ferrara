@@ -93,4 +93,46 @@ public class WeaponController extends Controller implements WeaponObserver {
         Weapon weapon = currentPlayer.getSelectedWeapon();
         ((WeaponOptional1)weapon).useOptionalFireMode1(currentPlayer,selectedPlayers);
     }
+
+    @Override
+    public void update(ReloadEndTurnEvent reloadEndTurnEvent){
+        char input = reloadEndTurnEvent.getInput();
+        PlayerColor currentPlayerColor = reloadEndTurnEvent.getPlayerColor();
+
+        if(input != 'Y' && input != 'N'){
+            reloadEndTurnEvent.getView().reportError("Invalid input.\n");
+            getModel().askReloadEndTurn(currentPlayerColor);
+            return;
+        }
+
+        if (input == 'N'){
+            getModel().endTurn();
+        }
+        else{
+            getModel().requestWeaponReload(currentPlayerColor);
+        }
+    }
+
+    @Override
+    public void update(WeaponReloadEvent weaponReloadEvent){
+        int input = weaponReloadEvent.getInput();
+        PlayerColor currentPlayerColor = weaponReloadEvent.getPlayerColor();
+        Player currentPlayer = getModel().getPlayer(currentPlayerColor);
+        ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
+        if(input < 1 || input > reloadableWeapon.size()){
+            weaponReloadEvent.getView().reportError("Invalid input.\n");
+            getModel().requestWeaponReload(currentPlayerColor);
+        }
+        else{
+            Weapon chosenWeapon = reloadableWeapon.get(input - 1);
+            /*if (può fare la ricarica){
+                //scartare powerup
+                getModel().reload...
+            }
+            else{
+                weaponReloadEvent.getView().reportError("Insufficient Ammo.\n");
+                getModel().updateTurn(); nel turno normale può scegliere se ricaricare o finire, nel frenesia ridecide l'azione
+            }*/
+        }
+    }
 }

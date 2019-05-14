@@ -8,4 +8,6 @@ public interface WeaponObserver {
     void update(BaseLockRifleTargetsEvent event);
     void update(OptionalLockRifleEvent1 event);
     void update(OptionalLockRifleTargetsEvent1 event);
+    void update(ReloadEndTurnEvent reloadEndTurnEvent);
+    void update(WeaponReloadEvent weaponReloadEvent);
 }

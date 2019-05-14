@@ -18,7 +18,7 @@ public abstract class Weapon extends Card {
     protected ArrayList<Integer> visibility;
     protected int baseTargetsNumber;
     private final Model model;
-    private String baseText;
+    private String baseText; //todo inserire costo di ricarica  e modificare metodo canReload in Checks
 
     public void reload(){
 

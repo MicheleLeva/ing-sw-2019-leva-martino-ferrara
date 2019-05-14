@@ -5,6 +5,7 @@ import model.player_package.PlayerColor;
 import utils.observable.WeaponObservable;
 import utils.update.WeaponUpdate;
 
+import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 
 public class WeaponView extends WeaponObservable implements WeaponUpdate {
@@ -66,4 +67,15 @@ public class WeaponView extends WeaponObservable implements WeaponUpdate {
         listeners.forEach(l -> l.update(new OptionalLockRifleTargetsEvent1(view,selectedTargets)));
     }
 
+    @Override
+    public void update(AskReloadMessage askReloadMessage){
+        view.printMessage(askReloadMessage.getMessage());
+        listeners.forEach(l -> l.update(new ReloadEndTurnEvent(view , view.inputChar())));
+    }
+
+    @Override
+    public void update(WeaponReloadMessage weaponReloadMessage){
+        view.printMessage(weaponReloadMessage.getMessage());
+        listeners.forEach((l -> l.update(new WeaponReloadEvent(view , view.inputInt()))));
+    }
 }

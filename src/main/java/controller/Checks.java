@@ -2,7 +2,10 @@ package controller;
 
 import model.Ammo;
 import model.cards.Card;
+import model.cards.Weapon;
 import model.player_package.Player;
+
+import java.util.ArrayList;
 
 public class Checks {
 
@@ -73,5 +76,15 @@ public class Checks {
         }
 
         return drawableAmmo;
+    }
+
+    public static boolean canReload(ArrayList<Weapon> weapon , Ammo allAmmo){
+        for (int i = 0; i < weapon.size(); i++){
+            Ammo reloadCost = weapon.get(i).getBaseCost(); //todo ritornare il costo di ricarica
+            if (allAmmo.isEnough(reloadCost)){
+                return true;
+            }
+        }
+        return false;
     }
 }

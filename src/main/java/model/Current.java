@@ -17,6 +17,7 @@ public class Current {
     private ArrayList<Player> selectedOptionalTargets1 = new ArrayList<>();
     private ArrayList<Player> selectedOptionalTargets2 = new ArrayList<>();
     private Weapon selectedWeapon = null;
+    private ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
 
     public Current(){
         resetCurrent();
@@ -102,4 +103,11 @@ public class Current {
         this.selectedWeapon = selectedWeapon;
     }
 
+    public ArrayList<Weapon> getReloadableWeapon(){
+        return reloadableWeapon;
+    }
+
+    public void setReloadableWeapon(ArrayList<Weapon> reloadableWeapon){
+        this.reloadableWeapon = reloadableWeapon;
+    }
 }
