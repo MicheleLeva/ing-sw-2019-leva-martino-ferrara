@@ -87,4 +87,14 @@ public class Checks {
         }
         return false;
     }
+
+    public static int givenDamage(int playerDamage , int damage){
+        return 0;
+    }
+
+    public static int givenMark(int playerMark , int mark){
+        return 0;
+    }
+
+
 }

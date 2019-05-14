@@ -736,6 +736,13 @@ public class Model extends ControllerObservable {
         weaponNotifier.requestWeaponReload(playerColor , reloadableWeaponList , availableAmmoList , availablePowerUpList);
     }
 
+    public void addDamage(PlayerColor shooterColor ,PlayerColor opponentColor ,  int damage){
+
+    }
+
+    public void addMark(PlayerColor shooterColor , PlayerColor opponentColor , int mark){
+
+    }
 
 }
 

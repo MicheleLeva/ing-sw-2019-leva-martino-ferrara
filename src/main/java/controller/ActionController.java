@@ -30,14 +30,13 @@ public class ActionController extends Controller implements ActionObserver {
         if(!TurnManager.isPlayerTurn(playerColor)){
             String error = "It's not your turn.\n";
             view.reportError(error);
-            //richiedi di inserire azione dal model
             return;
         }
 
         if(!KeyMap.isValid(move)){
             String error = "Invalid action.\n";
             view.reportError(error);
-            //richiedi di inserire azione dal model
+            getModel().chooseAction(playerColor);
             return;
         }
 
@@ -48,7 +47,7 @@ public class ActionController extends Controller implements ActionObserver {
         if(!player.getActionTree().checkAction(move)){
             String error = "You can't perform this move now.\n";
             view.reportError(error);
-            //richiedi di inserire azione dal model
+            getModel().chooseAction(playerColor);
             return;
         }
         //l'azione è valida e possibile
