@@ -1,8 +1,7 @@
 package controller;
 
 import model.Ammo;
-import model.cards.Card;
-import model.cards.Weapon;
+import model.cards.*;
 import model.player_package.Player;
 
 import java.util.ArrayList;
@@ -86,6 +85,20 @@ public class Checks {
             }
         }
         return false;
+    }
+
+
+
+    public static boolean canUseFireMode(Weapon currentWeapon, String effectType){
+        if(effectType.equals("base"))
+            currentWeapon.getBaseCost();
+        if(effectType.equals("alternative"))
+            ((WeaponAlternative)currentWeapon).getAlternativeCost();
+        if(effectType.equals("optional1"))
+            ((WeaponOptional1)currentWeapon).getOptionalCost1();
+        if(effectType.equals("optional2"))
+            ((WeaponOptional2)currentWeapon).getOptionalCost1();
+        return true;
     }
 
     public static int givenDamage(int playerDamage , int damage){

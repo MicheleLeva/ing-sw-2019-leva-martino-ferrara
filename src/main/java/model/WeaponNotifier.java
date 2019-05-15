@@ -5,6 +5,7 @@ import model.cards.WeaponAlternative;
 import model.cards.WeaponOptional1;
 import model.cards.WeaponOptional2;
 import model.events.*;
+import model.map_package.Square;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
 import utils.notify.WeaponNotify;
@@ -22,6 +23,10 @@ public class WeaponNotifier extends WeaponNotify {
     public void notifyAlternativeEffect(PlayerColor playerColor, Weapon weapon){
         String message = "Choose Fire Mode: "+"\n"+((WeaponAlternative)weapon).getBaseText()+" | "+((WeaponAlternative)weapon).getAlternativeText()+"\n";
         listeners.get(playerColor).update(new AskAlternativeMessage(message));
+    }
+
+    public void showFireModes(PlayerColor playerColor, String fireModes){
+        listeners.get(playerColor).update(new AskFireModesMessage(fireModes));
     }
 
     public void notifyBaseLockRifleTargets(PlayerColor playerColor,String availableTargets,int targetsNumber){
@@ -56,6 +61,13 @@ public class WeaponNotifier extends WeaponNotify {
         String message ="Choose a target: \n";
         message = message+availableTargets;
         listeners.get(playerColor).update(new OptionalThorTargetsMessage2(message,targetsNumber));
+    }
+
+    public void chooseWeaponSquare(PlayerColor playerColor, ArrayList<Square> squares){
+        String message = "Choose a square to move to:\n";
+        for(Square square : squares)
+            message = message + square.getID();
+        listeners.get(playerColor).update(new ChooseWeaponSquareMessage(message));
     }
 
     public void askReload(PlayerColor playerColor , String reloadableWeapon){

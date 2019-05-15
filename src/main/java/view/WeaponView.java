@@ -108,4 +108,12 @@ public class WeaponView extends WeaponObservable implements WeaponUpdate {
         listeners.forEach(l -> l.update(new OptionalLockRifleTargetsEvent1(view,selectedTargets)));
     }
 
+    public void update(AskFireModesMessage message){
+        listeners.forEach(l -> l.update(new OptionalFireModesEvent(view,view.inputInt())));
+    }
+
+    public void update(ChooseWeaponSquareMessage message){
+        view.printMessage(message.getMessage());
+        listeners.forEach(l -> l.update(new ChooseWeaponSquareEvent(view , view.inputInt())));
+    }
 }

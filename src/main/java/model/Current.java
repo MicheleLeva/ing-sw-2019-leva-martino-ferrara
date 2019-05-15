@@ -10,7 +10,15 @@ public class Current {
                         ///For PowerUps///
     private ArrayList<Player> opponent = new ArrayList<>();
     private ArrayList<Square> square = new ArrayList<>();
-                        ///For Weapons///
+
+
+
+    ///For Weapons///
+    private int baseCounter = 0;
+    private int optionalCounter1 = 0;
+    private int optionalCounter2 = 0;
+    private int alternativeCounter = 0;
+    private ArrayList<Square> availableOptionalSquares =  new ArrayList<>();
     private ArrayList<Player> selectedBaseTargets = new ArrayList<>();
     private ArrayList<Player> availableBaseTargets = new ArrayList<>();
     private ArrayList<Player> selectedAlternativeTargets = new ArrayList<>();
@@ -139,7 +147,41 @@ public class Current {
         this.availableOptionalTargets2 = availableOptionalTargets2;
     }
 
+    public ArrayList<Square> getAvailableOptionalSquares() {
+        return availableOptionalSquares;
+    }
 
+    public void setAvailableOptionalSquares(ArrayList<Square> optionalAvailableSquares) {
+        this.availableOptionalSquares = optionalAvailableSquares;
+    }
+
+    public int getBaseCounter() {
+        return baseCounter;
+    }
+
+    public int getOptionalCounter1() {
+        return optionalCounter1;
+    }
+
+    public int getOptionalCounter2() {
+        return optionalCounter2;
+    }
+
+    public int getAlternativeCounter() {
+        return alternativeCounter;
+    }
+
+    public void incrementBaseCounter(){
+        this.baseCounter++;
+    }
+    public void incrementOptionalCounter1(){
+        this.optionalCounter1++;
+    }
+    public void incrementOptionalCounter2(){
+        this.optionalCounter2++;
+    }
+    public void incrementAlternativeCounter(){
+        this.alternativeCounter++;
+    }
 }
 
-}

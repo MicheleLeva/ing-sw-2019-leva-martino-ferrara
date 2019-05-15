@@ -686,9 +686,29 @@ public class Model extends ControllerObservable {
         weaponNotifier.optionalThorTargets2(playerColor,opponentList,targetsNumber);
     }
 
+    public void showFireModes(PlayerColor playerColor, String fireModes){
+        weaponNotifier.showFireModes(playerColor, fireModes);
+    }
+
+
+    public void chooseWeaponSquare(PlayerColor playerColor,ArrayList<Square> squares){
+        for(Square square : squares)
+            current.setAvailableOptionalSquares(squares);
+        weaponNotifier.chooseWeaponSquare(playerColor,squares);
+    }
+
     public void notifyShoot(Player currentPlayer,ArrayList<Player> targets){
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
         gameNotifier.notifyShoot(currentPlayer,targets,allPlayers);
+    }
+
+    public void checkNextWeaponAction(Weapon weapon,Player currentPlayer,ArrayList<Player> selectedTargets){
+        weapon.getWeaponTree().updateLastActionPerformed();
+        if(weapon.getWeaponTree().isActionEnded()){
+            weapon.getWeaponTree().resetAction();
+            weapon.getModel().notifyShoot(currentPlayer,selectedTargets);
+        }
+        weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon.getWeaponTree().availableAction());
     }
 
     public void discardAmmo(Square square){

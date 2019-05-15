@@ -13,4 +13,6 @@ public interface WeaponUpdate {
     void update(AlternativeHellionTargetsMessage alternativeHellionTargetsMessage);
     void update(OptionalThorMessage2 optionalThorMessage2);
     void update(OptionalThorTargetsMessage2 optionalThorTargetsMessage2);
+    void update(AskFireModesMessage message);
+    void update(ChooseWeaponSquareMessage message);
 }

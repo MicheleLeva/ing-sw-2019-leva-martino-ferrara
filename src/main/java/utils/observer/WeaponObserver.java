@@ -13,4 +13,6 @@ public interface WeaponObserver {
     void update(AlternativeHellionTargetsEvent event);
     void update(OptionalThorEvent2 event);
     void update(OptionalThorTargetsEvent2 event);
+    void update(OptionalFireModesEvent event);
+    void update(ChooseWeaponSquareEvent event);
 }

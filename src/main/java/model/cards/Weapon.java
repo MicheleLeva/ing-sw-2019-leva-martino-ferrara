@@ -19,6 +19,7 @@ public abstract class Weapon extends Card {
     protected int baseTargetsNumber;
     private final Model model;
     private String baseText; //todo inserire costo di ricarica  e modificare metodo canReload in Checks
+    private WeaponTree weaponTree;
 
     public void reload(){
 
@@ -77,5 +78,9 @@ public abstract class Weapon extends Card {
     }
 
     public abstract void start(Player player);
+
+    public WeaponTree getWeaponTree(){
+        return weaponTree;
+    }
 
 }

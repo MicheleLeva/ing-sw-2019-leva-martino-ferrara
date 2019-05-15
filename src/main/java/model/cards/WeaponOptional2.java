@@ -12,6 +12,7 @@ public abstract class WeaponOptional2 extends WeaponOptional1 {
     protected int optionalTargetsNumber2;
     protected Ammo optionalCost2;
     protected String optionalText2;
+    WeaponTree weaponTree;
 
     public WeaponOptional2(String name, Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage,
                            int optionalDamage1, int baseDamage2, int baseMarks, int optionalMarks1, int optionalMarks2,
