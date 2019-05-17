@@ -107,7 +107,6 @@ public class GameNotifier extends GameNotify {
         String toPlayer ="You shot: ";
         String toOpponent = currentPlayer.getName() +" shot you";
         String toOthers = "";
-
         for(Player player : targets){
             toPlayer = toPlayer+player.getName();
             targetsColor.add(player.getPlayerColor());

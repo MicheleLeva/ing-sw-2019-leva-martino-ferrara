@@ -107,7 +107,7 @@ public class RemoteView extends PlayerView implements ActionUpdate, GameUpdate, 
                     for (int i = 1; i<= inputs.length; i++){
                         optTargets.add(Integer.parseInt(inputs[i]));
                     }
-                    OptionalLockRifleTargetsEvent1 optionalLockRifleTargetsEvent1 = new OptionalLockRifleTargetsEvent1(this, optTargets);
+                    TargetsSelectionEvent optionalLockRifleTargetsEvent1 = new TargetsSelectionEvent(this, optTargets);
                     weaponListeners.forEach(l -> l.update(optionalLockRifleTargetsEvent1));
                     break;
             }
@@ -193,7 +193,7 @@ public class RemoteView extends PlayerView implements ActionUpdate, GameUpdate, 
     }
 
     @Override
-    public void update(OptionalLockRifleTargetsMessage1 optionalLockRifleTargetsMessage1){
+    public void update(TargetsSelectionMessage optionalLockRifleTargetsMessage1){
         clientConnection.asyncSend("OptionalLockRifleTargetsMessage1," + optionalLockRifleTargetsMessage1.getMessage());
     }
 

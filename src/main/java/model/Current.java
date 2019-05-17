@@ -1,10 +1,13 @@
 package model;
 
+import model.cards.FireMode;
 import model.cards.Weapon;
+import model.cards.WeaponTreeNode;
 import model.map_package.Square;
 import model.player_package.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Current {
                         ///For PowerUps///
@@ -12,13 +15,14 @@ public class Current {
     private ArrayList<Square> square = new ArrayList<>();
 
 
-
     ///For Weapons///
+    private boolean dealtDamage = false;
     private int baseCounter = 0;
     private int optionalCounter1 = 0;
     private int optionalCounter2 = 0;
     private int alternativeCounter = 0;
-    private ArrayList<Square> availableOptionalSquares =  new ArrayList<>();
+    private ArrayList<Square> availableWeaponSquares =  new ArrayList<>();
+    private Square selectedWeaponSquare = null;
     private ArrayList<Player> selectedBaseTargets = new ArrayList<>();
     private ArrayList<Player> availableBaseTargets = new ArrayList<>();
     private ArrayList<Player> selectedAlternativeTargets = new ArrayList<>();
@@ -27,13 +31,23 @@ public class Current {
     private ArrayList<Player> availableOptionalTargets1 = new ArrayList<>();
     private ArrayList<Player> selectedOptionalTargets2 = new ArrayList<>();
     private ArrayList<Player> availableOptionalTargets2 = new ArrayList<>();
-
     private Weapon selectedWeapon = null;
-    private ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
 
     public Current(){
         resetCurrent();
     }
+
+    public List<WeaponTreeNode<FireMode>> getAvailableFireModes() {
+        return availableFireModes;
+    }
+
+    public void setAvailableFireModes(List<WeaponTreeNode<FireMode>> availableFireModes) {
+        this.availableFireModes = availableFireModes;
+    }
+
+    private List<WeaponTreeNode<FireMode>> availableFireModes = new ArrayList<>();
+
+    private ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
 
     public ArrayList<Player> getOpponent() {
         return opponent;
@@ -62,6 +76,15 @@ public class Current {
         for (int i = 0; i < square.size(); i++){
             if(square.get(i).getID() == ID){
                 return square.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Square getWeaponSquareFromID(int ID){
+        for (int i = 0; i < availableWeaponSquares.size(); i++){
+            if(availableWeaponSquares.get(i).getID() == ID){
+                return availableWeaponSquares.get(i);
             }
         }
         return null;
@@ -147,12 +170,20 @@ public class Current {
         this.availableOptionalTargets2 = availableOptionalTargets2;
     }
 
-    public ArrayList<Square> getAvailableOptionalSquares() {
-        return availableOptionalSquares;
+    public ArrayList<Square> getAvailableWeaponSquares() {
+        return availableWeaponSquares;
     }
 
-    public void setAvailableOptionalSquares(ArrayList<Square> optionalAvailableSquares) {
-        this.availableOptionalSquares = optionalAvailableSquares;
+    public void setAvailableWeaponSquares(ArrayList<Square> optionalAvailableSquares) {
+        this.availableWeaponSquares = optionalAvailableSquares;
+    }
+
+    public void setSelectedWeaponSquare(Square square){
+        this.selectedWeaponSquare=square;
+    }
+
+    public Square getSelectedWeaponSquare(){
+        return selectedWeaponSquare;
     }
 
     public int getBaseCounter() {
@@ -174,14 +205,21 @@ public class Current {
     public void incrementBaseCounter(){
         this.baseCounter++;
     }
+
     public void incrementOptionalCounter1(){
         this.optionalCounter1++;
     }
+
     public void incrementOptionalCounter2(){
         this.optionalCounter2++;
     }
+
     public void incrementAlternativeCounter(){
         this.alternativeCounter++;
     }
+
+    public boolean isDealtDamage(){ return this.isDealtDamage();}
+
+    public void setDealtDamage(boolean choice){ this.dealtDamage = choice;}
 }
 

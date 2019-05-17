@@ -138,7 +138,7 @@ public class Translator implements ActionObserver, PowerUpObserver, WeaponObserv
                     weaponListeners.forEach(l -> l.update(optionalLockRifleMessage1));
                     break;
                 case "OptionalLockRifleTargetsMessage1":
-                    OptionalLockRifleTargetsMessage1 optionalLockRifleTargetsMessage1 = new OptionalLockRifleTargetsMessage1(inputs[1], Integer.parseInt(inputs[2]));
+                    TargetsSelectionMessage optionalLockRifleTargetsMessage1 = new TargetsSelectionMessage(inputs[1], Integer.parseInt(inputs[2]));
                     weaponListeners.forEach(l -> l.update(optionalLockRifleTargetsMessage1));
                     break;
             }
@@ -209,7 +209,7 @@ public class Translator implements ActionObserver, PowerUpObserver, WeaponObserv
     }
 
     @Override
-    public void update(OptionalLockRifleTargetsEvent1 event){
+    public void update(TargetsSelectionEvent event){
         //todo fare il toString dell'array
         client.asyncSend("OptionalLockRifleTargetsEvent1," + event.getSelectedTargets());
     }

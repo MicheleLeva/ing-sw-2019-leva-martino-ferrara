@@ -2,27 +2,16 @@ package model;
 
 import controller.Checks;
 import model.adrenaline_exceptions.EmptySquareException;
-import model.adrenaline_exceptions.IllegalOpponentException;
 import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.cards.*;
-import model.events.Event;
-import model.events.ShootEvent;
-import model.events.message.*;
-import model.events.message.Message;
-import model.events.message.RunMessage;
-import model.events.playermove.ShowCardsMove;
 import model.map_package.Direction;
 import model.map_package.*;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.*;
 
-import org.omg.PortableServer.POA;
 import utils.ControllerObservable;
-import utils.Observable;
 
 public class Model extends ControllerObservable {
 
@@ -630,26 +619,7 @@ public class Model extends ControllerObservable {
         weaponNotifier.showWeaponCards(playerColor , availableWeapons);
     }
 
-    public void askAlternativeEffect(PlayerColor playerColor, Weapon weapon){
-        weaponNotifier.notifyAlternativeEffect(playerColor, weapon);
-    }
-
-    public void baseLockRifleTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
-        String opponentList = "";
-        for (int i = 0; i < availableTargets.size(); i++){
-            if(availableTargets.get(i).getPlayerColor() != playerColor){
-                current.addOpponent(availableTargets.get(i));
-                opponentList = opponentList +availableTargets.get(i).getPlayerName() +" ";
-            }
-        }
-        weaponNotifier.notifyBaseLockRifleTargets(playerColor,opponentList,targetsNumber);
-    }
-
-    public void optionalLockRifle1(PlayerColor playerColor, Weapon weapon){
-        weaponNotifier.optionalLockRifle1(playerColor, weapon);
-    }
-
-    public void optionalLockRifleTargets1(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
+    public void selectTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
         String opponentList = "";
         for (int i = 0; i < availableTargets.size(); i++){
             if(availableTargets.get(i).getPlayerColor() != playerColor){
@@ -657,47 +627,40 @@ public class Model extends ControllerObservable {
                 opponentList = opponentList + availableTargets.get(i).getPlayerName() +" ";
             }
         }
-        weaponNotifier.optionalLockRifleTargets1(playerColor,opponentList,targetsNumber);
+        weaponNotifier.selectTargets(playerColor,opponentList,targetsNumber);
     }
 
-    public void AlternativeHellionTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
-        String opponentList = "";
-        for (int i = 0; i < availableTargets.size(); i++){
-            if(availableTargets.get(i).getPlayerColor() != playerColor){
-                current.addOpponent(availableTargets.get(i));
-                opponentList = opponentList +availableTargets.get(i).getPlayerName() +" ";
-            }
+    public void showFireModes(PlayerColor playerColor, Weapon weapon){
+        List<WeaponTreeNode<FireMode>> FireModes = new ArrayList<>();
+        List<WeaponTreeNode<FireMode>> availableFireModes = weapon.getWeaponTree().getLastActionPerformed().getChildren();
+        for(WeaponTreeNode<FireMode> fireMode : availableFireModes){
+            if(Checks.canUseFireMode(weapon, fireMode.getData().getType()))
+                FireModes.add(fireMode);
         }
-        weaponNotifier.AlternativeHellionTargets(playerColor,opponentList,targetsNumber);
-    }
-
-    public void optionalThor2(PlayerColor playerColor, Weapon weapon){
-        weaponNotifier.optionalThor2(playerColor, weapon);
-    }
-
-    public void optionalThorTargets2(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
-        String opponentList = "";
-        for (int i = 0; i < availableTargets.size(); i++){
-            if(availableTargets.get(i).getPlayerColor() != playerColor){
-                current.addOpponent(availableTargets.get(i));
-                opponentList = opponentList + availableTargets.get(i).getPlayerName() +" ";
-            }
+        getCurrent().setAvailableFireModes(availableFireModes);
+        String result = "Your available fire modes: \n";
+        for(WeaponTreeNode<FireMode> child : availableFireModes){
+            result = result + child.getData().getEffectName();
         }
-        weaponNotifier.optionalThorTargets2(playerColor,opponentList,targetsNumber);
+        weaponNotifier.showFireModes(playerColor, result);
     }
 
-    public void showFireModes(PlayerColor playerColor, String fireModes){
-        weaponNotifier.showFireModes(playerColor, fireModes);
+    public void payFireMode(Player currentPlayer){
+        //esegui pagamento con powerup o con munizioni//
     }
 
 
     public void chooseWeaponSquare(PlayerColor playerColor,ArrayList<Square> squares){
-        for(Square square : squares)
-            current.setAvailableOptionalSquares(squares);
+        current.setAvailableWeaponSquares(squares);
         weaponNotifier.chooseWeaponSquare(playerColor,squares);
     }
 
     public void notifyShoot(Player currentPlayer,ArrayList<Player> targets){
+        Set<Player> set = new LinkedHashSet<Player>(current.getSelectedBaseTargets());
+        set.addAll(current.getSelectedAlternativeTargets());
+        set.addAll(current.getSelectedOptionalTargets1());
+        set.addAll(current.getSelectedOptionalTargets2());
+        targets = new ArrayList<>(set);
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
         gameNotifier.notifyShoot(currentPlayer,targets,allPlayers);
     }
@@ -708,7 +671,8 @@ public class Model extends ControllerObservable {
             weapon.getWeaponTree().resetAction();
             weapon.getModel().notifyShoot(currentPlayer,selectedTargets);
         }
-        weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon.getWeaponTree().availableAction());
+        else
+            weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon);
     }
 
     public void discardAmmo(Square square){
@@ -762,6 +726,10 @@ public class Model extends ControllerObservable {
 
     public void addMark(PlayerColor shooterColor , PlayerColor opponentColor , int mark){
 
+    }
+
+    public ArrayList<Player> getAllPlayers(){
+        return turnManager.getAllPlayers();
     }
 
 }

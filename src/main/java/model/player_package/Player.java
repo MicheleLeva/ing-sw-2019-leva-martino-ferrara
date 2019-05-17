@@ -20,7 +20,6 @@ public class Player {
     private Square position;
     private boolean isFirst;
     private ActionTree actionTree;
-    private Weapon selectedWeapon ;
     private ArrayList<Player> baseAvailablePlayers;
 
     public Player(String name, PlayerColor color){
@@ -106,12 +105,6 @@ public class Player {
     public ActionTree getActionTree(){
         return this.actionTree;
     }
-
-    public Weapon getSelectedWeapon(){
-        return selectedWeapon;
-    }
-
-    public void setSelectedWeapon(Weapon weapon){this.selectedWeapon = weapon;}
 
     public ArrayList<Player> getBaseAvailablePlayers(){
         return baseAvailablePlayers;

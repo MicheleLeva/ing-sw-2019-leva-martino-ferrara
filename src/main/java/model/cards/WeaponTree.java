@@ -15,59 +15,14 @@ import java.util.List;
 
 public class WeaponTree {
 
-
-        //Identificatore dell'albero
-        //1: albero normale
-        //2: albero con una azione potenziata
-        //3: albero con due azioni potenziate
-        //4: albero frenesia per giocatori dopo il 1°
-        //5: albero frenesia per giocatori prima del 1°
-        private final int ID;
-
         private String path = null;
         private WeaponTreeNode<FireMode> root = null; //Radice dell'albero
         private WeaponTreeNode<FireMode> lastActionPerformed = null; //Ultima azione inserita
         private WeaponTreeNode<FireMode> lastAction = null; //Ultima azione inserita, ma non ancora performata
 
-        private int actionCounter;
-        private int performedAction;
-
-        public WeaponTree(int ID){
-            this.ID = ID;
-            performedAction = 0;
-            init();
+        public WeaponTree(String path){
+            this.path = path;
             parseActionTree();
-        }
-
-        //Imposta la destinazione del file JSON
-        private void init(){
-            switch (ID)
-            {
-                case 1:
-                    path = "src/resources/actionTree1.json";
-                    actionCounter = 2;
-                    break;
-
-                case 2:
-                    path = "src/resources/actionTree2.json";
-                    actionCounter = 2;
-                    break;
-
-                case 3:
-                    path = "src/resources/actionTree3.json";
-                    actionCounter = 2;
-                    break;
-
-                case 4:
-                    path = "src/resources/actionTree4.json";
-                    actionCounter = 2;
-                    break;
-
-                case 5:
-                    path = "src/resources/actionTree5.json";
-                    actionCounter = 1;
-                    break;
-            }
         }
 
         private void buildTree(WeaponTreeNode<FireMode> parent , JSONObject obj){
@@ -144,16 +99,17 @@ public class WeaponTree {
         }
 
         public boolean isActionEnded(){
-            return lastActionPerformed.getChildren().isEmpty();
+            if(lastActionPerformed.getChildren().isEmpty())
+                return true;
+            else if(lastActionPerformed.getChildren().size()==1 &&
+                    lastActionPerformed.getChildren().get(0).getData().getType()=="end")
+                return true;
+            else
+                return false;
         }
 
         public void resetAction(){
-            performedAction = 0;
             resetLastAction();
-        }
-
-        public boolean isTurnEnded(){
-            return (performedAction == actionCounter);
         }
 
         private void resetLastAction(){
@@ -161,7 +117,6 @@ public class WeaponTree {
         }
 
         public void endAction(){
-            performedAction++;
             resetLastAction();
         }
 
@@ -169,15 +124,15 @@ public class WeaponTree {
             return lastAction.getData().getType();
         }
 
-         public String getEffectName(){
+        public String getEffectName(){
             return lastAction.getData().getType();
     }
 
-    public WeaponTreeNode<FireMode> getLastActionPerformed(){
+        public WeaponTreeNode<FireMode> getLastActionPerformed(){
             return this.lastActionPerformed;
     }
 
-    public WeaponTreeNode<FireMode> getLastAction(){
+        public WeaponTreeNode<FireMode> getLastAction(){
         return this.lastAction;
     }
 

@@ -1,9 +1,10 @@
 package model.events;
 
-public class OptionalThorTargetsMessage2 extends PlayerMessage {
+public class TargetsSelectionMessage extends PlayerMessage{
+
     private final int targetsNumber;
 
-    public OptionalThorTargetsMessage2(String message, int targetsNumber) {
+    public TargetsSelectionMessage(String message, int targetsNumber) {
         super(message);
         this.targetsNumber = targetsNumber;
     }
@@ -12,4 +13,3 @@ public class OptionalThorTargetsMessage2 extends PlayerMessage {
         return this.targetsNumber;
     }
 }
-

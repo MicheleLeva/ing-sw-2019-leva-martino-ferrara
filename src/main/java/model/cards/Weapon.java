@@ -13,35 +13,37 @@ public abstract class Weapon extends Card {
     protected boolean isReloaded;
     protected String name;
     protected Ammo baseCost;
+    protected Ammo pickUpCost;
     protected int baseDamage;
     protected int baseMarks;
-    protected ArrayList<Integer> visibility;
     protected int baseTargetsNumber;
     private final Model model;
-    private String baseText; //todo inserire costo di ricarica  e modificare metodo canReload in Checks
-    private WeaponTree weaponTree;
+     //todo inserire costo di ricarica  e modificare metodo canReload in Checks
+    protected WeaponTree weaponTree;
+
 
     public void reload(){
 
     }
 
-    public Weapon(String name, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,String baseText,Model model){
+    public Weapon(String name, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,Model model){
         this.name = name;
         this.baseCost = baseCost;
         this.baseDamage = baseDamage;
         this.baseMarks = baseMarks;
         this.baseTargetsNumber = baseTargetsNumber;
-        this.baseText = baseText;
         this.model = model;
     }
 
     public String getWeaponName(){
-        return this.name;
+        return name;
     }
 
     public Ammo getBaseCost(){
         return baseCost;
     }
+
+    public Ammo getPickUpCost(){return pickUpCost;}
 
     public int getBaseDamage() {
         return baseDamage;
@@ -49,10 +51,6 @@ public abstract class Weapon extends Card {
 
     public int getBaseMarks() {
         return baseMarks;
-    }
-
-    public ArrayList<Integer> getVisibility() {
-        return visibility;
     }
 
     public int getBaseTargetsNumber(){
@@ -65,10 +63,6 @@ public abstract class Weapon extends Card {
 
     public Model getModel(){return this.model;}
 
-    public String getBaseText(){
-        return baseText;
-    }
-
     public void setIsReload(){
         isReloaded = true;
     }
@@ -76,8 +70,6 @@ public abstract class Weapon extends Card {
     public boolean isReloaded(){
         return isReloaded;
     }
-
-    public abstract void start(Player player);
 
     public WeaponTree getWeaponTree(){
         return weaponTree;

@@ -10,12 +10,9 @@ import static model.Model.getModelInstance;
 
 public class Electroscythe extends WeaponAlternative {
 
-    String alternativeText;
-    String baseText;
-
     public Electroscythe(String name, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
-                         int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,String baseText,String alternativeText,Model model){
-        super(name,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,baseText,alternativeText,model);
+                         int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,Model model){
+        super(name,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
 
     }
 
@@ -32,29 +29,24 @@ public class Electroscythe extends WeaponAlternative {
 
 
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
-        for(Player target : selectedTargets){
-            target.getPlayerBoard().getDamageCounter().addDamage(currentPlayer.getPlayerColor(),getBaseDamage());
-            target.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
+        for (Player target : selectedTargets) {
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
+        //sistemare il pagamento
         currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        currentPlayer.getActionTree().endAction();
-        getModel().notifyShoot(currentPlayer, getModel().getCurrent().getSelectedBaseTargets());
+        //
+        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
-        for(Player target : selectedTargets){
-            target.getPlayerBoard().getDamageCounter().addDamage(currentPlayer.getPlayerColor(),getAlternativeDamage());
-            target.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getAlternativeMarks());
+        for (Player target : selectedTargets) {
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getAlternativeCost());
-        currentPlayer.getActionTree().endAction();
-        getModel().notifyShoot(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
+        //sistemare il pagamento
+        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
+        //
+        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
-
-    public String getBaseText(){ return baseText;}
-
-    public String getAlternativeText(){
-        return alternativeText;
-    }
-
 }

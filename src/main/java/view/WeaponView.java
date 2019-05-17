@@ -31,39 +31,25 @@ public class WeaponView extends WeaponObservable implements WeaponUpdate {
 
     }
 
-    public void update(AskAlternativeMessage message){
-        view.printMessage(message.getMessage());
-        listeners.forEach(l -> l.update(new AlternativeSelectionEvent(view,view.inputInt())));
-    }
-
-    public void update(BaseLockRifleTargetsMessage message){
+    public void update(TargetsSelectionMessage message){
         ArrayList<Integer> selectedTargets = new ArrayList<>();
         int counter = message.getTargetsNumber();
         int selection;
-        while(counter>0){
-            selection = view.inputInt();
-            selectedTargets.add(selection);
-            counter--;
+        String temp = message.getMessage();
+        if(temp.equals("Choose a target: \n")){
+            view.printMessage("No available targets for this fire mode \n");
+            selectedTargets.add(-1);
+            listeners.forEach(l -> l.update(new TargetsSelectionEvent(view,selectedTargets)));}
+
+        else{
+            view.printMessage(message.getMessage());
+            while(counter>0){
+                selection = view.inputInt();
+                selectedTargets.add(selection);
+                counter--;
+            }
+            listeners.forEach(l -> l.update(new TargetsSelectionEvent(view,selectedTargets)));
         }
-        listeners.forEach(l -> l.update(new BaseLockRifleTargetsEvent(view,selectedTargets)));
-
-    }
-
-    public void update(OptionalLockRifleMessage1 message){
-        view.printMessage(message.getMessage());
-        listeners.forEach(l -> l.update(new OptionalLockRifleEvent1(view,view.inputInt())));
-    }
-
-    public void update(OptionalLockRifleTargetsMessage1 message){
-        ArrayList<Integer> selectedTargets = new ArrayList<>();
-        int counter = message.getTargetsNumber();
-        int selection;
-        while(counter>0){
-            selection = view.inputInt();
-            selectedTargets.add(selection);
-            counter--;
-        }
-        listeners.forEach(l -> l.update(new OptionalLockRifleTargetsEvent1(view,selectedTargets)));
     }
 
     @Override
@@ -76,36 +62,6 @@ public class WeaponView extends WeaponObservable implements WeaponUpdate {
     public void update(WeaponReloadMessage weaponReloadMessage){
         view.printMessage(weaponReloadMessage.getMessage());
         listeners.forEach((l -> l.update(new WeaponReloadEvent(view , view.inputInt()))));
-    }
-
-    public void update(AlternativeHellionTargetsMessage message){
-        ArrayList<Integer> selectedTargets = new ArrayList<>();
-        int counter = message.getTargetsNumber();
-        int selection;
-        while(counter>0){
-            selection = view.inputInt();
-            selectedTargets.add(selection);
-            counter--;
-        }
-        listeners.forEach(l -> l.update(new AlternativeHellionTargetsEvent(view,selectedTargets)));
-
-    }
-
-    public void update(OptionalThorMessage2 message){
-        view.printMessage(message.getMessage());
-        listeners.forEach(l -> l.update(new OptionalLockRifleEvent1(view,view.inputInt())));
-    }
-
-    public void update (OptionalThorTargetsMessage2 message){
-        ArrayList<Integer> selectedTargets = new ArrayList<>();
-        int counter = message.getTargetsNumber();
-        int selection;
-        while(counter>0){
-            selection = view.inputInt();
-            selectedTargets.add(selection);
-            counter--;
-        }
-        listeners.forEach(l -> l.update(new OptionalLockRifleTargetsEvent1(view,selectedTargets)));
     }
 
     public void update(AskFireModesMessage message){

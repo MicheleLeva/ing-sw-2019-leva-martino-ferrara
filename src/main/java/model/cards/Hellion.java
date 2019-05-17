@@ -8,85 +8,92 @@ import java.util.ArrayList;
 
 public class Hellion extends WeaponAlternative {
 
-    String alternativeText;
-    String baseText;
-
     public Hellion(String name, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
-                   int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,String baseText,String alternativeText, Model model){
-        super(name,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,baseText,alternativeText,model);
+                   int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){
+        super(name,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
 
     }
 
-    @Override
-    public String getAlternativeText() {
-        return null;
-    }
 
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
-        ArrayList<Player> finalList = new ArrayList<>();
-        ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(1,currentPlayer));
-        ArrayList<Player> availableTargets = new ArrayList<>(getModel().getVisiblePlayers(currentPlayer));
-        for(Player player : availableTargets){
-            if(temp.contains(player))
-                finalList.add(player);
-
+        if(getModel().getCurrent().getAlternativeCounter() == 0) {
+            ArrayList<Player> finalList = new ArrayList<>();
+            ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(1,currentPlayer));
+            ArrayList<Player> availableTargets = new ArrayList<>(getModel().getVisiblePlayers(currentPlayer));
+            for(Player player : availableTargets){
+                if(temp.contains(player))
+                    finalList.add(player);
+            }
+            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
+            getModel().getCurrent().incrementAlternativeCounter();
+            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
         }
-        getModel().AlternativeHellionTargets(currentPlayer.getPlayerColor(),availableTargets,this.getBaseTargetsNumber());
+        else
+            useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
     }
 
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-            ArrayList<Player> finalList = new ArrayList<>();
-            for(Player target : selectedTargets){
-                target.getPlayerBoard().getDamageCounter().addDamage(currentPlayer.getPlayerColor(),getBaseDamage());
-                target.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
+        ArrayList<Player> finalList = new ArrayList<>();
+        for(Player target : selectedTargets){
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
+        }
+        for(Player player : getModel().getAllPlayers()){
+            if(player.getPosition()==selectedTargets.get(0).getPosition() && player!=currentPlayer && !selectedTargets.contains(player)){
+                player.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getAlternativeMarks());
+                finalList.add(player);
             }
-            for(Player player : getModel().getAllPlayers()){
-                if(player.getPosition()==selectedTargets.get(0).getPosition() && player!=currentPlayer && !selectedTargets.contains(player)){
-                    player.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
-                    finalList.add(player);
-                }
-
-            }
-            ArrayList<Player> temp = new ArrayList<>(getModel().getCurrent().getSelectedBaseTargets());
-            temp.addAll(finalList);
-            currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-            currentPlayer.getActionTree().endAction();
-            getModel().notifyShoot(currentPlayer, temp);
+        }
+        for(Player target : finalList){
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), 0);
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
+        }
+        //sistemare il pagamento
+        currentPlayer.getResources().removeFromAvailableAmmo(this.getAlternativeCost());
+        //
+        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
     @Override
     public void askBaseRequirements(Player currentPlayer) {
-        ArrayList<Player> finalList = new ArrayList<>();
-        ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(1,currentPlayer));
-        ArrayList<Player> availableTargets = new ArrayList<>(getModel().getVisiblePlayers(currentPlayer));
-        for(Player player : availableTargets){
-            if(temp.contains(player))
-                finalList.add(player);
-
+        if(getModel().getCurrent().getBaseCounter() == 0) {
+            ArrayList<Player> finalList = new ArrayList<>();
+            ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(1,currentPlayer));
+            ArrayList<Player> availableTargets = new ArrayList<>(getModel().getVisiblePlayers(currentPlayer));
+            for(Player player : availableTargets){
+                if(temp.contains(player))
+                    finalList.add(player);
+            }
+            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
+            getModel().getCurrent().incrementBaseCounter();
+            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
         }
-        getModel().baseLockRifleTargets(currentPlayer.getPlayerColor(),finalList,this.getBaseTargetsNumber());
+        else
+            useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         ArrayList<Player> finalList = new ArrayList<>();
         for(Player target : selectedTargets){
-            target.getPlayerBoard().getDamageCounter().addDamage(currentPlayer.getPlayerColor(),getBaseDamage());
-            target.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
         for(Player player : getModel().getAllPlayers()){
             if(player.getPosition()==selectedTargets.get(0).getPosition() && player!=currentPlayer && !selectedTargets.contains(player)){
                 player.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
                 finalList.add(player);
             }
-
         }
-        ArrayList<Player> temp = new ArrayList<>(getModel().getCurrent().getSelectedBaseTargets());
-        temp.addAll(finalList);
+        for(Player target : finalList){
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), 0);
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
+        }
+        //sistemare il pagamento
         currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        currentPlayer.getActionTree().endAction();
-        getModel().notifyShoot(currentPlayer, temp);
+        //
+        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 }
