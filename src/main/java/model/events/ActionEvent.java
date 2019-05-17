@@ -13,4 +13,9 @@ public class ActionEvent extends Event {
     public char getInput(){
         return input;
     }
+
+    @Override
+    public String toString() {
+        return "ActionEvent," + getInput();
+    }
 }

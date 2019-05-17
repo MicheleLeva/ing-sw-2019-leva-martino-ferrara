@@ -65,12 +65,6 @@ public class SocketClientConnection extends Observable<String> implements Client
         }).start();
     }
 
-    /*
-    public void asyncSend(final String message){
-        new Thread(() -> send(message)).start();
-    }
-    */
-
     public synchronized void closeConnection() { //mando messaggio al network.client e chiudo la connessione
         send("GenericMessage,The connection has been closed");
         try {

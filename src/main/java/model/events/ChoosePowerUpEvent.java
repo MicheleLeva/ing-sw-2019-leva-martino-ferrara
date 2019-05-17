@@ -11,4 +11,9 @@ public class ChoosePowerUpEvent extends Event {
     public int getInput(){
         return input;
     }
+
+    @Override
+    public String toString() {
+        return "ChoosePowerUpEvent," + getInput();
+    }
 }

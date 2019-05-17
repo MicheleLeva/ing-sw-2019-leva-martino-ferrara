@@ -58,15 +58,22 @@ public class Client extends Observable<String> implements ClientConnection,Runna
 
     public void run(){
 
+        PlayerColor playerColor = PlayerColor.BLUE;
         //placeholder, c'è davvero bisogno che la PlayerView contega il colore?
+        //alla fine il model lo ha e si recupera il colore della view a seconda di chi gli manda il messaggio
         //se sì bisogna implementare la messaggistica
-        playerView = new PlayerView(PlayerColor.BLUE);
-        Translator translator = new Translator(this);
+        playerView = new PlayerView(playerColor);
+        NetworkHandler networkHandler = new NetworkHandler(this);
 
-        translator.register(playerView.getActionView());
-        translator.register(playerView.getGameView());
-        translator.register(playerView.getPowerUpView());
-        translator.register(playerView.getWeaponView());
+        networkHandler.getRemoteActionHandler().register(playerColor, playerView.getActionView());
+        networkHandler.getRemoteWeaponHandler().register(playerColor, playerView.getWeaponView());
+        networkHandler.getRemoteGameHandler().register(playerColor, playerView.getGameView());
+        networkHandler.getRemotePowerUpHandler().register(playerColor, playerView.getPowerUpView());
+
+        playerView.getActionView().register(networkHandler.getRemoteActionHandler());
+        playerView.getWeaponView().register(networkHandler.getRemoteWeaponHandler());
+        playerView.getGameView().register(networkHandler.getRemoteGameHandler());
+        playerView.getPowerUpView().register(networkHandler.getRemotePowerUpHandler());
 
         Scanner in;
         try {

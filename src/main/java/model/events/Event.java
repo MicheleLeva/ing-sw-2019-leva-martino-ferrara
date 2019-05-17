@@ -3,6 +3,8 @@ package model.events;
 import model.player_package.PlayerColor;
 import view.PlayerView;
 
+import java.util.List;
+
 public abstract class Event {
     private final PlayerColor playerColor;
 
@@ -19,5 +21,22 @@ public abstract class Event {
 
     public PlayerColor getPlayerColor(){
         return playerColor;
+    }
+
+    public String arrayToString(List<Integer> array){
+        String temp = "";
+        for(int i = 0; i<array.size(); i++){
+            temp = temp.concat(array.get(i).toString());
+            if (i != array.size()-1){
+                temp = temp.concat(",");
+            }
+        }
+
+        return temp;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

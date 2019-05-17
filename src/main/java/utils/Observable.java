@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Observable<T> {
 
-    private final ArrayList<Observer<T>> observers = new ArrayList<Observer<T>>();
+    private final ArrayList<Observer> observers = new ArrayList<>();
 
     public void register(Observer observer){
         synchronized (observers){
@@ -20,7 +20,7 @@ public class Observable<T> {
 
     protected void notify(T message){
         synchronized(observers){
-            for (Observer<T> observer : observers){
+            for (Observer observer : observers){
                 observer.update(message);
             }
         }

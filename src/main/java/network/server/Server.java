@@ -93,15 +93,14 @@ public class Server {
         Model model = new Model(players, 8);
 
         for (RemoteView v : remoteViews){
-            model.getGameNotifier().register(v.getPlayerColor(), v);
-            model.getActionNotifier().register(v.getPlayerColor(), v);
-            model.getPowerUpNotifier().register(v.getPlayerColor(), v);
-            model.getWeaponNotifier().register(v.getPlayerColor(), v);
-            v.register(new ActionController(model));
-            v.register(new PowerUpController(model));
-            v.register(new WeaponController(model));
+            model.getGameNotifier().register(v.getPlayerColor(), v.getRemoteGameView());
+            model.getActionNotifier().register(v.getPlayerColor(), v.getRemoteActionView());
+            model.getPowerUpNotifier().register(v.getPlayerColor(), v.getRemotePowerUpView());
+            model.getWeaponNotifier().register(v.getPlayerColor(), v.getRemoteWeaponView());
+            v.getRemoteActionView().register(new ActionController(model));
+            v.getRemotePowerUpView().register(new PowerUpController(model));
+            v.getRemoteWeaponView().register(new WeaponController(model));
         }
-
 
         new Game(0, model);
         //inizializzo il gioco, da rivedere l'assegnazione del gameID

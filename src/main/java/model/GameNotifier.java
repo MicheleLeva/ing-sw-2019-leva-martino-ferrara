@@ -1,24 +1,33 @@
 package model;
 
 import model.events.GenericMessage;
+import model.events.PlayerMessage;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
-import utils.notify.GameNotify;
 import utils.update.GameUpdate;
-import model.events.ShootMessage;
+import utils.update.ViewObservable;
 
 import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameNotifier extends GameNotify {
+public class GameNotifier extends ViewObservable<PlayerMessage> {
 
     public void notifyRun(PlayerColor playerColor , String playerName , String newSquare){
         String toPlayer = "You ";
         String toOthers = playerName +" ";
-        String message;
-        message = playerName +"just moved to " +newSquare +".\n";
+        String message = "just moved to " +newSquare +".\n";
+        toPlayer = toPlayer +message;
+        toOthers = toOthers +message;
+
+        PlayerMessage msgToPlayer = new GenericMessage(toPlayer);
+        notify(msgToPlayer, playerColor);
+
+        PlayerMessage msgToOthers = new GenericMessage(toOthers);
+        notifyOthers(msgToOthers, playerColor);
+
+        /*
         for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
             PlayerColor currentPlayerColor = entry.getKey();
             if(currentPlayerColor == playerColor){
@@ -28,6 +37,7 @@ public class GameNotifier extends GameNotify {
                 entry.getValue().update(new GenericMessage(toOthers));
             }
         }
+         */
     }
 
     public void notifyTeleporter(PlayerColor playerColor , String playerName , String newSquare){
@@ -36,7 +46,14 @@ public class GameNotifier extends GameNotify {
         String message = "just teleported to " +newSquare +".\n";
         toPlayer = toPlayer +message;
         toOthers = toOthers +message;
-        for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
+
+        PlayerMessage msgToPlayer = new GenericMessage(toPlayer);
+        notify(msgToPlayer, playerColor);
+
+        PlayerMessage msgToOthers = new GenericMessage(toOthers);
+        notifyOthers(msgToOthers, playerColor);
+
+        /*for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
             PlayerColor currentPlayerColor = entry.getKey();
             if(currentPlayerColor == playerColor){
                 entry.getValue().update(new GenericMessage(toPlayer));
@@ -44,14 +61,24 @@ public class GameNotifier extends GameNotify {
             else{
                 entry.getValue().update(new GenericMessage(toOthers));
             }
-        }
+        }*/
     }
 
     public void notifyNewton(String playerName , String opponentName , PlayerColor playerColor , PlayerColor opponentColor , String newSquare){
         String toPlayer ="You moved " +opponentName +" to: " +newSquare +".\n";
         String toOpponent = playerName +" moved you to: " +newSquare +".\n";
         String toOthers = playerName +" moved " +opponentName +" to: " +newSquare +".\n";
-        for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
+
+        PlayerMessage msgToPlayer = new GenericMessage(toPlayer);
+        notify(msgToPlayer, playerColor);
+
+        PlayerMessage msgToOpponent = new GenericMessage(toOpponent);
+        notify(msgToOpponent, opponentColor);
+
+        PlayerMessage msgToOthers = new GenericMessage(toOthers);
+        notifyOthers(msgToOthers, playerColor, opponentColor);
+
+        /*for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
             PlayerColor currentPlayerColor = entry.getKey();
             if(currentPlayerColor == playerColor){
                 entry.getValue().update(new GenericMessage(toPlayer));
@@ -64,7 +91,7 @@ public class GameNotifier extends GameNotify {
                    entry.getValue().update(new GenericMessage(toOthers));
                }
             }
-        }
+        }*/
 
     }
     public void notifyDrawPowerUp(PlayerColor playerColor ,String playerName , String powerUpList , int num){
@@ -75,7 +102,13 @@ public class GameNotifier extends GameNotify {
         }
         toOthers = toOthers +".\n";
 
-        for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
+        PlayerMessage msgToPlayer = new GenericMessage(toPlayer);
+        notify(msgToPlayer, playerColor);
+
+        PlayerMessage msgToOthers = new GenericMessage(toOthers);
+        notifyOthers(msgToOthers, playerColor);
+
+        /*for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
             PlayerColor currentPlayerColor = entry.getKey();
             if(currentPlayerColor == playerColor){
                 entry.getValue().update(new GenericMessage(toPlayer));
@@ -83,7 +116,7 @@ public class GameNotifier extends GameNotify {
             else{
                 entry.getValue().update(new GenericMessage(toOthers));
             }
-        }
+        }*/
     }
 
     public void notifyDrawAmmo(PlayerColor playerColor , String playerName , String ammo){
@@ -91,7 +124,14 @@ public class GameNotifier extends GameNotify {
         String toOthers = playerName +" drew: \n";
         toPlayer = toPlayer + ammo +".\n";
         toOthers = toOthers +ammo +".\n";
-        for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
+
+        PlayerMessage msgToPlayer = new GenericMessage(toPlayer);
+        notify(msgToPlayer, playerColor);
+
+        PlayerMessage msgToOthers = new GenericMessage(toOthers);
+        notifyOthers(msgToOthers, playerColor);
+
+        /*for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
             PlayerColor currentPlayerColor = entry.getKey();
             if(currentPlayerColor == playerColor){
                 entry.getValue().update(new GenericMessage(toPlayer));
@@ -99,7 +139,7 @@ public class GameNotifier extends GameNotify {
             else{
                 entry.getValue().update(new GenericMessage(toOthers));
             }
-        }
+        }*/
     }
 
     public void notifyShoot(Player currentPlayer, ArrayList<Player> targets, ArrayList<Player> allPlayers){
@@ -128,7 +168,25 @@ public class GameNotifier extends GameNotify {
             }
             toOthers = toOthers+"\n";
         }
-        for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
+
+
+        PlayerMessage msgToPlayer = new GenericMessage(toPlayer+"\n"+toOthers);
+        notify(msgToPlayer, currentPlayer.getPlayerColor());
+
+        PlayerMessage msgToOpponent = new GenericMessage(toOpponent);
+        PlayerMessage msgToOthers = new GenericMessage(toOthers);
+
+        for(Player player : allPlayers){
+            if(targetsColor.contains(currentPlayer.getPlayerColor())){
+
+                notify(msgToOpponent, player.getPlayerColor());
+            }
+            else{
+                notify(msgToOthers, player.getPlayerColor());
+            }
+        }
+
+        /*for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
             PlayerColor currentPlayerColor = entry.getKey();
             if(currentPlayerColor == currentPlayer.getPlayerColor()){
                 entry.getValue().update(new GenericMessage(toPlayer+"\n"+toOthers));
@@ -141,7 +199,7 @@ public class GameNotifier extends GameNotify {
                     entry.getValue().update(new GenericMessage(toOthers));
                 }
             }
-        }
+        }*/
     }
 
 }
