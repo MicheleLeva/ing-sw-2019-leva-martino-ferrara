@@ -12,4 +12,9 @@ public class AlternativeSelectionEvent extends Event {
     public int getIndex(){
         return this.index;
     }
+
+    @Override
+    public String toString() {
+        return ("AlternativeSelectionEvent," + getIndex());
+    }
 }

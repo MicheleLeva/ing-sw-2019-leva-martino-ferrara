@@ -12,4 +12,9 @@ public class WeaponReloadEvent extends Event {
     public int getInput(){
         return input;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "," + getInput();
+    }
 }

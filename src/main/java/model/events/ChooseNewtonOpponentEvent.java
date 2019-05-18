@@ -12,4 +12,9 @@ public class ChooseNewtonOpponentEvent extends Event {
     public int getInput() {
         return input;
     }
+
+    @Override
+    public String toString() {
+        return "ChooseNewtonOpponentEvent," + getInput();
+    }
 }

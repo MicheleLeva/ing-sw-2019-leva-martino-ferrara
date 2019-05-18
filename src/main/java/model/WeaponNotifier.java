@@ -31,6 +31,7 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         //listeners.get(playerColor).update(new AskAlternativeMessage(message));
     }
 */
+
     public void showFireModes(PlayerColor playerColor, String fireModes){
 
         PlayerMessage playerMessage = new AskFireModesMessage(fireModes);
@@ -41,7 +42,10 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
     public void selectTargets(PlayerColor playerColor, String availableTargets, int targetsNumber){
         String message ="Choose a target: \n";
         message = message+availableTargets;
-        listeners.get(playerColor).update(new TargetsSelectionMessage(message,targetsNumber));
+
+        PlayerMessage playerMessage = new TargetsSelectionMessage(message,targetsNumber);
+        notify(playerMessage, playerColor);
+        //listeners.get(playerColor).update(new TargetsSelectionMessage(message,targetsNumber));
     }
 
     public void chooseWeaponSquare(PlayerColor playerColor, ArrayList<Square> squares){

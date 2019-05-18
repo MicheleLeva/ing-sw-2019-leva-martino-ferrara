@@ -13,4 +13,8 @@ public class ChooseNewtonSquareEvent extends Event {
         return input;
     }
 
+    @Override
+    public String toString() {
+        return "ChooseNewtonSquareEvent," + getInput();
+    }
 }

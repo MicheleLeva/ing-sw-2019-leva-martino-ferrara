@@ -24,15 +24,14 @@ public abstract class Event {
     }
 
     public String arrayToString(List<Integer> array){
-        String temp = "";
+        StringBuilder stringBuilder = new StringBuilder();
         for(int i = 0; i<array.size(); i++){
-            temp = temp.concat(array.get(i).toString());
+             stringBuilder.append(array.get(i).toString());
             if (i != array.size()-1){
-                temp = temp.concat(",");
+                stringBuilder.append(",");
             }
         }
-
-        return temp;
+        return stringBuilder.toString();
     }
 
     @Override

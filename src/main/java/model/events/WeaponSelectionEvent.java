@@ -12,4 +12,9 @@ public class WeaponSelectionEvent extends Event {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "," + getIndex();
+    }
 }

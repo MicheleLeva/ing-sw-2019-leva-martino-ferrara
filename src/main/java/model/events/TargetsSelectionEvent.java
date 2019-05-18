@@ -16,4 +16,11 @@ public class TargetsSelectionEvent extends Event {
     public ArrayList<Integer> getSelectedTargets() {
         return selectedTargets;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "," +  arrayToString(getSelectedTargets());
+    }
+
+
 }

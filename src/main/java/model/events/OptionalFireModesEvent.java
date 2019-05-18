@@ -13,4 +13,9 @@ public class OptionalFireModesEvent extends Event {
     public int getInput(){
         return this.input;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "," + getInput();
+    }
 }

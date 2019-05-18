@@ -42,6 +42,9 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
         if(temp.equals("Choose a target: \n")){
             view.printMessage("No available targets for this fire mode \n");
             selectedTargets.add(-1);
+
+            Event event = new TargetsSelectionEvent(view,selectedTargets);
+            notify(event);
             //listeners.forEach(l -> l.update(new TargetsSelectionEvent(view,selectedTargets)));
             }
 
@@ -52,6 +55,9 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
                 selectedTargets.add(selection);
                 counter--;
             }
+
+            Event event = new TargetsSelectionEvent(view,selectedTargets);
+            notify(event);
             //listeners.forEach(l -> l.update(new TargetsSelectionEvent(view,selectedTargets)));
         }
     }
@@ -75,11 +81,18 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     }
 
     public void update(AskFireModesMessage message){
+        view.printMessage(message.getMessage());
+
+        Event event = new OptionalFireModesEvent(view,view.inputInt());
+        notify(event);
         //listeners.forEach(l -> l.update(new OptionalFireModesEvent(view,view.inputInt())));
     }
 
     public void update(ChooseWeaponSquareMessage message){
         view.printMessage(message.getMessage());
+
+        Event event = new ChooseWeaponSquareEvent(view , view.inputInt());
+        notify(event);
         //listeners.forEach(l -> l.update(new ChooseWeaponSquareEvent(view , view.inputInt())));
     }
 }

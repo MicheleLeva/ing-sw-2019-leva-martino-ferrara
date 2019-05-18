@@ -12,4 +12,9 @@ public class TargetsSelectionMessage extends PlayerMessage{
     public int getTargetsNumber(){
         return this.targetsNumber;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "," + getMessage() + "," +getTargetsNumber();
+    }
 }
