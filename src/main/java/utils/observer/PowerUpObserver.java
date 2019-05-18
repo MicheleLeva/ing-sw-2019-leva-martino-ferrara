@@ -1,6 +1,9 @@
 package utils.observer;
 
-import model.events.*;
+import model.exchanges.events.ChooseNewtonOpponentEvent;
+import model.exchanges.events.ChooseNewtonSquareEvent;
+import model.exchanges.events.ChoosePowerUpEvent;
+import model.exchanges.events.ChooseTeleporterSquareEvent;
 
 public interface PowerUpObserver {
     void update(ChoosePowerUpEvent choosePowerUpEvent);

@@ -1,6 +1,5 @@
 package utils.observable;
 
-import model.events.Event;
 import utils.observer.ActionObserver;
 
 import java.util.ArrayList;

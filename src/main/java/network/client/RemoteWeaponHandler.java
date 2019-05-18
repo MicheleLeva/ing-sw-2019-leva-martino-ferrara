@@ -1,7 +1,8 @@
 package network.client;
 
-import model.events.*;
-import model.player_package.PlayerColor;
+import model.exchanges.events.Event;
+import model.exchanges.messages.*;
+import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
 import utils.notify.WeaponNotify;

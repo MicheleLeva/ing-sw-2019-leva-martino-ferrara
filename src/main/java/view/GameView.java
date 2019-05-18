@@ -1,14 +1,18 @@
 package view;
 
-import model.events.*;
-import model.player_package.PlayerColor;
+import model.exchanges.events.Event;
+import model.exchanges.messages.GenericMessage;
+import model.exchanges.messages.NameSetMessage;
+import model.exchanges.messages.RunMessage;
+import model.exchanges.messages.ShootMessage;
+import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.GameUpdate;
 
 public class GameView extends Observable<Event> implements GameUpdate {
     private final PlayerColor playerColor;
-    private final PlayerView view;
-    public GameView(PlayerColor playerColor , PlayerView view){
+    private final View view;
+    public GameView(PlayerColor playerColor , View view){
         this.playerColor = playerColor;
         this.view = view;
     }

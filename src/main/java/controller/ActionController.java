@@ -1,20 +1,19 @@
 package controller;
 
 import model.Model;
-import model.Turn;
-import model.TurnManager;
+import model.turn.TurnManager;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.MaxAmmoException;
 import model.adrenaline_exceptions.NoPowerUpException;
 import model.adrenaline_exceptions.WallException;
-import model.events.ActionEvent;
-import model.player_package.Action;
-import model.player_package.ActionCreator;
-import model.player_package.Player;
-import model.player_package.PlayerColor;
-import model.player_package.action.KeyMap;
+import model.exchanges.events.ActionEvent;
+import model.player.action.Action;
+import model.player.action.ActionCreator;
+import model.player.Player;
+import model.player.PlayerColor;
+import model.player.action.KeyMap;
 import utils.observer.ActionObserver;
-import view.PlayerView;
+import view.View;
 
 public class ActionController extends Controller implements ActionObserver {
     //override di tutti gli update
@@ -24,7 +23,7 @@ public class ActionController extends Controller implements ActionObserver {
 
     public void update(ActionEvent actionEvent){
         PlayerColor playerColor = actionEvent.getPlayerColor();
-        PlayerView view = actionEvent.getView();
+        View view = actionEvent.getView();
         char move = actionEvent.getInput();
 
         if(!TurnManager.isPlayerTurn(playerColor)){

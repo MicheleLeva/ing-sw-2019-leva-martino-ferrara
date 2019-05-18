@@ -1,13 +1,13 @@
 package view;
 
-import model.player_package.PlayerColor;
+import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
 
 
 import java.util.Arrays;
 
-public class RemoteView extends PlayerView implements Observer<String> {
+public class RemoteView extends View implements Observer<String> {
 
     private ClientConnection clientConnection;
     private final RemoteActionView remoteActionView;
@@ -46,7 +46,7 @@ public class RemoteView extends PlayerView implements Observer<String> {
     }
 
     public void update(String message) {
-        //System.out.println("Received " + message);
+        //System.out.println("Received " + messages);
         try{
             String[] inputs = message.split(",");
             String[] strings = Arrays.copyOfRange(inputs, 1, inputs.length);
@@ -64,7 +64,7 @@ public class RemoteView extends PlayerView implements Observer<String> {
                     remotePowerUpView.stringToMessage(strings);
                     break;
                 default:
-                    System.out.println("Unidentified message from " + getPlayerColor().toString() + " view: \n" + message);
+                    System.out.println("Unidentified messages from " + getPlayerColor().toString() + " view: \n" + message);
             }
         }catch(IllegalArgumentException e){
             //todo da modificare

@@ -1,6 +1,6 @@
 package utils.observer;
 
-import model.events.ActionEvent;
+import model.exchanges.events.ActionEvent;
 
 public interface ActionObserver {
     //void update();

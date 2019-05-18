@@ -1,6 +1,6 @@
 package utils.observer;
 
-import model.events.*;
+import model.exchanges.events.*;
 
 public interface WeaponObserver {
     void update(WeaponSelectionEvent event);

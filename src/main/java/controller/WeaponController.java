@@ -2,11 +2,14 @@ package controller;
 
 import model.Current;
 import model.Model;
-import model.cards.*;
-import model.events.*;
-import model.map_package.Square;
-import model.player_package.Player;
-import model.player_package.PlayerColor;
+import model.cards.weapons.Weapon;
+import model.cards.weapons.WeaponAlternative;
+import model.cards.weapons.WeaponOptional1;
+import model.cards.weapons.WeaponOptional2;
+import model.exchanges.events.*;
+import model.map.Square;
+import model.player.Player;
+import model.player.PlayerColor;
 import utils.observer.WeaponObserver;
 
 import java.util.ArrayList;

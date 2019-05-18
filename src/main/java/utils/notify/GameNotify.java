@@ -1,6 +1,6 @@
 package utils.notify;
 
-import model.player_package.PlayerColor;
+import model.player.PlayerColor;
 import utils.update.GameUpdate;
 
 import java.util.HashMap;

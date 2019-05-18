@@ -1,7 +1,7 @@
 package view;
 
-import model.events.PlayerMessage;
-import model.events.*;
+import model.exchanges.messages.PlayerMessage;
+import model.exchanges.events.*;
 import network.ClientConnection;
 import utils.Observer;
 import utils.observable.WeaponObservable;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class RemoteWeaponView extends WeaponObservable implements Observer<PlayerMessage> {
 
     private ClientConnection clientConnection;
-    private PlayerView view;
+    private View view;
 
-    public RemoteWeaponView(ClientConnection clientConnection, PlayerView view){
+    public RemoteWeaponView(ClientConnection clientConnection, View view){
         this.clientConnection = clientConnection;
         this.view = view;
     }

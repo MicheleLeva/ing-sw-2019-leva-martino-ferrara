@@ -1,16 +1,19 @@
 package view;
 
-import model.events.*;
-import model.player_package.PlayerColor;
+import model.exchanges.events.*;
+import model.exchanges.messages.ChooseNewtonOpponentMessage;
+import model.exchanges.messages.ChooseNewtonSquareMessage;
+import model.exchanges.messages.ChoosePowerUpMessage;
+import model.exchanges.messages.ChooseTeleporterSquareMessage;
+import model.player.PlayerColor;
 import utils.Observable;
-import utils.observable.PowerUpObservable;
 import utils.update.PowerUpUpdate;
 
 public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
     private final PlayerColor playerColor;
-    private final PlayerView view;
+    private final View view;
 
-    public PowerUpView(PlayerColor playerColor , PlayerView view){
+    public PowerUpView(PlayerColor playerColor , View view){
         this.playerColor = playerColor;
         this.view = view;
     }
@@ -19,7 +22,7 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
         return playerColor;
     }
 
-    public PlayerView getView(){
+    public View getView(){
         return view;
     }
     @Override
@@ -28,7 +31,7 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
 
         Event event = new ChoosePowerUpEvent(view , view.inputInt());
         notify(event);
-        //listeners.forEach(l -> l.update(new ChoosePowerUpEvent(view , view.inputInt())));
+
     }
     @Override
     public void update(ChooseTeleporterSquareMessage chooseTeleporterSquareMessage){
@@ -36,7 +39,6 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
 
         Event event = new ChooseTeleporterSquareEvent(view , view.inputInt());
         notify(event);
-        //listeners.forEach(l -> l.update(new ChooseTeleporterSquareEvent(view , view.inputInt())));
     }
 
     @Override
@@ -45,7 +47,6 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
 
         Event event = new ChooseNewtonOpponentEvent(view , view.inputInt());
         notify(event);
-        //listeners.forEach(l -> l.update(new ChooseNewtonOpponentEvent(view , view.inputInt())));
     }
     @Override
     public void update(ChooseNewtonSquareMessage chooseNewtonSquareMessage){
@@ -53,6 +54,5 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
 
         Event event = new ChooseNewtonSquareEvent(view , view.inputInt());
         notify(event);
-        //listeners.forEach(l -> l.update(new ChooseNewtonSquareEvent(view , view.inputInt())));
     }
 }

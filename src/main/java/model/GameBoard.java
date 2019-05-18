@@ -1,10 +1,10 @@
 package model;
 
 import model.cards.AmmoCard;
-import model.cards.PowerUp;
-import model.cards.Weapon;
-import model.map_package.Map;
-import model.player_package.PlayerColor;
+import model.cards.powerups.PowerUp;
+import model.cards.weapons.Weapon;
+import model.map.Map;
+import model.player.PlayerColor;
 
 public class GameBoard {
 
@@ -24,14 +24,6 @@ public class GameBoard {
     this.killShotTrack.removeSkull(playerColor, tokenNumber);
     }
 
-    public void setSpawnWeapon(){
-
-    }
-
-    public void setNonSpawnWeapon(){
-
-    }
-
     public KillShotTrack getKillShotTrack(){
 
         return this.killShotTrack;
@@ -43,17 +35,5 @@ public class GameBoard {
 
     public Decks getDecks(){
         return this.decks;
-    }
-
-    public Weapon removeWeapon(){
-        return null;
-    }
-
-    public PowerUp removePowerUp(){
-        return null;
-    }
-
-    public AmmoCard removeAmmoCard(){
-        return null;
     }
 }

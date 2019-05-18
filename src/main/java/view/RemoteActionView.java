@@ -1,7 +1,7 @@
 package view;
 
-import model.events.ActionEvent;
-import model.events.PlayerMessage;
+import model.exchanges.events.ActionEvent;
+import model.exchanges.messages.PlayerMessage;
 import network.ClientConnection;
 import utils.Observer;
 import utils.observable.ActionObservable;
@@ -9,9 +9,9 @@ import utils.observable.ActionObservable;
 public class RemoteActionView  extends ActionObservable implements Observer<PlayerMessage>{
 
     private ClientConnection clientConnection;
-    private PlayerView view;
+    private View view;
 
-    public RemoteActionView(ClientConnection clientConnection, PlayerView view){
+    public RemoteActionView(ClientConnection clientConnection, View view){
         this.clientConnection = clientConnection;
         this.view = view;
     }

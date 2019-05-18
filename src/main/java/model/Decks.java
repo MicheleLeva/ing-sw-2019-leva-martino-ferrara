@@ -2,13 +2,9 @@ package model;
 
 
 import model.cards.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import model.cards.powerups.PowerUp;
+import model.cards.weapons.Weapon;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -42,7 +38,7 @@ public class Decks {
 
     }
 
-
+    //todo
     public Weapon drawWeapon() {
         if (weaponsDeck.size() > 0)
             return weaponsDeck.remove(rand.nextInt(weaponsDeck.size()));
@@ -61,6 +57,7 @@ public class Decks {
         return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
     }
 
+    //todo rivedere
     public AmmoCard drawAmmoCard() {
 
         if (ammoCardDeck.size() > 0) {
@@ -96,6 +93,7 @@ public class Decks {
 
     }
 
+    //todo
    /* private void createPowerUpDeck() {
         JSONParser parser = new JSONParser();
         try {

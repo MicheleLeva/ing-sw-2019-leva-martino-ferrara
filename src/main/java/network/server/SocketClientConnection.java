@@ -39,6 +39,7 @@ public class SocketClientConnection extends Observable<String> implements Client
             send("NameSetMessage,Insert your name!");
             String read = in.nextLine();
             name = read;
+            //todo sistemare
             server.addPlayer(this, name);
             while(isActive()){
                 read = in.nextLine();

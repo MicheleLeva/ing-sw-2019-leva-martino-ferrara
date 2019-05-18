@@ -1,6 +1,9 @@
 package utils.update;
 
-import model.events.*;
+import model.exchanges.messages.ChooseNewtonOpponentMessage;
+import model.exchanges.messages.ChooseNewtonSquareMessage;
+import model.exchanges.messages.ChoosePowerUpMessage;
+import model.exchanges.messages.ChooseTeleporterSquareMessage;
 
 public interface PowerUpUpdate {
     void update(ChoosePowerUpMessage choosePowerUpMessage);

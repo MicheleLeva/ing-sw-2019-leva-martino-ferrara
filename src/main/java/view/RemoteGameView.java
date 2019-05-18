@@ -1,15 +1,14 @@
 package view;
 
-import model.events.*;
-import model.events.PlayerMessage;
+import model.exchanges.messages.PlayerMessage;
 import network.ClientConnection;
 import utils.Observer;
 
 public class RemoteGameView implements Observer<PlayerMessage> {
     private ClientConnection clientConnection;
-    private PlayerView view;
+    private View view;
 
-    public RemoteGameView(ClientConnection clientConnection, PlayerView view){
+    public RemoteGameView(ClientConnection clientConnection, View view){
         this.clientConnection = clientConnection;
         this.view = view;
     }

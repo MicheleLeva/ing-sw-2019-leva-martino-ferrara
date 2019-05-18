@@ -1,7 +1,11 @@
 package network.client;
 
-import model.events.*;
-import model.player_package.PlayerColor;
+import model.exchanges.events.Event;
+import model.exchanges.messages.GenericMessage;
+import model.exchanges.messages.NameSetMessage;
+import model.exchanges.messages.RunMessage;
+import model.exchanges.messages.ShootMessage;
+import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
 import utils.notify.GameNotify;

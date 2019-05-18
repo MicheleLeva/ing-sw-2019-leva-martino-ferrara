@@ -1,18 +1,18 @@
 package view;
 
-import model.events.*;
-import model.player_package.PlayerColor;
+import model.exchanges.events.*;
+import model.exchanges.messages.*;
+import model.player.PlayerColor;
 import utils.Observable;
-import utils.observable.WeaponObservable;
 import utils.update.WeaponUpdate;
 
 import java.util.ArrayList;
 
 public class WeaponView extends Observable<Event> implements WeaponUpdate {
     private final PlayerColor playerColor;
-    private final PlayerView view;
+    private final View view;
 
-    public WeaponView(PlayerColor playerColor , PlayerView view){
+    public WeaponView(PlayerColor playerColor , View view){
         this.playerColor = playerColor;
         this.view = view;
     }
@@ -21,7 +21,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
         return playerColor;
     }
 
-    public PlayerView getView(){
+    public View getView(){
         return view;
     }
 
@@ -31,7 +31,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
         Event event = new WeaponSelectionEvent(view, view.inputInt());
         notify(event);
-        //listeners.forEach(l -> l.update(new WeaponSelectionEvent(view , view.inputInt())));
     }
 
     public void update(TargetsSelectionMessage message){
@@ -45,7 +44,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
             Event event = new TargetsSelectionEvent(view,selectedTargets);
             notify(event);
-            //listeners.forEach(l -> l.update(new TargetsSelectionEvent(view,selectedTargets)));
             }
 
         else{
@@ -58,7 +56,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
             Event event = new TargetsSelectionEvent(view,selectedTargets);
             notify(event);
-            //listeners.forEach(l -> l.update(new TargetsSelectionEvent(view,selectedTargets)));
         }
     }
 
@@ -68,7 +65,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
         Event event = new ReloadEndTurnEvent(view , view.inputChar());
         notify(event);
-        //listeners.forEach(l -> l.update(new ReloadEndTurnEvent(view , view.inputChar())));
     }
 
     @Override
@@ -77,7 +73,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
         Event event = new WeaponReloadEvent(view , view.inputInt());
         notify(event);
-        //listeners.forEach((l -> l.update(new WeaponReloadEvent(view , view.inputInt()))));
     }
 
     public void update(AskFireModesMessage message){
@@ -85,7 +80,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
         Event event = new OptionalFireModesEvent(view,view.inputInt());
         notify(event);
-        //listeners.forEach(l -> l.update(new OptionalFireModesEvent(view,view.inputInt())));
     }
 
     public void update(ChooseWeaponSquareMessage message){
@@ -93,6 +87,5 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
         Event event = new ChooseWeaponSquareEvent(view , view.inputInt());
         notify(event);
-        //listeners.forEach(l -> l.update(new ChooseWeaponSquareEvent(view , view.inputInt())));
     }
 }

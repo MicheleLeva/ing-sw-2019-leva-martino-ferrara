@@ -1,18 +1,17 @@
 package view;
 
-import model.events.ActionEvent;
-import model.events.ChooseActionMessage;
-import model.events.Event;
-import model.player_package.PlayerColor;
+import model.exchanges.events.ActionEvent;
+import model.exchanges.messages.ChooseActionMessage;
+import model.exchanges.events.Event;
+import model.player.PlayerColor;
 import utils.Observable;
-import utils.observable.ActionObservable;
 import utils.update.ActionUpdate;
 
 public class ActionView extends Observable<Event> implements ActionUpdate {
     private final PlayerColor playerColor;
-    private final PlayerView view;
+    private final View view;
 
-    public ActionView(PlayerColor playerColor , PlayerView view){
+    public ActionView(PlayerColor playerColor , View view){
         this.playerColor = playerColor;
         this.view = view;
     }
@@ -20,7 +19,7 @@ public class ActionView extends Observable<Event> implements ActionUpdate {
     public PlayerColor getPlayerColor(){
         return playerColor;
     }
-    public PlayerView getView(){
+    public View getView(){
         return view;
     }
 
@@ -30,6 +29,5 @@ public class ActionView extends Observable<Event> implements ActionUpdate {
 
         Event actionEvent = new ActionEvent(view , view.inputChar());
         this.notify(actionEvent);
-        //listeners.forEach(l -> l.update(actionEvent));
     }
 }

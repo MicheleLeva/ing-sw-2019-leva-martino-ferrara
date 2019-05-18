@@ -1,9 +1,9 @@
 package network.client;
 
-import model.player_package.PlayerColor;
+import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observable;
-import view.PlayerView;
+import view.View;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -18,7 +18,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
 
     private boolean active = true;
 
-    private PlayerView playerView;
+    private View view;
 
     //da recuperare effettivi dati per connessione
     private String ip = "0.0.0.0";
@@ -59,21 +59,21 @@ public class Client extends Observable<String> implements ClientConnection,Runna
     public void run(){
 
         PlayerColor playerColor = PlayerColor.BLUE;
-        //placeholder, c'è davvero bisogno che la PlayerView contega il colore?
+        //placeholder, c'è davvero bisogno che la View contega il colore?
         //alla fine il model lo ha e si recupera il colore della view a seconda di chi gli manda il messaggio
         //se sì bisogna implementare la messaggistica
-        playerView = new PlayerView(playerColor);
+        view = new View(playerColor);
         NetworkHandler networkHandler = new NetworkHandler(this);
 
-        networkHandler.getRemoteActionHandler().register(playerColor, playerView.getActionView());
-        networkHandler.getRemoteWeaponHandler().register(playerColor, playerView.getWeaponView());
-        networkHandler.getRemoteGameHandler().register(playerColor, playerView.getGameView());
-        networkHandler.getRemotePowerUpHandler().register(playerColor, playerView.getPowerUpView());
+        networkHandler.getRemoteActionHandler().register(playerColor, view.getActionView());
+        networkHandler.getRemoteWeaponHandler().register(playerColor, view.getWeaponView());
+        networkHandler.getRemoteGameHandler().register(playerColor, view.getGameView());
+        networkHandler.getRemotePowerUpHandler().register(playerColor, view.getPowerUpView());
 
-        playerView.getActionView().register(networkHandler.getRemoteActionHandler());
-        playerView.getWeaponView().register(networkHandler.getRemoteWeaponHandler());
-        playerView.getGameView().register(networkHandler.getRemoteGameHandler());
-        playerView.getPowerUpView().register(networkHandler.getRemotePowerUpHandler());
+        view.getActionView().register(networkHandler.getRemoteActionHandler());
+        view.getWeaponView().register(networkHandler.getRemoteWeaponHandler());
+        view.getGameView().register(networkHandler.getRemoteGameHandler());
+        view.getPowerUpView().register(networkHandler.getRemotePowerUpHandler());
 
         Scanner in;
         try {

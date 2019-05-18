@@ -1,8 +1,6 @@
 package model;
 
-import model.player_package.PlayerColor;
-
-import java.util.ArrayList;
+import model.player.PlayerColor;
 
 public class KillShotTrack {
 

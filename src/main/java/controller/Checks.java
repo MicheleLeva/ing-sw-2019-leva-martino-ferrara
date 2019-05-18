@@ -2,7 +2,11 @@ package controller;
 
 import model.Ammo;
 import model.cards.*;
-import model.player_package.Player;
+import model.cards.weapons.Weapon;
+import model.cards.weapons.WeaponAlternative;
+import model.cards.weapons.WeaponOptional1;
+import model.cards.weapons.WeaponOptional2;
+import model.player.Player;
 
 import java.util.ArrayList;
 
@@ -17,13 +21,6 @@ public class Checks {
     private static final int SECOND_DAMADE_TRESHOLD = 6;
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARK_FOR_COLOR = 3;
-    public static boolean hasMaxWeapon(Player player){
-        return true;
-    }
-
-    public static boolean hasMaxAmmo(Player player){
-        return true;
-    }
 
     public static boolean hasMaxPowerUp(Player player){
         return (player.getResources().getPowerUp().size() == MAX_POWERUP);
@@ -102,6 +99,7 @@ public class Checks {
             ((WeaponOptional1)currentWeapon).getOptionalCost1();
         if(effectType.equals("optional2"))
             ((WeaponOptional2)currentWeapon).getOptionalCost1();
+        //todo
         return true;
     }
 

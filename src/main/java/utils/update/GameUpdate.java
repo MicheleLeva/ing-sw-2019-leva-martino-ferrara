@@ -1,9 +1,9 @@
 package utils.update;
 
-import model.events.GenericMessage;
-import model.events.NameSetMessage;
-import model.events.RunMessage;
-import model.events.ShootMessage;
+import model.exchanges.messages.GenericMessage;
+import model.exchanges.messages.NameSetMessage;
+import model.exchanges.messages.RunMessage;
+import model.exchanges.messages.ShootMessage;
 
 public interface GameUpdate {
     void update(GenericMessage message);

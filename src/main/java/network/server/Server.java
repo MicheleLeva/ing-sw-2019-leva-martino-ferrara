@@ -1,13 +1,12 @@
 package network.server;
 
 import controller.ActionController;
-import controller.Controller;
 import controller.PowerUpController;
 import controller.WeaponController;
 import model.Game;
 import model.Model;
-import model.player_package.Player;
-import model.player_package.PlayerColor;
+import model.player.Player;
+import model.player.PlayerColor;
 import network.ClientConnection;
 import view.*;
 

@@ -1,6 +1,8 @@
 package model.adrenaline_exceptions;
 
 public class IllegalActionException extends Exception {
+    //todo controllare se serve
+
     public IllegalActionException(String message){
         super(message);
     }

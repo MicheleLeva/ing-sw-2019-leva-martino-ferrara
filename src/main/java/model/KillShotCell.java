@@ -1,6 +1,6 @@
 package model;
 
-import model.player_package.PlayerColor;
+import model.player.PlayerColor;
 
 public class KillShotCell {
 

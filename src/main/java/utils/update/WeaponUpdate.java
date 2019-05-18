@@ -1,6 +1,6 @@
 package utils.update;
 
-import model.events.*;
+import model.exchanges.messages.*;
 
 public interface WeaponUpdate {
     void update(ShowWeaponCardsMessage weaponCardsMessage);

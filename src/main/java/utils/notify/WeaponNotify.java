@@ -1,11 +1,9 @@
 package utils.notify;
 
-import model.player_package.PlayerColor;
+import model.player.PlayerColor;
 import utils.update.WeaponUpdate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class WeaponNotify {

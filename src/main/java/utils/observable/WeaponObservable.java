@@ -1,6 +1,5 @@
 package utils.observable;
 
-import model.events.WeaponSelectionEvent;
 import utils.observer.WeaponObserver;
 
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
 package model;
 
-import model.cards.FireMode;
-import model.cards.Weapon;
-import model.cards.WeaponTreeNode;
-import model.map_package.Square;
-import model.player_package.Player;
+import model.cards.weapons.FireMode;
+import model.cards.weapons.Weapon;
+import model.cards.weapons.WeaponTreeNode;
+import model.map.Square;
+import model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,10 @@
 package view;
 
-import model.events.*;
+import model.exchanges.events.ChooseNewtonOpponentEvent;
+import model.exchanges.events.ChooseNewtonSquareEvent;
+import model.exchanges.events.ChoosePowerUpEvent;
+import model.exchanges.events.ChooseTeleporterSquareEvent;
+import model.exchanges.messages.PlayerMessage;
 import network.ClientConnection;
 import utils.Observer;
 import utils.observable.PowerUpObservable;
@@ -8,9 +12,9 @@ import utils.observable.PowerUpObservable;
 public class RemotePowerUpView extends PowerUpObservable implements Observer<PlayerMessage> {
 
     private ClientConnection clientConnection;
-    private PlayerView view;
+    private View view;
 
-    public RemotePowerUpView(ClientConnection clientConnection, PlayerView view){
+    public RemotePowerUpView(ClientConnection clientConnection, View view){
         this.clientConnection = clientConnection;
         this.view = view;
     }

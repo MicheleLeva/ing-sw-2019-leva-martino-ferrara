@@ -1,6 +1,6 @@
 package network.client;
 
-import model.player_package.PlayerColor;
+import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
 import java.util.Arrays;
@@ -57,7 +57,7 @@ public class NetworkHandler implements Observer<String> {
                     remotePowerUpHandler.stringToMessage(strings);
                     break;
                 default:
-                    System.out.println("Unidentified message from the server: \n" + message);
+                    System.out.println("Unidentified messages from the server: \n" + message);
             }
         }catch(IllegalArgumentException e){
             System.out.println("Error reading from stream!");

@@ -1,6 +1,6 @@
 package model;
 
-import model.map_package.*;
+import model.map.*;
 import org.junit.Before;
 import org.junit.Test;
 

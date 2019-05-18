@@ -1,7 +1,6 @@
 package model;
 
-import model.KillShotCell;
-import model.player_package.PlayerColor;
+import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Test;
 

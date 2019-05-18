@@ -1,21 +1,28 @@
 package model;
 
 import controller.Checks;
-import model.adrenaline_exceptions.EmptySquareException;
-import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.cards.*;
-import model.map_package.Direction;
-import model.map_package.*;
-import model.player_package.DamageCounter;
-import model.player_package.MarkCounter;
-import model.player_package.Player;
-import model.player_package.PlayerColor;
+import model.cards.powerups.PowerUp;
+import model.cards.weapons.FireMode;
+import model.cards.weapons.Weapon;
+import model.cards.weapons.WeaponTreeNode;
+import model.map.Direction;
+import model.map.*;
+import model.notifiers.ActionNotifier;
+import model.notifiers.GameNotifier;
+import model.notifiers.PowerUpNotifier;
+import model.notifiers.WeaponNotifier;
+import model.player.DamageCounter;
+import model.player.MarkCounter;
+import model.player.Player;
+import model.player.PlayerColor;
 
 import java.util.*;
 
-import utils.ControllerObservable;
+import model.turn.CurrentTurn;
+import model.turn.TurnManager;
 
-public class Model extends ControllerObservable {
+public class Model {
 
     private final HashMap<PlayerColor, Player> players = new HashMap<>();
 
@@ -24,8 +31,6 @@ public class Model extends ControllerObservable {
     private final TurnManager turnManager = null;
 
     private final CurrentTurn currentTurn = null;
-
-    private static Model modelInstance = null;
 
     private GameNotifier gameNotifier;
 
@@ -38,18 +43,6 @@ public class Model extends ControllerObservable {
     private WeaponNotifier weaponNotifier;
 
     private ScoreManager scoreManager;
-
-    private Model(){
-
-
-    }
-
-    public static Model getModelInstance(){
-        if(modelInstance == null)
-            modelInstance = new Model();
-        return modelInstance;
-
-    }
 
     public WeaponNotifier getWeaponNotifier(){
         return weaponNotifier;
@@ -75,90 +68,6 @@ public class Model extends ControllerObservable {
         return players.get(playerColor);
     }
 
-    public void performRun(PlayerColor playerColor, int x, int y){
-        Player player = getPlayer(playerColor);
-        player.setPosition(gameBoard.getMap().getSquareFromCoordinates(x,y));
-        //notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
-    }
-
-  /*  public void performShoot(PlayerColor shooterColor, ArrayList<PlayerColor> opponentsColor, Weapon weapon,int fireMode) throws IllegalOpponentException {
-        //Need weapon cards
-        //notify
-        ArrayList<Player> selected = new ArrayList<>();
-        Player shooter = getPlayer(shooterColor);
-        for(PlayerColor playercolor : opponentsColor )
-            selected.add(getPlayer(playercolor));
-        if (fireMode == 0)
-            weapon.useBaseWeapon(shooter,selected,weapon);
-        if (fireMode == 1)
-            weapon.useOptionalWeapon1(shooter,selected,weapon);
-        if (fireMode == 2)
-            weapon.useOptionalWeapon2(shooter,selected,weapon);
-
-        String resultString = "";
-        ArrayList<String> names= new ArrayList<>();
-        for (PlayerColor playerColor : opponentsColor)
-            names.add(getPlayer(playerColor).getName());
-        for(String name : names)
-            resultString = resultString.concat(name+", ");
-
-        notify(new ShootMessage(shooterColor,getPlayer(shooterColor).getName(),opponentsColor,resultString,weapon,gameBoard));
-    }
-*/
-    public void performGrab(PlayerColor playerColor) throws EmptySquareException {
-        Player player = getPlayer(playerColor);
-
-        if (player.getPosition().getAmmoCard() !=null){
-            AmmoCard ammoCard = player.getPosition().getAmmoCard();
-            //Need ammo cards
-        }else throw new EmptySquareException();
-        //notify
-    }
-
-    public void asktTeleporterCoordinates(){
-       // notify(new TeleporterMessage());
-    }
-
-
-    public void performTeleporterMove(PlayerColor playerColor, int row, int column){
-        Player player = getPlayer(playerColor);
-        player.setPosition(gameBoard.getMap().getSquareFromCoordinates(row,column));
-       // notify(new RunMessage(playerColor, player.getPlayerName(), player.getPosition()));
-
-    }
-
-    public void performReload(PlayerColor playerColor, int index) throws InsufficientAmmoException {
-        //Need weapon cards
-    }
-/*
-    public void performDraw(PlayerColor playerColor){
-        Player player = getPlayer(playerColor);
-        PowerUp drawnCard = gameBoard.getDecks().drawPowerUp();
-        player.getResources().addPowerUp(drawnCard);
-        notify(new DrawMessage(playerColor, player.getPlayerName(), drawnCard));
-    }
-*/
-    public void performUsePowerUp(PlayerColor playerColor, int index){
-        //Need powerup cards
-    }
-
-    public void performShowCards(PlayerColor playerColor){
-        Player player = getPlayer(playerColor);
-       // notify(new ShowCardsMessage(playerColor, player.getPlayerName(), player.getResources().showPowerUps(),
-        //        player.getResources().showWeapons()));
-    }
-/*
-    public void performShowTargetsMove(PlayerColor playerColor,int weaponIndex,int fireModeIndex){
-
-        Player player = getPlayer(playerColor);
-        Weapon weapon = player.getResources().showWeapons().get(weaponIndex);
-        notify(new ShowTargetsMessage(weapon.getAvailableTargets(player.getPosition(),fireModeIndex),
-               weapon, weapon.getTargetsNumber()[fireModeIndex], fireModeIndex));
-
-    }
-*/
-
-
     public Model(ArrayList<Player> playersList, int skulls){
 
         players.put(PlayerColor.BLUE, playersList.get(0));
@@ -177,24 +86,20 @@ public class Model extends ControllerObservable {
 
         //currentTurn = new CurrentTurn(this);
 
+        //todo inizializzare notifier
 
     }
+
 
     public CurrentTurn getCurrentTurn(){
         return (currentTurn);
-    }
-
-    public void addDamage(PlayerColor playerColor){
-        //addDamage
-        //controllo per la granata
-        //notify al player se c'è
-        //
     }
 
     public TurnManager getTurnManager(){
         return turnManager;
     }
 
+    //todo rivedere
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare){
 
         ArrayList<Square> squares = new ArrayList<>();
@@ -221,18 +126,9 @@ public class Model extends ControllerObservable {
         return new ArrayList<>(hashSet);
 
     }
-
+    //todo cancellare
     private static Square getSquareFromDir(Square square, Direction direction) throws NullPointerException{
-
-        MapElement side = square.getSide(direction);
-
-        if (side instanceof Door) {
-            return ((Door) side).enter();
-        }
-        if (side instanceof  Square){
-            return (Square) side;
-        }
-        return null;
+        return square.getSide(direction);
     }
 
     //Metodo che ritorna una lista dei giocatori
@@ -253,26 +149,6 @@ public class Model extends ControllerObservable {
         }
         return visiblePlayers;
     }
-
-    //Metodo che ritorna una lista dei giocatori
-    //a distanza 0 o 1 da uno square dato
-    /*public ArrayList<Player> getPlayersAtDistance1(Square square){
-        ArrayList<Player> playersAtDistance1 = new ArrayList<>();
-        for(Player player : players.values()) {
-            for(Direction direction : Direction.values()){
-                if(    !(square.getSide(direction) instanceof Wall) &&
-                        player.getPosition() == square.getSide(direction).enter()) {
-
-                        playersAtDistance1.add(player);
-                }
-
-                if(square == player.getPosition())
-                    playersAtDistance1.add(player);
-
-            }
-        }
-        return playersAtDistance1;
-    }*/
 
     //Metodo che ritorna una lista di giocatori
     //a distanza variabile dallo square scelto
@@ -354,7 +230,7 @@ public class Model extends ControllerObservable {
 
         player.drawPowerUp(drawnPowerUp);
 
-        //notify(new DrawPowerUpMessage(player.getPlayerColor() , player.getPlayerName() , drawnPowerUp));
+        //todo notify
 
     }
 
@@ -362,7 +238,7 @@ public class Model extends ControllerObservable {
         String powerUpList = player.getResources().showpowerUp();
         int num = player.getResources().getPowerUp().size();
         if (num > 1){}
-            //notify(new PowerUpDiscardMessage(player.getPlayerColor() , player.getPlayerName() , powerUpList , num));
+            //todo notify
         else{
             discardPowerUp(player , 0);
         }
@@ -373,34 +249,21 @@ public class Model extends ControllerObservable {
         gameBoard.getDecks().getDiscardedPowerUpDeck().add(discardedPowerUp);
 
         String toPlayer = "You discarded " +discardedPowerUp.toString();
-        String toOthers = player.getName() +" discarded " +discardedPowerUp.toString();
+        String toOthers = player.getPlayerName() +" discarded " +discardedPowerUp.toString();
         printMessage(player.getPlayerColor() , toPlayer , toOthers);
 
-        spawnPlayer(player , discardedPowerUp.getCost());
+        spawnPlayer(player , discardedPowerUp.getAmmo());
 
         if(turnManager.getCurrentTurnNumber() == 1){
-            notify();
+            //todo notify();
         }
 
 
     }
 
-    public void showPowerUp(PlayerColor playerColor){
-
-    }
 
     public void printMessage(PlayerColor playerColor , String toPlayer , String toOthers){
-        //notify (new Message(playerColor , toPlayer , toOthers));
-    }
-
-    public void setPlayerPosition(Player player , Square square){
-        player.setPosition(square);
-        String toPlayer;
-        String toOthers;
-
-        toPlayer = "You just moved to " + square.toString();
-        toOthers = player.getName() +" just moved to " +square.toString();
-        printMessage(player.getPlayerColor() , toPlayer , toOthers);
+        //todo notify
     }
 
     public void spawnPlayer(Player player , AmmoColor ammoColor){
@@ -410,24 +273,8 @@ public class Model extends ControllerObservable {
         String toOthers;
 
         toPlayer = "You just spawned at " + spawnSquare.toString();
-        toOthers = player.getName() +" just spawned at " +spawnSquare.toString();
+        toOthers = player.getPlayerName() +" just spawned at " +spawnSquare.toString();
         printMessage(player.getPlayerColor() , toPlayer , toOthers);
-    }
-
-    public void askTurnInput(PlayerColor playerColor){
-        //notify (new AskTurnInputMessage(playerColor));
-    }
-
-    public void showCards(PlayerColor playerColor){
-        Player player = turnManager.getPlayerFromColor(playerColor);
-        String powerUp = "PowerUp: " +player.getResources().showpowerUp();
-        String weapon = "Weapon: " +player.getResources().showWeapon();
-        String ammo = player.getResources().showAmmo();
-
-        String cards = powerUp +"\n" + weapon +"\n" +ammo +"\n";
-
-        //notify(new Message(playerColor , cards , ""));
-
     }
 
     private boolean canRecharge(Player player){
@@ -436,7 +283,7 @@ public class Model extends ControllerObservable {
         ArrayList<PowerUp> powerUp = player.getResources().getPowerUp();
 
         for (int i = 0; i < powerUp.size(); i++){
-            allAmmoAvailable.addAmmo(powerUp.get(i).getCost());
+            allAmmoAvailable.addAmmo(powerUp.get(i).getAmmo());
         }
 
         boolean result = false;
@@ -458,14 +305,14 @@ public class Model extends ControllerObservable {
         //2: non può      ricordarsi di notify
 
         if (canRecharge(player)){
-
+            //todo
         }
 
         String toPlayer;
         String toOthers;
         toPlayer = "Your turn has ended\n";
-        toOthers = player.getName() +"'s turn has ended\n";
-        //notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
+        toOthers = player.getPlayerName() +"'s turn has ended\n";
+        //todo notify
         turnManager.update();
 
     }
@@ -474,7 +321,7 @@ public class Model extends ControllerObservable {
         String toPlayer;
         String toOthers;
         toPlayer = "Your frenzy turn has ended\n";
-        toOthers = player.getName() +"'s frenzy turn has ended\n";
+        toOthers = player.getPlayerName() +"'s frenzy turn has ended\n";
         //notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
 
         if(player.getPlayerColor() == turnManager.getLastPlayerColor()){
@@ -495,35 +342,12 @@ public class Model extends ControllerObservable {
         ArrayList<Player> allPlayer = turnManager.getAllPlayers();
 
         for (int i = 0; i < allPlayer.size(); i++){
-            addInRank(rank , allPlayer.get(i));
+            //todo classifica
         }
 
 
     }
 
-    private void addInRank(ArrayList<Player> rank , Player player){
-        if (rank.isEmpty()){
-            rank.add(player);
-            return;
-        }
-        else{
-            for (int i = 0; i < rank.size(); i++){
-                if(player.getScore().getScore() > rank.get(i).getScore().getScore()){
-                    rank.add(i , player);
-                    return;
-                }
-
-                if(player.getScore() == rank.get(i).getScore()){
-                    if (player.getScore().getNumKillShot() > rank.get(i).getScore().getNumKillShot()){
-                        rank.add(i , player);
-                        return;
-                    }
-                }
-            }
-
-            rank.add(player);
-        }
-    }
 
     public void updateRun(){
         Player currentPlayer = turnManager.getCurrentPlayer();
@@ -611,7 +435,7 @@ public class Model extends ControllerObservable {
 
     public void notifyNewton(PlayerColor playerColor , Player opponent){
         String playerName = getPlayer(playerColor).getPlayerName();
-        String opponentName = opponent.getName();
+        String opponentName = opponent.getPlayerName();
         String newSquare = opponent.getPosition().toString();
         PlayerColor opponentColor = opponent.getPlayerColor();
         gameNotifier.notifyNewton(playerName , opponentName , playerColor , opponentColor , newSquare);
@@ -650,6 +474,7 @@ public class Model extends ControllerObservable {
     }
 
     public void payFireMode(Player currentPlayer){
+        //todo riguardare
         //esegui pagamento con powerup o con munizioni//
     }
 
@@ -697,7 +522,7 @@ public class Model extends ControllerObservable {
         currentPlayer.getResources().addPowerUp(drawnPowerUp);
 
 
-        gameNotifier.notifyDrawPowerUp(playerColor , currentPlayer.getName() , powerUpList , num);
+        gameNotifier.notifyDrawPowerUp(playerColor , currentPlayer.getPlayerName() , powerUpList , num);
 
     }
 
@@ -731,10 +556,6 @@ public class Model extends ControllerObservable {
         DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
         if(givenDamage != 0){
             damageCounter.addDamage(shooterColor , givenDamage);
-            //notifica
-        }
-        else{
-            //notifica
         }
     }
 
@@ -745,13 +566,9 @@ public class Model extends ControllerObservable {
         int givenMark = Checks.givenMark(opponentMark , mark);
         if(givenMark != 0){
             markCounter.addMarks(shooterColor , givenMark);
-            //notifica
         }
-        else{
-            //notifica
-        }
-
     }
+
     //va chiamato sempre alla fine del turno su tutti i giocatori colpiti dopo aver valutato i marchi e i giocatori morti
     public void verifyNewAction(PlayerColor opponentColor){
         Player player = getPlayer(opponentColor);

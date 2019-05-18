@@ -1,11 +1,6 @@
 package model;
 
-import model.player_package.Player;
-import model.player_package.PlayerColor;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import model.turn.Turn;
 
 public class Game {
 
