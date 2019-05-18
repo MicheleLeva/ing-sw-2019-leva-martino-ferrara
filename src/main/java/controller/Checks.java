@@ -13,6 +13,10 @@ public class Checks {
     }
     private static final int MAX_AMMO = 3;
     private static final int MAX_POWERUP = 3;
+    private static final int FIRST_DAMAGE_TRESHOLD = 2;
+    private static final int SECOND_DAMADE_TRESHOLD = 6;
+    private static final int MAX_DAMAGE = 12;
+    private static final int MAX_MARK_FOR_COLOR = 3;
     public static boolean hasMaxWeapon(Player player){
         return true;
     }
@@ -102,12 +106,34 @@ public class Checks {
     }
 
     public static int givenDamage(int playerDamage , int damage){
-        return 0;
+        if (MAX_DAMAGE - playerDamage < damage){
+            return (MAX_DAMAGE - playerDamage);
+        }
+        else{
+            return damage;
+        }
     }
 
     public static int givenMark(int playerMark , int mark){
-        return 0;
+        if(MAX_MARK_FOR_COLOR - playerMark < mark){
+            return (MAX_MARK_FOR_COLOR - playerMark);
+        }
+        else{
+            return mark;
+        }
     }
 
+    public static int verifyNewAction(Player player){
+        int currentPlayerDamage = player.getPlayerBoard().getDamageCounter().getDamage();
+        if(currentPlayerDamage < FIRST_DAMAGE_TRESHOLD){
+            return 1;
+        }
+        if(currentPlayerDamage >= FIRST_DAMAGE_TRESHOLD && currentPlayerDamage < SECOND_DAMADE_TRESHOLD){
+            return 2;
+        }
+        else{
+            return 3;
+        }
+    }
 
 }

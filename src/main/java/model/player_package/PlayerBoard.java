@@ -24,15 +24,7 @@ public class PlayerBoard {
         return points;
     }
 
-  /*  public void addMarks(PlayerColor color, int marks){
-        markCounter.addMarks(color, marks);
-    }
 
-    public void addDamage(PlayerColor color){
-        damageCounter.addDamage(color);
-
-    }
-*/
     public void removeHighestPoint(){
         points.removeHighestPoint();
    }

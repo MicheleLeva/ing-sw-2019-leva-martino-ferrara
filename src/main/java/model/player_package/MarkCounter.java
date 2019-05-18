@@ -33,4 +33,8 @@ public class MarkCounter {
     public boolean checkMarkValidity(){
         return true;
     }
+
+    public int getMarkFromColor(PlayerColor playerColor){
+        return markList.get(playerColor);
+    }
 }

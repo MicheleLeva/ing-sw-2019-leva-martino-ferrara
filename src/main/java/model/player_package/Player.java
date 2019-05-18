@@ -22,6 +22,8 @@ public class Player {
     private ActionTree actionTree;
     private ArrayList<Player> baseAvailablePlayers;
 
+    private boolean isDead;
+
     public Player(String name, PlayerColor color){
         playerName = name;
         playerColor = color;
@@ -109,4 +111,22 @@ public class Player {
     public ArrayList<Player> getBaseAvailablePlayers(){
         return baseAvailablePlayers;
     }
+
+    public void setActionTree(int ID){
+        actionTree = new ActionTree(ID);
+    }
+
+    public boolean isDead(){
+        return isDead;
+    }
+
+    public void dead(){
+        isDead = true;
+    }
+
+    public void alive(){
+        isDead = false;
+    }
+
+
 }

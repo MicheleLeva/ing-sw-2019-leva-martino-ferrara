@@ -13,16 +13,10 @@ public class DamageCounter {
 
     }
 
-    public void addDamage(PlayerColor damage, int number){
-        while(number>0) {
-            this.damage.add(damage);
-            number--;
+    public void addDamage(PlayerColor playerColor , int damage){
+        for (int i = 0; i < damage; i++){
+            this.damage.add(playerColor);
         }
-        if(this.damage.size() >= 11)
-            if(this.damage.size() >= 12)
-                System.out.println("Giocatore ucciso + marchio assegnato");
-            else
-                System.out.println("Giocatore ucciso");
     }
 
     public void clearDamage(){
@@ -37,5 +31,20 @@ public class DamageCounter {
 
 
     }
+
+    public int getDamage(){
+        return damage.size();
+    }
+
+    public int getDamageFromColor(PlayerColor playerColor){
+        int result = 0;
+        for (int i = 0; i < damage.size(); i++){
+            if (damage.get(i) == playerColor){
+                result++;
+            }
+        }
+        return result;
+    }
+
 
 }

@@ -6,6 +6,8 @@ import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.cards.*;
 import model.map_package.Direction;
 import model.map_package.*;
+import model.player_package.DamageCounter;
+import model.player_package.MarkCounter;
 import model.player_package.Player;
 import model.player_package.PlayerColor;
 
@@ -34,6 +36,8 @@ public class Model extends ControllerObservable {
     private Current current;
 
     private WeaponNotifier weaponNotifier;
+
+    private ScoreManager scoreManager;
 
     private Model(){
 
@@ -721,12 +725,44 @@ public class Model extends ControllerObservable {
     }
 
     public void addDamage(PlayerColor shooterColor ,PlayerColor opponentColor ,  int damage){
-
+        Player opponent = getPlayer(opponentColor);
+        int opponentDamage = opponent.getPlayerBoard().getDamageCounter().getDamage();
+        int givenDamage = Checks.givenDamage(opponentDamage , damage);
+        DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
+        if(givenDamage != 0){
+            damageCounter.addDamage(shooterColor , givenDamage);
+            //notifica
+        }
+        else{
+            //notifica
+        }
     }
 
     public void addMark(PlayerColor shooterColor , PlayerColor opponentColor , int mark){
+        Player opponent = getPlayer(opponentColor);
+        MarkCounter markCounter = opponent.getPlayerBoard().getMarkCounter();
+        int opponentMark = markCounter.getMarkFromColor(shooterColor);
+        int givenMark = Checks.givenMark(opponentMark , mark);
+        if(givenMark != 0){
+            markCounter.addMarks(shooterColor , givenMark);
+            //notifica
+        }
+        else{
+            //notifica
+        }
 
     }
+    //va chiamato sempre alla fine del turno su tutti i giocatori colpiti dopo aver valutato i marchi e i giocatori morti
+    public void verifyNewAction(PlayerColor opponentColor){
+        Player player = getPlayer(opponentColor);
+        int currentTreeID = player.getActionTree().getID();
+        int newTreeID = Checks.verifyNewAction(player);
+        if (currentTreeID != newTreeID){
+            player.setActionTree(newTreeID);
+            //notifica al giocatore(?)
+        }
+    }
+
 
     public ArrayList<Player> getAllPlayers(){
         return turnManager.getAllPlayers();
