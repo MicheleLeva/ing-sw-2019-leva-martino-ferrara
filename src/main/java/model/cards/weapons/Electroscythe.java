@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class Electroscythe extends WeaponAlternative {
 
-    public Electroscythe(String name, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
+    public Electroscythe(String name, Ammo pickUpCost,Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
                          int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,Model model){
-        super(name,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
+        super(name,pickUpCost,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
 
     }
 

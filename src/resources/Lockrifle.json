@@ -1,0 +1,7 @@
+{"child" : [
+  {"type" : "base" , "name" : "| Base Effect |" , "child" :  [
+    {"type" : "optional1" , "name" : "| Second Lock |" , "child" :  [
+      {"type" : "end" , "name" : "| End |" , "child" :  []}]},
+    {"type" : "end" , "name" : "| End |" , "child" :  []}]},
+  {"type" : "return" , "name" : "| Return |" , "child" :  []}
+]}

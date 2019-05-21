@@ -24,6 +24,10 @@ public class Square {
         squareColumn = column;
     }
 
+    public void setID(int ID){
+        this.ID = ID;
+    }
+
     //todo
     public Weapon[] getWeapon(){
         return weapons;

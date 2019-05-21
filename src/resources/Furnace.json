@@ -1,0 +1,5 @@
+{"child" : [
+  {"type" : "base" , "name" : "| Base Effect |" , "child" :  []},
+  {"type" : "alternative" , "name" : "| Cozy Fire Mode |" , "child" :  []},
+  {"type" : "return" , "name" : "| Return |" , "child" :  []}
+]}

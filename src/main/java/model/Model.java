@@ -136,13 +136,14 @@ public class Model {
     public ArrayList<Player> getVisiblePlayers(Player currentPlayer){
         Square square = currentPlayer.getPosition();
         ArrayList<Player> visiblePlayers = new ArrayList<>();
-        for(Player player : players.values()) {
+        ArrayList<Player> allPlayers = getAllPlayers();
+        for(Player player : allPlayers) {
 
             if (player.getPosition().getColor() == square.getColor() && currentPlayer != player)
                 visiblePlayers.add(player);
             else
                 for (Direction direction : Direction.values()) {
-                    if (    square.getSide(direction).getColor()!=square.getColor() &&
+                    if (    square.getSide(direction)!=null && square.getSide(direction).getColor()!=square.getColor() &&
                             square.getSide(direction).getColor() == player.getPosition().getColor())
                             visiblePlayers.add(player);
                 }
@@ -150,13 +151,36 @@ public class Model {
         return visiblePlayers;
     }
 
+    public ArrayList<Player> getPlayersNotInYourRoom(Player currentPlayer){
+        ArrayList<Player> visiblePlayers = getVisiblePlayers(currentPlayer);
+        ArrayList<Player> copy = new ArrayList<>(visiblePlayers);
+        for(Player player : copy){
+            if(player.getPosition().getColor().equals(currentPlayer.getPosition().getColor()))
+                visiblePlayers.remove(player);
+        }
+        return visiblePlayers;
+    }
+
+    public ArrayList<Square> getSquaresInCardinal2(Player currentPlayer){
+        ArrayList<Square> finalList = new ArrayList<>();
+        finalList.add(currentPlayer.getPosition());
+        for(Direction dir : Direction.values()) {
+            if (currentPlayer.getPosition().getSide(dir) != null) {
+                finalList.add(currentPlayer.getPosition().getSide(dir));
+                if (currentPlayer.getPosition().getSide(dir).getSide(dir) != null)
+                    finalList.add(currentPlayer.getPosition().getSide(dir).getSide(dir));
+            }
+        }
+        return finalList;
+    }
     //Metodo che ritorna una lista di giocatori
     //a distanza variabile dallo square scelto
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer){
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistance = new ArrayList<>();
-        for(Player player : players.values()) {
-            if(runnableSquare(distance, square).contains(player.getPosition())){
+        ArrayList<Player> allPlayers = getAllPlayers();
+        for(Player player : allPlayers) {
+            if(runnableSquare(distance, square).contains(player.getPosition())&& player!=currentPlayer){
                 playersAtDistance.add(player);
             }
         }
@@ -166,15 +190,16 @@ public class Model {
 
     public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer){
         Square square = currentPlayer.getPosition();
-        ArrayList<Player> playersAtDistanceMore = new ArrayList<>();
-        ArrayList<Player> temp = new ArrayList<>();
-        playersAtDistanceMore = getPlayersAtDistance(distance, currentPlayer);
-        temp = getPlayersAtDistance(distance-1,currentPlayer);
-        for(Player player : players.values()){
-            if(temp.contains(player))
-                playersAtDistanceMore.remove(player);
+        ArrayList<Player> playersAtDistanceMore ;
+        ArrayList<Player> playersAtDistance = getPlayersAtDistance(distance, currentPlayer);
+        ArrayList<Player> allPlayers = getAllPlayers();
+        for(Player player : playersAtDistance){
+            if(allPlayers.contains(player))
+                allPlayers.remove(player);
         }
-        return playersAtDistanceMore;
+        if(allPlayers.contains(currentPlayer))
+            allPlayers.remove(currentPlayer);
+        return allPlayers;
     }
 
     //Metodo che ritorna una lista dei giocatori
@@ -183,13 +208,57 @@ public class Model {
     public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer){
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInCardinalDirection = new ArrayList<>();
-        for(Player player : players.values()) {
+        ArrayList<Player> allPlayers = getAllPlayers();
+
+        for(Player player : allPlayers) {
             if( player.getPosition().getSquareRow() == square.getSquareRow() ||
                     player.getPosition().getSquareColumn() == square.getSquareColumn()){
                 playersInCardinalDirection.add(player);
             }
         }
+        if(playersInCardinalDirection.contains(currentPlayer))
+            playersInCardinalDirection.remove(currentPlayer);
        return playersInCardinalDirection;
+    }
+
+    public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal){
+        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> finalPlayers = new ArrayList<>();
+        if(cardinal == 'n'){
+            for(Player player : allPlayers)
+                if(player.getPosition().getSquareColumn()==currentPlayer.getPosition().getSquareColumn() &&
+                        player.getPosition().getSquareRow() < currentPlayer.getPosition().getSquareRow() && player != currentPlayer)
+                    finalPlayers.add(player);
+        }
+        if(cardinal == 'e'){
+            for(Player player : allPlayers)
+                if(player.getPosition().getSquareRow()==currentPlayer.getPosition().getSquareRow() &&
+                        player.getPosition().getSquareColumn() > currentPlayer.getPosition().getSquareColumn() &&
+                            player != currentPlayer)
+                    finalPlayers.add(player);
+        }
+        if(cardinal == 's'){
+            for(Player player : allPlayers)
+                if(player.getPosition().getSquareColumn()==currentPlayer.getPosition().getSquareColumn() &&
+                    player.getPosition().getSquareRow() > currentPlayer.getPosition().getSquareRow() &&
+                        player != currentPlayer)
+                    finalPlayers.add(player);
+        }
+        if(cardinal == 'w'){
+            for(Player player : allPlayers)
+                if(player.getPosition().getSquareRow()==currentPlayer.getPosition().getSquareRow() &&
+                        player.getPosition().getSquareColumn() < currentPlayer.getPosition().getSquareColumn() &&
+                            player != currentPlayer)
+                    finalPlayers.add(player);
+        }
+        if(cardinal == 'x'){
+            finalPlayers = getPlayersInCardinalDirection(currentPlayer);
+        }
+        for(Player player : allPlayers){
+            if(player.getPosition()==currentPlayer.getPosition() && player!=currentPlayer)
+                finalPlayers.add(player);
+        }
+        return finalPlayers;
     }
 
     //Metodo che ritorna una lista dei giocatori
@@ -198,7 +267,9 @@ public class Model {
     public ArrayList<Player> getPlayersInSameSquare(Player currentPlayer){
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInSameSquare = new ArrayList<>();
-        for(Player player : players.values()) {
+        ArrayList<Player> allPlayers = getAllPlayers();
+
+        for(Player player : allPlayers) {
             if(player.getPosition().getSquareRow() == square.getSquareRow() &&
                     player.getPosition().getSquareColumn() == square.getSquareColumn() && currentPlayer != player){
                 playersInSameSquare.add(player);
@@ -211,12 +282,15 @@ public class Model {
     //NON visibili a partire da uno square dato
     public ArrayList<Player> getNonVisiblePlayers(Player currentPlayer){
         ArrayList<Player> nonVisiblePlayers = new ArrayList<>();
+        ArrayList<Player> allPlayers = getAllPlayers();
 
-        for(Player player : players.values()) {
+        for(Player player : allPlayers) {
 
             if(!(getVisiblePlayers(currentPlayer).contains(player)))
                 nonVisiblePlayers.add(player);
         }
+        if(nonVisiblePlayers.contains(currentPlayer))
+            nonVisiblePlayers.remove(currentPlayer);
         return nonVisiblePlayers;
 
     }
@@ -582,7 +656,8 @@ public class Model {
 
 
     public ArrayList<Player> getAllPlayers(){
-        return turnManager.getAllPlayers();
+        ArrayList<Player> def = new ArrayList<Player>(players.values());
+        return def;
     }
 
 }

@@ -104,14 +104,14 @@ public class WeaponController extends Controller implements WeaponObserver {
         String effectType = weapon.getWeaponTree().getLastActionPerformed().getChildren().get(input).getData().getType();
         weapon.getWeaponTree().updateLastAction(event.getInput());
 
+        if(effectType.equals("return")){
+            weapon.getWeaponTree().resetAction();
+            getModel().getCurrent().resetCurrent();
+            getModel().getCurrent().setSelectedWeapon(null);
+            getModel().chooseAction(event.getPlayerColor());
+        }
+
         if(effectType.equals("end")){
-            if(weapon.getWeaponTree().getRoot().getChildren().contains(weapon.getWeaponTree().getLastAction())){
-                weapon.getWeaponTree().resetAction();
-                getModel().getCurrent().resetCurrent();
-                getModel().getCurrent().setSelectedWeapon(weapon);
-                getModel().showFireModes(event.getPlayerColor(),weapon);
-            }
-            else
                 getModel().notifyShoot(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
             return;
         }

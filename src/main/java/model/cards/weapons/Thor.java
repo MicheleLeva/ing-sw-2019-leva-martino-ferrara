@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class Thor extends WeaponOptional2 {
 
-    public Thor(String name, Ammo baseCost, Ammo optionalCost1,Ammo optionalCost2, int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,
+    public Thor(String name,Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1,Ammo optionalCost2, int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,
                 int optionalMarks1, int optionalMarks2, int baseTargetsNumber, int optionalTargetsNumber1,
                 int optionalTargetsNumber2, Model model) {
 
-        super(name,baseCost,optionalCost1,optionalCost2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,
+        super(name,pickUpCost,baseCost,optionalCost1,optionalCost2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,
                 baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model);
     }
 

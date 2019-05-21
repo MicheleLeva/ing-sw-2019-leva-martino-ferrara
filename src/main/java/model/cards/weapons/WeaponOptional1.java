@@ -14,9 +14,9 @@ public abstract class WeaponOptional1 extends Weapon {
 
 
 
-    public WeaponOptional1(String name, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,
+    public WeaponOptional1(String name,Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,
                            int optionalMarks1, int baseTargetsNumber, int optionalTargetsNumber1,Model model){
-        super(name,baseCost,baseDamage,baseMarks,baseTargetsNumber,model);
+        super(name,pickUpCost,baseCost,baseDamage,baseMarks,baseTargetsNumber,model);
         this.optionalDamage1= optionalDamage1;
         this.optionalCost1=optionalCost1;
         this.optionalMarks1=optionalMarks1;

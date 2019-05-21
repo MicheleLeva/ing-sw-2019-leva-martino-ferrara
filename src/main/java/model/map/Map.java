@@ -12,7 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Map {
+public class
+Map {
 
     private Square[][] map;
 
@@ -26,12 +27,20 @@ public class Map {
         else nome = "/src/resources/map2.json";
 
         map = new Square[3][4];
-
+        int ID = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
                 map[i][j] = new Square(i,j);
             }
         }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                map[i][j].setID(ID);
+                ID++;
+            }
+        }
+
         int k=0;
         JSONParser parser = new JSONParser();
 
@@ -67,7 +76,6 @@ public class Map {
                     else
                         map[i][j].setColor(SquareColor.valueOf((String)result1.get("color")));
                     map[i][j].isSpawn = (Boolean) result1.get("isSpawn");
-                    //if(map[i][j].getSide(Direction.EAST) instanceof Square)System.out.println("door"+i+j);
                     k++;
 
                 }

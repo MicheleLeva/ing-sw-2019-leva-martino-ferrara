@@ -1,0 +1,18 @@
+{"child" : [
+  {"type" : "base" , "name" : "| Base Effect |" , "child" :  [
+    {"type" : "optional1" , "name" : "| Rocket Jump |" , "child" :  [
+      {"type" : "optional2" , "name" : "| Fragmenting Warhead |" , "child" :  []}
+    ]},
+    {"type" : "optional2" , "name" : "| Fragmenting Warhead |" , "child" :  [
+      {"type" : "optional1" , "name" : "| Rocket Jump |" , "child" :  []}
+    ]},
+    {"type" : "end" , "name" : "| End |" , "child" :  []}
+  ]},
+  {"type" : "optional1" , "name" : "| Rocket Jump |" , "child" :  [
+    {"type" : "base" , "name" : "| Base Effect |" , "child" :  [
+      {"type" : "optional2" , "name" : "| Fragmenting Warhead |" , "child" :  []},
+      {"type" : "end" , "name" : "| End |" , "child" :  []}
+    ]}
+  ]},
+  {"type" : "return" , "name" : "| Return |" , "child" :  []}
+]}

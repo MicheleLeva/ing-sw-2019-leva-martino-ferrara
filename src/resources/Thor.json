@@ -1,0 +1,9 @@
+{"child" : [
+  {"type" : "base" , "name" : "| Base Effect |" , "child" :  [
+    {"type" : "optional1" , "name" : "| Chain Reaction |" , "child" :  [
+      {"type" : "optional2" , "name" : "| High Voltage |" , "child" :  []},
+      {"type" : "end" , "name" : "| End |" , "child" :  []}
+    ]},
+    {"type" : "end" , "name" : "| End |" , "child" :  []}]},
+  {"type" : "return" , "name" : "| Return |" , "child" :  []}
+]}

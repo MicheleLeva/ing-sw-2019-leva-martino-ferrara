@@ -1,0 +1,18 @@
+{"child" : [
+  {"type" : "base" , "name" : "| Base Effect |" , "child" :  [
+    {"type" : "optional1" , "name" : "| Phase Glide |" , "child" :  [
+      {"type" : "optional2" , "name" : "| Charged Shot |" , "child" :  []}
+    ]},
+    {"type" : "optional2" , "name" : "| Charged Shot |" , "child" :  [
+      {"type" : "optional1" , "name" : "| Phase Glide |" , "child" :  []}
+    ]},
+    {"type" : "end" , "name" : "| End |" , "child" :  []}
+  ]},
+  {"type" : "optional1" , "name" : "| Phase Glide |" , "child" :  [
+    {"type" : "base" , "name" : "| Base Effect |" , "child" :  [
+      {"type" : "optional2" , "name" : "| Charged Shot |" , "child" :  []},
+      {"type" : "end" , "name" : "| End |" , "child" :  []}
+    ]}
+  ]},
+  {"type" : "return" , "name" : "| Return |" , "child" :  []}
+]}

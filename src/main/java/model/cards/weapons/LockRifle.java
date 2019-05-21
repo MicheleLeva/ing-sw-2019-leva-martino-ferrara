@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class LockRifle extends WeaponOptional1 {
 
-    public LockRifle(String name, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,
+    public LockRifle(String name,Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,
                      int optionalMarks1, int baseTargetsNumber, int optionalTargetsNumber1,Model model) {
 
-        super(name,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,
+        super(name,pickUpCost,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,
                 optionalTargetsNumber1,model);
     }
 

@@ -1,0 +1,15 @@
+{"child" : [
+  {"type" : "base" , "name" : "| Base Effect |" , "child" :  [
+    {"type" : "optional1" , "name" : "| Focus Shot |" , "child" :  [
+      {"type" : "optional2" , "name" : "| Turret Tripod |" , "child" :  []},
+      {"type" : "end" , "name" : "| End |" , "child" :  []}
+    ]},
+    {"type" : "optional2" , "name" : "| Turret Tripod |" , "child" :  [
+      {"type" : "optional1" , "name" : "| Focus Shot |" , "child" :  []},
+      {"type" : "end" , "name" : "| End |" , "child" :  []}
+    ]},
+    {"type" : "end" , "name" : "| End |" , "child" :  []}
+  ]},
+  {"type" : "return" , "name" : "| Return |" , "child" :  []}
+
+]}

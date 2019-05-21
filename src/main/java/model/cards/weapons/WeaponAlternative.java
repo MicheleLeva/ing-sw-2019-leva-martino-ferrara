@@ -14,9 +14,9 @@ public abstract class WeaponAlternative extends Weapon {
     protected int alternativeTargetsNumber;
 
 
-    public WeaponAlternative(String name, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
+    public WeaponAlternative(String name, Ammo pickUpCost,Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
                              int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){
-        super(name,baseCost,baseDamage,baseMarks,baseTargetsNumber,model);
+        super(name,pickUpCost,baseCost,baseDamage,baseMarks,baseTargetsNumber,model);
         this.alternativeCost = alternativeCost;
         this.alternativeDamage = alternativeDamage;
         this.alternativeMarks = alternativeMarks;

@@ -12,10 +12,10 @@ public abstract class WeaponOptional2 extends WeaponOptional1 {
     protected int optionalTargetsNumber2;
     protected Ammo optionalCost2;
 
-    public WeaponOptional2(String name, Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage,
+    public WeaponOptional2(String name, Ammo pickUpCost,Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage,
                            int optionalDamage1, int optionalDamage2, int baseMarks, int optionalMarks1, int optionalMarks2,
                            int baseTargetsNumber, int optionalTargetsNumber1, int optionalTargetsNumber2,Model model) {
-        super(name, baseCost, optionalCost1, baseDamage, optionalDamage1, baseMarks, optionalMarks1,
+        super(name, pickUpCost,baseCost, optionalCost1, baseDamage, optionalDamage1, baseMarks, optionalMarks1,
                 baseTargetsNumber, optionalTargetsNumber1,model);
 
         this.optionalDamage2 = optionalDamage2;

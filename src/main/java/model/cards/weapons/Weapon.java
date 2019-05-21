@@ -29,13 +29,14 @@ public abstract class Weapon extends Card {
         isReloaded = false;
     }
 
-    public Weapon(String name, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,Model model){
+    public Weapon(String name, Ammo pickUpCost, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,Model model){
         this.name = name;
         this.baseCost = baseCost;
         this.baseDamage = baseDamage;
         this.baseMarks = baseMarks;
         this.baseTargetsNumber = baseTargetsNumber;
         this.model = model;
+        this.pickUpCost = pickUpCost;
         //todo assegnare weapontree
     }
 
@@ -73,6 +74,10 @@ public abstract class Weapon extends Card {
 
     public WeaponTree getWeaponTree(){
         return weaponTree;
+    }
+
+    public void setWeaponTree(WeaponTree weaponTree){
+        this.weaponTree = weaponTree;
     }
 
 }

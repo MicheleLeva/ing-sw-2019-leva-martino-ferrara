@@ -11,7 +11,8 @@
 {"type" : "optional1" , "name" : "| Shadowstep |" , "child" : [
 {"type" : "base" , "name" : "| Base Effect |" , "child" : [
 {"type" : "optional2" , "name" : "| Slice and Dice |" , "child" : []},
-{"type" : "end" , "name" : "| end |" , "child" : []}]}]}]}
+{"type" : "end" , "name" : "| end |" , "child" : []}]}]},
+  {"type" : "return" , "name" : "| Return |" , "child" :  []}]}
 
 
 
