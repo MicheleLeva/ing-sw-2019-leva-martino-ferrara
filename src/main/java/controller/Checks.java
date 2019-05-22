@@ -21,6 +21,8 @@ public class Checks {
     private static final int SECOND_DAMADE_TRESHOLD = 6;
     private static final int MAX_DAMAGE = 12;
     private static final int MAX_MARK_FOR_COLOR = 3;
+    private static final int KILLSHOT = 11;
+    private static final int DOUBLEKILLSHOT = 2;
 
     public static boolean hasMaxPowerUp(Player player){
         return (player.getResources().getPowerUp().size() == MAX_POWERUP);
@@ -132,6 +134,18 @@ public class Checks {
         else{
             return 3;
         }
+    }
+
+    public static int getMaxDamage(){
+        return MAX_DAMAGE;
+    }
+
+    public static int getKillshot(){
+        return KILLSHOT;
+    }
+
+    public static int getDoubleKillShot(){
+        return DOUBLEKILLSHOT;
     }
 
 }

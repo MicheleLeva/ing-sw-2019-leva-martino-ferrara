@@ -44,7 +44,7 @@ public class Model {
 
     private ScoreManager scoreManager;
 
-    public WeaponNotifier getWeaponNotifier(){
+    public WeaponNotifier getWeaponNotifier() {
         return weaponNotifier;
     }
 
@@ -52,7 +52,7 @@ public class Model {
         return gameNotifier;
     }
 
-    public ActionNotifier getActionNotifier(){
+    public ActionNotifier getActionNotifier() {
         return actionNotifier;
     }
 
@@ -60,23 +60,23 @@ public class Model {
         return powerUpNotifier;
     }
 
-    public GameBoard getGameBoard(){
+    public GameBoard getGameBoard() {
         return gameBoard;
     }
 
-    public Player getPlayer(PlayerColor playerColor){
+    public Player getPlayer(PlayerColor playerColor) {
         return players.get(playerColor);
     }
 
-    public Model(ArrayList<Player> playersList, int skulls){
+    public Model(ArrayList<Player> playersList, int skulls) {
 
         players.put(PlayerColor.BLUE, playersList.get(0));
         players.put(PlayerColor.GREEN, playersList.get(1));
         players.put(PlayerColor.PURPLE, playersList.get(2));
-        if (playersList.size()== 4){
+        if (playersList.size() == 4) {
             players.put(PlayerColor.YELLOW, playersList.get(3));
         }
-        if (playersList.size()== 5){
+        if (playersList.size() == 5) {
             players.put(PlayerColor.GREY, playersList.get(4));
         }
 
@@ -91,33 +91,33 @@ public class Model {
     }
 
 
-    public CurrentTurn getCurrentTurn(){
+    public CurrentTurn getCurrentTurn() {
         return (currentTurn);
     }
 
-    public TurnManager getTurnManager(){
+    public TurnManager getTurnManager() {
         return turnManager;
     }
 
     //todo rivedere
-    public static ArrayList<Square> runnableSquare(int n, Square startingSquare){
+    public static ArrayList<Square> runnableSquare(int n, Square startingSquare) {
 
         ArrayList<Square> squares = new ArrayList<>();
 
         squares.add(startingSquare);
 
-        if (n>0){
-            if (getSquareFromDir(startingSquare, Direction.NORTH) != null){
-                squares.addAll(runnableSquare(n-1, getSquareFromDir(startingSquare, Direction.NORTH)));
+        if (n > 0) {
+            if (getSquareFromDir(startingSquare, Direction.NORTH) != null) {
+                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.NORTH)));
             }
-            if (getSquareFromDir(startingSquare, Direction.SOUTH) != null){
-                squares.addAll(runnableSquare(n-1, getSquareFromDir(startingSquare, Direction.SOUTH)));
+            if (getSquareFromDir(startingSquare, Direction.SOUTH) != null) {
+                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.SOUTH)));
             }
-            if (getSquareFromDir(startingSquare, Direction.EAST) != null){
-                squares.addAll(runnableSquare(n-1, getSquareFromDir(startingSquare, Direction.EAST)));
+            if (getSquareFromDir(startingSquare, Direction.EAST) != null) {
+                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.EAST)));
             }
-            if (getSquareFromDir(startingSquare, Direction.WEST) != null){
-                squares.addAll(runnableSquare(n-1, getSquareFromDir(startingSquare, Direction.WEST)));
+            if (getSquareFromDir(startingSquare, Direction.WEST) != null) {
+                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.WEST)));
             }
         }
 
@@ -126,45 +126,46 @@ public class Model {
         return new ArrayList<>(hashSet);
 
     }
+
     //todo cancellare
-    private static Square getSquareFromDir(Square square, Direction direction) throws NullPointerException{
+    private static Square getSquareFromDir(Square square, Direction direction) throws NullPointerException {
         return square.getSide(direction);
     }
 
     //Metodo che ritorna una lista dei giocatori
     //visibili a partire da uno square dato
-    public ArrayList<Player> getVisiblePlayers(Player currentPlayer){
+    public ArrayList<Player> getVisiblePlayers(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> visiblePlayers = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
-        for(Player player : allPlayers) {
+        for (Player player : allPlayers) {
 
             if (player.getPosition().getColor() == square.getColor() && currentPlayer != player)
                 visiblePlayers.add(player);
             else
                 for (Direction direction : Direction.values()) {
-                    if (    square.getSide(direction)!=null && square.getSide(direction).getColor()!=square.getColor() &&
+                    if (square.getSide(direction) != null && square.getSide(direction).getColor() != square.getColor() &&
                             square.getSide(direction).getColor() == player.getPosition().getColor())
-                            visiblePlayers.add(player);
+                        visiblePlayers.add(player);
                 }
         }
         return visiblePlayers;
     }
 
-    public ArrayList<Player> getPlayersNotInYourRoom(Player currentPlayer){
+    public ArrayList<Player> getPlayersNotInYourRoom(Player currentPlayer) {
         ArrayList<Player> visiblePlayers = getVisiblePlayers(currentPlayer);
         ArrayList<Player> copy = new ArrayList<>(visiblePlayers);
-        for(Player player : copy){
-            if(player.getPosition().getColor().equals(currentPlayer.getPosition().getColor()))
+        for (Player player : copy) {
+            if (player.getPosition().getColor().equals(currentPlayer.getPosition().getColor()))
                 visiblePlayers.remove(player);
         }
         return visiblePlayers;
     }
 
-    public ArrayList<Square> getSquaresInCardinal2(Player currentPlayer){
+    public ArrayList<Square> getSquaresInCardinal2(Player currentPlayer) {
         ArrayList<Square> finalList = new ArrayList<>();
         finalList.add(currentPlayer.getPosition());
-        for(Direction dir : Direction.values()) {
+        for (Direction dir : Direction.values()) {
             if (currentPlayer.getPosition().getSide(dir) != null) {
                 finalList.add(currentPlayer.getPosition().getSide(dir));
                 if (currentPlayer.getPosition().getSide(dir).getSide(dir) != null)
@@ -173,14 +174,15 @@ public class Model {
         }
         return finalList;
     }
+
     //Metodo che ritorna una lista di giocatori
     //a distanza variabile dallo square scelto
-    public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer){
+    public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistance = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
-        for(Player player : allPlayers) {
-            if(runnableSquare(distance, square).contains(player.getPosition())&& player!=currentPlayer){
+        for (Player player : allPlayers) {
+            if (runnableSquare(distance, square).contains(player.getPosition()) && player != currentPlayer) {
                 playersAtDistance.add(player);
             }
         }
@@ -188,16 +190,16 @@ public class Model {
 
     }
 
-    public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer){
+    public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer) {
         Square square = currentPlayer.getPosition();
-        ArrayList<Player> playersAtDistanceMore ;
+        ArrayList<Player> playersAtDistanceMore;
         ArrayList<Player> playersAtDistance = getPlayersAtDistance(distance, currentPlayer);
         ArrayList<Player> allPlayers = getAllPlayers();
-        for(Player player : playersAtDistance){
-            if(allPlayers.contains(player))
+        for (Player player : playersAtDistance) {
+            if (allPlayers.contains(player))
                 allPlayers.remove(player);
         }
-        if(allPlayers.contains(currentPlayer))
+        if (allPlayers.contains(currentPlayer))
             allPlayers.remove(currentPlayer);
         return allPlayers;
     }
@@ -205,57 +207,57 @@ public class Model {
     //Metodo che ritorna una lista dei giocatori
     //lungo le direzioni cardinali dello square
     //dato
-    public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer){
+    public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInCardinalDirection = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
 
-        for(Player player : allPlayers) {
-            if( player.getPosition().getSquareRow() == square.getSquareRow() ||
-                    player.getPosition().getSquareColumn() == square.getSquareColumn()){
+        for (Player player : allPlayers) {
+            if (player.getPosition().getSquareRow() == square.getSquareRow() ||
+                    player.getPosition().getSquareColumn() == square.getSquareColumn()) {
                 playersInCardinalDirection.add(player);
             }
         }
-        if(playersInCardinalDirection.contains(currentPlayer))
+        if (playersInCardinalDirection.contains(currentPlayer))
             playersInCardinalDirection.remove(currentPlayer);
-       return playersInCardinalDirection;
+        return playersInCardinalDirection;
     }
 
-    public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal){
+    public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal) {
         ArrayList<Player> allPlayers = getAllPlayers();
         ArrayList<Player> finalPlayers = new ArrayList<>();
-        if(cardinal == 'n'){
-            for(Player player : allPlayers)
-                if(player.getPosition().getSquareColumn()==currentPlayer.getPosition().getSquareColumn() &&
+        if (cardinal == 'n') {
+            for (Player player : allPlayers)
+                if (player.getPosition().getSquareColumn() == currentPlayer.getPosition().getSquareColumn() &&
                         player.getPosition().getSquareRow() < currentPlayer.getPosition().getSquareRow() && player != currentPlayer)
                     finalPlayers.add(player);
         }
-        if(cardinal == 'e'){
-            for(Player player : allPlayers)
-                if(player.getPosition().getSquareRow()==currentPlayer.getPosition().getSquareRow() &&
+        if (cardinal == 'e') {
+            for (Player player : allPlayers)
+                if (player.getPosition().getSquareRow() == currentPlayer.getPosition().getSquareRow() &&
                         player.getPosition().getSquareColumn() > currentPlayer.getPosition().getSquareColumn() &&
-                            player != currentPlayer)
-                    finalPlayers.add(player);
-        }
-        if(cardinal == 's'){
-            for(Player player : allPlayers)
-                if(player.getPosition().getSquareColumn()==currentPlayer.getPosition().getSquareColumn() &&
-                    player.getPosition().getSquareRow() > currentPlayer.getPosition().getSquareRow() &&
                         player != currentPlayer)
                     finalPlayers.add(player);
         }
-        if(cardinal == 'w'){
-            for(Player player : allPlayers)
-                if(player.getPosition().getSquareRow()==currentPlayer.getPosition().getSquareRow() &&
-                        player.getPosition().getSquareColumn() < currentPlayer.getPosition().getSquareColumn() &&
-                            player != currentPlayer)
+        if (cardinal == 's') {
+            for (Player player : allPlayers)
+                if (player.getPosition().getSquareColumn() == currentPlayer.getPosition().getSquareColumn() &&
+                        player.getPosition().getSquareRow() > currentPlayer.getPosition().getSquareRow() &&
+                        player != currentPlayer)
                     finalPlayers.add(player);
         }
-        if(cardinal == 'x'){
+        if (cardinal == 'w') {
+            for (Player player : allPlayers)
+                if (player.getPosition().getSquareRow() == currentPlayer.getPosition().getSquareRow() &&
+                        player.getPosition().getSquareColumn() < currentPlayer.getPosition().getSquareColumn() &&
+                        player != currentPlayer)
+                    finalPlayers.add(player);
+        }
+        if (cardinal == 'x') {
             finalPlayers = getPlayersInCardinalDirection(currentPlayer);
         }
-        for(Player player : allPlayers){
-            if(player.getPosition()==currentPlayer.getPosition() && player!=currentPlayer)
+        for (Player player : allPlayers) {
+            if (player.getPosition() == currentPlayer.getPosition() && player != currentPlayer)
                 finalPlayers.add(player);
         }
         return finalPlayers;
@@ -264,14 +266,14 @@ public class Model {
     //Metodo che ritorna una lista dei giocatori
     //nello stesso square
 
-    public ArrayList<Player> getPlayersInSameSquare(Player currentPlayer){
+    public ArrayList<Player> getPlayersInSameSquare(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInSameSquare = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
 
-        for(Player player : allPlayers) {
-            if(player.getPosition().getSquareRow() == square.getSquareRow() &&
-                    player.getPosition().getSquareColumn() == square.getSquareColumn() && currentPlayer != player){
+        for (Player player : allPlayers) {
+            if (player.getPosition().getSquareRow() == square.getSquareRow() &&
+                    player.getPosition().getSquareColumn() == square.getSquareColumn() && currentPlayer != player) {
                 playersInSameSquare.add(player);
             }
         }
@@ -280,55 +282,43 @@ public class Model {
 
     //Metodo che ritorna una lista dei giocatori
     //NON visibili a partire da uno square dato
-    public ArrayList<Player> getNonVisiblePlayers(Player currentPlayer){
+    public ArrayList<Player> getNonVisiblePlayers(Player currentPlayer) {
         ArrayList<Player> nonVisiblePlayers = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
 
-        for(Player player : allPlayers) {
+        for (Player player : allPlayers) {
 
-            if(!(getVisiblePlayers(currentPlayer).contains(player)))
+            if (!(getVisiblePlayers(currentPlayer).contains(player)))
                 nonVisiblePlayers.add(player);
         }
-        if(nonVisiblePlayers.contains(currentPlayer))
+        if (nonVisiblePlayers.contains(currentPlayer))
             nonVisiblePlayers.remove(currentPlayer);
         return nonVisiblePlayers;
 
     }
 
-    public void drawPowerUp(Player player , int num){
-        ArrayList<PowerUp> drawnPowerUp = new ArrayList<>();
-        //Pesca 'num' powerUp
-        for (int i = 0; i < num; i++){
-            drawnPowerUp.add(gameBoard.getDecks().drawPowerUp());
-        }
-
-        player.drawPowerUp(drawnPowerUp);
-
-        //todo notify
-
-    }
-
-    public void requestPowerUpDiscard(Player player){
+    public void requestPowerUpDiscard(Player player) {
         String powerUpList = player.getResources().showpowerUp();
         int num = player.getResources().getPowerUp().size();
-        if (num > 1){}
-            //todo notify
-        else{
-            discardPowerUp(player , 0);
+        if (num > 1) {
+        }
+        //todo notify
+        else {
+            discardPowerUp(player, 0);
         }
     }
 
-    public void discardPowerUp(Player player , int index){
+    public void discardPowerUp(Player player, int index) {
         PowerUp discardedPowerUp = player.getResources().removePowerUp(index);
         gameBoard.getDecks().getDiscardedPowerUpDeck().add(discardedPowerUp);
 
-        String toPlayer = "You discarded " +discardedPowerUp.toString();
-        String toOthers = player.getPlayerName() +" discarded " +discardedPowerUp.toString();
-        printMessage(player.getPlayerColor() , toPlayer , toOthers);
+        String toPlayer = "You discarded " + discardedPowerUp.toString();
+        String toOthers = player.getPlayerName() + " discarded " + discardedPowerUp.toString();
+        printMessage(player.getPlayerColor(), toPlayer, toOthers);
 
-        spawnPlayer(player , discardedPowerUp.getAmmo());
+        spawnPlayer(player, discardedPowerUp.getAmmo());
 
-        if(turnManager.getCurrentTurnNumber() == 1){
+        if (turnManager.getCurrentTurnNumber() == 1) {
             //todo notify();
         }
 
@@ -336,35 +326,35 @@ public class Model {
     }
 
 
-    public void printMessage(PlayerColor playerColor , String toPlayer , String toOthers){
+    public void printMessage(PlayerColor playerColor, String toPlayer, String toOthers) {
         //todo notify
     }
 
-    public void spawnPlayer(Player player , AmmoColor ammoColor){
+    public void spawnPlayer(Player player, AmmoColor ammoColor) {
         Square spawnSquare = gameBoard.getMap().getSpawnSquare(ammoColor);
         player.setPosition(spawnSquare);
         String toPlayer;
         String toOthers;
 
         toPlayer = "You just spawned at " + spawnSquare.toString();
-        toOthers = player.getPlayerName() +" just spawned at " +spawnSquare.toString();
-        printMessage(player.getPlayerColor() , toPlayer , toOthers);
+        toOthers = player.getPlayerName() + " just spawned at " + spawnSquare.toString();
+        printMessage(player.getPlayerColor(), toPlayer, toOthers);
     }
 
-    private boolean canRecharge(Player player){
+    private boolean canRecharge(Player player) {
         ArrayList<Weapon> reloadableWeapon = player.getResources().getReloadableWeapon();
         Ammo allAmmoAvailable = new Ammo(player.getResources().getAvailableAmmo());
         ArrayList<PowerUp> powerUp = player.getResources().getPowerUp();
 
-        for (int i = 0; i < powerUp.size(); i++){
+        for (int i = 0; i < powerUp.size(); i++) {
             allAmmoAvailable.addAmmo(powerUp.get(i).getAmmo());
         }
 
         boolean result = false;
         //controlla nel ciclo while se getBaseCost è corretto
-        for (int i = 0; i < reloadableWeapon.size(); i++){
-            while (!result){
-                if (allAmmoAvailable.isEnough(reloadableWeapon.get(i).getBaseCost())){
+        for (int i = 0; i < reloadableWeapon.size(); i++) {
+            while (!result) {
+                if (allAmmoAvailable.isEnough(reloadableWeapon.get(i).getBaseCost())) {
                     result = true;
                 }
             }
@@ -373,41 +363,39 @@ public class Model {
         return result;
     }
 
-    public void endTurn(Player player){
+    public void endTurn(Player player) {
         //2 casi:
-         //1. piò ricaricare
+        //1. piò ricaricare
         //2: non può      ricordarsi di notify
 
-        if (canRecharge(player)){
+        if (canRecharge(player)) {
             //todo
         }
 
         String toPlayer;
         String toOthers;
         toPlayer = "Your turn has ended\n";
-        toOthers = player.getPlayerName() +"'s turn has ended\n";
+        toOthers = player.getPlayerName() + "'s turn has ended\n";
         //todo notify
         turnManager.update();
 
     }
 
-    public void endFrenzyTurn(Player player){
+    public void endFrenzyTurn(Player player) {
         String toPlayer;
         String toOthers;
         toPlayer = "Your frenzy turn has ended\n";
-        toOthers = player.getPlayerName() +"'s frenzy turn has ended\n";
+        toOthers = player.getPlayerName() + "'s frenzy turn has ended\n";
         //notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
 
-        if(player.getPlayerColor() == turnManager.getLastPlayerColor()){
+        if (player.getPlayerColor() == turnManager.getLastPlayerColor()) {
             turnManager.setGameOver(true);
-        }
-
-        else{
+        } else {
             turnManager.update();
         }
     }
 
-    public void endGame(){
+    public void endGame() {
         //Calcolo classifica
         //Notifica
 
@@ -415,7 +403,7 @@ public class Model {
 
         ArrayList<Player> allPlayer = turnManager.getAllPlayers();
 
-        for (int i = 0; i < allPlayer.size(); i++){
+        for (int i = 0; i < allPlayer.size(); i++) {
             //todo classifica
         }
 
@@ -423,13 +411,13 @@ public class Model {
     }
 
 
-    public void updateRun(){
+    public void updateRun() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
-        gameNotifier.notifyRun(currentPlayerColor , currentPlayer.getPlayerName() , currentPlayer.getPosition().toString());
+        gameNotifier.notifyRun(currentPlayerColor, currentPlayer.getPlayerName(), currentPlayer.getPosition().toString());
     }
 
-    public void updateAction(){
+    public void updateAction() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         currentPlayer.getActionTree().updateAction();
     }
@@ -439,180 +427,177 @@ public class Model {
         if (currentPlayer.getActionTree().isTurnEnded()) {
             ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
             Ammo allAmmo = currentPlayer.getResources().getAllAmmo();
-            if(Checks.canReload(reloadableWeapon , allAmmo)){
+            if (Checks.canReload(reloadableWeapon, allAmmo)) {
                 //chiedi di ricaricare
                 askReloadEndTurn(currentPlayer.getPlayerColor());
-            }
-            else{
+            } else {
                 endTurn();
             }
-        }
-        else {
+        } else {
             chooseAction(currentPlayer.getPlayerColor());
         }
     }
 
-    public void endTurn(){ //todo riempire metodo
+    public void endTurn() { //todo riempire metodo
         //cambia giocatore
         //respawna giocatori morti
         //notifica nuovo turno
     }
 
-    public void choosePowerUp(PlayerColor playerColor){
+    public void choosePowerUp(PlayerColor playerColor) {
         String availablePowerUp;
         availablePowerUp = getPlayer(playerColor).getResources().showpowerUp();
-        powerUpNotifier.choosePowerUp(playerColor , availablePowerUp);
+        powerUpNotifier.choosePowerUp(playerColor, availablePowerUp);
     }
 
-    public void useTeleporter(PlayerColor playerColor){
+    public void useTeleporter(PlayerColor playerColor) {
         powerUpNotifier.chooseTeleporterSquare(playerColor);
     }
 
-    public void notifyTeleporter(PlayerColor playerColor){
+    public void notifyTeleporter(PlayerColor playerColor) {
         String playerName = getPlayer(playerColor).getPlayerName();
         String newSquare = getPlayer(playerColor).getPosition().toString();
-        gameNotifier.notifyTeleporter(playerColor , playerName , newSquare);
+        gameNotifier.notifyTeleporter(playerColor, playerName, newSquare);
     }
 
-    public void chooseAction(PlayerColor playerColor){
+    public void chooseAction(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         String availableAction = currentPlayer.getActionTree().availableAction();
-        actionNotifier.chooseAction(playerColor , availableAction);
+        actionNotifier.chooseAction(playerColor, availableAction);
     }
 
-    public Current getCurrent(){
+    public Current getCurrent() {
         return current;
     }
 
-    public void useNewton(PlayerColor playerColor){
-        ArrayList <Player> allPLayers = turnManager.getAllPlayers();
+    public void useNewton(PlayerColor playerColor) {
+        ArrayList<Player> allPLayers = turnManager.getAllPlayers();
         String opponentList = "";
-        for (int i = 0; i < allPLayers.size(); i++){
-            if(allPLayers.get(i).getPlayerColor() != playerColor){
+        for (int i = 0; i < allPLayers.size(); i++) {
+            if (allPLayers.get(i).getPlayerColor() != playerColor) {
                 current.addOpponent(allPLayers.get(i));
-                opponentList = opponentList +allPLayers.get(i).getPlayerName() +" ";
+                opponentList = opponentList + allPLayers.get(i).getPlayerName() + " ";
             }
         }
-        powerUpNotifier.chooseNewtonOpponent(playerColor , opponentList);
+        powerUpNotifier.chooseNewtonOpponent(playerColor, opponentList);
     }
 
-    public void chooseNewtonSquare(PlayerColor playerColor , Player opponent){
+    public void chooseNewtonSquare(PlayerColor playerColor, Player opponent) {
         Square currentOpponentSquare = opponent.getPosition();
-        ArrayList<Square> possibleSquare = runnableSquare(2 , currentOpponentSquare);
+        ArrayList<Square> possibleSquare = runnableSquare(2, currentOpponentSquare);
         current.setSquare(possibleSquare);
         String squareList = "";
-        for (int i = 0; i < possibleSquare.size(); i++){
-            squareList = squareList +possibleSquare.get(i).getID() +" ";
+        for (int i = 0; i < possibleSquare.size(); i++) {
+            squareList = squareList + possibleSquare.get(i).getID() + " ";
         }
-        powerUpNotifier.chooseNewtonSquare(playerColor , squareList);
+        powerUpNotifier.chooseNewtonSquare(playerColor, squareList);
     }
 
-    public void notifyNewton(PlayerColor playerColor , Player opponent){
+    public void notifyNewton(PlayerColor playerColor, Player opponent) {
         String playerName = getPlayer(playerColor).getPlayerName();
         String opponentName = opponent.getPlayerName();
         String newSquare = opponent.getPosition().toString();
         PlayerColor opponentColor = opponent.getPlayerColor();
-        gameNotifier.notifyNewton(playerName , opponentName , playerColor , opponentColor , newSquare);
+        gameNotifier.notifyNewton(playerName, opponentName, playerColor, opponentColor, newSquare);
     }
 
-    public void showWeaponCards(PlayerColor playerColor){
+    public void showWeaponCards(PlayerColor playerColor) {
         String availableWeapons;
         availableWeapons = getPlayer(playerColor).getResources().showWeapon();
-        weaponNotifier.showWeaponCards(playerColor , availableWeapons);
+        weaponNotifier.showWeaponCards(playerColor, availableWeapons);
     }
 
-    public void selectTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber){
+    public void selectTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber) {
         String opponentList = "";
-        for (int i = 0; i < availableTargets.size(); i++){
-            if(availableTargets.get(i).getPlayerColor() != playerColor){
+        for (int i = 0; i < availableTargets.size(); i++) {
+            if (availableTargets.get(i).getPlayerColor() != playerColor) {
                 current.addOpponent(availableTargets.get(i));
-                opponentList = opponentList + availableTargets.get(i).getPlayerName() +" ";
+                opponentList = opponentList + availableTargets.get(i).getPlayerName() + " ";
             }
         }
-        weaponNotifier.selectTargets(playerColor,opponentList,targetsNumber);
+        weaponNotifier.selectTargets(playerColor, opponentList, targetsNumber);
     }
 
-    public void showFireModes(PlayerColor playerColor, Weapon weapon){
+    public void showFireModes(PlayerColor playerColor, Weapon weapon) {
         List<WeaponTreeNode<FireMode>> FireModes = new ArrayList<>();
         List<WeaponTreeNode<FireMode>> availableFireModes = weapon.getWeaponTree().getLastActionPerformed().getChildren();
-        for(WeaponTreeNode<FireMode> fireMode : availableFireModes){
-            if(Checks.canUseFireMode(weapon, fireMode.getData().getType()))
+        for (WeaponTreeNode<FireMode> fireMode : availableFireModes) {
+            if (Checks.canUseFireMode(weapon, fireMode.getData().getType()))
                 FireModes.add(fireMode);
         }
         getCurrent().setAvailableFireModes(availableFireModes);
         String result = "Your available fire modes: \n";
-        for(WeaponTreeNode<FireMode> child : availableFireModes){
+        for (WeaponTreeNode<FireMode> child : availableFireModes) {
             result = result + child.getData().getEffectName();
         }
         weaponNotifier.showFireModes(playerColor, result);
     }
 
-    public void payFireMode(Player currentPlayer){
+    public void payFireMode(Player currentPlayer) {
         //todo riguardare
         //esegui pagamento con powerup o con munizioni//
     }
 
 
-    public void chooseWeaponSquare(PlayerColor playerColor,ArrayList<Square> squares){
+    public void chooseWeaponSquare(PlayerColor playerColor, ArrayList<Square> squares) {
         current.setAvailableWeaponSquares(squares);
-        weaponNotifier.chooseWeaponSquare(playerColor,squares);
+        weaponNotifier.chooseWeaponSquare(playerColor, squares);
     }
 
-    public void notifyShoot(Player currentPlayer,ArrayList<Player> targets){
+    public void notifyShoot(Player currentPlayer, ArrayList<Player> targets) {
         Set<Player> set = new LinkedHashSet<Player>(current.getSelectedBaseTargets());
         set.addAll(current.getSelectedAlternativeTargets());
         set.addAll(current.getSelectedOptionalTargets1());
         set.addAll(current.getSelectedOptionalTargets2());
         targets = new ArrayList<>(set);
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
-        gameNotifier.notifyShoot(currentPlayer,targets,allPlayers);
+        gameNotifier.notifyShoot(currentPlayer, targets, allPlayers);
     }
 
-    public void checkNextWeaponAction(Weapon weapon,Player currentPlayer,ArrayList<Player> selectedTargets){
+    public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
         weapon.getWeaponTree().updateLastActionPerformed();
-        if(weapon.getWeaponTree().isActionEnded()){
+        if (weapon.getWeaponTree().isActionEnded()) {
             weapon.getWeaponTree().resetAction();
-            weapon.getModel().notifyShoot(currentPlayer,selectedTargets);
-        }
-        else
+            weapon.getModel().notifyShoot(currentPlayer, selectedTargets);
+        } else
             weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon);
     }
 
-    public void discardAmmo(Square square){
+    public void discardAmmo(Square square) {
         AmmoCard discardedAmmo = square.getAmmoCard();
         square.removeAmmoCard();
         gameBoard.getDecks().getDiscardedAmmoCardDeck().add(discardedAmmo);
     }
 
-    public void drawPowerUp(PlayerColor playerColor , int num){
+    public void drawPowerUp(PlayerColor playerColor, int num) {
         Player currentPlayer = getPlayer(playerColor);
         ArrayList<PowerUp> drawnPowerUp = new ArrayList<>();
         String powerUpList = "";
-        for (int i = 0; i < num; i++){
+        for (int i = 0; i < num; i++) {
             PowerUp powerUp = gameBoard.getDecks().drawPowerUp();
             drawnPowerUp.add(powerUp);
-            powerUpList = powerUpList +powerUp.toString() +" ";
+            powerUpList = powerUpList + powerUp.toString() + " ";
         }
         currentPlayer.getResources().addPowerUp(drawnPowerUp);
 
 
-        gameNotifier.notifyDrawPowerUp(playerColor , currentPlayer.getPlayerName() , powerUpList , num);
+        gameNotifier.notifyDrawPowerUp(playerColor, currentPlayer.getPlayerName(), powerUpList, num);
 
     }
 
-    public void addAmmo(PlayerColor playerColor , Ammo ammo){
+    public void addAmmo(PlayerColor playerColor, Ammo ammo) {
         Player currentPlayer = getPlayer(playerColor);
         currentPlayer.getResources().addAmmo(ammo);
-        gameNotifier.notifyDrawAmmo(playerColor , currentPlayer.getPlayerName() , ammo.toString());
+        gameNotifier.notifyDrawAmmo(playerColor, currentPlayer.getPlayerName(), ammo.toString());
     }
 
-    public void askReloadEndTurn(PlayerColor playerColor){
+    public void askReloadEndTurn(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
-        weaponNotifier.askReload(playerColor , reloadableWeapon);
+        weaponNotifier.askReload(playerColor, reloadableWeapon);
     }
 
-    public void requestWeaponReload(PlayerColor playerColor){
+    public void requestWeaponReload(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
         current.setReloadableWeapon(reloadableWeapon);
@@ -620,45 +605,59 @@ public class Model {
         String availableAmmoList = currentPlayer.getResources().getAvailableAmmo().toString();
         String availablePowerUpList = currentPlayer.getResources().showpowerUp();
 
-        weaponNotifier.requestWeaponReload(playerColor , reloadableWeaponList , availableAmmoList , availablePowerUpList);
+        weaponNotifier.requestWeaponReload(playerColor, reloadableWeaponList, availableAmmoList, availablePowerUpList);
     }
 
-    public void addDamage(PlayerColor shooterColor ,PlayerColor opponentColor ,  int damage){
+    public void addDamage(PlayerColor shooterColor, PlayerColor opponentColor, int damage) { //todo aggiungere anche i marchi
         Player opponent = getPlayer(opponentColor);
         int opponentDamage = opponent.getPlayerBoard().getDamageCounter().getDamage();
-        int givenDamage = Checks.givenDamage(opponentDamage , damage);
+        int givenDamage = Checks.givenDamage(opponentDamage, damage);
         DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
-        if(givenDamage != 0){
-            damageCounter.addDamage(shooterColor , givenDamage);
-        }
-    }
 
-    public void addMark(PlayerColor shooterColor , PlayerColor opponentColor , int mark){
+        if (givenDamage != 0) {
+            damageCounter.addDamage(shooterColor, givenDamage);
+            if (damageCounter.getDamage() >= Checks.getKillshot()) {
+                opponent.setKillshot();
+
+                if(damageCounter.getDamage() == Checks.getKillshot()) {
+                    turnManager.addKillShot(shooterColor);
+                    }
+                }
+
+                if (damageCounter.getDamage() == Checks.getMaxDamage()) {
+                    opponent.setDead();
+                }
+            }
+        }
+
+
+    public void addMark(PlayerColor shooterColor, PlayerColor opponentColor, int mark) {
         Player opponent = getPlayer(opponentColor);
         MarkCounter markCounter = opponent.getPlayerBoard().getMarkCounter();
         int opponentMark = markCounter.getMarkFromColor(shooterColor);
-        int givenMark = Checks.givenMark(opponentMark , mark);
-        if(givenMark != 0){
-            markCounter.addMarks(shooterColor , givenMark);
+        int givenMark = Checks.givenMark(opponentMark, mark);
+        if (givenMark != 0) {
+            markCounter.addMarks(shooterColor, givenMark);
         }
     }
 
     //va chiamato sempre alla fine del turno su tutti i giocatori colpiti dopo aver valutato i marchi e i giocatori morti
-    public void verifyNewAction(PlayerColor opponentColor){
+    public void verifyNewAction(PlayerColor opponentColor) {
         Player player = getPlayer(opponentColor);
         int currentTreeID = player.getActionTree().getID();
         int newTreeID = Checks.verifyNewAction(player);
-        if (currentTreeID != newTreeID){
+        if (currentTreeID != newTreeID) {
             player.setActionTree(newTreeID);
             //notifica al giocatore(?)
         }
     }
 
 
-    public ArrayList<Player> getAllPlayers(){
+    public ArrayList<Player> getAllPlayers() {
         ArrayList<Player> def = new ArrayList<Player>(players.values());
         return def;
     }
+
 
 }
 

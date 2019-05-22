@@ -29,6 +29,10 @@ public class TurnManager {
 
     private boolean isTurnEnded;
 
+    private boolean killshot;
+
+    private ArrayList<PlayerColor> currentTurnKillShots;
+
     public Player getPlayerFromColor(PlayerColor playerColor){ //Dato il colore, ritorna il giocatore corrispondente
         Player result = null;
 
@@ -45,6 +49,7 @@ public class TurnManager {
         currentPlayerIndex = 0;
         currentPlayerColor = allPlayers.get(0).getPlayerColor();
         currentTurnNumber = 1;
+        currentTurnKillShots = new ArrayList<>();
     }
 
     public synchronized void update(){
@@ -117,5 +122,25 @@ public class TurnManager {
 
     public void startTurn(){
         isTurnEnded = false;
+    }
+
+    public boolean isKillshot(){
+        return killshot;
+    }
+
+    public void setKillshot(boolean killshot){
+        this.killshot = killshot;
+    }
+
+    public void addKillShot(PlayerColor playerColor){
+        currentTurnKillShots.add(playerColor);
+    }
+
+    public void resetKillShot(){
+        currentTurnKillShots.clear();
+    }
+
+    public int numOfKillShot(){
+        return currentTurnKillShots.size();
     }
 }

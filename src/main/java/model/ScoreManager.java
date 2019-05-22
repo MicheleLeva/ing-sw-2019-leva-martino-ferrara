@@ -1,5 +1,6 @@
 package model;
 
+import controller.Checks;
 import model.player.Player;
 import model.player.PlayerColor;
 
@@ -11,55 +12,110 @@ public class ScoreManager {
 
     private ArrayList<PlayerColor> playerRank = new ArrayList<>();
 
+    private final int frenzyKillShotPoints[] = {8,6,4,2,1};
+
     public ScoreManager(Model model){
         this.model = model;
-        //playerRank = model.getTurnManager().ge
     }
 
     public void updateScore(){
         ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
-        //todo mettere un if che verifichi se nel turno corrente almeno un giocatore è morto
+
         for (int i = 0; i < allPlayer.size(); i++){
-            if(allPlayer.get(i).isDead()){
-                computeScore(allPlayer.get(i)); //se un giocatore è morto, calcola i punteggi
+            if(allPlayer.get(i).isKillShot()){
+                computePoints(allPlayer.get(i));
+
+                //remove skull and add token
+                model.getGameBoard().getKillShotTrack().removeSkull(allPlayer.get(i).getPlayerBoard().
+                        getDamageCounter().getDamageCounter().
+                            get(Checks.getKillshot() - 1));
+
+                //remove the highest point
+                allPlayer.get(i).getPlayerBoard().getPoints().removeHighestPoint();
+
+                //overkill
+                if(allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()){
+                    model.getGameBoard().getKillShotTrack().addOverKill();
+                }
             }
+        }
+
+        //compute double killshots
+        if(model.getTurnManager().numOfKillShot() >= Checks.getDoubleKillShot()){
+            model.getTurnManager().getCurrentPlayer().addScore(1);
         }
 
         updatePlayerRank();
     }
 
-    private void computeScore(Player player){
+    public void updateScoreFrenzy(){
+        ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
+        //maps every player to his token on the killshot track
+        LinkedHashMap<PlayerColor,Integer> unsortRank;
+        ArrayList<PlayerColor> killShotTrackRank;
 
-        ArrayList<PlayerColor> temp = player.getPlayerBoard().getDamageCounter().getDamageCounter(); //lista di tutti i giocatori che hanno fatto danno
-        ArrayList<PlayerColor> shooterColor = new ArrayList<>(); //lista di tutti i giocatori che hanno fatto danno , senza duplicati
-        LinkedHashMap<PlayerColor,Integer> currentRank = new LinkedHashMap<>(); //classifica corrente
+        for (int i = 0; i < allPlayer.size(); i++){
+            if(allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamage() > 0)
+                computePoints(allPlayer.get(i));
+        }
 
-        //cancella duplicati
+        //compute killshottrack points
+         unsortRank = model.getGameBoard().getKillShotTrack().getRank();
+
+        killShotTrackRank = sortRank(unsortRank);
+
+        //add killshot track points
+        for (int i = 0; i < killShotTrackRank.size(); i++){
+            PlayerColor playerColor = killShotTrackRank.get(i);
+            Player player = model.getPlayer(playerColor);
+            player.addScore(frenzyKillShotPoints[i]);
+        }
+
+        updatePlayerRank();
+    }
+
+
+    private void computePoints(Player player){
+
+        //all players that dealt damage
+        ArrayList<PlayerColor> temp = player.getPlayerBoard().getDamageCounter().getDamageCounter();
+        //all players that dealt damage, with no duplicates
+        ArrayList<PlayerColor> shooterColor = new ArrayList<>();
+        //current turn rank
+        LinkedHashMap<PlayerColor,Integer> currentRank = new LinkedHashMap<>();
+
+        //delete duplicates
         for (int i = 0; i < temp.size(); i++){
             PlayerColor currentColor = temp.get(i);
             if(!shooterColor.contains(currentColor)){
                 shooterColor.add(currentColor);
             }
         }
-        //aggiunge il primo danno
-        int firstBloodDamage = player.getPlayerBoard().getPoints().getFirstBlood(); //retrieve the damage to give for the first blood
-        Player firstBloodPlayer = model.getPlayer(shooterColor.get(0)); //retrieve the player who made the first blood
-        firstBloodPlayer.getScore().addScore(firstBloodDamage); //add damage
-
+        //add the first blood damage
+        //retrieve the damage to deal for the first blood
+        int firstBloodDamage = player.getPlayerBoard().getPoints().getFirstBlood();
+        //player who dealt the first blood
+        Player firstBloodPlayer = model.getPlayer(shooterColor.get(0));
+        //add score
+        firstBloodPlayer.getScore().addScore(firstBloodDamage);
+        //reverse the array list
         Collections.reverse(shooterColor);
 
         for (int i = 0; i < shooterColor.size(); i++){
             PlayerColor currentColor = shooterColor.get(i);
             int currentDamage = player.getPlayerBoard().getDamageCounter().getDamageFromColor(currentColor);
-            currentRank.put(currentColor,currentDamage); //build the linked map that maps every shooter to its damage
+            //build the linked map that maps every shooter to the damage he dealt
+            currentRank.put(currentColor,currentDamage);
         }
-
-        shooterColor = sortRank(currentRank); //sort the rank by descending order
+        //sort the rank by descending order
+        shooterColor = sortRank(currentRank);
 
         for (int i = 0; i < shooterColor.size(); i++){
             Player currentPlayer = model.getPlayer(shooterColor.get(i));
-            int score = player.getPlayerBoard().getPoints().getPoint(i); //retrive the score for the i-th highest damage
-            currentPlayer.getScore().addScore(score); //add damage
+            //retrive the score for the i-th highest damage
+            int score = player.getPlayerBoard().getPoints().getPoint(i);
+            //add damage
+            currentPlayer.getScore().addScore(score);
         }
     }
 
