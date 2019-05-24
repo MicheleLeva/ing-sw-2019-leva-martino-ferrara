@@ -19,6 +19,7 @@ public class Player {
     private ActionTree actionTree;
 
     private boolean isDead;
+    private boolean isKillShot;
 
     public Player(String name, PlayerColor color){
         playerName = name;
@@ -82,13 +83,20 @@ public class Player {
         return isDead;
     }
 
-    public void dead(){
+    public void setDead(){
         isDead = true;
     }
 
-    public void alive(){
+    public void setAlive(){
         isDead = false;
+        isKillShot = false;
     }
 
+    public void setKillshot(){
+        isKillShot = true;
+    }
 
+    public boolean isKillShot(){
+        return isKillShot;
+    }
 }

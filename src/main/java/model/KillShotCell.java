@@ -31,4 +31,14 @@ public class KillShotCell {
     public boolean isSkull() {
         return isSkull;
     }
+
+    public void addToken(PlayerColor tokenColor){
+        isSkull = false;
+        this.tokenColor = tokenColor;
+        tokenNumber++;
+    }
+
+    public void addToken(){
+        tokenNumber++;
+    }
 }
