@@ -34,4 +34,15 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage playerMessage = new ChooseNewtonSquareMessage(message);
         notify(playerMessage, playerColor);
     }
+
+    public void askTargetingScope(PlayerColor playerColor){
+        String message = "Want to use the targeting Scope?";
+        PlayerMessage playerMessage = new TargetingScopeMessage(message);
+        notify(playerMessage,playerColor);
+    }
+
+    public void targetingScopeTargets(PlayerColor playerColor, String message){
+        PlayerMessage playerMessage = new TargetingScopeSelectionMessage(message);
+        notify(playerMessage,playerColor);
+    }
 }

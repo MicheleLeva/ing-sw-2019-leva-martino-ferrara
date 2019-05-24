@@ -207,7 +207,7 @@ public class Decks {
                         weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Heatseeker.json"));
                 }
                 if(result2.get("name").equals("TRACTOR BEAM")) {
-                    //weaponsDeck.add(new Tractorbeam(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Tractorbeam(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Tracktorbeam.json"));
                 }
                 if(result2.get("name").equals("FURNACE")) {
@@ -219,7 +219,7 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Hellion.json"));
                 }
                 if(result2.get("name").equals("FLAMETHROWER")) {
-                    //weaponsDeck.add(new Flamethrower(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Flamethrower(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Flamethrower.json"));
                 }
                 if(result2.get("name").equals("ZX-2")) {
@@ -227,7 +227,7 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Zx2.json"));
                 }
                 if(result2.get("name").equals("SHOTGUN")) {
-                    //weaponsDeck.add(new Shotgun(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Shotgun(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Shotgun.json"));
                 }
                 if(result2.get("name").equals("POWERGLOVE")) {
@@ -239,7 +239,7 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Railgun.json"));
                 }
                 if(result2.get("name").equals("SHOCKWAVE")) {
-                    //weaponsDeck.add(new Shockwave(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Shockwave(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Shockwave.json"));
                 }
                 if(result2.get("name").equals("SLEDGEHAMMER")) {
@@ -283,11 +283,11 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Lockrifle.json"));
                 }
                 if(result2.get("name").equals("GRENADELAUNCHER")) {
-                    //weaponsDeck.add(new Grenadelauncher(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
+                    weaponsDeck.add(new Grenadelauncher(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Grenadelauncher.json"));
                 }
                 if(result2.get("name").equals("VORTEX")) {
-                    //weaponsDeck.add(new Vortexcannon(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
+                    weaponsDeck.add(new Vortexcannon(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Vortexcannon.json"));
                 }
             }

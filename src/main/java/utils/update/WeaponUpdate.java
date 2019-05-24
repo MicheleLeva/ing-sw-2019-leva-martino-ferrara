@@ -9,4 +9,7 @@ public interface WeaponUpdate {
     void update(WeaponReloadMessage weaponReloadMessage);
     void update(AskFireModesMessage message);
     void update(ChooseWeaponSquareMessage message);
+    void update(WeaponPaymentMessage message);
+    void update(ReloadPaymentMessage message);
+    void update(PickUpPaymentMessage message);
 }

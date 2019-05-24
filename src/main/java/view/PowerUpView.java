@@ -1,10 +1,8 @@
 package view;
 
+import model.cards.powerups.TargetingScope;
 import model.exchanges.events.*;
-import model.exchanges.messages.ChooseNewtonOpponentMessage;
-import model.exchanges.messages.ChooseNewtonSquareMessage;
-import model.exchanges.messages.ChoosePowerUpMessage;
-import model.exchanges.messages.ChooseTeleporterSquareMessage;
+import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.PowerUpUpdate;
@@ -55,4 +53,20 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
         Event event = new ChooseNewtonSquareEvent(view , view.inputInt());
         notify(event);
     }
+
+    @Override
+    public void update(TargetingScopeMessage targetingScopeMessage){
+        view.printMessage(targetingScopeMessage.getMessage());
+
+        Event event = new TargetingScopeEvent(view , view.inputChar());
+        notify(event);
+    }
+    @Override
+    public void update(TargetingScopeSelectionMessage targetingScopeSelectionMessage){
+        view.printMessage(targetingScopeSelectionMessage.getMessage());
+
+        Event event = new TargetingScopeSelectionEvent(view, view.inputInt());
+        notify(event);
+    }
+
 }

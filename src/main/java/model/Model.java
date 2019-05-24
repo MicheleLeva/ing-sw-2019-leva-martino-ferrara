@@ -3,9 +3,8 @@ package model;
 import controller.Checks;
 import model.cards.*;
 import model.cards.powerups.PowerUp;
-import model.cards.weapons.FireMode;
-import model.cards.weapons.Weapon;
-import model.cards.weapons.WeaponTreeNode;
+import model.cards.powerups.TargetingScope;
+import model.cards.weapons.*;
 import model.map.Direction;
 import model.map.*;
 import model.notifiers.ActionNotifier;
@@ -151,6 +150,26 @@ public class Model {
         return visiblePlayers;
     }
 
+    public ArrayList<Square> getVisibleSquares(Player currentPlayer){
+        Square currentSquare = currentPlayer.getPosition();
+        ArrayList<Square> visibleSquares = new ArrayList<>();
+        Square[][] allSquares = getGameBoard().getMap().getMap();
+
+            for (int row = 0; row < allSquares.length; row++) {
+                for (int col = 0; col < allSquares[row].length; col++) {
+                    if(currentSquare.getColor().equals(allSquares[row][col].getColor()))
+                        visibleSquares.add(allSquares[row][col]);
+                    else
+                        for (Direction direction : Direction.values()) {
+                            if (    currentSquare.getSide(direction)!=null && currentSquare.getSide(direction).getColor()!=allSquares[row][col].getColor() &&
+                                    currentSquare.getSide(direction).getColor() == allSquares[row][col].getColor())
+                                visibleSquares.add(allSquares[row][col]);
+                        }
+                }
+            }
+            return visibleSquares;
+    }
+
     public ArrayList<Player> getPlayersNotInYourRoom(Player currentPlayer){
         ArrayList<Player> visiblePlayers = getVisiblePlayers(currentPlayer);
         ArrayList<Player> copy = new ArrayList<>(visiblePlayers);
@@ -173,10 +192,66 @@ public class Model {
         }
         return finalList;
     }
-    //Metodo che ritorna una lista di giocatori
+
+    public ArrayList<Square> getSquaresInCardinal1(Player currentPlayer) {
+        ArrayList<Square> finalList = new ArrayList<>();
+        finalList.add(currentPlayer.getPosition());
+        for(Direction dir : Direction.values()) {
+            if (currentPlayer.getPosition().getSide(dir) != null) {
+                finalList.add(currentPlayer.getPosition().getSide(dir));
+            }
+        }
+        return finalList;
+    }
+        //Metodo che ritorna una lista di giocatori
     //a distanza variabile dallo square scelto
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer){
         Square square = currentPlayer.getPosition();
+        ArrayList<Player> playersAtDistance = new ArrayList<>();
+        ArrayList<Player> allPlayers = getAllPlayers();
+        for(Player player : allPlayers) {
+            if(runnableSquare(distance, square).contains(player.getPosition())&& player!=currentPlayer){
+                playersAtDistance.add(player);
+            }
+        }
+        return playersAtDistance;
+
+    }
+
+    public Square getSquareInSameDirection(Square currentSquare,Square targetSquare){
+        Square finalSquare = null;
+        for(Direction dir : Direction.values()) {
+            if (currentSquare.getSide(dir) == targetSquare) {
+                if (dir == Direction.NORTH)
+                    if (targetSquare.getSide(Direction.NORTH) != null)
+                        finalSquare = targetSquare.getSide(Direction.NORTH);
+                if (dir == Direction.EAST)
+                    if (targetSquare.getSide(Direction.EAST) != null)
+                        finalSquare = targetSquare.getSide(Direction.EAST);
+                if (dir == Direction.SOUTH)
+                    if (targetSquare.getSide(Direction.SOUTH) != null)
+                        finalSquare = targetSquare.getSide(Direction.SOUTH);
+                if (dir == Direction.WEST)
+                    if (targetSquare.getSide(Direction.WEST) != null)
+                        finalSquare = targetSquare.getSide(Direction.WEST);
+            }
+        }
+        return finalSquare;
+    }
+
+    public ArrayList<Player> getPlayersInSameDirection(Player currentPlayer,Player target){
+        ArrayList<Player> finalPlayers = new ArrayList<>();
+        Square currentSquare = currentPlayer.getPosition();
+        Square targetSquare = target.getPosition();
+        Square finalSquare = getSquareInSameDirection(currentSquare,targetSquare);
+        for(Player player : getAllPlayers()){
+            if(player.getPosition() == finalSquare)
+                finalPlayers.add(player);
+        }
+        return finalPlayers;
+    }
+
+    public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer, Square square){
         ArrayList<Player> playersAtDistance = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
         for(Player player : allPlayers) {
@@ -536,7 +611,7 @@ public class Model {
         List<WeaponTreeNode<FireMode>> FireModes = new ArrayList<>();
         List<WeaponTreeNode<FireMode>> availableFireModes = weapon.getWeaponTree().getLastActionPerformed().getChildren();
         for(WeaponTreeNode<FireMode> fireMode : availableFireModes){
-            if(Checks.canUseFireMode(weapon, fireMode.getData().getType()))
+            if(Checks.canUseFireMode(getPlayer(playerColor),weapon, fireMode.getData().getType()))
                 FireModes.add(fireMode);
         }
         getCurrent().setAvailableFireModes(availableFireModes);
@@ -547,9 +622,240 @@ public class Model {
         weaponNotifier.showFireModes(playerColor, result);
     }
 
-    public void payFireMode(Player currentPlayer){
-        //todo riguardare
-        //esegui pagamento con powerup o con munizioni//
+    public void askReloadPayment(Player currentPlayer, Weapon weapon){
+        Ammo fireModeCost;
+        int fireRED;
+        int fireBLUE;
+        int fireYELLOW;
+
+        fireModeCost = setFireCost("reload",weapon);
+
+        fireRED = fireModeCost.getRed();
+        fireBLUE = fireModeCost.getBlue();
+        fireYELLOW = fireModeCost.getYellow();
+
+        if(currentPlayer.getResources().getPowerUp().isEmpty()){
+            payReload(currentPlayer,weapon);
+            return;
+        }
+
+        for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
+            if (fireRED > 0 && powerUp.getAmmo().toString().equals("RED"))
+                getCurrent().addAvailablePaymentPowerUps(powerUp);
+            else
+            if(fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE"))
+                getCurrent().addAvailablePaymentPowerUps(powerUp);
+            else
+            if(fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW"))
+                getCurrent().addAvailablePaymentPowerUps(powerUp);
+        }
+        weaponNotifier.askReloadPayment(currentPlayer.getPlayerColor(),currentPlayer.getResources().getPowerUp());
+    }
+
+    public void payReload(Player currentPlayer, Weapon weapon){
+        int powerUpRED = 0;
+        int powerUpBLUE = 0;
+        int powerUpYELLOW = 0;
+        Ammo fireModeCost = weapon.getBaseCost();
+        int fireRED = fireModeCost.getRed();
+        int fireBLUE = fireModeCost.getBlue();
+        int fireYELLOW = fireModeCost.getYellow();
+        ArrayList<PowerUp> powerUps = current.getSelectedPaymentPowerUps();
+
+        for(PowerUp powerUp : powerUps){
+            if (powerUp.getAmmo().toString().equals("RED"))
+                powerUpRED++;
+            else
+            if(powerUp.getAmmo().toString().equals("BLUE"))
+                powerUpBLUE++;
+            else
+            if(powerUp.getAmmo().toString().equals("YELLOW"))
+                powerUpYELLOW++;
+        }
+        fireRED = fireRED-powerUpRED;
+        fireBLUE = fireBLUE-powerUpBLUE;
+        fireYELLOW = fireYELLOW-powerUpYELLOW;
+        currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
+        current.resetCurrent();
+        //todo richiedi azione dopo aver ricaricato;
+    }
+
+    public void askPickUpPayment(Player currentPlayer, Weapon weapon){
+        Ammo fireModeCost;
+        int fireRED;
+        int fireBLUE;
+        int fireYELLOW;
+
+        fireModeCost = setFireCost("pickup",weapon);
+
+        fireRED = fireModeCost.getRed();
+        fireBLUE = fireModeCost.getBlue();
+        fireYELLOW = fireModeCost.getYellow();
+
+        if(currentPlayer.getResources().getPowerUp().isEmpty()){
+            payPickUp(currentPlayer,weapon);
+            return;
+        }
+
+        for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
+            if (fireRED > 0 && powerUp.getAmmo().toString().equals("RED"))
+                getCurrent().addAvailablePaymentPowerUps(powerUp);
+            else
+            if(fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE"))
+                getCurrent().addAvailablePaymentPowerUps(powerUp);
+            else
+            if(fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW"))
+                getCurrent().addAvailablePaymentPowerUps(powerUp);
+        }
+        weaponNotifier.askPickUpPayment(currentPlayer.getPlayerColor(),currentPlayer.getResources().getPowerUp());
+    }
+
+    public void payPickUp(Player currentPlayer, Weapon weapon){
+        int powerUpRED = 0;
+        int powerUpBLUE = 0;
+        int powerUpYELLOW = 0;
+        Ammo fireModeCost = weapon.getBaseCost();
+        int fireRED = fireModeCost.getRed();
+        int fireBLUE = fireModeCost.getBlue();
+        int fireYELLOW = fireModeCost.getYellow();
+        ArrayList<PowerUp> powerUps = current.getSelectedPaymentPowerUps();
+
+        for(PowerUp powerUp : powerUps){
+            if (powerUp.getAmmo().toString().equals("RED"))
+                powerUpRED++;
+            else
+            if(powerUp.getAmmo().toString().equals("BLUE"))
+                powerUpBLUE++;
+            else
+            if(powerUp.getAmmo().toString().equals("YELLOW"))
+                powerUpYELLOW++;
+        }
+        fireRED = fireRED-powerUpRED;
+        fireBLUE = fireBLUE-powerUpBLUE;
+        fireYELLOW = fireYELLOW-powerUpYELLOW;
+        currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
+        current.resetCurrent();
+        //todo richiedi azione dopo aver ricaricato;
+    }
+
+
+
+    public void payFireMode(Player currentPlayer, Weapon weapon){
+        int powerUpRED = 0;
+        int powerUpBLUE = 0;
+        int powerUpYELLOW = 0;
+        Ammo fireModeCost;
+        int fireRED ;
+        int fireBLUE ;
+        int fireYELLOW ;
+        ArrayList<PowerUp> powerUps = current.getSelectedPaymentPowerUps();
+        String effectType = weapon.getWeaponTree().getLastAction().getData().getType();
+        switch (effectType) {
+            case "alternative": {
+                fireModeCost = ((WeaponAlternative) weapon).getAlternativeCost();
+                break;
+            }
+            case "optional1": {
+                fireModeCost = ((WeaponOptional1) weapon).getOptionalCost1();
+                break;
+            }
+            case "optional2": {
+                fireModeCost = ((WeaponOptional2) weapon).getOptionalCost2();
+                break;
+            }
+            default: fireModeCost = new Ammo(0,0,0);
+        }
+            fireRED = fireModeCost.getRed();
+            fireBLUE = fireModeCost.getBlue();
+            fireYELLOW = fireModeCost.getYellow();
+
+        for(PowerUp powerUp : powerUps){
+            if (powerUp.getAmmo().toString().equals("RED"))
+                powerUpRED++;
+            else
+            if(powerUp.getAmmo().toString().equals("BLUE"))
+                powerUpBLUE++;
+            else
+            if(powerUp.getAmmo().toString().equals("YELLOW"))
+                powerUpYELLOW++;
+            }
+        fireRED = fireRED-powerUpRED;
+        fireBLUE = fireBLUE-powerUpBLUE;
+        fireYELLOW = fireYELLOW-powerUpYELLOW;
+        currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
+        current.getSelectedPaymentPowerUps().clear();
+        current.getAvailablePaymentPowerUps().clear();
+    }
+
+    public void askFireModePayment(Player currentPlayer,Weapon weapon,String effectType){
+        Ammo fireModeCost;
+        int fireRED;
+        int fireBLUE;
+        int fireYELLOW;
+        fireModeCost = setFireCost(effectType,weapon);
+
+        fireRED = fireModeCost.getRed();
+        fireBLUE = fireModeCost.getBlue();
+        fireYELLOW = fireModeCost.getYellow();
+
+        if(currentPlayer.getResources().getPowerUp().isEmpty()){
+            switch (effectType){
+                case("alternative"):
+                    ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
+                    break;
+                case("optional1"):
+                    ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
+                    break;
+                case("optional2"):
+                    ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
+                    break;
+            }
+            return;
+        }
+
+        for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
+            if (fireRED > 0 && powerUp.getAmmo().toString().equals("RED"))
+                getCurrent().addAvailablePaymentPowerUps(powerUp);
+            else
+                if(fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE"))
+                    getCurrent().addAvailablePaymentPowerUps(powerUp);
+                else
+                    if(fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW"))
+                        getCurrent().addAvailablePaymentPowerUps(powerUp);
+        }
+
+
+        weaponNotifier.askWeaponPayment(currentPlayer.getPlayerColor(),getCurrent().getAvailablePaymentPowerUps());
+    }
+
+    public Ammo setFireCost(String effectType,Weapon weapon){
+        Ammo fireModeCost;
+        switch(effectType){
+
+            case "reload":{
+                fireModeCost = weapon.getBaseCost();
+                break;
+            }
+            case "pickup":{
+                fireModeCost = weapon.getPickUpCost();
+                break;
+            }
+            case "alternative":{
+                fireModeCost = ((WeaponAlternative)weapon).getAlternativeCost();
+                break;
+            }
+            case "optional1":{
+                fireModeCost = ((WeaponOptional1)weapon).getOptionalCost1();
+                break;
+            }
+            case "optional2":{
+                fireModeCost = ((WeaponOptional2)weapon).getOptionalCost2();
+                break;
+            }
+            default: fireModeCost = new Ammo(0,0,0);
+        }
+
+        return fireModeCost;
     }
 
 
@@ -572,7 +878,7 @@ public class Model {
         weapon.getWeaponTree().updateLastActionPerformed();
         if(weapon.getWeaponTree().isActionEnded()){
             weapon.getWeaponTree().resetAction();
-            weapon.getModel().notifyShoot(currentPlayer,selectedTargets);
+            powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor());
         }
         else
             weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon);
@@ -631,6 +937,26 @@ public class Model {
         if(givenDamage != 0){
             damageCounter.addDamage(shooterColor , givenDamage);
         }
+        /*if(getPlayer(shooterColor).getResources().getPowerUp().get(i) instanceof TargetingScope){
+            synchronized(current.getPowerUpLock()) {
+                powerUpNotifier.askTargetingScope(shooterColor);
+                while(current.isPowerUpControl() == false) {
+                    try {
+                        current.getPowerUpLock().wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(current.isPowerUpDiscard()){
+
+                }
+                else{
+
+                }
+
+            }
+
+        }*/
     }
 
     public void addMark(PlayerColor shooterColor , PlayerColor opponentColor , int mark){
@@ -658,6 +984,13 @@ public class Model {
     public ArrayList<Player> getAllPlayers(){
         ArrayList<Player> def = new ArrayList<Player>(players.values());
         return def;
+    }
+
+    public void targetingScopeTargets(PlayerColor playerColor, ArrayList<Player> damagedPlayers){
+        String message="Select Targeting Scope target: ";
+        for(Player player : damagedPlayers)
+            message = message + player.getPlayerName();
+        powerUpNotifier.targetingScopeTargets(playerColor,message);
     }
 
 }

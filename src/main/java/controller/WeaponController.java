@@ -2,6 +2,7 @@ package controller;
 
 import model.Current;
 import model.Model;
+import model.cards.powerups.PowerUp;
 import model.cards.weapons.Weapon;
 import model.cards.weapons.WeaponAlternative;
 import model.cards.weapons.WeaponOptional1;
@@ -25,7 +26,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     public WeaponController(Model model){
         super(model);
     }
-
+    @Override
     public void update(WeaponSelectionEvent event){
         int input = event.getIndex();
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
@@ -78,22 +79,16 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
         else{
             Weapon chosenWeapon = reloadableWeapon.get(input - 1);
-            /*if (può fare la ricarica){
-                //scartare powerup
-                getModel().reload...
-            }
-            else{
-                weaponReloadEvent.getView().reportError("Insufficient Ammo.\n");
-                getModel().updateTurn(); nel turno normale può scegliere se ricaricare o finire, nel frenesia ridecide l'azione
-            }*/
+            getModel().getCurrent().setSelectedWeapon(chosenWeapon);
+            getModel().askReloadPayment(currentPlayer,chosenWeapon);
         }
     }
-
+    @Override
     public void update(OptionalFireModesEvent event){
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         int input = event.getInput();
-        if (input < 0 || input >= getModel().getCurrent().getAvailableFireModes().size()){
+        if (input < 1 || input > getModel().getCurrent().getAvailableFireModes().size()){
             String error;
             error = "Invalid input.\n";
             event.getView().reportError(error);
@@ -102,37 +97,29 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
 
         String effectType = weapon.getWeaponTree().getLastActionPerformed().getChildren().get(input).getData().getType();
-        weapon.getWeaponTree().updateLastAction(event.getInput());
+        weapon.getWeaponTree().updateLastAction(event.getInput()-1);
 
         if(effectType.equals("return")){
             weapon.getWeaponTree().resetAction();
             getModel().getCurrent().resetCurrent();
-            getModel().getCurrent().setSelectedWeapon(null);
             getModel().chooseAction(event.getPlayerColor());
         }
 
         if(effectType.equals("end")){
-                getModel().notifyShoot(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
+
+            getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor());
             return;
         }
         if(effectType.equals(BASE)) {
             weapon.askBaseRequirements(currentPlayer);
             return;
         }
-        if(effectType.equals(ALTERNATIVE)) {
-            ((WeaponAlternative) weapon).askAlternativeRequirements(currentPlayer);
+        if(effectType.equals(ALTERNATIVE)||effectType.equals(OPTIONAL1)||effectType.equals(OPTIONAL2)) {
+            getModel().askFireModePayment(currentPlayer,weapon,effectType);
             return;
-        }
-        if(effectType.equals(OPTIONAL1)) {
-            ((WeaponOptional1) weapon).askOptionalRequirements1(currentPlayer);
-            return;
-        }
-        if(effectType.equals(OPTIONAL2)) {
-            ((WeaponOptional2) weapon).askOptionalRequirements2(currentPlayer);
-
         }
     }
-
+    @Override
     public void update(TargetsSelectionEvent event){
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
@@ -163,7 +150,7 @@ public class WeaponController extends Controller implements WeaponObserver {
             checkOptionalTargets2(event,weapon,current,currentPlayer);
         }
     }
-
+    @Override
     public void update(ChooseWeaponSquareEvent event){
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         int input = event.getInput();
@@ -192,6 +179,110 @@ public class WeaponController extends Controller implements WeaponObserver {
             if(effectType.equals(OPTIONAL2)) {
                 ((WeaponOptional2) weapon).askOptionalRequirements2(currentPlayer);
             }
+        }
+    }
+
+
+    @Override
+    public void update(WeaponPaymentEvent event){
+        Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+        Weapon weapon = getModel().getCurrent().getSelectedWeapon();
+        String error;
+        int PowerUpRED = 0;
+        int PowerUpBLUE = 0;
+        int PowerUpYELLOW = 0;
+        String effectType = weapon.getWeaponTree().getLastAction().getData().getType();
+
+
+
+        for(int i : event.getSelectedPowerUps()){
+            if(i>1 || i<0){
+                error = "Invalid input.\n";
+                event.getView().reportError(error);
+                getModel().askFireModePayment(currentPlayer,weapon,effectType);
+                return;
+            }
+        }
+
+        if(!Checks.validPayment(currentPlayer,event.getSelectedPowerUps(),effectType,getModel())) {
+            error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().askFireModePayment(currentPlayer, weapon, effectType);
+        }
+        else {
+            addSelectedPaymentPowerUps(currentPlayer, event.getSelectedPowerUps());
+            if(effectType.equals(ALTERNATIVE)) {
+                ((WeaponAlternative) weapon).askAlternativeRequirements(currentPlayer);
+                return;
+            }
+            if(effectType.equals(OPTIONAL1)) {
+                ((WeaponOptional1) weapon).askOptionalRequirements1(currentPlayer);
+                return;
+            }
+            if(effectType.equals(OPTIONAL2)) {
+                ((WeaponOptional2) weapon).askOptionalRequirements2(currentPlayer);
+                return;
+            }
+        }
+    }
+
+
+    public void addSelectedPaymentPowerUps(Player currentPlayer, ArrayList<Integer> selectedPowerUps){
+        ArrayList<PowerUp> available = getModel().getCurrent().getAvailablePaymentPowerUps();
+        for(int i : selectedPowerUps){
+            getModel().getCurrent().addSelectedPaymentPowerUps(getModel().getCurrent().getAvailablePaymentPowerUps().get(i));
+        }
+    }
+
+
+    @Override
+    public void update(ReloadPaymentEvent event){
+        Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+        Weapon weapon = getModel().getCurrent().getSelectedWeapon();
+        String error;
+
+
+        for(int i : event.getSelectedPowerUps()){
+            if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
+                error = "Invalid input.\n";
+                event.getView().reportError(error);
+                getModel().askReloadPayment(currentPlayer,weapon);
+                return;
+            }
+        }
+        if(!Checks.validPayment(currentPlayer,event.getSelectedPowerUps(),"reload",getModel())) {
+            error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().askReloadPayment(currentPlayer, weapon);
+        }
+        else{
+            addSelectedPaymentPowerUps(currentPlayer, event.getSelectedPowerUps());
+            getModel().payReload(currentPlayer, weapon);
+        }
+    }
+    @Override
+    public void update(PickUpPaymentEvent event){
+        Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+        Weapon weapon = getModel().getCurrent().getSelectedWeapon();
+        String error;
+
+
+        for(int i : event.getSelectedPowerUps()){
+            if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
+                error = "Invalid input.\n";
+                event.getView().reportError(error);
+                getModel().askPickUpPayment(currentPlayer,weapon);
+                return;
+            }
+        }
+        if(!Checks.validPayment(currentPlayer,event.getSelectedPowerUps(),"pickup",getModel())) {
+            error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().askPickUpPayment(currentPlayer, weapon);
+        }
+        else{
+            addSelectedPaymentPowerUps(currentPlayer, event.getSelectedPowerUps());
+            getModel().payPickUp(currentPlayer, weapon);
         }
     }
 
@@ -245,7 +336,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
     }
 
-    public void checkOptionalTargets1(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer){
+    public void checkOptionalTargets1(TargetsSelectionEvent event, Weapon weapon, Current current, Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
         for (Integer target : event.getSelectedTargets()) {
             int temp = event.getSelectedTargets().get(target);
@@ -270,7 +361,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
     }
 
-    public void checkOptionalTargets2(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer){
+    public void checkOptionalTargets2(TargetsSelectionEvent event, Weapon weapon, Current current, Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
         for (Integer target : event.getSelectedTargets()) {
             int temp = event.getSelectedTargets().get(target);

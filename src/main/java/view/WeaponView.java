@@ -33,6 +33,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
         notify(event);
     }
 
+    @Override
     public void update(TargetsSelectionMessage message){
         ArrayList<Integer> selectedTargets = new ArrayList<>();
         int counter = message.getTargetsNumber();
@@ -75,17 +76,58 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
         notify(event);
     }
 
+    @Override
     public void update(AskFireModesMessage message){
         view.printMessage(message.getMessage());
-
         Event event = new OptionalFireModesEvent(view,view.inputInt());
         notify(event);
     }
-
+    @Override
     public void update(ChooseWeaponSquareMessage message){
         view.printMessage(message.getMessage());
-
         Event event = new ChooseWeaponSquareEvent(view , view.inputInt());
+        notify(event);
+    }
+    @Override
+    public void update(WeaponPaymentMessage message) {
+        ArrayList<Integer> choices = new ArrayList<>();
+        int counter = message.getSize();
+        int selection;
+        view.printMessage(message.getMessage());
+        while (counter>0){
+            selection = view.inputInt();
+            choices.add(selection);
+            counter--;
+        }
+        Event event = new WeaponPaymentEvent(view, choices);
+        notify(event);
+    }
+    @Override
+    public void update(ReloadPaymentMessage message){
+        ArrayList<Integer> choices = new ArrayList<>();
+        int counter = message.getSize();
+        int selection;
+        view.printMessage(message.getMessage());
+        while (counter>0){
+            selection = view.inputInt();
+            choices.add(selection);
+            counter--;
+        }
+        Event event = new ReloadPaymentEvent(view, choices);
+        notify(event);
+    }
+    @Override
+    public void update(PickUpPaymentMessage message){
+        ArrayList<Integer> choices = new ArrayList<>();
+        int counter = message.getSize();
+        int selection;
+        view.printMessage(message.getMessage());
+        while (counter>0){
+            selection = view.inputInt();
+            choices.add(selection);
+            counter--;
+        }
+        Event event = new PickUpPaymentEvent(view, choices);
         notify(event);
     }
 }

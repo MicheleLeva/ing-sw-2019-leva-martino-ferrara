@@ -1,5 +1,6 @@
 package model;
 
+import model.cards.powerups.PowerUp;
 import model.cards.weapons.FireMode;
 import model.cards.weapons.Weapon;
 import model.cards.weapons.WeaponTreeNode;
@@ -17,6 +18,16 @@ public class Current {
 
     ///For Weapons///
     private boolean dealtDamage = false;
+
+    public String getEffectType() {
+        return effectType;
+    }
+
+    public void setEffectType(String effectType) {
+        this.effectType = effectType;
+    }
+
+    private String effectType;
     private int baseCounter = 0;
     private int optionalCounter1 = 0;
     private int optionalCounter2 = 0;
@@ -31,10 +42,63 @@ public class Current {
     private ArrayList<Player> availableOptionalTargets1 = new ArrayList<>();
     private ArrayList<Player> selectedOptionalTargets2 = new ArrayList<>();
     private ArrayList<Player> availableOptionalTargets2 = new ArrayList<>();
+    private ArrayList<PowerUp> availablePaymentPowerUps = new ArrayList<>();
+    private ArrayList<PowerUp> selectedPaymentPowerUps = new ArrayList<>();
+    private Square rocketlauncherSquare = null;
+    private Player flamethrowerSupportPlayer = null;
+
+    public Player getFlamethrowerSupportPlayer(){
+        return this.flamethrowerSupportPlayer;
+    }
+
+    public void setFlamethrowerSupportPlayer(Player player){
+        flamethrowerSupportPlayer = player;
+    }
+
+    public void decreaseBaseCounter(){this.baseCounter--;}
+
+    public void setRocketlauncherSquare(Square square){this.rocketlauncherSquare = square;}
+
+    public Square getRocketlauncherSquare() {
+        return this.rocketlauncherSquare;
+    }
+
+    public ArrayList<Player> getAllDamagedPlayer() {
+        return allDamagedPlayer;
+    }
+
+    public void setAllDamagedPlayer(ArrayList<Player> allDamagedPlayer) {
+        this.allDamagedPlayer = allDamagedPlayer;
+    }
+
+    private ArrayList<Player> allDamagedPlayer = new ArrayList<>();
     private Weapon selectedWeapon = null;
+    private Object powerUpLock = new Object();
+    private boolean powerUpDiscard = false;
+    private boolean powerUpControl = false;
 
     public Current(){
         resetCurrent();
+    }
+
+    public boolean isPowerUpControl(){
+        return this.powerUpControl;
+    }
+
+    public void setPowerUpControl(boolean powerUpControl) {
+        this.powerUpControl = powerUpControl;
+    }
+
+    public Object getPowerUpLock(){
+        return this.powerUpLock;
+    }
+
+    public void setPowerUpDiscard(boolean discard){
+        this.powerUpDiscard = powerUpDiscard;
+    }
+
+    public boolean isPowerUpDiscard() {
+        return powerUpDiscard;
     }
 
     public List<WeaponTreeNode<FireMode>> getAvailableFireModes() {
@@ -221,5 +285,16 @@ public class Current {
     public boolean isDealtDamage(){ return this.isDealtDamage();}
 
     public void setDealtDamage(boolean choice){ this.dealtDamage = choice;}
+
+    public ArrayList<PowerUp> getAvailablePaymentPowerUps() { return availablePaymentPowerUps; }
+
+    public void addAvailablePaymentPowerUps(PowerUp availablePaymentPowerUp) {
+        this.availablePaymentPowerUps.add(availablePaymentPowerUp); }
+
+    public ArrayList<PowerUp> getSelectedPaymentPowerUps() { return selectedPaymentPowerUps; }
+
+    public void addSelectedPaymentPowerUps(PowerUp selectedPaymentPowerUp) {
+        this.selectedPaymentPowerUps.add(selectedPaymentPowerUp); }
+
 }
 

@@ -1,7 +1,9 @@
 package controller;
 
 import model.Ammo;
+import model.Model;
 import model.cards.*;
+import model.cards.powerups.PowerUp;
 import model.cards.weapons.Weapon;
 import model.cards.weapons.WeaponAlternative;
 import model.cards.weapons.WeaponOptional1;
@@ -90,17 +92,51 @@ public class Checks {
 
 
 
-    public static boolean canUseFireMode(Weapon currentWeapon, String effectType){
-        if(effectType.equals("base"))
-            currentWeapon.getBaseCost();
-        if(effectType.equals("alternative"))
-            ((WeaponAlternative)currentWeapon).getAlternativeCost();
-        if(effectType.equals("optional1"))
-            ((WeaponOptional1)currentWeapon).getOptionalCost1();
-        if(effectType.equals("optional2"))
-            ((WeaponOptional2)currentWeapon).getOptionalCost1();
-        //todo
-        return true;
+    public static boolean canUseFireMode(Player player, Weapon currentWeapon, String effectType){
+        int RED = 0;
+        int YELLOW = 0;
+        int BLUE = 0;
+        Ammo playerAmmo = player.getResources().getAvailableAmmo();
+
+
+        for(PowerUp powerUp : player.getResources().getPowerUp()){
+            if(powerUp.getAmmo().toString().equals("RED"))
+                RED++;
+            else if(powerUp.getAmmo().toString().equals("BLUE"))
+                BLUE++;
+            else
+                YELLOW++;
+        }
+
+        switch (effectType) {
+            case "base":
+                return true;
+            case "alternative": {
+                Ammo cost = ((WeaponAlternative) currentWeapon).getAlternativeCost();
+                if (cost.getRed() <= (RED + playerAmmo.getRed()) && cost.getBlue() <= (BLUE + playerAmmo.getBlue()) && cost.getYellow() <= (YELLOW + playerAmmo.getYellow()))
+                    return true;
+                else
+                    return false;
+            }
+            case "optional1": {
+                Ammo cost = ((WeaponOptional1) currentWeapon).getOptionalCost1();
+                if (cost.getRed() <= (RED + playerAmmo.getRed()) && cost.getBlue() <= (BLUE + playerAmmo.getBlue()) && cost.getYellow() <= (YELLOW + playerAmmo.getYellow()))
+                    return true;
+                else
+                    return false;
+            }
+            case "optional2": {
+                Ammo cost = ((WeaponOptional2) currentWeapon).getOptionalCost2();
+                if (cost.getRed() <= (RED + playerAmmo.getRed()) && cost.getBlue() <= (BLUE + playerAmmo.getBlue()) && cost.getYellow() <= (YELLOW + playerAmmo.getYellow()))
+                    return true;
+                else
+                    return false;
+            }
+
+            default:
+                return false;
+
+        }
     }
 
     public static int givenDamage(int playerDamage , int damage){
@@ -134,4 +170,106 @@ public class Checks {
         }
     }
 
+    public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
+        Weapon weapon = model.getCurrent().getSelectedWeapon();
+        Ammo fireModeCost;
+        int powerUpRED = 0;
+        int powerUpBLUE = 0;
+        int powerUpYELLOW = 0;
+        int playerRED = currentPlayer.getResources().getAvailableAmmo().getRed();
+        int playerBLUE = currentPlayer.getResources().getAvailableAmmo().getBlue();
+        int playerYELLOW = currentPlayer.getResources().getAvailableAmmo().getYellow();
+        int fireRED = 0;
+        int fireBLUE = 0;
+        int fireYELLOW = 0;
+        Boolean R;
+        Boolean B;
+        Boolean Y;
+        for (int i : choices) {
+            String color = model.getCurrent().getAvailablePaymentPowerUps().get(i).getAmmo().toString();
+            if (i == 1 && color.equals("RED"))
+                powerUpRED++;
+
+            if (i == 1 && color.equals("BLUE"))
+                powerUpBLUE++;
+
+            if (i == 1 && color.equals("YELLOW"))
+                powerUpYELLOW++;
+        }
+
+        switch (effectType) {
+            case "reload" :{
+                fireModeCost = weapon.getBaseCost();
+                fireRED = fireModeCost.getRed();
+                fireBLUE = fireModeCost.getBlue();
+                fireYELLOW = fireModeCost.getYellow();
+                break;
+            }
+            case "pickup" :{
+                fireModeCost = weapon.getPickUpCost();
+                fireRED = fireModeCost.getRed();
+                fireBLUE = fireModeCost.getBlue();
+                fireYELLOW = fireModeCost.getYellow();
+                break;
+            }
+            case "alternative": {
+                fireModeCost = ((WeaponAlternative) weapon).getAlternativeCost();
+                fireRED = fireModeCost.getRed();
+                fireBLUE = fireModeCost.getBlue();
+                fireYELLOW = fireModeCost.getYellow();
+                break;
+            }
+            case "optional1": {
+                fireModeCost = ((WeaponOptional1) weapon).getOptionalCost1();
+                fireRED = fireModeCost.getRed();
+                fireBLUE = fireModeCost.getBlue();
+                fireYELLOW = fireModeCost.getYellow();
+                break;
+            }
+            case "optional2": {
+                fireModeCost = ((WeaponOptional2) weapon).getOptionalCost2();
+                fireRED = fireModeCost.getRed();
+                fireBLUE = fireModeCost.getBlue();
+                fireYELLOW = fireModeCost.getYellow();
+                break;
+            }
+        }
+
+
+        if(fireRED-powerUpRED==0)
+            R = true;
+        else {
+            if (fireRED - powerUpRED > 0) {
+                if (fireRED - powerUpRED - playerRED <= 0)
+                    R = true;
+                else
+                    R = false;
+            } else
+                R = false;
+        }
+        if(fireBLUE-powerUpBLUE==0)
+            B = true;
+        else{
+            if(fireBLUE-powerUpBLUE>0) {
+                if (fireBLUE - powerUpBLUE - playerBLUE <= 0)
+                    B = true;
+                else
+                    B = false;
+            }
+            else
+                B = false;
+        }
+        if(fireYELLOW-powerUpYELLOW==0)
+            Y = true;
+        else {
+            if (fireYELLOW - powerUpYELLOW > 0) {
+                if (fireYELLOW - powerUpYELLOW - playerYELLOW <= 0)
+                    Y = true;
+                else
+                    Y = false;
+            } else
+                Y = false;
+        }
+        return R&&B&&Y;
+    }
 }
