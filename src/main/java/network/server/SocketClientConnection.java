@@ -1,7 +1,6 @@
 package network.server;
 
 import network.ClientConnection;
-import network.server.Server;
 import utils.Observable;
 
 import java.io.IOException;
@@ -20,6 +19,8 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     private boolean active = true;
 
+    String playerName;
+
     public SocketClientConnection(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
@@ -36,11 +37,17 @@ public class SocketClientConnection extends Observable<String> implements Client
         try{
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            send("NameSetMessage,Insert your name!");
             String read = in.nextLine();
-            name = read;
-            //todo sistemare
-            server.addPlayer(this, name);
+            playerName = read;
+            int id = server.nameAvailable(playerName);
+            if (id != 0) {
+                //todo controllare che il giocatore con lo stesso nome sia afk
+                int index = server.getPlayerNames().get(id).indexOf(playerName);
+                this.register(server.getPlayerViews().get(id).get(index));
+                server.reconnectPlayer(this, id, index);
+            } else {
+                server.addPlayer(this, playerName);
+            }
             while(isActive()){
                 read = in.nextLine();
                 notify(read);

@@ -20,8 +20,8 @@ public class GameBoard {
         this.decks = new Decks();
     }
 
-    public void addToken(PlayerColor playerColor, int tokenNumber){
-    this.killShotTrack.removeSkull(playerColor, tokenNumber);
+    public void addToken(PlayerColor playerColor){
+    this.killShotTrack.removeSkull(playerColor);
     }
 
     public KillShotTrack getKillShotTrack(){

@@ -11,6 +11,8 @@ public class RemoteGameView implements Observer<PlayerMessage> {
     public RemoteGameView(ClientConnection clientConnection, View view){
         this.clientConnection = clientConnection;
         this.view = view;
+
+        clientConnection.asyncSend("GenericMessage,Welcome to the game! Your player color is " + view.getPlayerColor().toString());
     }
 
     public void stringToMessage(String[] inputs){

@@ -54,6 +54,7 @@ public class TurnManager {
 
     public synchronized void update(){
         //allPlayers.get(currentPlayerIndex).getActionTree().resetPerformedAction();
+
         if (currentPlayerIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
         {
             updateCurrentTurnNumber();

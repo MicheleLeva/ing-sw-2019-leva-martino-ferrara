@@ -16,9 +16,9 @@ public class CurrentTurn {
             return new FirstTurn(model);
         }
 
-        if (model.getGameBoard().getKillShotTrack().isFrenzy()){
+        /*if (model.getGameBoard().getKillShotTrack().isFrenzy()){
             return new FrenzyTurn(model);
-        }
+        }*/
 
         else
             return new StandardTurn(model);

@@ -135,6 +135,7 @@ public class ActionTree {
         else{
             lastActionPerformed = lastAction;
         }
+        //todo fine della mossa nel turno corrente
     }
 
     public String availableAction(){ //Modificare per mostrare tutte le combinazioni

@@ -40,9 +40,6 @@ public class RemoteView extends View implements Observer<String> {
         this.remoteGameView = new RemoteGameView(c, this);
         this.remotePowerUpView = new RemotePowerUpView(c, this);
         this.remoteWeaponView = new RemoteWeaponView(c, this);
-
-        //todo messaggi di default?
-        c.asyncSend("Welcome to the game! Your player color is " + playerColor.toString()); //messaggio di benvenuto?
     }
 
     public void update(String message) {
@@ -67,7 +64,6 @@ public class RemoteView extends View implements Observer<String> {
                     System.out.println("Unidentified messages from " + getPlayerColor().toString() + " view: \n" + message);
             }
         }catch(IllegalArgumentException e){
-            //todo da modificare
             clientConnection.asyncSend("Error!");
         }
     }

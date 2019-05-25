@@ -17,6 +17,7 @@ public class Player {
     private Square position;
     private boolean isFirst;
     private ActionTree actionTree;
+    private boolean afk = false;
 
     private boolean isDead;
     private boolean isKillShot;
@@ -90,6 +91,14 @@ public class Player {
     public void setAlive(){
         isDead = false;
         isKillShot = false;
+    }
+
+    public void setAfk(boolean afk) {
+        this.afk = afk;
+    }
+
+    public boolean isAfk() {
+        return afk;
     }
 
     public void setKillshot(){

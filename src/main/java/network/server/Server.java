@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private static final int PORT = 12345; //da cambiare, magari ottenendolo da json?
+    private static final int PORT = 12345; //todo da cambiare, magari ottenendolo da json?
 
     private boolean isServerActive = false;
 
@@ -27,9 +27,17 @@ public class Server {
 
     private ExecutorService executor = Executors.newFixedThreadPool(128);
 
+    private  ExecutorService games = Executors.newFixedThreadPool( 10);
+
     private Map<String, ClientConnection> waitingConnection = new HashMap<>();
 
     private Map<Integer, ArrayList<ClientConnection>> playingPool = new HashMap<>(); //più tavoli di giocatori
+
+    private Map<Integer, ArrayList<String>> playerNames = new HashMap<>();
+
+    private Map<Integer, ArrayList<RemoteView>> playerViews = new HashMap<>();
+
+    private int lastID;
 
     private ArrayList<ClientConnection> playingConnection = new ArrayList<>(); //singolo tavolo di giocatori
 
@@ -37,21 +45,61 @@ public class Server {
 
     private Timer timer = new Timer();
 
-    public TimerTask turnTimerOff = new TimerTask() {
+    private TimerTask turnTimerOff = new TimerTask() {
         @Override
         public void run() {
             isTimerOn = false;
         }
     };
 
+    public Map<Integer, ArrayList<RemoteView>> getPlayerViews() {
+        return playerViews;
+    }
+
+    public Map<Integer, ArrayList<String>> getPlayerNames() {
+        return playerNames;
+    }
+
+    public synchronized void reconnectPlayer(ClientConnection c, int pool, int index){
+        playingPool.get(pool).remove(index);
+        playingPool.get(pool).add(index, c);
+    }
+
     /*
      * Deregistro una connessione
      */
+    public synchronized void deregisterConnection(ClientConnection c) {
+        for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()){
+            if (entry.getValue().contains(c)){
+                entry.getValue().remove(c);
+                c.closeConnection();
+            }
+        }
+        for (Map.Entry<String, ClientConnection> entry : waitingConnection.entrySet()){
+            if (entry.getValue() == c){
+                waitingConnection.remove(entry.getKey());
+                c.closeConnection();
+            }
+        }
+    }
 
-    public synchronized void deregisterConnection(ClientConnection c) { //da cambiare per il nostro gioco
-        //todo
-        //deregistra un pool?
-        //deregistra un solo giocatore?
+    public int nameAvailable(String name){
+        for (Map.Entry<Integer, ArrayList<String>> entry : playerNames.entrySet()){
+            if (entry.getValue().contains(name)){
+                return entry.getKey();
+            }
+        }
+        return 0;
+    }
+
+    public synchronized void deregisterPool(int id){
+        for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()){
+            if (entry.getKey() == id){
+                for (ClientConnection c : entry.getValue()){
+                    deregisterConnection(c);
+                }
+            }
+        }
     }
 
     public Server() throws IOException {
@@ -64,30 +112,49 @@ public class Server {
     }
 
     private void createGame(){
+        if (!playingPool.isEmpty()) {
+            for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()) {
+                lastID = entry.getKey();
+            }
+            lastID ++;
+        } else {
+            lastID = 1;
+        }
+        playingPool.put(lastID, new ArrayList<>());
+        playerNames.put(lastID, new ArrayList<>());
+
         List<String> keys = new ArrayList<>(waitingConnection.keySet());
         for (String key : keys){
-            playingConnection.add(waitingConnection.get(key));
+            playingPool.get(lastID).add(waitingConnection.get(key));
         }
-        List<RemoteView> remoteViews= new ArrayList<>();
+        ArrayList<RemoteView> remoteViews= new ArrayList<>();
         ArrayList<Player> players= new ArrayList<>();
 
         players.add(new Player(keys.get(0), PlayerColor.BLUE));
+        playerNames.get(lastID).add(keys.get(0));
         remoteViews.add(new RemoteView(PlayerColor.BLUE, playingConnection.get(0)));
 
         players.add(new Player(keys.get(1), PlayerColor.GREEN));
-        remoteViews.add(new RemoteView(PlayerColor.GREEN, playingConnection.get(1)));
+        playerNames.get(lastID).add(keys.get(1));
+        remoteViews.add(new RemoteView(PlayerColor.GREEN, playingPool.get(lastID).get(1)));
 
         players.add(new Player(keys.get(2), PlayerColor.PURPLE));
-        remoteViews.add(new RemoteView(PlayerColor.PURPLE, playingConnection.get(2)));
+        playerNames.get(lastID).add(keys.get(2));
+        remoteViews.add(new RemoteView(PlayerColor.PURPLE, playingPool.get(lastID).get(2)));
 
-        if (playingConnection.size()== 4){
+        if (waitingConnection.size()== 4){
             players.add(new Player(keys.get(3), PlayerColor.YELLOW));
-            remoteViews.add(new RemoteView(PlayerColor.YELLOW, playingConnection.get(4)));
+            playerNames.get(lastID).add(keys.get(3));
+            remoteViews.add(new RemoteView(PlayerColor.YELLOW, playingPool.get(lastID).get(3)));
         }
-        if (playingConnection.size()== 5){
+
+        if (waitingConnection.size()== 5){
             players.add(new Player(keys.get(4), PlayerColor.GREY));
-            remoteViews.add(new RemoteView(PlayerColor.YELLOW, playingConnection.get(3)));
+            playerNames.get(lastID).add(keys.get(4));
+            remoteViews.add(new RemoteView(PlayerColor.YELLOW,playingPool.get(lastID).get(4)));
         }
+
+        playerViews.put(lastID, remoteViews);
 
         Model model = new Model(players, 8);
 
@@ -101,9 +168,9 @@ public class Server {
             v.getRemoteWeaponView().register(new WeaponController(model));
         }
 
-        new Game(0, model);
-        //inizializzo il gioco, da rivedere l'assegnazione del gameID
-        //magari in base al tavolo?
+        new Game(lastID, model);
+        //game.run?
+        //todo aprire thread per il game
 
          waitingConnection.clear();
     }
@@ -111,7 +178,7 @@ public class Server {
     private void checkConnected(){
         if (waitingConnection.size()>2 && !isTimerOn){
             isTimerOn = true;
-            timer.schedule(turnTimerOff, 1000*30);
+            timer.schedule(turnTimerOff, 1000L*30);
             while (isTimerOn) {
                 if (waitingConnection.size() == 5) {
                     createGame();
@@ -120,9 +187,12 @@ public class Server {
                     return;
                 }
             }
+            if (waitingConnection.size()<3){
+                isTimerOn = false;
+                return;
+            }
             createGame();
             isTimerOn = false;
-            return;
             //se finisce il timer faccio un createGame
         }
     }

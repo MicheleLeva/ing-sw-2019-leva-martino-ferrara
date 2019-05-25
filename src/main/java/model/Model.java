@@ -519,8 +519,10 @@ public class Model {
 
     public void endTurn() { //todo riempire metodo
         //cambia giocatore
-        //respawna giocatori morti
         //notifica nuovo turno
+        //stampa lo stato del gioco
+        //calcola punteggi
+        //ridistribuisci le ammo sulla mappa
     }
 
     public void choosePowerUp(PlayerColor playerColor) {
@@ -668,6 +670,7 @@ public class Model {
         currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
         current.resetCurrent();
         //todo richiedi azione dopo aver ricaricato;
+        //set roladinputricevuto a true
     }
 
     public void askPickUpPayment(Player currentPlayer, Weapon weapon){
@@ -905,6 +908,8 @@ public class Model {
     public void askReloadEndTurn(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
+        //se non ha niente da ricaricare haricaricato e inputricevuto a true
+        //altrimenti entrambi a false
         weaponNotifier.askReload(playerColor, reloadableWeapon);
     }
 

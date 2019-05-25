@@ -20,17 +20,18 @@ public class Game {
         this.model = model;
 
         startGame();
+        //diventa una run per farlo diventare thread
     }
 
+    //todo diventerà run: thread principale del gioco
     private void startGame(){
         while(!model.getTurnManager().isGameOver()){
             currentTurn = model.getCurrentTurn().getTurn();
             currentTurn.notifyTurn();
             currentTurn.startTurn();
         }
-
-        //Calcolo punteggi
-        model.endGame();
+        //manda punteggi
+        //clear game dal server
     }
 
 
