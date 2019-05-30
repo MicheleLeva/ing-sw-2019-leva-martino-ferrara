@@ -21,9 +21,9 @@ public class Client extends Observable<String> implements ClientConnection,Runna
     private View view;
 
     //da recuperare effettivi dati per connessione
-    private String ip = "0.0.0.0";
+    private String ip = "localhost";
 
-    private int port = 1234;
+    private int port = 6868;
 
     private boolean isActive(){
         return active;
@@ -33,6 +33,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
         //magari si importano ip e port dall'input dell'utente?
         try {
             socket = new Socket(ip, port);
+            System.out.println("Server found!");
         } catch (IOException e) {
             System.out.println("Connection error!");
         }

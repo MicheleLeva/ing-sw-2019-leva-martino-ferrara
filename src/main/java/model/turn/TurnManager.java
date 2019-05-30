@@ -53,17 +53,23 @@ public class TurnManager {
     }
 
     public synchronized void update(){
-        //allPlayers.get(currentPlayerIndex).getActionTree().resetPerformedAction();
+        //todo da fare nell'end turn allPlayers.get(currentPlayerIndex).getActionTree().resetPerformedAction();
 
         if (currentPlayerIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
         {
             updateCurrentTurnNumber();
             currentPlayerIndex = 0;
+            while (getCurrentPlayer().isAfk()){
+                currentPlayerIndex ++;
+            }
         }
 
         else
         {
             currentPlayerIndex++;
+            while (getCurrentPlayer().isAfk()){
+                currentPlayerIndex ++;
+            }
 
         }
         currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();

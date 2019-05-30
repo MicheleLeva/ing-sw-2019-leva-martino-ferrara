@@ -8,6 +8,6 @@ public interface PowerUpObserver {
     void update(ChooseNewtonOpponentEvent chooseNewtonOpponentEvent);
     void update(ChooseNewtonSquareEvent chooseNewtonSquareEvent);
     void update(TargetingScopeEvent targetingScopeEvent);
-
     void update(TargetingScopeSelectionEvent event);
+    void update(TagbackGrenadeEvent tagbackGrenadeEvent);
 }

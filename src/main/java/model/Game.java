@@ -2,33 +2,31 @@ package model;
 
 import model.turn.Turn;
 
-public class Game {
+public class Game implements Runnable{
 
     private final int gameID;
 
-    private Model model = null;
+    private final Model model;
 
     private Turn currentTurn;
 
-    public Game(int gameID, Model model){
-        this.gameID = gameID;
-        init(model);
+    public int getGameID() {
+        return gameID;
     }
 
-    private void init(Model model){
-        //Inizializzazione passando solo il model
+    public Game(int gameID, Model model){
+        this.gameID = gameID;
         this.model = model;
-
-        startGame();
+        run();
         //diventa una run per farlo diventare thread
     }
 
-    //todo diventerà run: thread principale del gioco
-    private void startGame(){
+    public void run(){
         while(!model.getTurnManager().isGameOver()){
             currentTurn = model.getCurrentTurn().getTurn();
             currentTurn.notifyTurn();
             currentTurn.startTurn();
+            //endturn?
         }
         //manda punteggi
         //clear game dal server

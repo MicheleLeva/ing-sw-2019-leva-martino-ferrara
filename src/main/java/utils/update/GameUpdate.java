@@ -1,13 +1,11 @@
 package utils.update;
 
 import model.exchanges.messages.GenericMessage;
-import model.exchanges.messages.NameSetMessage;
 import model.exchanges.messages.RunMessage;
 import model.exchanges.messages.ShootMessage;
 
 public interface GameUpdate {
     void update(GenericMessage message);
     void update(RunMessage runMessage);
-    void update(NameSetMessage nameSetMessage);
     void update (ShootMessage shootMessage);
 }

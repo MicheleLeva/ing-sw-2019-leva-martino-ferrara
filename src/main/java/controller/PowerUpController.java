@@ -5,6 +5,7 @@ import model.Model;
 import model.adrenaline_exceptions.TagbackGrenadeException;
 import model.adrenaline_exceptions.TargetingScopeException;
 import model.cards.powerups.PowerUp;
+import model.cards.powerups.TagbackGrenade;
 import model.cards.powerups.TargetingScope;
 import model.exchanges.events.*;
 import model.map.Square;
@@ -90,7 +91,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
     @Override
     public void update(TargetingScopeEvent event) {
         char choice = event.getChoice();
-        if (choice != 'Y' || choice != 'N') {
+        if (choice != 'Y' && choice != 'N') {
             event.getView().reportError("Invalid input");
             getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor());
         }
@@ -139,5 +140,21 @@ public class PowerUpController extends Controller implements PowerUpObserver {
             getModel().notifyShoot(getModel().getPlayer(event.getPlayerColor()),getModel().getCurrent().getAllDamagedPlayer());
         }
 
+    }
+
+    @Override
+    public void update(TagbackGrenadeEvent tagbackGrenadeEvent) {
+        Player player = getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor());
+        ArrayList<PowerUp> powerUps = player.getResources().getPowerUp();
+        getModel().getCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
+        if (tagbackGrenadeEvent.getInput() == '0'){
+            return;
+        }
+        if (powerUps.get(tagbackGrenadeEvent.getInput() - 1) instanceof TagbackGrenade){
+            ((TagbackGrenade)powerUps.get(tagbackGrenadeEvent.getInput() - 1)).usePowerUp(getModel().getTurnManager().getCurrentPlayerColor());
+        } else {
+            tagbackGrenadeEvent.getView().reportError("Invalid input!");
+            getModel().tagbackGranadeRequest(tagbackGrenadeEvent.getPlayerColor(), getModel().getTurnManager().getCurrentPlayerColor());
+        }
     }
 }

@@ -60,7 +60,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
 
         if (input == 'N'){
-            //set haricaricato a true
+            getModel().getCurrent().setFinishedReloading(true);
         }
         else{
             getModel().requestWeaponReload(currentPlayerColor);

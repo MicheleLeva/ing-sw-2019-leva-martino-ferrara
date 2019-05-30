@@ -1,6 +1,7 @@
 package model.player;
 
 import model.cards.powerups.PowerUp;
+import model.cards.powerups.TagbackGrenade;
 import model.map.Square;
 import model.player.action.ActionTree;
 
@@ -108,4 +109,14 @@ public class Player {
     public boolean isKillShot(){
         return isKillShot;
     }
+
+    public boolean hasTagBackGrenade(){
+        for (PowerUp powerUp : getResources().getPowerUp()){
+            if (powerUp instanceof TagbackGrenade){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

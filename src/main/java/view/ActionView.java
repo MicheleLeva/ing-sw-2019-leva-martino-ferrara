@@ -1,8 +1,10 @@
 package view;
 
 import model.exchanges.events.ActionEvent;
+import model.exchanges.events.QuitAfkEvent;
 import model.exchanges.messages.ChooseActionMessage;
 import model.exchanges.events.Event;
+import model.exchanges.messages.SetAfkMessage;
 import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.ActionUpdate;
@@ -29,5 +31,13 @@ public class ActionView extends Observable<Event> implements ActionUpdate {
 
         Event actionEvent = new ActionEvent(view , view.inputChar());
         this.notify(actionEvent);
+    }
+
+    @Override
+    public void update(SetAfkMessage setAfkMessage){
+        view.printMessage(setAfkMessage.getMessage());
+
+        Event event = new QuitAfkEvent(view, view.inputChar());
+        this.notify(event);
     }
 }

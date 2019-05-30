@@ -27,5 +27,7 @@ public class Shoot extends Action {
             count++;
         }*/
         //model.getWeaponNotifier().notifyShowWeaponCards(messages,currentPlayer.getPlayerName());
+
+        //todo chiamare gli update in model (shoot, action, turn)
     }
 }

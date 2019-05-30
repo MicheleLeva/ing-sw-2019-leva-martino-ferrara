@@ -1,6 +1,7 @@
 package controller;
 
 import model.Model;
+import model.exchanges.events.QuitAfkEvent;
 import model.turn.TurnManager;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.MaxAmmoException;
@@ -64,6 +65,11 @@ public class ActionController extends Controller implements ActionObserver {
         }
         catch(Exception e){
         }
+    }
+
+    @Override
+    public void update(QuitAfkEvent quitAfkEvent) {
+        getModel().wakeUpPlayer(getModel().getPlayer(quitAfkEvent.getPlayerColor()));
     }
 }
 

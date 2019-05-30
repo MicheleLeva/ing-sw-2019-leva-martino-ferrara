@@ -2,7 +2,6 @@ package network.client;
 
 import model.exchanges.events.Event;
 import model.exchanges.messages.GenericMessage;
-import model.exchanges.messages.NameSetMessage;
 import model.exchanges.messages.RunMessage;
 import model.exchanges.messages.ShootMessage;
 import model.player.PlayerColor;
@@ -22,10 +21,6 @@ public class RemoteGameHandler extends GameNotify implements Observer<Event> {
 
     public void stringToMessage(String[] inputs){
         switch(inputs[0]) {
-            case "NameSetMessage":
-                NameSetMessage nameSetMessage = new NameSetMessage(inputs[1]);
-                listeners.get(playerColor).update(nameSetMessage);
-                break;
             case "RunMessage":
                 RunMessage runMessage = new RunMessage(inputs[1]);
                 listeners.get(playerColor).update(runMessage);

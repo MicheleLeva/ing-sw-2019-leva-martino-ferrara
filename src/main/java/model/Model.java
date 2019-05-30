@@ -3,6 +3,7 @@ package model;
 import controller.Checks;
 import model.cards.*;
 import model.cards.powerups.PowerUp;
+import model.cards.powerups.TagbackGrenade;
 import model.cards.weapons.FireMode;
 import model.cards.weapons.Weapon;
 import model.cards.powerups.TargetingScope;
@@ -101,7 +102,6 @@ public class Model {
         return turnManager;
     }
 
-    //todo rivedere
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare) {
 
         ArrayList<Square> squares = new ArrayList<>();
@@ -109,17 +109,17 @@ public class Model {
         squares.add(startingSquare);
 
         if (n > 0) {
-            if (getSquareFromDir(startingSquare, Direction.NORTH) != null) {
-                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.NORTH)));
+            if (startingSquare.getSide(Direction.NORTH) != null) {
+                squares.addAll(runnableSquare(n - 1, startingSquare.getSide(Direction.NORTH)));
             }
-            if (getSquareFromDir(startingSquare, Direction.SOUTH) != null) {
-                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.SOUTH)));
+            if (startingSquare.getSide(Direction.SOUTH) != null) {
+                squares.addAll(runnableSquare(n - 1, startingSquare.getSide(Direction.SOUTH)));
             }
-            if (getSquareFromDir(startingSquare, Direction.EAST) != null) {
-                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.EAST)));
+            if (startingSquare.getSide(Direction.EAST) != null) {
+                squares.addAll(runnableSquare(n - 1, startingSquare.getSide(Direction.EAST)));
             }
-            if (getSquareFromDir(startingSquare, Direction.WEST) != null) {
-                squares.addAll(runnableSquare(n - 1, getSquareFromDir(startingSquare, Direction.WEST)));
+            if (startingSquare.getSide(Direction.WEST) != null) {
+                squares.addAll(runnableSquare(n - 1, startingSquare.getSide(Direction.WEST)));
             }
         }
 
@@ -127,11 +127,6 @@ public class Model {
 
         return new ArrayList<>(hashSet);
 
-    }
-
-    //todo cancellare
-    private static Square getSquareFromDir(Square square, Direction direction) throws NullPointerException {
-        return square.getSide(direction);
     }
 
     //Metodo che ritorna una lista dei giocatori
@@ -501,7 +496,7 @@ public class Model {
         currentPlayer.getActionTree().updateAction();
     }
 
-    public void updateTurn() {
+    public void updateTurn() { //todo controllare se serve ancora
         Player currentPlayer = turnManager.getCurrentPlayer();
         if (currentPlayer.getActionTree().isTurnEnded()) {
             ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
@@ -544,7 +539,9 @@ public class Model {
     public void chooseAction(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         String availableAction = currentPlayer.getActionTree().availableAction();
+        currentPlayer.getActionTree().setMoveEnded(false);
         actionNotifier.chooseAction(playerColor, availableAction);
+
     }
 
     public Current getCurrent() {
@@ -669,8 +666,7 @@ public class Model {
         fireYELLOW = fireYELLOW-powerUpYELLOW;
         currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
         current.resetCurrent();
-        //todo richiedi azione dopo aver ricaricato;
-        //set roladinputricevuto a true
+        getCurrent().setReceivedInput(true);
     }
 
     public void askPickUpPayment(Player currentPlayer, Weapon weapon){
@@ -907,10 +903,13 @@ public class Model {
 
     public void askReloadEndTurn(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
-        String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
-        //se non ha niente da ricaricare haricaricato e inputricevuto a true
-        //altrimenti entrambi a false
-        weaponNotifier.askReload(playerColor, reloadableWeapon);
+        if (!currentPlayer.getResources().getReloadableWeapon().isEmpty()){
+            String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
+            weaponNotifier.askReload(playerColor, reloadableWeapon);
+        } else {
+            getCurrent().setFinishedReloading(true);
+            getCurrent().setReceivedInput(true);
+        }
     }
 
     public void requestWeaponReload(PlayerColor playerColor) {
@@ -944,6 +943,9 @@ public class Model {
                     opponent.setDead();
                 }
             }
+        if (getPlayer(opponentColor).hasTagBackGrenade()) {
+            getCurrent().getGrenadePeopleArray().add(getPlayer(opponentColor));
+        }
         }
 
 
@@ -979,6 +981,32 @@ public class Model {
         for(Player player : damagedPlayers)
             message = message + player.getPlayerName();
         powerUpNotifier.targetingScopeTargets(playerColor,message);
+    }
+
+    public void setPlayerAfk(Player player){
+        player.setAfk(true);
+        getActionNotifier().setPlayerAfk(player.getPlayerColor());
+    }
+
+    public void wakeUpPlayer(Player player){
+        player.setAfk(false);
+    }
+
+    public void tagbackGranadeRequest(PlayerColor playerColor, PlayerColor opponentColor){
+        StringBuilder stringBuilder = new StringBuilder();
+        int i = 1;
+        for (PowerUp currentPowerUp : getPlayer(playerColor).getResources().getPowerUp()){
+            if (currentPowerUp instanceof TagbackGrenade){
+                stringBuilder.append(i);
+                stringBuilder.append(": ");
+                stringBuilder.append(currentPowerUp.toString());
+                stringBuilder.append(" Ammo: ");
+                stringBuilder.append(currentPowerUp.getAmmo().toString());
+                stringBuilder.append(".\n");
+                i++;
+            }
+        }
+        getPowerUpNotifier().askTagbackGrenade(playerColor, opponentColor, stringBuilder.toString());
     }
 
 }

@@ -42,12 +42,15 @@ public class SocketClientConnection extends Observable<String> implements Client
             int id = server.nameAvailable(playerName);
             if (id != 0) {
                 //todo controllare che il giocatore con lo stesso nome sia afk
+                //conviene salvare sul server il model direttamente invece dei playernames
                 int index = server.getPlayerNames().get(id).indexOf(playerName);
                 this.register(server.getPlayerViews().get(id).get(index));
                 server.reconnectPlayer(this, id, index);
             } else {
                 server.addPlayer(this, playerName);
             }
+            System.out.println("The player added their name!");
+            asyncSend("GenericMessage,Connected to the server!");
             while(isActive()){
                 read = in.nextLine();
                 notify(read);

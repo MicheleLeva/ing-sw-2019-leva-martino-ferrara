@@ -2,7 +2,6 @@ package view;
 
 import model.exchanges.events.Event;
 import model.exchanges.messages.GenericMessage;
-import model.exchanges.messages.NameSetMessage;
 import model.exchanges.messages.RunMessage;
 import model.exchanges.messages.ShootMessage;
 import model.player.PlayerColor;
@@ -19,13 +18,6 @@ public class GameView extends Observable<Event> implements GameUpdate {
 
     public PlayerColor getPlayerColor(){
         return playerColor;
-    }
-
-    @Override
-    public void update(NameSetMessage nameSetMessage){
-        view.printMessage(nameSetMessage.getMessage());
-        // il giocatore inserisce il nome che viene dato al translator per inoltrarlo
-        //notify NameSetEvent
     }
 
     @Override

@@ -8,6 +8,6 @@ public interface PowerUpUpdate {
     void update(ChooseNewtonOpponentMessage chooseNewtonOpponentMessage);
     void update(ChooseNewtonSquareMessage chooseNewtonSquareMessage);
     void update(TargetingScopeMessage targetingScopeMessage);
-
     void update(TargetingScopeSelectionMessage targetingScopeSelectionMessage);
+    void update(TagbackGrenadeMessage tagbackGrenadeMessage);
 }

@@ -3,7 +3,7 @@ package model.exchanges.events;
 import view.View;
 
 public class TargetingScopeEvent extends Event {
-    char choice;
+    private char choice;
     public TargetingScopeEvent(View view,char choice) {
         super(view);
         this.choice = choice;

@@ -41,6 +41,10 @@ public class Resources {
         return powerUp.remove(index);
     }
 
+    public void removePowerUp(PowerUp powerUp){
+        this.powerUp.remove(powerUp);
+    }
+
 
     public ArrayList<Weapon> getReloadedWeapon(){
         ArrayList<Weapon> reloadedWeapon = new ArrayList<>();

@@ -18,12 +18,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
+    private ServerSocket serverSocket;
 
-    private static final int PORT = 12345; //todo da cambiare, magari ottenendolo da json?
+    private int PORT = 6868;
 
     private boolean isServerActive = false;
-
-    private ServerSocket serverSocket;
 
     private ExecutorService executor = Executors.newFixedThreadPool(128);
 
@@ -45,12 +44,12 @@ public class Server {
 
     private Timer timer = new Timer();
 
-    private TimerTask turnTimerOff = new TimerTask() {
+    /*private TimerTask turnTimerOff = new TimerTask() {
         @Override
         public void run() {
             isTimerOn = false;
         }
-    };
+    };*/
 
     public Map<Integer, ArrayList<RemoteView>> getPlayerViews() {
         return playerViews;
@@ -58,6 +57,10 @@ public class Server {
 
     public Map<Integer, ArrayList<String>> getPlayerNames() {
         return playerNames;
+    }
+
+    public void setServerActive(boolean serverActive) {
+        isServerActive = serverActive;
     }
 
     public synchronized void reconnectPlayer(ClientConnection c, int pool, int index){
@@ -106,12 +109,54 @@ public class Server {
         this.serverSocket = new ServerSocket(PORT);
     }
 
-    public synchronized void addPlayer(ClientConnection c, String name){
+    public synchronized void  addPlayer(ClientConnection c, String name){
         waitingConnection.put(name, c);
-        checkConnected(); //controllo di avere abbastanza giocatori per iniziare una partita
+        checkConnected();
+    }
+
+    private void checkConnected() { //todo sistemare, il gioco non parte!
+        if (waitingConnection.size() > 2 && !isTimerOn) {
+            isTimerOn = true;
+            new Thread() {
+                public void run() {
+                    startTimer();
+                }
+            }.start();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            isTimerOn = false;
+        }
+
+    }
+
+    private void startTimer(){
+        System.out.println("Timer is starting");
+        while (isTimerOn) {
+            if (waitingConnection.size() == 5) {
+                System.out.println("Reached 5 players!");
+                createGame();
+                isTimerOn = false;
+                timer.cancel();
+                return;
+            }
+            if (waitingConnection.size()<3){
+                System.out.println("Not enough players to start a game: stopping the timer");
+                isTimerOn = false;
+                timer.cancel();
+                return;
+            }
+        }
+        System.out.println("Time is up!");
+        createGame();
+        isTimerOn = false;
+        //se finisce il timer faccio un createGame
     }
 
     private void createGame(){
+        System.out.println("Starting a game!");
         if (!playingPool.isEmpty()) {
             for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()) {
                 lastID = entry.getKey();
@@ -168,40 +213,19 @@ public class Server {
             v.getRemoteWeaponView().register(new WeaponController(model));
         }
 
-        new Game(lastID, model);
-        //game.run?
-        //todo aprire thread per il game
+        games.submit(new Game(lastID, model));
 
          waitingConnection.clear();
     }
 
-    private void checkConnected(){
-        if (waitingConnection.size()>2 && !isTimerOn){
-            isTimerOn = true;
-            timer.schedule(turnTimerOff, 1000L*30);
-            while (isTimerOn) {
-                if (waitingConnection.size() == 5) {
-                    createGame();
-                    isTimerOn = false;
-                    timer.cancel();
-                    return;
-                }
-            }
-            if (waitingConnection.size()<3){
-                isTimerOn = false;
-                return;
-            }
-            createGame();
-            isTimerOn = false;
-            //se finisce il timer faccio un createGame
-        }
-    }
-
     public void run(){
+        setServerActive(true);
+        System.out.println("The server is running!");
         while(isServerActive){ //finchè il server è attivo cerco client che vogliono connettersi
             try {
                 Socket newSocket = serverSocket.accept(); //trovo il client
                 SocketClientConnection socketConnection = new SocketClientConnection(newSocket, this);
+                System.out.println("Found a client!");
                 executor.submit(socketConnection); //istanzio la connessione su un nuovo thread
             } catch (IOException e) {
                 System.out.println("Connection error!");
@@ -218,7 +242,6 @@ public class Server {
             System.err.println("Impossible to initialize the server: " + e.getMessage() + "!");
         }
     }
-
 
 
 }

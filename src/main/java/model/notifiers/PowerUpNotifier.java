@@ -45,4 +45,13 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage playerMessage = new TargetingScopeSelectionMessage(message);
         notify(playerMessage,playerColor);
     }
+
+    public void askTagbackGrenade(PlayerColor playerColor, PlayerColor opponent, String powerUps){
+        String message = opponent.toString() + "hit you. Do you want to use a TagbackGrenade on them?\n";
+        message = message + "If you want to use it, insert the index of the grenade you want to use from the ones below";
+        message = message + powerUps;
+        message = message + "If you don't want to use it, insert 0";
+        PlayerMessage playerMessage = new TagbackGrenadeMessage(message);
+        notify(playerMessage, playerColor);
+    }
 }

@@ -26,6 +26,7 @@ public class ActionTree {
 
     private int actionCounter;
     private int performedAction;
+    private boolean isMoveEnded = true;
 
     public ActionTree(int ID){
         this.ID = ID;
@@ -135,7 +136,15 @@ public class ActionTree {
         else{
             lastActionPerformed = lastAction;
         }
-        //todo fine della mossa nel turno corrente
+        setMoveEnded(true);
+    }
+
+    public void setMoveEnded(boolean moveEnded) {
+        isMoveEnded = moveEnded;
+    }
+
+    public boolean isMoveEnded() {
+        return isMoveEnded;
     }
 
     public String availableAction(){ //Modificare per mostrare tutte le combinazioni
@@ -145,7 +154,7 @@ public class ActionTree {
         return result;
     }
 
-    private boolean isActionEnded(){
+    public boolean isActionEnded(){
         return lastActionPerformed.getChildren().isEmpty();
     }
 
@@ -171,10 +180,9 @@ public class ActionTree {
         return  ID;
     }
 
-
-
-
-
+    public Node<String> getLastAction() {
+        return lastAction;
+    }
 }
 
 
