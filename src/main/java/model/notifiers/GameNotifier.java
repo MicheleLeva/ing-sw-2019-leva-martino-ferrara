@@ -158,6 +158,14 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         notifyOthers(messageToOthers, user, victim);
         notify(messageToPlayer, user);
         notify(messageToVictim, victim);
+    }
+
+    public void notifyMessages(PlayerColor playerColor, String toPlayer, String toOthers){
+        PlayerMessage messageToPlayer = new GenericMessage(toPlayer);
+        PlayerMessage messageToOthers = new GenericMessage(toOthers);
+
+        notify(messageToPlayer, playerColor);
+        notifyOthers(messageToOthers, playerColor);
 
     }
 

@@ -18,7 +18,6 @@ public class Game implements Runnable{
         this.gameID = gameID;
         this.model = model;
         run();
-        //diventa una run per farlo diventare thread
     }
 
     public void run(){

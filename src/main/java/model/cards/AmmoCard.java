@@ -2,7 +2,7 @@ package model.cards;
 
 import model.Ammo;
 
-public abstract class AmmoCard extends Card{
+public class AmmoCard extends Card{
 
     private final Ammo ammo;
     private boolean hasPowerUp;

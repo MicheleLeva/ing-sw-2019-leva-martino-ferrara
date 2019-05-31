@@ -31,9 +31,9 @@ public class Model {
 
     private GameBoard gameBoard;
 
-    private final TurnManager turnManager = null;
+    private final TurnManager turnManager;
 
-    private final CurrentTurn currentTurn = null;
+    private CurrentTurn currentTurn = null;
 
     private GameNotifier gameNotifier;
 
@@ -85,12 +85,14 @@ public class Model {
 
         gameBoard = new GameBoard(playersList.size(), skulls);
 
-        //turnManager = new TurnManager(playersList);
+        turnManager = new TurnManager(playersList);
 
-        //currentTurn = new CurrentTurn(this);
+        currentTurn = new CurrentTurn(this);
 
-        //todo inizializzare notifier
-
+        this.gameNotifier = new GameNotifier();
+        this.actionNotifier = new ActionNotifier();
+        this.powerUpNotifier = new PowerUpNotifier();
+        this.weaponNotifier = new WeaponNotifier();
     }
 
 
@@ -401,7 +403,7 @@ public class Model {
 
 
     public void printMessage(PlayerColor playerColor, String toPlayer, String toOthers) {
-        //todo notify
+        gameNotifier.notifyMessages(playerColor, toPlayer, toOthers);
     }
 
     public void spawnPlayer(Player player, AmmoColor ammoColor) {

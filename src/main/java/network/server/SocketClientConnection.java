@@ -50,7 +50,7 @@ public class SocketClientConnection extends Observable<String> implements Client
                 server.addPlayer(this, playerName);
             }
             System.out.println("The player added their name!");
-            asyncSend("GenericMessage,Connected to the server!");
+            asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");
             while(isActive()){
                 read = in.nextLine();
                 notify(read);
@@ -77,7 +77,7 @@ public class SocketClientConnection extends Observable<String> implements Client
     }
 
     public synchronized void closeConnection() { //mando messaggio al network.client e chiudo la connessione
-        send("GenericMessage,The connection has been closed");
+        asyncSend("GAME,GenericMessage,The connection has been closed");
         try {
             socket.close();
         } catch (IOException e) {

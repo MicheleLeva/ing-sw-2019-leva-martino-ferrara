@@ -40,16 +40,16 @@ public class Server {
 
     private ArrayList<ClientConnection> playingConnection = new ArrayList<>(); //singolo tavolo di giocatori
 
-    private boolean isTimerOn = false;
+    private boolean isTimerOn;
 
     private Timer timer = new Timer();
 
-    /*private TimerTask turnTimerOff = new TimerTask() {
+    private TimerTask turnTimerOff = new TimerTask() {
         @Override
         public void run() {
             isTimerOn = false;
         }
-    };*/
+    };
 
     public Map<Integer, ArrayList<RemoteView>> getPlayerViews() {
         return playerViews;
@@ -109,32 +109,28 @@ public class Server {
         this.serverSocket = new ServerSocket(PORT);
     }
 
-    public synchronized void  addPlayer(ClientConnection c, String name){
+    public void  addPlayer(ClientConnection c, String name){
         waitingConnection.put(name, c);
         checkConnected();
     }
 
     private void checkConnected() { //todo sistemare, il gioco non parte!
         if (waitingConnection.size() > 2 && !isTimerOn) {
-            isTimerOn = true;
-            new Thread() {
+            new Thread(new Runnable() {
+                @Override
                 public void run() {
                     startTimer();
                 }
-            }.start();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            isTimerOn = false;
+            }).start();
         }
-
     }
 
     private void startTimer(){
+        isTimerOn = true;
+        timer.schedule(turnTimerOff, 3*1000L);
         System.out.println("Timer is starting");
         while (isTimerOn) {
+            System.out.print("");
             if (waitingConnection.size() == 5) {
                 System.out.println("Reached 5 players!");
                 createGame();
@@ -177,7 +173,7 @@ public class Server {
 
         players.add(new Player(keys.get(0), PlayerColor.BLUE));
         playerNames.get(lastID).add(keys.get(0));
-        remoteViews.add(new RemoteView(PlayerColor.BLUE, playingConnection.get(0)));
+        remoteViews.add(new RemoteView(PlayerColor.BLUE, playingPool.get(lastID).get(0)));
 
         players.add(new Player(keys.get(1), PlayerColor.GREEN));
         playerNames.get(lastID).add(keys.get(1));
@@ -215,7 +211,7 @@ public class Server {
 
         games.submit(new Game(lastID, model));
 
-         waitingConnection.clear();
+        waitingConnection.clear();
     }
 
     public void run(){

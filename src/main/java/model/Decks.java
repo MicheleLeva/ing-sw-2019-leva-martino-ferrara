@@ -2,7 +2,7 @@ package model;
 
 
 import model.cards.*;
-import model.cards.powerups.PowerUp;
+import model.cards.powerups.*;
 import model.cards.weapons.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -42,6 +42,10 @@ public class Decks {
         discardedAmmoCardDeck = new ArrayList<>();
         discardedPowerUpDeck = new ArrayList<>();
 
+        addBasicWeapons();
+        addAlternativeWeapons();
+        addOptionalWeapons1();
+        addOptionalWeapons2();
     }
 
     //todo
@@ -99,8 +103,7 @@ public class Decks {
 
     }
 
-    //todo
-   /* private void createPowerUpDeck() {
+    private void createPowerUpDeck() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("src/resources/powerUps.json"));
@@ -109,13 +112,13 @@ public class Decks {
             for (int i = 0; i < myArray.size(); i++) {
                 JSONObject result1 = (JSONObject) myArray.get(i);
                 if (result1.get("nome").equals("targetingScope"))
-                    powerUpDeck.add(new TargetingScope(AmmoColor.valueOf((String) result1.get("color"))));
+                    powerUpDeck.add(new TargetingScope(model, AmmoColor.valueOf((String) result1.get("color"))));
                 if (result1.get("nome").equals("newton"))
-                    powerUpDeck.add(new TargetingScope(AmmoColor.valueOf((String) result1.get("color"))));
+                    powerUpDeck.add(new Newton(model, AmmoColor.valueOf((String) result1.get("color"))));
                 if (result1.get("nome").equals("tagbackGrenade"))
-                    powerUpDeck.add(new TargetingScope(AmmoColor.valueOf((String) result1.get("color"))));
+                    powerUpDeck.add(new TagbackGrenade(model, AmmoColor.valueOf((String) result1.get("color"))));
                 if (result1.get("nome").equals("teleporter"))
-                    powerUpDeck.add(new TargetingScope(AmmoColor.valueOf((String) result1.get("color"))));
+                    powerUpDeck.add(new Teleporter(model, AmmoColor.valueOf((String) result1.get("color"))));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -125,6 +128,7 @@ public class Decks {
             e.printStackTrace();
         }
     }
+    
     public void createAmmoCardDeck() {
         JSONParser parser = new JSONParser();
         try {
@@ -133,7 +137,8 @@ public class Decks {
             JSONArray myArray = (JSONArray) myJo.get("ammoCards");
             for (int i = 0; i < myArray.size(); i++) {
                 JSONObject result1 = (JSONObject) myArray.get(i);
-                ammoCardDeck.add(new AmmoCard((int) result1.get("RED"), (int) result1.get("BLUE"), (int) result1.get("YELLOW"), (boolean) result1.get("powerUps")));
+                Ammo ammo = new Ammo((int) result1.get("RED"), (int) result1.get("BLUE"), (int) result1.get("YELLOW"));
+                ammoCardDeck.add(new AmmoCard(ammo, (boolean) result1.get("powerUps")));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -142,7 +147,7 @@ public class Decks {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 
     public void addBasicWeapons() {

@@ -43,7 +43,6 @@ public class RemoteView extends View implements Observer<String> {
     }
 
     public void update(String message) {
-        //System.out.println("Received " + messages);
         try{
             String[] inputs = message.split(",");
             String[] strings = Arrays.copyOfRange(inputs, 1, inputs.length);
