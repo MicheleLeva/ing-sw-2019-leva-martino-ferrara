@@ -23,9 +23,7 @@ public class Shockwave extends WeaponAlternative {
                 if(!temp.contains(player))
                     availableTargets.add(player);
             }
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-            getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
@@ -33,14 +31,7 @@ public class Shockwave extends WeaponAlternative {
 
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
-        }
-
-        getModel().payFireMode(currentPlayer,this);
-
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
@@ -53,9 +44,7 @@ public class Shockwave extends WeaponAlternative {
                 if (!temp.contains(player))
                     availableTargets.add(player);
             }
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
         /*if(getModel().getCurrent().getBaseCounter() == 1) {
@@ -74,13 +63,6 @@ public class Shockwave extends WeaponAlternative {
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 }

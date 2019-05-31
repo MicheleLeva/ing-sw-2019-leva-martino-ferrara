@@ -19,15 +19,11 @@ public class Sledgehammer extends WeaponAlternative {
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-            getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         if(getModel().getCurrent().getAlternativeCounter() == 1) {
             ArrayList<Square> squares = getModel().getSquaresInCardinal2(currentPlayer);
-            getModel().getCurrent().setAvailableWeaponSquares(squares);
-            getModel().getCurrent().incrementAlternativeCounter();
-            getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(),squares);
+            endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
@@ -48,9 +44,7 @@ public class Sledgehammer extends WeaponAlternative {
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
@@ -58,13 +52,6 @@ public class Sledgehammer extends WeaponAlternative {
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 }

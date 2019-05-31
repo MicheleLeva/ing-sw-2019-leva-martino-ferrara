@@ -49,7 +49,7 @@ public class KeyMap {
 
             end = myJo.get("end").toString().charAt(0);
             usePowerUp = myJo.get("usePowerUp").toString().charAt(0);
-            showCards = myJo.get("showCards").toString().charAt(0);
+            //showCards = myJo.get("showCards").toString().charAt(0);
         }
 
         catch(FileNotFoundException e ){

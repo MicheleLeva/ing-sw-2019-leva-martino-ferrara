@@ -21,9 +21,7 @@ public class Thor extends WeaponOptional2 {
         if(getModel().getCurrent().getOptionalCounter2()==0){
             Player player = getModel().getCurrent().getSelectedOptionalTargets2().get(0);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(player);
-            getModel().getCurrent().setAvailableOptionalTargets2(availableTargets);
-            getModel().getCurrent().incrementOptionalCounter2();
-            getModel().selectTargets(currentPlayer.getPlayerColor(),availableTargets,this.getOptionalTargetsNumber2());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
@@ -31,14 +29,7 @@ public class Thor extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getOptionalDamage2());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getOptionalMarks2());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getOptionalCost2());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
@@ -46,9 +37,7 @@ public class Thor extends WeaponOptional2 {
         if(getModel().getCurrent().getOptionalCounter1()==0){
             Player player = getModel().getCurrent().getSelectedOptionalTargets1().get(0);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(player);
-            getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
-            getModel().getCurrent().incrementOptionalCounter1();
-            getModel().selectTargets(currentPlayer.getPlayerColor(),availableTargets,this.getOptionalTargetsNumber1());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
@@ -56,23 +45,14 @@ public class Thor extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getOptionalDamage1());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getOptionalMarks1());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getOptionalCost1());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
@@ -80,13 +60,6 @@ public class Thor extends WeaponOptional2 {
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 }

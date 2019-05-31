@@ -58,7 +58,7 @@ public class Square {
 
     public SquareColor getColor(){
 
-        return color;
+        return this.color;
     }
 
     public void setColor(SquareColor color){

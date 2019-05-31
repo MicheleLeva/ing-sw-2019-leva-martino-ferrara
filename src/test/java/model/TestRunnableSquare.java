@@ -2,6 +2,7 @@ package model;
 
 import model.map.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static model.Model.*;
@@ -20,7 +21,7 @@ public class TestRunnableSquare {
         firstSquare = map.getSquareFromCoordinates(0, 0);
 
     }
-    @Test
+    @Test @Ignore
     public void testRunnableSquare(){
 
         ArrayList<Square> test = new ArrayList<>();

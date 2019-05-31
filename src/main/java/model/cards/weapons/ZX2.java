@@ -19,9 +19,7 @@ public class ZX2 extends WeaponAlternative{
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-            getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
@@ -29,24 +27,14 @@ public class ZX2 extends WeaponAlternative{
 
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
-        }
-
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getAlternativeCost());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
@@ -54,14 +42,7 @@ public class ZX2 extends WeaponAlternative{
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
 }

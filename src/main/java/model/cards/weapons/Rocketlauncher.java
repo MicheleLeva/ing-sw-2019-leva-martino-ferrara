@@ -32,23 +32,14 @@ public class Rocketlauncher extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(),target.getPlayerColor(),this.getOptionalDamage2());
-            getModel().addMark(currentPlayer.getPlayerColor(),target.getPlayerColor(),getOptionalMarks2());
-        }
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
     public void askOptionalRequirements1(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter1()== 0) {
             ArrayList<Square> squares = getModel().runnableSquare(2, currentPlayer.getPosition());
-            getModel().getCurrent().setAvailableWeaponSquares(squares);
-            getModel().getCurrent().incrementOptionalCounter1();
-            getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
+            endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
 
         else
@@ -57,11 +48,7 @@ public class Rocketlauncher extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        currentPlayer.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
-        //Pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
+        changePlayerPositionUse(currentPlayer,selectedTargets);
     }
 
     @Override
@@ -70,15 +57,11 @@ public class Rocketlauncher extends WeaponOptional2 {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             if(availableTargets.contains(currentPlayer))
                 availableTargets.remove(currentPlayer);
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         if(getModel().getCurrent().getBaseCounter()== 1) {
             ArrayList<Square> squares = getModel().runnableSquare(1, currentPlayer.getPosition());
-            getModel().getCurrent().setAvailableWeaponSquares(squares);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
+            endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());

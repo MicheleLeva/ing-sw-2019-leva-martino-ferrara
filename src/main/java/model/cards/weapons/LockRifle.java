@@ -55,14 +55,7 @@ public class LockRifle extends WeaponOptional1 {
     }
 
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getOptionalDamage1());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getOptionalMarks1());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getOptionalCost1());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
 }

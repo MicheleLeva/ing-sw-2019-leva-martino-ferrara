@@ -18,7 +18,6 @@ public class TestModel {
     private Player player1 ;
     private Player player2;
     private Player player3;
-    private TurnManager turnManager;
     private Model model ;
     private model.map.Map map ;
     private Square[][] squares;
@@ -37,10 +36,15 @@ public class TestModel {
         players.add(player2);
         players.add(player3);
         model = new Model(players,8);
-        turnManager = new TurnManager(players);
+    }
+    @Test @Ignore
+    public void testRunnableSquare(){
+        ArrayList<Square> squares = Model.runnableSquare(3,player1.getPosition());
+        for(Square square : squares)
+            System.out.println(square.getID());
     }
 
-    @Test
+   /* @Test
     public void testVisiblePlayers(){
         ArrayList<Player> visiblePlayers;
         visiblePlayers = model.getVisiblePlayers(player1);
@@ -155,5 +159,5 @@ public class TestModel {
         assertEquals(visiblePlayers.size(),1);
     }
 
-
+*/
 }

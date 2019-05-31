@@ -26,9 +26,7 @@ public class Cyberblade extends WeaponOptional2 {
                 if(player.getPlayerName()==oldPlayer.getPlayerName())
                     availableTargets.remove(player);
             }
-            getModel().getCurrent().setAvailableOptionalTargets2(availableTargets);
-            getModel().getCurrent().incrementOptionalCounter2();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getOptionalTargetsNumber2());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
 
         }
         else
@@ -37,14 +35,7 @@ public class Cyberblade extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(),target.getPlayerColor(),this.getOptionalDamage2());
-            getModel().addMark(currentPlayer.getPlayerColor(),target.getPlayerColor(),getOptionalMarks2());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getOptionalCost2());
-        //
-        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
@@ -52,8 +43,7 @@ public class Cyberblade extends WeaponOptional2 {
         if(getModel().getCurrent().getOptionalCounter1()== 0) {
             ArrayList<Square> squares = getModel().runnableSquare(1, currentPlayer.getPosition());
             if(!getWeaponTree().getLastAction().getParent().getData().getType().equals("base")) {
-                getModel().getCurrent().incrementOptionalCounter1();
-                getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
+                endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
             }
 
             else{
@@ -62,8 +52,7 @@ public class Cyberblade extends WeaponOptional2 {
                     if(squares.contains(player.getPosition()) && player!=currentPlayer)
                         afterBaseSquares.add(player.getPosition());
                 }
-                getModel().getCurrent().incrementOptionalCounter1();
-                getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
+                endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
             }
         }
         else
@@ -72,20 +61,14 @@ public class Cyberblade extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        currentPlayer.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
-        //Pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
+        changePlayerPositionUse(currentPlayer,selectedTargets);
     }
 
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
@@ -94,14 +77,7 @@ public class Cyberblade extends WeaponOptional2 {
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
 
-        for(Player target : selectedTargets){
-            getModel().addDamage(currentPlayer.getPlayerColor(),target.getPlayerColor(),this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(),target.getPlayerColor(),getBaseMarks());
-        }
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
 }

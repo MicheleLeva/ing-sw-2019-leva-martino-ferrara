@@ -22,6 +22,7 @@ import model.player.PlayerColor;
 
 import java.util.*;
 
+import model.player.action.KeyMap;
 import model.turn.CurrentTurn;
 import model.turn.TurnManager;
 
@@ -46,6 +47,8 @@ public class Model {
     private WeaponNotifier weaponNotifier;
 
     private ScoreManager scoreManager;
+
+    private KeyMap keyMap;
 
     public WeaponNotifier getWeaponNotifier() {
         return weaponNotifier;
@@ -82,6 +85,10 @@ public class Model {
         if (playersList.size() == 5) {
             players.put(PlayerColor.GREY, playersList.get(4));
         }
+
+        current = new Current();
+
+        keyMap = new KeyMap();
 
         gameBoard = new GameBoard(playersList.size(), skulls);
 
@@ -370,7 +377,6 @@ public class Model {
         if (nonVisiblePlayers.contains(currentPlayer))
             nonVisiblePlayers.remove(currentPlayer);
         return nonVisiblePlayers;
-
     }
 
     public void requestPowerUpDiscard(Player player) {
@@ -398,7 +404,6 @@ public class Model {
             //todo notify();
         }
 
-
     }
 
 
@@ -407,7 +412,21 @@ public class Model {
     }
 
     public void spawnPlayer(Player player, AmmoColor ammoColor) {
-        Square spawnSquare = gameBoard.getMap().getSpawnSquare(ammoColor);
+        SquareColor squareColor;
+        switch(ammoColor.toString()) {
+            case "RED":
+                squareColor = SquareColor.RED;
+                break;
+            case "BLUE":
+                squareColor = SquareColor.BLUE;
+                break;
+            case "YELLOW":
+                squareColor = SquareColor.YELLOW;
+                break;
+            default:
+                squareColor = null;
+        }
+        Square spawnSquare = gameBoard.getMap().getSpawnSquare(squareColor);
         player.setPosition(spawnSquare);
         String toPlayer;
         String toOthers;

@@ -16,7 +16,7 @@ public class TestKillShotTrack {
 
     }
 
-    @Test @Ignore //todo
+    @Test
     public void testKillShotTrackGetter(){
 
         KillShotCell[] KSTrack = killShotTrackTest.getKillShotTrack();
@@ -29,13 +29,13 @@ public class TestKillShotTrack {
         }
     }
 
-    @Test @Ignore //todo
+    @Test
     public void testRemove(){
         KillShotCell[] KSTrack = killShotTrackTest.getKillShotTrack();
         killShotTrackTest.removeSkull(PlayerColor.YELLOW);
         assertFalse(KSTrack[0].isSkull());
         assertEquals(PlayerColor.YELLOW, KSTrack[0].getTokenColor());
-        assertEquals(2, KSTrack[0].getTokenNumber());
+        assertEquals(1, KSTrack[0].getTokenNumber());
 
     }
 

@@ -14,10 +14,7 @@ public class Shoot extends Action {
     //todo implement method
     @Override
     public void perform (Model model, PlayerColor playerColor) throws NoReloadedWeaponsException {
-        int count = 0;
-        String message = "";
         Player currentPlayer = model.getPlayer(playerColor);
-        ArrayList<Weapon> weapons = currentPlayer.getResources().getReloadedWeapon();
         //check if he can t shoot
         if(currentPlayer.getResources().getReloadedWeapon().isEmpty())
             throw new NoReloadedWeaponsException();

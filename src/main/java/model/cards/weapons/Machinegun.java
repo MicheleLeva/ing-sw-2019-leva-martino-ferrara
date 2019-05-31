@@ -37,13 +37,7 @@ public class Machinegun extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getOptionalDamage2());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getOptionalMarks2());
-        }
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
@@ -60,14 +54,7 @@ public class Machinegun extends WeaponOptional2 {
 
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getOptionalDamage1());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getOptionalMarks1());
-        }
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
@@ -84,14 +71,6 @@ public class Machinegun extends WeaponOptional2 {
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
-
 }

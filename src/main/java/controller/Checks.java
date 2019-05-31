@@ -186,68 +186,57 @@ public class Checks {
 
     public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
         Weapon weapon = model.getCurrent().getSelectedWeapon();
-        Ammo fireModeCost;
+        Ammo fireModeCost = null;
         int powerUpRED = 0;
         int powerUpBLUE = 0;
         int powerUpYELLOW = 0;
         int playerRED = currentPlayer.getResources().getAvailableAmmo().getRed();
         int playerBLUE = currentPlayer.getResources().getAvailableAmmo().getBlue();
         int playerYELLOW = currentPlayer.getResources().getAvailableAmmo().getYellow();
-        int fireRED = 0;
-        int fireBLUE = 0;
-        int fireYELLOW = 0;
+        int fireRED;
+        int fireBLUE;
+        int fireYELLOW;
         Boolean R;
         Boolean B;
         Boolean Y;
         for (int i : choices) {
             String color = model.getCurrent().getAvailablePaymentPowerUps().get(i).getAmmo().toString();
-            if (i == 1 && color.equals("RED"))
+            if (color.equals("RED"))
                 powerUpRED++;
 
-            if (i == 1 && color.equals("BLUE"))
+            if (color.equals("BLUE"))
                 powerUpBLUE++;
 
-            if (i == 1 && color.equals("YELLOW"))
+            if (color.equals("YELLOW"))
                 powerUpYELLOW++;
         }
 
         switch (effectType) {
             case "reload" :{
                 fireModeCost = weapon.getBaseCost();
-                fireRED = fireModeCost.getRed();
-                fireBLUE = fireModeCost.getBlue();
-                fireYELLOW = fireModeCost.getYellow();
                 break;
             }
             case "pickup" :{
                 fireModeCost = weapon.getPickUpCost();
-                fireRED = fireModeCost.getRed();
-                fireBLUE = fireModeCost.getBlue();
-                fireYELLOW = fireModeCost.getYellow();
                 break;
             }
             case "alternative": {
                 fireModeCost = ((WeaponAlternative) weapon).getAlternativeCost();
-                fireRED = fireModeCost.getRed();
-                fireBLUE = fireModeCost.getBlue();
-                fireYELLOW = fireModeCost.getYellow();
                 break;
             }
             case "optional1": {
                 fireModeCost = ((WeaponOptional1) weapon).getOptionalCost1();
-                fireRED = fireModeCost.getRed();
-                fireBLUE = fireModeCost.getBlue();
-                fireYELLOW = fireModeCost.getYellow();
                 break;
             }
             case "optional2": {
                 fireModeCost = ((WeaponOptional2) weapon).getOptionalCost2();
-                fireRED = fireModeCost.getRed();
-                fireBLUE = fireModeCost.getBlue();
-                fireYELLOW = fireModeCost.getYellow();
                 break;
             }
         }
+
+        fireRED = fireModeCost.getRed();
+        fireBLUE = fireModeCost.getBlue();
+        fireYELLOW = fireModeCost.getYellow();
 
 
         if(fireRED-powerUpRED==0)

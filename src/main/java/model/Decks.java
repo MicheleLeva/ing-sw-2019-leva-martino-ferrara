@@ -41,7 +41,8 @@ public class Decks {
         ammoCardDeck = new ArrayList<>();
         discardedAmmoCardDeck = new ArrayList<>();
         discardedPowerUpDeck = new ArrayList<>();
-
+        createPowerUpDeck();
+        createAmmoCardDeck();
         addBasicWeapons();
         addAlternativeWeapons();
         addOptionalWeapons1();
@@ -111,13 +112,13 @@ public class Decks {
             JSONArray myArray = (JSONArray) myJo.get("powerUps");
             for (int i = 0; i < myArray.size(); i++) {
                 JSONObject result1 = (JSONObject) myArray.get(i);
-                if (result1.get("nome").equals("targetingScope"))
+                if (result1.get("name").equals("targetingScope"))
                     powerUpDeck.add(new TargetingScope(model, AmmoColor.valueOf((String) result1.get("color"))));
-                if (result1.get("nome").equals("newton"))
+                if (result1.get("name").equals("newton"))
                     powerUpDeck.add(new Newton(model, AmmoColor.valueOf((String) result1.get("color"))));
-                if (result1.get("nome").equals("tagbackGrenade"))
+                if (result1.get("name").equals("tagbackGrenade"))
                     powerUpDeck.add(new TagbackGrenade(model, AmmoColor.valueOf((String) result1.get("color"))));
-                if (result1.get("nome").equals("teleporter"))
+                if (result1.get("name").equals("teleporter"))
                     powerUpDeck.add(new Teleporter(model, AmmoColor.valueOf((String) result1.get("color"))));
             }
         } catch (FileNotFoundException e) {
@@ -137,7 +138,7 @@ public class Decks {
             JSONArray myArray = (JSONArray) myJo.get("ammoCards");
             for (int i = 0; i < myArray.size(); i++) {
                 JSONObject result1 = (JSONObject) myArray.get(i);
-                Ammo ammo = new Ammo((int) result1.get("RED"), (int) result1.get("BLUE"), (int) result1.get("YELLOW"));
+                Ammo ammo = new Ammo(((Long) result1.get("RED")).intValue(), ((Long) result1.get("BLUE")).intValue(), ((Long) result1.get("YELLOW")).intValue());
                 ammoCardDeck.add(new AmmoCard(ammo, (boolean) result1.get("powerUps")));
             }
         } catch (FileNotFoundException e) {
@@ -161,11 +162,11 @@ public class Decks {
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo((int) result2.get("RED"), (int) result2.get("BLUE"), (int) result2.get("YELLOW"));
-                Ammo pickUpAmmo = new Ammo((int) result2.get("PRED"), (int) result2.get("PBLUE"), (int) result2.get("PYELLOW"));
-                int baseDamage = (int) result2.get("DAMAGE");
-                int baseMarks = (int) result2.get("MARKS");
-                int baseTargetsNumber = (int) result2.get("TARGETSNUMBER");
+                Ammo baseAmmo = new Ammo( ((Long)result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long)result2.get("YELLOW")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
+                int baseMarks = ((Long) result2.get("MARKS")).intValue();
+                int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
                 if(result2.get("name").equals("HEATSEEKER")) {
                      weaponsDeck.add(new Heatseeker(name,pickUpAmmo,baseAmmo,baseDamage,baseMarks,baseTargetsNumber,model));
                      weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Heatseeker.json"));
@@ -193,27 +194,27 @@ public class Decks {
             Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
             JSONObject myJo = (JSONObject) obj;
             JSONArray myArray = (JSONArray) myJo.get("weaponCards");
-            JSONObject result1 = (JSONObject) myArray.get(0);
+            JSONObject result1 = (JSONObject) myArray.get(1);
             JSONArray myArray2 = (JSONArray) result1.get("alternative");
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo((int) result2.get("RED"), (int) result2.get("BLUE"), (int) result2.get("YELLOW"));
-                Ammo alternativeAmmo = new Ammo((int) result2.get("RED1"), (int) result2.get("BLUE1"), (int) result2.get("YELLOW1"));
-                Ammo pickUpAmmo = new Ammo((int) result2.get("PRED"), (int) result2.get("PBLUE"), (int) result2.get("PYELLOW"));
-                int baseDamage = (int) result2.get("DAMAGE");
-                int alternativeDamage = (int) result2.get("DAMAGE1");
-                int baseMarks = (int) result2.get("MARKS");
-                int alternativeMarks = (int) result2.get("MARKS1");
-                int baseTargetsNumber = (int) result2.get("TARGETSNUMBER");
-                int alternativeTargetsNumber = (int) result2.get("TARGETSNUMBER1");
+                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long) result2.get("YELLOW")).intValue());
+                Ammo alternativeAmmo = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
+                int alternativeDamage = ((Long) result2.get("DAMAGE1")).intValue();
+                int baseMarks = ((Long) result2.get("MARKS")).intValue();
+                int alternativeMarks = ((Long) result2.get("MARKS1")).intValue();
+                int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
+                int alternativeTargetsNumber = ((Long) result2.get("TARGETSNUMBER1")).intValue();
                 if(result2.get("name").equals("ELECTROSCYTHE")) {
                         weaponsDeck.add(new Electroscythe(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                         weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Heatseeker.json"));
                 }
                 if(result2.get("name").equals("TRACTOR BEAM")) {
                     weaponsDeck.add(new Tractorbeam(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
-                    weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Tracktorbeam.json"));
+                    weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Tractorbeam.json"));
                 }
                 if(result2.get("name").equals("FURNACE")) {
                     weaponsDeck.add(new Furnace(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
@@ -269,20 +270,20 @@ public class Decks {
             Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
             JSONObject myJo = (JSONObject) obj;
             JSONArray myArray = (JSONArray) myJo.get("weaponCards");
-            JSONObject result1 = (JSONObject) myArray.get(0);
+            JSONObject result1 = (JSONObject) myArray.get(2);
             JSONArray myArray2 = (JSONArray) result1.get("optional1");
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo((int) result2.get("RED"), (int) result2.get("BLUE"), (int) result2.get("YELLOW"));
-                Ammo optionalAmmo1 = new Ammo((int) result2.get("RED1"), (int) result2.get("BLUE1"), (int) result2.get("YELLOW1"));
-                Ammo pickUpAmmo = new Ammo((int) result2.get("PRED"), (int) result2.get("PBLUE"), (int) result2.get("PYELLOW"));
-                int baseDamage = (int) result2.get("DAMAGE");
-                int optionalDamage1 = (int) result2.get("DAMAGE1");
-                int baseMarks = (int) result2.get("MARKS");
-                int optionalMarks1 = (int) result2.get("MARKS1");
-                int baseTargetsNumber = (int) result2.get("TARGETSNUMBER");
-                int optionalTargetsNumber1 = (int) result2.get("TARGETSNUMBER1");
+                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long) result2.get("YELLOW")).intValue());
+                Ammo optionalAmmo1 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
+                int optionalDamage1 = ((Long) result2.get("DAMAGE1")).intValue();
+                int baseMarks = ((Long) result2.get("MARKS")).intValue();
+                int optionalMarks1 = ((Long) result2.get("MARKS1")).intValue();
+                int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
+                int optionalTargetsNumber1 = ((Long) result2.get("TARGETSNUMBER1")).intValue();
                 if(result2.get("name").equals("LOCKRIFLE")) {
                     weaponsDeck.add(new LockRifle(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Lockrifle.json"));
@@ -313,24 +314,24 @@ public class Decks {
             Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
             JSONObject myJo = (JSONObject) obj;
             JSONArray myArray = (JSONArray) myJo.get("weaponCards");
-            JSONObject result1 = (JSONObject) myArray.get(0);
-            JSONArray myArray2 = (JSONArray) result1.get("optional1");
+            JSONObject result1 = (JSONObject) myArray.get(3);
+            JSONArray myArray2 = (JSONArray) result1.get("optional2");
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo((int) result2.get("RED"), (int) result2.get("BLUE"), (int) result2.get("YELLOW"));
-                Ammo optionalAmmo1 = new Ammo((int) result2.get("RED1"), (int) result2.get("BLUE1"), (int) result2.get("YELLOW1"));
-                Ammo optionalAmmo2 = new Ammo((int) result2.get("RED1"), (int) result2.get("BLUE1"), (int) result2.get("YELLOW1"));
-                Ammo pickUpAmmo = new Ammo((int) result2.get("PRED"), (int) result2.get("PBLUE"), (int) result2.get("PYELLOW"));
-                int baseDamage = (int) result2.get("DAMAGE");
-                int optionalDamage1 = (int) result2.get("DAMAGE1");
-                int optionalDamage2 = (int) result2.get("DAMAGE2");
-                int baseMarks = (int) result2.get("MARKS");
-                int optionalMarks1 = (int) result2.get("MARKS1");
-                int optionalMarks2 = (int) result2.get("MARKS2");
-                int baseTargetsNumber = (int) result2.get("TARGETSNUMBER");
-                int optionalTargetsNumber1 = (int) result2.get("TARGETSNUMBER1");
-                int optionalTargetsNumber2 = (int) result2.get("TARGETSNUMBER2");
+                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long) result2.get("YELLOW")).intValue());
+                Ammo optionalAmmo1 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
+                Ammo optionalAmmo2 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
+                int optionalDamage1 = ((Long) result2.get("DAMAGE1")).intValue();
+                int optionalDamage2 = ((Long) result2.get("DAMAGE2")).intValue();
+                int baseMarks = ((Long) result2.get("MARKS")).intValue();
+                int optionalMarks1 = ((Long) result2.get("MARKS1")).intValue();
+                int optionalMarks2 = ((Long) result2.get("MARKS2")).intValue();
+                int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
+                int optionalTargetsNumber1 = ((Long) result2.get("TARGETSNUMBER1")).intValue();
+                int optionalTargetsNumber2 = ((Long) result2.get("TARGETSNUMBER2")).intValue();
 
                 if(result2.get("name").equals("MACHINEGUN")) {
                     //weaponsDeck.add(new Machinegun(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));

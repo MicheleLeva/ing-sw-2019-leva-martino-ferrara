@@ -16,22 +16,22 @@ public class TestPoints {
     }
 
 
-    @Test @Ignore //todo
+    @Test
     public void testGetPointsList(){
-        assertEquals(1,pointsTest.getPointsList().toArray()[0]);
-        assertEquals(1,pointsTest.getPointsList().toArray()[1]);
-        assertEquals(2,pointsTest.getPointsList().toArray()[2]);
-        assertEquals(4,pointsTest.getPointsList().toArray()[3]);
-        assertEquals(6,pointsTest.getPointsList().toArray()[4]);
-        assertEquals(8,pointsTest.getPointsList().toArray()[5]);
+        for(int i = 0 ; i< pointsTest.getPointsList().size();i++)
+        assertEquals(8,(int)pointsTest.getPointsList().get(0));
+        assertEquals(6,(int)pointsTest.getPointsList().get(1));
+        assertEquals(4,(int)pointsTest.getPointsList().get(2));
+        assertEquals(2,(int)pointsTest.getPointsList().get(3));
+        assertEquals(1,(int)pointsTest.getPointsList().get(4));
 
     }
 
 
-    @Test @Ignore //todo
+    @Test
     public void testPointsRemover(){
         pointsTest.removeHighestPoint();
         pointsTest.removeHighestPoint();
-        assertEquals(2,pointsTest.getPointsList().toArray()[0]);
+        assertEquals(4,(int)pointsTest.getPointsList().get(0));
     }
 }

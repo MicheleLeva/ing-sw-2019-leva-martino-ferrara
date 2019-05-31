@@ -188,15 +188,12 @@ public class WeaponController extends Controller implements WeaponObserver {
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String error;
-        int PowerUpRED = 0;
-        int PowerUpBLUE = 0;
-        int PowerUpYELLOW = 0;
         String effectType = weapon.getWeaponTree().getLastAction().getData().getType();
 
 
 
         for(int i : event.getSelectedPowerUps()){
-            if(i>1 || i<0){
+            if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
                 error = "Invalid input.\n";
                 event.getView().reportError(error);
                 getModel().askFireModePayment(currentPlayer,weapon,effectType);

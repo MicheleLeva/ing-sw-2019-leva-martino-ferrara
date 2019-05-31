@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class Points {
 
     private ArrayList<Integer> points;
-    private ArrayList<Integer> frenzyPoints;
+    private ArrayList<Integer> frenzyPoints = new ArrayList<>();
     private int firstBlood;
     private int frenzyFirstBlood;
-    private final String path = ""; //todo settare e modificare il costruttore
+    private final String path = "src/resources/playerPoints.json"; //todo settare e modificare il costruttore
     public Points(){
         points = new ArrayList<>();
         readPoints();
@@ -32,16 +32,16 @@ public class Points {
             Object obj = parser.parse(new FileReader(path));
             JSONObject myJo = (JSONObject)obj;
             JSONArray standardPointsArray = (JSONArray) myJo.get("standard points");
-            firstBlood = (int)standardPointsArray.get(0);
+            firstBlood = ((Long)standardPointsArray.get(0)).intValue();
             for (int i = 1; i < standardPointsArray.size(); i++){
-                value = (int) standardPointsArray.get(i);
+                value = ((Long) standardPointsArray.get(i)).intValue();
                 points.add(value);
             }
 
             JSONArray frenzyPointsArray = (JSONArray) myJo.get("frenzy points");
-            frenzyFirstBlood = (int)frenzyPointsArray.get(0);
+            frenzyFirstBlood = ((Long)frenzyPointsArray.get(0)).intValue();
             for (int j = 1; j < frenzyPointsArray.size(); j++){
-                value = (int)frenzyPointsArray.get(j);
+                value = ((Long)frenzyPointsArray.get(j)).intValue();
                 frenzyPoints.add(value);
             }
 

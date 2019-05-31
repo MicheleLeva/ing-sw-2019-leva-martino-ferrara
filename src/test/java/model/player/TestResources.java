@@ -15,7 +15,7 @@ public class TestResources {
         resourcesTest = new Resources();
     }
 
-    @Test @Ignore //todo
+    @Test @Ignore
     public void testAmmoGetters(){
         assertEquals(2,resourcesTest.getAllAmmo().getBlue());
         assertEquals(2,resourcesTest.getAllAmmo().getRed());

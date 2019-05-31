@@ -19,9 +19,7 @@ public class Shotgun extends  WeaponAlternative{
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistanceMore(0, currentPlayer);
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-            getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
@@ -29,28 +27,18 @@ public class Shotgun extends  WeaponAlternative{
 
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
-        }
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);//
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         if(getModel().getCurrent().getBaseCounter() == 1){
             ArrayList<Square> squares = getModel().runnableSquare(1,getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
-            getModel().getCurrent().setAvailableWeaponSquares(squares);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(),squares);
+            endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
@@ -58,16 +46,6 @@ public class Shotgun extends  WeaponAlternative{
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        ArrayList<Player> finalList = new ArrayList<>();
-        for(Player target : selectedTargets){
-            target.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUseWithMove(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 }

@@ -24,18 +24,15 @@ public class Powerglove extends WeaponAlternative {
                 if(!temp.contains(player))
                     availableTargets.add(player);
             }
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-            getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
         if(getModel().getCurrent().getAlternativeCounter() == 1) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameDirection(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets().get(0));
             if(!availableTargets.isEmpty()) {
-                getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-                getModel().getCurrent().incrementAlternativeCounter();
                 getModel().getCurrent().setFlamethrowerSupportPlayer(getModel().getCurrent().getSelectedAlternativeTargets().get(0));
-                getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+                endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+
             }
             else
                 useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
@@ -72,9 +69,7 @@ public class Powerglove extends WeaponAlternative {
                 if(!temp.contains(player))
                     availableTargets.add(player);
             }
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
 
         else
