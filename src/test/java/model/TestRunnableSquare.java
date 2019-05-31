@@ -21,7 +21,7 @@ public class TestRunnableSquare {
         firstSquare = map.getSquareFromCoordinates(0, 0);
 
     }
-    @Test @Ignore
+    @Test
     public void testRunnableSquare(){
 
         ArrayList<Square> test = new ArrayList<>();

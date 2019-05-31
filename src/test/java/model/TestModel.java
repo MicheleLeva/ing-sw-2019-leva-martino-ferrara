@@ -37,14 +37,14 @@ public class TestModel {
         players.add(player3);
         model = new Model(players,8);
     }
-    @Test @Ignore
+   /* @Test
     public void testRunnableSquare(){
         ArrayList<Square> squares = Model.runnableSquare(3,player1.getPosition());
         for(Square square : squares)
             System.out.println(square.getID());
-    }
+    }*/
 
-   /* @Test
+    @Test
     public void testVisiblePlayers(){
         ArrayList<Player> visiblePlayers;
         visiblePlayers = model.getVisiblePlayers(player1);
@@ -159,5 +159,5 @@ public class TestModel {
         assertEquals(visiblePlayers.size(),1);
     }
 
-*/
+
 }
