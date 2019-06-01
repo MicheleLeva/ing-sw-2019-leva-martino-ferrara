@@ -1,13 +1,15 @@
 package model.player.action;
 
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestActionCreator {
+
     @Test
-    public static void testCreateAction()
+    public void testCreateAction()
     {
-        Action action1 = ActionCreator.createAction('S');
-        assertEquals(action1,new Shoot());
+        assertTrue(ActionCreator.createAction('S') instanceof Shoot);
     }
 }

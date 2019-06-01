@@ -7,6 +7,7 @@ import model.cards.weapons.Heatseeker;
 import model.cards.weapons.LockRifle;
 import model.cards.weapons.Weapon;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -25,7 +26,7 @@ public class TetsSquare {
 
         }
 
-        @Test
+        @Test @Ignore
         public void testSquare(){
         assertEquals(squareTest.getColor(),SquareColor.BLUE);
         assertEquals(squareTest.getSquareColumn(),3);
