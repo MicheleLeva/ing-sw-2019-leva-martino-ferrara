@@ -3,6 +3,7 @@ package model.map;
 
 
 import model.Decks;
+import model.CLI;
 import model.cards.AmmoColor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
@@ -12,21 +13,36 @@ import org.json.simple.JSONObject;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class
 Map {
 
     private Square[][] map;
+    private String mapCLI;
 
-    //todo rivedere
     public Map(int playersNumber) {
-        String nome;
-        if(playersNumber==3) nome = "src/resources/map1.json";
-        else if(playersNumber==4) nome = "src/resources/map2.json";
-        else if(playersNumber==5) nome = "src/resources/map3.json";
-        else if(playersNumber==6) nome = "src/resources/map4.json";
-        else nome = "src/resources/map2.json";
+        String JSONpath;
+        String CLIMapPath;
+        if(playersNumber==3) {
+            JSONpath = "src/resources/map1.json";
+            CLIMapPath = "src/resources/map1.txt";
+        }
+        else if(playersNumber==4) {
+            JSONpath = "src/resources/map2.json";
+            CLIMapPath = "src/resources/map2.txt";
+        }
+        else if(playersNumber==5) {
+            JSONpath = "src/resources/map3.json";
+            CLIMapPath = "src/resources/map3.txt";
+        }
+        else if(playersNumber==6) {
+            JSONpath = "src/resources/map4.json";
+            CLIMapPath = "src/resources/map4.txt";
+        }
+        else {
+            JSONpath = "/src/resources/map2.json";
+            CLIMapPath = "src/resources/map2.txt";
+        }
 
         map = new Square[3][4];
         for(int i = 0; i < 3; i++){
@@ -40,8 +56,8 @@ Map {
         JSONParser parser = new JSONParser();
 
         try {
-
-            Object obj = parser.parse(new FileReader(nome));
+            mapCLI = CLI.buildCLIMap(CLIMapPath);
+            Object obj = parser.parse(new FileReader(JSONpath));
             JSONObject myJo = (JSONObject) obj;
             //System.out.println(myJo.get("map"));
             JSONArray myArray = (JSONArray) myJo.get("map");
@@ -136,6 +152,10 @@ Map {
                     }
             }
         }
+    }
+
+    public String printMap(){
+        return mapCLI;
     }
 }
 

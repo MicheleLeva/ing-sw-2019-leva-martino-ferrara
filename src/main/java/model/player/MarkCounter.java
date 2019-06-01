@@ -1,5 +1,7 @@
 package model.player;
 
+import model.CLI;
+
 import java.util.HashMap;
 
 public class MarkCounter {
@@ -31,5 +33,18 @@ public class MarkCounter {
 
     public int getMarkFromColor(PlayerColor playerColor){
         return markList.get(playerColor);
+    }
+
+    public String printMarkCounter(){
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder markBuilder = new StringBuilder();
+        for(PlayerColor i : markList.keySet()){
+            markBuilder.append(CLI.getColor(i));
+            markBuilder.append(getMarkFromColor(i));
+            markBuilder.append(CLI.getResetString());
+        }
+
+        stringBuilder.append(markBuilder);
+        return stringBuilder.toString();
     }
 }

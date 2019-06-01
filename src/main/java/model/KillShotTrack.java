@@ -9,6 +9,7 @@ public class KillShotTrack {
 
     private KillShotCell[] killShotTrack;
     private int lastIndex;
+    private final String SKULL_CLI = "@";
 
     public KillShotTrack(int size){
             killShotTrack = new KillShotCell[size];
@@ -29,11 +30,11 @@ public class KillShotTrack {
         if(lastIndex < killShotTrack.length){
             killShotTrack[lastIndex].addToken(playerColor);
             lastIndex++;
+        }
 
-            if(lastIndex >= killShotTrack.length){
-                //todo setta frenzy turn
-                killShotTrack[killShotTrack.length - 1].addToken();
-            }
+        if(lastIndex >= killShotTrack.length){
+            //todo setta frenzy turn
+            killShotTrack[killShotTrack.length - 1].addToken();
         }
     }
 
@@ -78,5 +79,29 @@ public class KillShotTrack {
         }
 
         return result;
+    }
+
+    public String printKillshotTrack(){
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder tokenBuilder = new StringBuilder();
+
+        for (int i = 0; i < killShotTrack.length; i++){
+            if(killShotTrack[i].isSkull()){
+               stringBuilder.append(SKULL_CLI);
+            }
+            else{
+
+                String currentColor = CLI.getColor(killShotTrack[i].getTokenColor());
+                int tokenNumber = killShotTrack[i].getTokenNumber();
+                tokenBuilder.append(currentColor);
+                tokenBuilder.append(tokenNumber);
+                tokenBuilder.append(CLI.getResetString());
+
+                stringBuilder.append(tokenBuilder);
+            }
+        }
+
+        return stringBuilder.toString();
+
     }
 }

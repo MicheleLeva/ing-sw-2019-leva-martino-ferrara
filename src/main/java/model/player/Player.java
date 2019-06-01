@@ -1,5 +1,6 @@
 package model.player;
 
+import model.CLI;
 import model.cards.powerups.PowerUp;
 import model.cards.powerups.TagbackGrenade;
 import model.map.Square;
@@ -108,6 +109,38 @@ public class Player {
 
     public boolean isKillShot(){
         return isKillShot;
+    }
+
+    public String getColoredName(){
+        StringBuilder stringBuilder = new StringBuilder();
+        String color = CLI.getColor(getPlayerColor());
+        stringBuilder.append(color);
+        stringBuilder.append(getPlayerName());
+        stringBuilder.append(CLI.getResetString());
+        return stringBuilder.toString();
+    }
+
+    public String printPlayerInfo(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getColoredName());
+        stringBuilder.append("\n");
+        stringBuilder.append("Position: ");
+        stringBuilder.append(getPosition().getID());
+        stringBuilder.append("\n");
+        stringBuilder.append(getPlayerBoard().getDamageCounter().printDamageCounter());
+        stringBuilder.append("\n");
+        stringBuilder.append(getPlayerBoard().getMarkCounter().printMarkCounter());
+        stringBuilder.append("\n");
+        stringBuilder.append("Points: ");
+        stringBuilder.append(getPlayerBoard().getPoints().printPoints());
+        stringBuilder.append("\n");
+        stringBuilder.append(getResources().showAmmo());
+        stringBuilder.append("\n");
+        stringBuilder.append("Unloaded weapons: ");
+        stringBuilder.append(getResources().printUnloadedWeapons());
+        stringBuilder.append("\n");
+
+        return stringBuilder.toString();
     }
 
     public boolean hasTagBackGrenade(){

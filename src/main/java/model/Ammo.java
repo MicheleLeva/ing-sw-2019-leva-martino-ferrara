@@ -83,13 +83,20 @@ public class Ammo {
 
     @Override
     public String toString(){
-        String result;
-        String blue = "Blue: " +getBlue();
-        String red = "Red: " +getRed();
-        String yellow = "Yellow: " +getYellow();
+        StringBuilder stringBuilder = new StringBuilder();
+        String blue = CLI.getBlue() +getBlue();
+        String red = CLI.getRed() +getRed();
+        String yellow = CLI.getYellow() +getYellow();
 
-        result = blue +"\n" +red +"\n" +yellow;
-        return result;
+        stringBuilder.append(blue);
+        stringBuilder.append(" ");
+        stringBuilder.append(red);
+        stringBuilder.append(" ");
+        stringBuilder.append(yellow);
+
+        return stringBuilder.toString();
+
+
     }
 
     public void add(Ammo ammo){

@@ -70,6 +70,10 @@ public class Model {
         return gameBoard;
     }
 
+    public ScoreManager getScoreManager(){
+        return scoreManager;
+    }
+
     public Player getPlayer(PlayerColor playerColor) {
         return players.get(playerColor);
     }

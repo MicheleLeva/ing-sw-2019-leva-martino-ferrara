@@ -78,4 +78,13 @@ public class Points {
         }
     }
 
+    public String printPoints(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < points.size(); i++){
+            stringBuilder.append(points.get(i));
+            stringBuilder.append(" ");
+        }
+
+        return stringBuilder.toString();
+    }
 }

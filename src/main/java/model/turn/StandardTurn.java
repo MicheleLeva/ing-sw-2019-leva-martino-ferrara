@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import java.util.ArrayList;
+
 public class StandardTurn extends Turn {
 
     private Random random = new Random();
@@ -171,5 +173,39 @@ public class StandardTurn extends Turn {
 
         getModel().endTurn();
 
+    }
+
+
+    public void notifyTurn(){
+        //print the game status
+        StringBuilder stringBuilder  = new StringBuilder();
+        //print current turn number
+        int currentTurnNumber = getModel().getTurnManager().getCurrentTurnNumber();
+        stringBuilder.append("Current turn number: ");
+        stringBuilder.append(currentTurnNumber);
+        stringBuilder.append("\n");
+        //print current player
+        Player currentPlayer = getModel().getTurnManager().getCurrentPlayer();
+        stringBuilder.append("Current player: ");
+        stringBuilder.append(currentPlayer.getColoredName());
+        stringBuilder.append("\n");
+        //print the updated rank
+        stringBuilder.append("Current Rank: \n");
+        stringBuilder.append(getModel().getScoreManager().showPlayerRank()); //todo settare i colori nel rank
+        stringBuilder.append("\n");
+        //print the killshot track
+        stringBuilder.append(getModel().getGameBoard().getKillShotTrack().printKillshotTrack());
+        stringBuilder.append("\n");
+        //print the map
+        stringBuilder.append(getModel().getGameBoard().getMap().printMap());
+        stringBuilder.append("\n");
+        //print all players info
+        ArrayList<Player> allPlayers = getModel().getAllPlayers();
+        for (int i = 0; i < allPlayers.size(); i++){
+            stringBuilder.append(allPlayers.get(i).printPlayerInfo());
+            stringBuilder.append("\n");
+        }
+
+        getModel().getGameNotifier().notifyGeneric(stringBuilder.toString());
     }
 }

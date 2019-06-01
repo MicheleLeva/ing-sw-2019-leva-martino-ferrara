@@ -1,10 +1,14 @@
 package model.player;
 
 
+import controller.Checks;
+import model.CLI;
+
 import java.util.ArrayList;
 
 public class DamageCounter {
 
+    private final String DAMAGE_CLI = "*";
     private ArrayList<PlayerColor> damage;
 
 
@@ -39,6 +43,27 @@ public class DamageCounter {
             }
         }
         return result;
+    }
+
+    public String printDamageCounter(){
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder damageBuilder = new StringBuilder();
+        for (int i = 0; i < damage.size(); i++){
+            damageBuilder.append(CLI.getColor(damage.get(i)));
+            damageBuilder.append(DAMAGE_CLI);
+            damageBuilder.append(CLI.getResetString());
+        }
+
+        stringBuilder.append(damageBuilder);
+        if(damage.size() == Checks.getKillshot()){
+            stringBuilder.append(" KILLSHOT!");
+        }
+
+        if(damage.size() == Checks.getMaxDamage()){
+            stringBuilder.append(" DEAD!");
+        }
+
+        return stringBuilder.toString();
     }
 
 

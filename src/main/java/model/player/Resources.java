@@ -173,4 +173,14 @@ public class Resources {
         }
         return result;
     }
+
+    public String printUnloadedWeapons(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < reloadableWeapon.size(); i++){
+            stringBuilder.append(reloadableWeapon.get(i).toString());
+            stringBuilder.append(" ");
+        }
+
+        return stringBuilder.toString();
+    }
 }
