@@ -25,6 +25,8 @@ public class RemoteGameView implements Observer<PlayerMessage> {
 
     @Override
     public void update(PlayerMessage message) {
-        clientConnection.asyncSend("GAME," + message.toString());
+        String gameMessage = "GAME," + message.toString();
+        clientConnection.asyncSend(gameMessage);
+
     }
 }

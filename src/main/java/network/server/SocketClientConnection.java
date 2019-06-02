@@ -63,6 +63,9 @@ public class SocketClientConnection extends Observable<String> implements Client
     }
 
     private void send(String message) {
+        message = message.replaceAll("\n","°");
+        message = message.replaceAll("\r", "§");
+        //System.out.println(message);
         out.println(message);
         out.flush();
     }

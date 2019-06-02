@@ -78,7 +78,7 @@ public class StandardTurn extends Turn {
             timer.schedule(turnTimerOff, time); //timer thread
 
             //Mostra al giocatore la lista comandi
-            getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), currentPlayerColor.toString() + "is viewing its commands.");
+            getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), currentPlayerColor.toString() + " is viewing its commands.");
 
             getModel().drawPowerUp(currentPlayerColor, 2);
             getModel().requestPowerUpDiscard(currentPlayer);

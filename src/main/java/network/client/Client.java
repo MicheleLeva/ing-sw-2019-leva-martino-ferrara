@@ -49,6 +49,8 @@ public class Client extends Observable<String> implements ClientConnection,Runna
     }
 
     private void send(String message) {
+        message = message.replaceAll("\n","°");
+        message = message.replaceAll("\r", "§");
         out.println(message);
         out.flush();
     }

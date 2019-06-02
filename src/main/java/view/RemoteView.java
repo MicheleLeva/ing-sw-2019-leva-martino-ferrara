@@ -44,6 +44,8 @@ public class RemoteView extends View implements Observer<String> {
 
     public void update(String message) {
         try{
+            message = message.replaceAll("°","\n");
+            message = message.replaceAll("§", "\r");
             String[] inputs = message.split(",");
             String[] strings = Arrays.copyOfRange(inputs, 1, inputs.length);
             switch(inputs[0]){

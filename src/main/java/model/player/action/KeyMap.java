@@ -53,15 +53,15 @@ public class KeyMap {
         }
 
         catch(FileNotFoundException e ){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         catch(IOException e ){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         catch(ParseException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
