@@ -62,7 +62,7 @@ public class SocketClientConnection extends Observable<String> implements Client
         }
     }
 
-    private void send(String message) {
+    private synchronized void send(String message) {
         message = message.replaceAll("\n","°");
         message = message.replaceAll("\r", "§");
         //System.out.println(message);
@@ -70,13 +70,14 @@ public class SocketClientConnection extends Observable<String> implements Client
         out.flush();
     }
 
-    public void asyncSend(final String message){
-        new Thread(new Runnable() {
+    public synchronized void asyncSend(final String message){
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
                 send(message);
             }
-        }).start();
+        }).start();*/
+        send(message);
     }
 
     public synchronized void closeConnection() { //mando messaggio al network.client e chiudo la connessione

@@ -48,8 +48,8 @@ public class TestModel {
     public void testVisiblePlayers(){
         ArrayList<Player> visiblePlayers;
         visiblePlayers = model.getVisiblePlayers(player1);
-        assertEquals(visiblePlayers.get(0),player2);
-        assertEquals(visiblePlayers.get(1),player3);
+        assertTrue(visiblePlayers.contains(player2));
+        assertTrue(visiblePlayers.contains(player3));
 
 
     }
@@ -62,7 +62,7 @@ public class TestModel {
         player3.setPosition(squares[0][0]);
 
         visiblePlayers = model.getPlayersNotInYourRoom(player1);
-        assertEquals(visiblePlayers.get(0),player3);
+        assertTrue(visiblePlayers.contains(player3));
         assertEquals(visiblePlayers.size(), 1);
     }
 

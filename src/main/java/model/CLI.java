@@ -82,14 +82,16 @@ public class CLI {
         return coloredMap;
     }
     public static String buildCLIMap(String CLIMapPath)throws FileNotFoundException,IOException {
-        FileReader fr = new FileReader(CLIMapPath);
-            String uncoloredMap = "";
-            String coloredMap;
+        String uncoloredMap;
+        String coloredMap;
+        try (FileReader fr = new FileReader(CLIMapPath)) {
+            uncoloredMap = "";
             int i;
-            while((i = fr.read()) != -1){
+            while ((i = fr.read()) != -1) {
                 uncoloredMap = uncoloredMap + (char) i;
             }
-            coloredMap = colorMap(uncoloredMap);
+        }
+        coloredMap = colorMap(uncoloredMap);
             return coloredMap;
     }
 }

@@ -100,7 +100,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
             if (choice == 'Y') {
                 getModel().targetingScopeTargets(event.getPlayerColor(),getModel().getCurrent().getAllDamagedPlayer());
             } else {
-                getModel().notifyShoot(getModel().getPlayer(event.getPlayerColor()),getModel().getCurrent().getAllDamagedPlayer());
+                getModel().notifyShoot(getModel().getPlayer(event.getPlayerColor()));
             }
         }
     }
@@ -137,7 +137,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
                 }
 
             }
-            getModel().notifyShoot(getModel().getPlayer(event.getPlayerColor()),getModel().getCurrent().getAllDamagedPlayer());
+            getModel().notifyShoot(getModel().getPlayer(event.getPlayerColor()));
         }
 
     }

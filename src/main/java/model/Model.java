@@ -378,6 +378,7 @@ public class Model {
         String powerUpList = player.getResources().showpowerUp();
         int num = player.getResources().getPowerUp().size();
         if (num > 1) {
+            powerUpNotifier.requestPowerUpDiscard(player.getPlayerColor(), powerUpList);
         }
         //todo notify
         else {
@@ -645,13 +646,11 @@ public class Model {
         }
 
         for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-            if (fireRED > 0 && powerUp.getAmmo().toString().equals("RED"))
-                getCurrent().addAvailablePaymentPowerUps(powerUp);
-            else
-            if(fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE"))
-                getCurrent().addAvailablePaymentPowerUps(powerUp);
-            else
-            if(fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW"))
+            boolean red = fireRED > 0 && powerUp.getAmmo().toString().equals("RED");
+            boolean blue = fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE");
+            boolean yellow = fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW");
+
+            if(red || blue || yellow)
                 getCurrent().addAvailablePaymentPowerUps(powerUp);
         }
         weaponNotifier.askReloadPayment(currentPlayer.getPlayerColor(),currentPlayer.getResources().getPowerUp());
@@ -703,13 +702,11 @@ public class Model {
         }
 
         for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-            if (fireRED > 0 && powerUp.getAmmo().toString().equals("RED"))
-                getCurrent().addAvailablePaymentPowerUps(powerUp);
-            else
-            if(fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE"))
-                getCurrent().addAvailablePaymentPowerUps(powerUp);
-            else
-            if(fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW"))
+            boolean red = fireRED > 0 && powerUp.getAmmo().toString().equals("RED");
+            boolean blue = fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE");
+            boolean yellow = fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW");
+
+            if(red || blue || yellow)
                 getCurrent().addAvailablePaymentPowerUps(powerUp);
         }
         weaponNotifier.askPickUpPayment(currentPlayer.getPlayerColor(),currentPlayer.getResources().getPowerUp());
@@ -819,14 +816,12 @@ public class Model {
         }
 
         for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-            if (fireRED > 0 && powerUp.getAmmo().toString().equals("RED"))
+            boolean red = fireRED > 0 && powerUp.getAmmo().toString().equals("RED");
+            boolean blue = fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE");
+            boolean yellow = fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW");
+
+            if(red || blue || yellow)
                 getCurrent().addAvailablePaymentPowerUps(powerUp);
-            else
-                if(fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE"))
-                    getCurrent().addAvailablePaymentPowerUps(powerUp);
-                else
-                    if(fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW"))
-                        getCurrent().addAvailablePaymentPowerUps(powerUp);
         }
 
 
@@ -869,12 +864,12 @@ public class Model {
         weaponNotifier.chooseWeaponSquare(playerColor, squares);
     }
 
-    public void notifyShoot(Player currentPlayer, ArrayList<Player> targets) {
+    public void notifyShoot(Player currentPlayer) {
         Set<Player> set = new LinkedHashSet<Player>(current.getSelectedBaseTargets());
         set.addAll(current.getSelectedAlternativeTargets());
         set.addAll(current.getSelectedOptionalTargets1());
         set.addAll(current.getSelectedOptionalTargets2());
-        targets = new ArrayList<>(set);
+        ArrayList<Player> targets = new ArrayList<>(set);
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
         gameNotifier.notifyShoot(currentPlayer, targets, allPlayers);
     }

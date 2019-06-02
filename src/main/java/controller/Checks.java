@@ -232,6 +232,7 @@ public class Checks {
                 fireModeCost = ((WeaponOptional2) weapon).getOptionalCost2();
                 break;
             }
+            default: fireModeCost = new Ammo(0,0,0);
         }
 
         fireRED = fireModeCost.getRed();

@@ -108,7 +108,7 @@ public class Turn {
                     if (!isTimerOn){
                         getModel().setPlayerAfk(currentPlayer);
                         if (currentPlayer.getActionTree().getLastAction().getData().equals("shoot")){
-                            getModel().notifyShoot(currentPlayer, getModel().getCurrent().getAllDamagedPlayer());
+                            getModel().notifyShoot(currentPlayer);
                         }
                         getModel().getTurnManager().update(); // da mettere nell'end turn
                         return;

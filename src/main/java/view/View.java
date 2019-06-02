@@ -53,7 +53,7 @@ public class View {
         return scanner.next().charAt(0);
     }
 
-    public void printMessage(String message){
+    public synchronized void printMessage(String message){
         System.out.println(message);
     }
 }

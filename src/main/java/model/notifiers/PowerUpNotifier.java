@@ -54,4 +54,11 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage playerMessage = new TagbackGrenadeMessage(message);
         notify(playerMessage, playerColor);
     }
+
+    public void requestPowerUpDiscard(PlayerColor playerColor, String powerUps){
+        String message = "Choose powerUp to discard: ";
+        message = message + powerUps;
+        PlayerMessage playerMessage = new DiscardPowerUpMessage(message);
+        notify(playerMessage, playerColor);
+    }
 }

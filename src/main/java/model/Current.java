@@ -94,7 +94,7 @@ public class Current {
     }
 
     public void setPowerUpDiscard(boolean discard){
-        this.powerUpDiscard = powerUpDiscard;
+        this.powerUpDiscard = discard;
     }
 
     public boolean isPowerUpDiscard() {
