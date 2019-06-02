@@ -76,4 +76,11 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
         Event event = new TagbackGrenadeEvent(view, view.inputChar());
         notify(event);
     }
+
+    @Override
+    public void update(DiscardPowerUpMessage discardPowerUpMessage){
+        view.printMessage(discardPowerUpMessage.getMessage());
+        Event event = new DiscardPowerUpEvent(view,view.inputInt());
+        notify(event);
+    }
 }

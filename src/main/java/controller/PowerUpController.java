@@ -157,4 +157,20 @@ public class PowerUpController extends Controller implements PowerUpObserver {
             getModel().tagbackGranadeRequest(tagbackGrenadeEvent.getPlayerColor(), getModel().getTurnManager().getCurrentPlayerColor());
         }
     }
+
+    @Override
+    public void update(DiscardPowerUpEvent discardPowerUpEvent){
+        Player currentPlayer = getModel().getPlayer(discardPowerUpEvent.getPlayerColor());
+        int input = discardPowerUpEvent.getInput();
+
+        if (input < 1 || input > currentPlayer.getResources().getPowerUp().size()) {
+            String error;
+            error = "Invalid input.\n";
+            discardPowerUpEvent.getView().reportError(error);
+            getModel().requestPowerUpDiscard(currentPlayer); //chiede di reinserire il powerup
+        } else {
+                getModel().discardPowerUp(currentPlayer,input-1);
+                //scarta powerup(è stato usato)
+        }
+    }
 }

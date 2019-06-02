@@ -380,7 +380,6 @@ public class Model {
         if (num > 1) {
             powerUpNotifier.requestPowerUpDiscard(player.getPlayerColor(), powerUpList);
         }
-        //todo notify
         else {
             discardPowerUp(player, 0);
         }
@@ -395,10 +394,7 @@ public class Model {
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
 
         spawnPlayer(player, discardedPowerUp.getAmmo());
-
-        if (turnManager.getCurrentTurnNumber() == 1) {
-            //todo notify();
-        }
+        getCurrent().setReceivedInput(true);
 
     }
 
@@ -427,8 +423,8 @@ public class Model {
         String toPlayer;
         String toOthers;
 
-        toPlayer = "You just spawned at " + spawnSquare.toString();
-        toOthers = player.getPlayerName() + " just spawned at " + spawnSquare.toString();
+        toPlayer = "You just spawned at " + spawnSquare.getID();
+        toOthers = player.getPlayerName() + " just spawned at " + spawnSquare.getID();
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
     }
 

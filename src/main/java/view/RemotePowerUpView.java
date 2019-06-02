@@ -1,9 +1,6 @@
 package view;
 
-import model.exchanges.events.ChooseNewtonOpponentEvent;
-import model.exchanges.events.ChooseNewtonSquareEvent;
-import model.exchanges.events.ChoosePowerUpEvent;
-import model.exchanges.events.ChooseTeleporterSquareEvent;
+import model.exchanges.events.*;
 import model.exchanges.messages.PlayerMessage;
 import network.ClientConnection;
 import utils.Observer;
@@ -37,6 +34,10 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
             case "ChooseNewtonSquareEvent":
                 ChooseNewtonSquareEvent chooseNewtonSquareEvent = new ChooseNewtonSquareEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(chooseNewtonSquareEvent));
+                break;
+            case "DiscardPowerUpEvent":
+                DiscardPowerUpEvent discardPowerUpEvent = new DiscardPowerUpEvent(view, Integer.parseInt(inputs[1]));
+                listeners.forEach(l -> l.update(discardPowerUpEvent));
                 break;
         }
     }

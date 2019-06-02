@@ -89,6 +89,7 @@ public class Turn {
             getModel().requestPowerUpDiscard(currentPlayer);
             getModel().getCurrent().setReceivedInput(false);
             while (!getModel().getCurrent().isReceivedInput()) {
+                System.out.print("");
                 if (!isTimerOn) {
                     getModel().discardPowerUp(currentPlayer, random.nextInt(2));
                     getModel().setPlayerAfk(currentPlayer);
@@ -101,7 +102,7 @@ public class Turn {
         while (!currentPlayer.getActionTree().isTurnEnded()){
             while (!currentPlayer.getActionTree().isActionEnded()){
                 //ottieni azioni figlie dall'albero e mostrale
-                getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), "");
+                getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), currentPlayer.getPlayerName()+" choosing action");
                 //Chiedi input
                 getModel().chooseAction(currentPlayerColor);
                 while (!currentPlayer.getActionTree().isMoveEnded()){

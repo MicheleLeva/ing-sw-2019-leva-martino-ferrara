@@ -30,7 +30,7 @@ public class Player {
         resources = new Resources();
         playerBoard = new PlayerBoard();
         score = new Score();
-        new ActionTree(1);
+        this.actionTree = new ActionTree(1);
     }
 
     public Score getScore() {

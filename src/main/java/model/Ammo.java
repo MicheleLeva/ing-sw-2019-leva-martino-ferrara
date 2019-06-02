@@ -110,7 +110,4 @@ public class Ammo {
         setBlue(getBlue() - ammo.getBlue());
         setYellow(getYellow() - ammo.getYellow());
     }
-
-
-
 }

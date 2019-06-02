@@ -1,10 +1,7 @@
 package network.client;
 
 import model.exchanges.events.Event;
-import model.exchanges.messages.ChooseNewtonOpponentMessage;
-import model.exchanges.messages.ChooseNewtonSquareMessage;
-import model.exchanges.messages.ChoosePowerUpMessage;
-import model.exchanges.messages.ChooseTeleporterSquareMessage;
+import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
@@ -38,6 +35,9 @@ public class RemotePowerUpHandler extends PowerUpNotify implements Observer<Even
                 ChooseNewtonSquareMessage chooseNewtonSquareMessage = new ChooseNewtonSquareMessage(inputs[1]);
                 listeners.get(playerColor).update(chooseNewtonSquareMessage);
                 break;
+            case "DiscardPowerUpMessage":
+                DiscardPowerUpMessage discardPowerUpMessage = new DiscardPowerUpMessage(inputs[1]);
+                listeners.get(playerColor).update(discardPowerUpMessage);
         }
     }
 

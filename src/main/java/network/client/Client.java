@@ -86,7 +86,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
             Scanner scanner = new Scanner(System.in);
             String name = scanner.nextLine();
             this.asyncSend(name);
-            scanner.close();
+            //scanner.close();
             String read;
             while(isActive()){
                 read = in.nextLine();
