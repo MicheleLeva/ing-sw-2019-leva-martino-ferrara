@@ -15,7 +15,11 @@ public class ScoreManager {
     private final int frenzyKillShotPoints[] = {8,6,4,2,1};
 
     public ScoreManager(Model model){
+
         this.model = model;
+        for(Player player : model.getTurnManager().getAllPlayers()){
+            playerRank.add(player.getPlayerColor());
+        }
     }
 
     public void updateScore(){

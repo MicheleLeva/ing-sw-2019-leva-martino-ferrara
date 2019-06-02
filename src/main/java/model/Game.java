@@ -22,7 +22,7 @@ public class Game implements Runnable{
 
     public void run(){
         while(!model.getTurnManager().isGameOver()){
-            currentTurn = model.getCurrentTurn().getTurn();
+            currentTurn = new Turn(model,model.getTurnManager().isFrenzy());
             currentTurn.notifyTurn();
             currentTurn.startTurn();
             //endturn?

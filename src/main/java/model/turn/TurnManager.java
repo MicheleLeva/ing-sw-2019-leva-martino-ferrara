@@ -31,6 +31,8 @@ public class TurnManager {
 
     private boolean killshot;
 
+    private boolean frenzy;
+
     private ArrayList<PlayerColor> currentTurnKillShots;
 
     public Player getPlayerFromColor(PlayerColor playerColor){ //Dato il colore, ritorna il giocatore corrispondente
@@ -45,6 +47,7 @@ public class TurnManager {
     }
 
     public TurnManager(ArrayList<Player> allPlayers){
+        this.frenzy = false;
         this.allPlayers = allPlayers;
         currentPlayerIndex = 0;
         currentPlayerColor = allPlayers.get(0).getPlayerColor();
@@ -149,5 +152,13 @@ public class TurnManager {
 
     public int numOfKillShot(){
         return currentTurnKillShots.size();
+    }
+
+    public boolean isFrenzy(){
+        return this.frenzy;
+    }
+
+    public void setFrenzy(boolean frenzy){
+        this.frenzy = frenzy;
     }
 }

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class TestActionCreator {
 
-    @Test
+    @Test @Ignore
     public void testCreateAction()
     {
         assertTrue(ActionCreator.createAction('S') instanceof Shoot);

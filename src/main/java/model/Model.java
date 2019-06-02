@@ -6,7 +6,6 @@ import model.cards.powerups.PowerUp;
 import model.cards.powerups.TagbackGrenade;
 import model.cards.weapons.FireMode;
 import model.cards.weapons.Weapon;
-import model.cards.powerups.TargetingScope;
 import model.cards.weapons.*;
 import model.cards.weapons.WeaponTreeNode;
 import model.map.Direction;
@@ -23,7 +22,6 @@ import model.player.PlayerColor;
 import java.util.*;
 
 import model.player.action.KeyMap;
-import model.turn.CurrentTurn;
 import model.turn.TurnManager;
 
 public class Model {
@@ -33,8 +31,6 @@ public class Model {
     private GameBoard gameBoard;
 
     private final TurnManager turnManager;
-
-    private CurrentTurn currentTurn = null;
 
     private GameNotifier gameNotifier;
 
@@ -98,17 +94,12 @@ public class Model {
 
         turnManager = new TurnManager(playersList);
 
-        currentTurn = new CurrentTurn(this);
+        scoreManager = new ScoreManager(this);
 
         this.gameNotifier = new GameNotifier();
         this.actionNotifier = new ActionNotifier();
         this.powerUpNotifier = new PowerUpNotifier();
         this.weaponNotifier = new WeaponNotifier();
-    }
-
-
-    public CurrentTurn getCurrentTurn() {
-        return (currentTurn);
     }
 
     public TurnManager getTurnManager() {
