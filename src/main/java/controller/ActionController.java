@@ -3,6 +3,7 @@ package controller;
 import model.Model;
 import model.adrenaline_exceptions.*;
 import model.exchanges.events.QuitAfkEvent;
+import model.exchanges.events.VoteMapEvent;
 import model.turn.TurnManager;
 import model.exchanges.events.ActionEvent;
 import model.player.action.Action;
@@ -67,6 +68,17 @@ public class ActionController extends Controller implements ActionObserver {
     @Override
     public void update(QuitAfkEvent quitAfkEvent) {
         getModel().wakeUpPlayer(getModel().getPlayer(quitAfkEvent.getPlayerColor()));
+    }
+
+    @Override
+    public void update(VoteMapEvent voteMapEvent) {
+        if (voteMapEvent.getInput() <1 || voteMapEvent.getInput()>4){
+            voteMapEvent.getView().reportError("Invalid input!");
+            getModel().mapVote(getModel().getPlayer(voteMapEvent.getPlayerColor()));
+        } else {
+            getModel().getMapVotes().add(Character.getNumericValue(voteMapEvent.getInput()));
+            getModel().getCurrent().setReceivedInput(true);
+        }
     }
 }
 

@@ -46,7 +46,6 @@ public class Run extends Action {
             currentPlayer.setPosition(newSquare);
             model.updateRun();
             model.updateAction();
-            model.updateTurn(); //todo probabilmente implementato dal turn manager
         }
     }
 }

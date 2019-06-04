@@ -38,6 +38,19 @@ public class RemotePowerUpHandler extends PowerUpNotify implements Observer<Even
             case "DiscardPowerUpMessage":
                 DiscardPowerUpMessage discardPowerUpMessage = new DiscardPowerUpMessage(inputs[1]);
                 listeners.get(playerColor).update(discardPowerUpMessage);
+                break;
+            case "TargetingScopeMessage":
+                TargetingScopeMessage targetingScopeMessage = new TargetingScopeMessage(inputs[1]);
+                listeners.get(playerColor).update(targetingScopeMessage);
+                break;
+            case "TargetingScopeSelectionMessage":
+                TargetingScopeSelectionMessage targetingScopeSelectionMessage = new TargetingScopeSelectionMessage(inputs[1]);
+                listeners.get(playerColor).update(targetingScopeSelectionMessage);
+                break;
+            case "TagbackGrenadeMessage":
+                TagbackGrenadeMessage tagbackGrenadeMessage = new TagbackGrenadeMessage(inputs[1]);
+                listeners.get(playerColor).update(tagbackGrenadeMessage);
+                break;
         }
     }
 

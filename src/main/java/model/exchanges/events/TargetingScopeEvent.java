@@ -12,4 +12,9 @@ public class TargetingScopeEvent extends Event {
     public char getChoice(){
         return this.choice;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "," + getChoice();
+    }
 }

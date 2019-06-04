@@ -106,6 +106,7 @@ public class Turn {
                 //Chiedi input
                 getModel().chooseAction(currentPlayerColor);
                 while (!currentPlayer.getActionTree().isMoveEnded()){
+                    System.out.print("");
                     if (!isTimerOn){
                         getModel().setPlayerAfk(currentPlayer);
                         if (currentPlayer.getActionTree().getLastAction().getData().equals("shoot")){
@@ -128,6 +129,7 @@ public class Turn {
                 //finchè l'array è popolato continuo con il timer
                 //l'input di un grenade player lo fa rimuovere dall'array
                 while (!getModel().getCurrent().getGrenadePeopleArray().isEmpty()){
+                    System.out.print("");
                     if (!isGrenadeTimerOn){
                         for (Player grenadePlayer : getModel().getCurrent().getGrenadePeopleArray()){
                             getModel().setPlayerAfk(grenadePlayer);
@@ -137,13 +139,16 @@ public class Turn {
                 }
                 grenadeTimer.cancel();
             }
+
         }
+
         if (!isFrenzy){
             getModel().getCurrent().setFinishedReloading(false);
             while (!getModel().getCurrent().isFinishedReloading()){
                 getModel().askReloadEndTurn(currentPlayerColor);
                 getModel().getCurrent().setReceivedInput(false);
                 while (!getModel().getCurrent().isReceivedInput()){
+                    System.out.print("");
                     if (!isTimerOn){
                         getModel().setPlayerAfk(currentPlayer);
                         getModel().getTurnManager().update(); //da mettere nell'end turn
@@ -154,31 +159,6 @@ public class Turn {
         }
 
         timer.cancel();
-
-        //todo spostare nell'end turn
-        if (!getModel().getCurrent().getDeadPlayers().isEmpty() && !isFrenzy){
-            for (Player deadPlayer : getModel().getCurrent().getDeadPlayers()) {
-                getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
-                getModel().requestPowerUpDiscard(deadPlayer);
-                isRespawnTimerOn = true;
-                respawnTimer.schedule(turnRespawnTimerOff, respawnTime);
-
-                getModel().getCurrent().setReceivedInput(false);
-                while (!getModel().getCurrent().isReceivedInput()){
-                    if (!isRespawnTimerOn){
-                        getModel().discardPowerUp(deadPlayer, random.nextInt(deadPlayer.getResources().getPowerUp().size()));
-                        getModel().setPlayerAfk(deadPlayer);
-                        getModel().getTurnManager().update();
-                        return;
-                    }
-                }
-                respawnTimer.cancel();
-            }
-        }
-
-
-        getModel().endTurn();
-
     }
 
 
@@ -214,5 +194,30 @@ public class Turn {
             }
         }
         getModel().getGameNotifier().notifyGeneric(stringBuilder.toString());
+    }
+
+    public void endTurn(){
+        if (!getModel().getCurrent().getDeadPlayers().isEmpty() && !isFrenzy){
+            for (Player deadPlayer : getModel().getCurrent().getDeadPlayers()) {
+                getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
+                getModel().requestPowerUpDiscard(deadPlayer);
+                isRespawnTimerOn = true;
+                respawnTimer.schedule(turnRespawnTimerOff, respawnTime);
+
+                getModel().getCurrent().setReceivedInput(false);
+                while (!getModel().getCurrent().isReceivedInput()){
+                    System.out.print("");
+                    if (!isRespawnTimerOn){
+                        getModel().discardPowerUp(deadPlayer, random.nextInt(deadPlayer.getResources().getPowerUp().size()));
+                        getModel().setPlayerAfk(deadPlayer);
+                        getModel().getTurnManager().update();
+                    }
+                }
+                respawnTimer.cancel();
+            }
+        }
+
+        //Scoring
+        //Replace ammo and weapon(?) cards on map
     }
 }

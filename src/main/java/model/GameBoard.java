@@ -15,12 +15,10 @@ public class GameBoard {
     private Map map;
     private Decks decks;
 
-
-
-    public GameBoard(int playersNumber, int KillShotCellsNumber){
-        this.killShotTrack = new KillShotTrack(KillShotCellsNumber);
-        this.map = new Map(playersNumber);
-        this.decks = new Decks();
+    public GameBoard(int chosenMap, int killShotCellsNumber, Model model){
+        this.killShotTrack = new KillShotTrack(killShotCellsNumber, model);
+        this.map = new Map(chosenMap);
+        this.decks = new Decks(model);
         setCardsOnMap();
     }
 

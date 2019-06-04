@@ -2,17 +2,16 @@ package model.exchanges.events;
 
 import view.View;
 
-public class TargetingScopeSelectionEvent extends Event{
+public class VoteMapEvent extends Event {
+    private char input;
 
-    private final int input;
-
-    public TargetingScopeSelectionEvent(View view,int input) {
+    public VoteMapEvent(View view, char input){
         super(view);
         this.input = input;
     }
 
-    public int getInput(){
-        return this.input;
+    public char getInput(){
+        return input;
     }
 
     @Override

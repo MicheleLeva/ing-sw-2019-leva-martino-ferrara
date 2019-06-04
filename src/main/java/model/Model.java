@@ -46,6 +46,10 @@ public class Model {
 
     private KeyMap keyMap;
 
+    private ArrayList<Integer> mapVotes;
+
+    private int skulls;
+
     public WeaponNotifier getWeaponNotifier() {
         return weaponNotifier;
     }
@@ -86,11 +90,10 @@ public class Model {
             players.put(PlayerColor.GREY, playersList.get(4));
         }
 
+        this.skulls = skulls;
         current = new Current();
 
         keyMap = new KeyMap();
-
-        gameBoard = new GameBoard(playersList.size(), skulls);
 
         turnManager = new TurnManager(playersList);
 
@@ -100,6 +103,10 @@ public class Model {
         this.actionNotifier = new ActionNotifier();
         this.powerUpNotifier = new PowerUpNotifier();
         this.weaponNotifier = new WeaponNotifier();
+    }
+
+    public void setGameBoard(int chosenMap) {
+        this.gameBoard = new GameBoard(chosenMap, skulls, this);
     }
 
     public TurnManager getTurnManager() {
@@ -1022,6 +1029,14 @@ public class Model {
             }
         }
         getPowerUpNotifier().askTagbackGrenade(playerColor, opponentColor, stringBuilder.toString());
+    }
+
+    public void mapVote(Player player){
+        actionNotifier.mapVote(player.getPlayerColor());
+    }
+
+    public ArrayList<Integer> getMapVotes() {
+        return mapVotes;
     }
 
     public void showPickUpWeapons(ArrayList<Weapon> payableWeapons,PlayerColor playerColor){

@@ -24,7 +24,9 @@ public class Decks {
     private Model model;
     private Random rand = new Random();
 
-    public Decks() {
+    public Decks(Model model) {
+        this.model = model;
+
         weaponsDeck = new ArrayList<>();
         powerUpDeck = new ArrayList<>();
         ammoCardDeck = new ArrayList<>();

@@ -21,22 +21,22 @@ Map {
     private Square[][] map;
     private String mapCLI;
 
-    public Map(int playersNumber) {
+    public Map(int chosenMap) {
         String JSONpath;
         String CLIMapPath;
-        if(playersNumber==3) {
+        if(chosenMap==1) {
             JSONpath = "src/resources/map1.json";
             CLIMapPath = "src/resources/map1.txt";
         }
-        else if(playersNumber==4) {
+        else if(chosenMap==2) {
             JSONpath = "src/resources/map2.json";
             CLIMapPath = "src/resources/map2.txt";
         }
-        else if(playersNumber==5) {
+        else if(chosenMap==3) {
             JSONpath = "src/resources/map3.json";
             CLIMapPath = "src/resources/map3.txt";
         }
-        else if(playersNumber==6) {
+        else if(chosenMap==4) {
             JSONpath = "src/resources/map4.json";
             CLIMapPath = "src/resources/map4.txt";
         }
