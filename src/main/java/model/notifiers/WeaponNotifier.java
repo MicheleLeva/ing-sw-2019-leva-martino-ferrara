@@ -87,7 +87,7 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         int size = powerUps.size();
         String message = "Select the power-ups to pay with :  ";
         for(PowerUp powerUp : powerUps){//todo getname powerup
-            message = message + powerUp.getClass().getSimpleName() + "\n";
+            message = message + powerUp.getClass().getSimpleName() + powerUp.getAmmo().toString()+ "\n";
         }
 
         PlayerMessage playerMessage = new PickUpPaymentMessage(message,size);

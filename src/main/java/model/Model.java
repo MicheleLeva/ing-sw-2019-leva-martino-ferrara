@@ -712,7 +712,12 @@ public class Model {
             if(red || blue || yellow)
                 getCurrent().addAvailablePaymentPowerUps(powerUp);
         }
-        weaponNotifier.askPickUpPayment(currentPlayer.getPlayerColor(),currentPlayer.getResources().getPowerUp());
+
+        if(getCurrent().getAvailablePaymentPowerUps().isEmpty()){
+            payPickUp(currentPlayer,weapon);
+            return;
+        }
+        weaponNotifier.askPickUpPayment(currentPlayer.getPlayerColor(),getCurrent().getAvailablePaymentPowerUps());
     }
 
     public void payPickUp(Player currentPlayer, Weapon weapon){

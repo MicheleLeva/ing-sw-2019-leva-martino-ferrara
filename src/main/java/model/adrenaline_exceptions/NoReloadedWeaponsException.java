@@ -7,6 +7,7 @@ public class NoReloadedWeaponsException extends Exception{
         }
         public NoReloadedWeaponsException(){
             super("You don't have any reloaded weapons.\n");
+
         }
 
 }
