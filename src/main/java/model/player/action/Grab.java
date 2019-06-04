@@ -58,6 +58,8 @@ public class Grab extends Action {
                         }
                     }
                 }
+                //for(Weapon weapon : payableWeapon)
+
                 if(payableWeapon.isEmpty())
                 {
                     throw new CannotPayException();

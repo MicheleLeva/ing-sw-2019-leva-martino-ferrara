@@ -69,6 +69,10 @@ public class RemoteView extends View implements Observer<String> {
         }
     }
 
+    @Override
+    public void reportError(String error){
+        clientConnection.asyncSend("GAME,GenericMessage," + error);
+    }
 
 
 

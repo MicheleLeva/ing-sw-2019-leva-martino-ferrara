@@ -138,23 +138,6 @@ Map {
         return squares;
     }
 
-    public void setCardsOnMap(){
-        ArrayList<Square> spawnSquares = getAllSpawnSquares();
-        for(int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++) {
-                if(map[i][j]!=null && spawnSquares.contains(map[i][j])) {
-                    map[i][j].setWeapon(Decks.getDecksInstance().drawWeapon());
-                    map[i][j].setWeapon(Decks.getDecksInstance().drawWeapon());
-                    map[i][j].setWeapon(Decks.getDecksInstance().drawWeapon());
-                }
-                else
-                    if(map[i][j]!=null){
-                        map[i][j].setAmmo(Decks.getDecksInstance().drawAmmoCard());
-                    }
-            }
-        }
-    }
-
     public String printMap(){
         return mapCLI;
     }

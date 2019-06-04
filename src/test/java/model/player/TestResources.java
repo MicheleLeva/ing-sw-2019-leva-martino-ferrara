@@ -33,7 +33,6 @@ public class TestResources {
     @Test @Ignore //todo, fallisce
     public void testAmmoModifiers(){
 
-        resourcesTest.addToAllAmmo(1,1,1);
         resourcesTest.addToAvailableAmmo(1,1,1);
 
         assertEquals(3,resourcesTest.getAllAmmo().getBlue());
@@ -44,7 +43,6 @@ public class TestResources {
         assertEquals(2,resourcesTest.getAvailableAmmo().getRed());
         assertEquals(2,resourcesTest.getAvailableAmmo().getYellow());
 
-        resourcesTest.removeFromAllAmmo(2,2,2);
         resourcesTest.removeFromAvailableAmmo(2,2,2);
 
         assertEquals(1,resourcesTest.getAllAmmo().getBlue());

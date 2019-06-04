@@ -123,7 +123,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
             for(PowerUp powerUp : powerUpsClone){
                 if(powerUp instanceof TargetingScope){
-                    Decks.getDecksInstance().getDiscardedPowerUpDeck().add(powerUp);
+                    getModel().getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
                     player.getResources().getPowerUp().remove(powerUp);
                     break;
                 }

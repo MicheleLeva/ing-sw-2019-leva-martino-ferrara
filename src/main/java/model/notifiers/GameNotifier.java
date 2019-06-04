@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class GameNotifier extends ViewObservable<PlayerMessage> {
 
-    public void notifyRun(PlayerColor playerColor , String playerName , String newSquare){
+    public void notifyRun(PlayerColor playerColor , String playerName , int newSquare){
         String toPlayer = "You ";
         String toOthers = playerName +" ";
         String message = "just moved to " +newSquare +".\n";

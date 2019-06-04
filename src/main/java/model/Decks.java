@@ -24,17 +24,6 @@ public class Decks {
     private Model model;
     private Random rand = new Random();
 
-    private static Decks decksInstance = null;
-
-
-    public static Decks getDecksInstance() {
-        if (decksInstance == null)
-            decksInstance = new Decks();
-        return decksInstance;
-
-    }
-
-
     public Decks() {
         weaponsDeck = new ArrayList<>();
         powerUpDeck = new ArrayList<>();
@@ -112,14 +101,38 @@ public class Decks {
             JSONArray myArray = (JSONArray) myJo.get("powerUps");
             for (int i = 0; i < myArray.size(); i++) {
                 JSONObject result1 = (JSONObject) myArray.get(i);
-                if (result1.get("name").equals("targetingScope"))
-                    powerUpDeck.add(new TargetingScope(model, AmmoColor.valueOf((String) result1.get("color"))));
-                if (result1.get("name").equals("newton"))
-                    powerUpDeck.add(new Newton(model, AmmoColor.valueOf((String) result1.get("color"))));
-                if (result1.get("name").equals("tagbackGrenade"))
-                    powerUpDeck.add(new TagbackGrenade(model, AmmoColor.valueOf((String) result1.get("color"))));
-                if (result1.get("name").equals("teleporter"))
-                    powerUpDeck.add(new Teleporter(model, AmmoColor.valueOf((String) result1.get("color"))));
+                if (result1.get("name").equals("targetingScope")) {
+                    if (result1.get("color").equals("RED"))
+                        powerUpDeck.add(new TargetingScope(model, AmmoColor.RED));
+                    if (result1.get("color").equals("BLUE"))
+                        powerUpDeck.add(new TargetingScope(model, AmmoColor.BLUE));
+                    if (result1.get("color").equals("YELLOW"))
+                        powerUpDeck.add(new TargetingScope(model, AmmoColor.YELLOW));
+                }
+                if (result1.get("name").equals("newton")) {
+                    if (result1.get("color").equals("RED"))
+                        powerUpDeck.add(new Newton(model, AmmoColor.RED));
+                    if (result1.get("color").equals("BLUE"))
+                        powerUpDeck.add(new Newton(model, AmmoColor.BLUE));
+                    if (result1.get("color").equals("YELLOW"))
+                        powerUpDeck.add(new Newton(model, AmmoColor.YELLOW));
+                }
+                if (result1.get("name").equals("tagbackGrenade")) {
+                    if (result1.get("color").equals("RED"))
+                        powerUpDeck.add(new TagbackGrenade(model, AmmoColor.RED));
+                    if (result1.get("color").equals("BLUE"))
+                        powerUpDeck.add(new TagbackGrenade(model, AmmoColor.BLUE));
+                    if (result1.get("color").equals("YELLOW"))
+                        powerUpDeck.add(new TagbackGrenade(model, AmmoColor.YELLOW));
+                }
+                if (result1.get("name").equals("teleporter")) {
+                    if (result1.get("color").equals("RED"))
+                        powerUpDeck.add(new Teleporter(model, AmmoColor.RED));
+                    if (result1.get("color").equals("BLUE"))
+                        powerUpDeck.add(new Teleporter(model, AmmoColor.BLUE));
+                    if (result1.get("color").equals("YELLOW"))
+                        powerUpDeck.add(new Teleporter(model, AmmoColor.YELLOW));
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -6,12 +6,12 @@ import java.util.HashMap;
 
 public class Ammo {
 
-    private HashMap<AmmoColor, Integer> ammo;
+    private HashMap<AmmoColor, Integer> ammo ;
 
 
     public Ammo(int red, int blue, int yellow){
         ammo = new HashMap<>();
-        setRed(red);
+        ammo.put(AmmoColor.RED,red);
         setBlue(blue);
         setYellow(yellow);
     }
@@ -50,17 +50,17 @@ public class Ammo {
 
     public void addRed(int num){
         int number = num + ammo.get(AmmoColor.RED);
-        ammo.put(AmmoColor.RED , number);
+        setRed(number);
     }
 
     public void addBlue(int num){
         int number = num + ammo.get(AmmoColor.BLUE);
-        ammo.put(AmmoColor.BLUE , number);
+        setBlue( number);
     }
 
     public void addYellow(int num){
         int number = num + ammo.get(AmmoColor.BLUE);
-        ammo.put(AmmoColor.BLUE , number);
+        setYellow(number);
     }
 
     public void addAmmo(AmmoColor ammoColor){

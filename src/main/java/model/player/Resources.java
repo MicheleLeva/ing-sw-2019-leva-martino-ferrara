@@ -1,20 +1,19 @@
 package model.player;
 
 import model.Ammo;
+import model.cards.AmmoColor;
 import model.cards.powerups.PowerUp;
 import model.cards.weapons.Weapon;
 
 import java.util.ArrayList;
 
 public class Resources {
-    private final Ammo allAmmo;
-    private final Ammo availableAmmo;
+    private Ammo availableAmmo;
     private final ArrayList<Weapon> weapon;
     private final ArrayList<PowerUp> powerUp;
     private final ArrayList<Weapon> reloadableWeapon;
 
     public Resources(){
-        this.allAmmo = new Ammo(2,2,2);
         this.availableAmmo = new Ammo(1,1,1);
         weapon = new ArrayList<>();
         powerUp = new ArrayList<>();
@@ -88,10 +87,14 @@ public class Resources {
     }
 
     public Ammo getAllAmmo(){
-        Ammo allAmmo = new Ammo(this.availableAmmo);
+
+        System.out.println("availableammo"+availableAmmo);
+        Ammo allAmmo = new Ammo(availableAmmo.getRed(),availableAmmo.getBlue(),availableAmmo.getYellow());
         for (int i = 0; i < powerUp.size(); i++){
+            System.out.println("powerupcost"+powerUp.get(i).getAmmo());
             allAmmo.addAmmo(powerUp.get(i).getAmmo());
         }
+        System.out.println("allammo"+allAmmo);
 
         return allAmmo;
     }
@@ -100,26 +103,11 @@ public class Resources {
         return availableAmmo;
     }
 
-    public void addToAllAmmo(int red, int blue, int yellow){
-
-        allAmmo.setRed(red);
-        allAmmo.setBlue(blue);
-        allAmmo.setYellow(yellow);
-
-    }
-
     public void addToAvailableAmmo(int red, int blue, int yellow){
 
         availableAmmo.setRed(red);
         availableAmmo.setBlue(blue);
         availableAmmo.setYellow(yellow);
-    }
-
-    public void removeFromAllAmmo(int red, int blue, int yellow){
-        allAmmo.setRed(-red);
-        allAmmo.setBlue(-blue);
-        allAmmo.setYellow(-yellow);
-
     }
 
     public void removeFromAvailableAmmo(int red, int blue, int yellow){
@@ -134,9 +122,9 @@ public class Resources {
         availableAmmo.setYellow(-ammo.getYellow());
     }
 
-    public void addAmmo(Ammo ammo){
-        allAmmo.remove(ammo);
-        availableAmmo.add(ammo);
+    public void addAmmo(Ammo ammoColor){
+
+
     }
 
     public boolean enoughAmmo(Ammo ammo){

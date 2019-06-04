@@ -2,7 +2,7 @@
 
   {"NORTH":"wall","SOUTH":"door","WEST":"wall","EAST":"square","color":"BLUE","isSpawn":false},
   {"NORTH":"wall","SOUTH":"wall","WEST":"square","EAST":"square","color":"BLUE","isSpawn":false},
-  {"NORTH":"wall","SOUTH":"wall","WEST":"square","EAST":"wall","color":"BLUE","isSpawn":true},
+  {"NORTH":"wall","SOUTH":"door","WEST":"square","EAST":"wall","color":"BLUE","isSpawn":true},
   {"NORTH":"null","SOUTH":"null","WEST":"null","EAST":"null","color":"null","isSpawn":false} ,
 
   {"NORTH":"door","SOUTH":"wall","WEST":"wall","EAST":"square","color":"RED","isSpawn":true},

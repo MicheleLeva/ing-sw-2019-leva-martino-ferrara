@@ -501,7 +501,7 @@ public class Model {
     public void updateRun() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
-        gameNotifier.notifyRun(currentPlayerColor, currentPlayer.getPlayerName(), currentPlayer.getPosition().toString());
+        gameNotifier.notifyRun(currentPlayerColor, currentPlayer.getPlayerName(), currentPlayer.getPosition().getID());
     }
 
     public void updateAction() {
@@ -510,8 +510,8 @@ public class Model {
     }
 
     public void updateTurn() { //todo controllare se serve ancora
-        Player currentPlayer = turnManager.getCurrentPlayer();
-        if (currentPlayer.getActionTree().isTurnEnded()) {
+       Player currentPlayer = turnManager.getCurrentPlayer();
+  /*       if (currentPlayer.getActionTree().isTurnEnded()) {
             ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
             Ammo allAmmo = currentPlayer.getResources().getAllAmmo();
             if (Checks.canReload(reloadableWeapon, allAmmo)) {
@@ -520,9 +520,9 @@ public class Model {
             } else {
                 endTurn();
             }
-        } else {
+        } else {*/
             chooseAction(currentPlayer.getPlayerColor());
-        }
+        //}
     }
 
     public void endTurn() { //todo riempire metodo
@@ -728,11 +728,19 @@ public class Model {
             if(powerUp.getAmmo().toString().equals("YELLOW"))
                 powerUpYELLOW++;
         }
+        //todo scarta i powerup
+        for(PowerUp powerUp : getCurrent().getSelectedPaymentPowerUps()){
+            currentPlayer.getResources().removePowerUp(powerUp);
+            getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
+        }
         fireRED = fireRED-powerUpRED;
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
         currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
         current.resetCurrent();
+        updateAction();
+        chooseAction(currentPlayer.getPlayerColor());
+
         //todo richiedi azione dopo aver ricaricato;
     }
 
