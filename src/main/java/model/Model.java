@@ -735,7 +735,7 @@ public class Model {
             if(powerUp.getAmmo().toString().equals("YELLOW"))
                 powerUpYELLOW++;
         }
-        //todo scarta i powerup
+
         for(PowerUp powerUp : getCurrent().getSelectedPaymentPowerUps()){
             currentPlayer.getResources().removePowerUp(powerUp);
             getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
@@ -745,8 +745,8 @@ public class Model {
         fireYELLOW = fireYELLOW-powerUpYELLOW;
         currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
         current.resetCurrent();
+        //todo scarta arma
         updateAction();
-        chooseAction(currentPlayer.getPlayerColor());
 
         //todo richiedi azione dopo aver ricaricato;
     }

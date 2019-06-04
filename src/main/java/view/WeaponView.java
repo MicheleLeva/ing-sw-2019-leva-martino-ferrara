@@ -127,6 +127,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
             choices.add(selection);
             counter--;
         }
+        System.out.println("non crashare plz");
         Event event = new PickUpPaymentEvent(view, choices);
         notify(event);
     }

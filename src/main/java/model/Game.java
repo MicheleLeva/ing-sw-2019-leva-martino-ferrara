@@ -71,7 +71,7 @@ public class Game implements Runnable{
     }
 
     public void run(){
-        for (Player player : model.getAllPlayers()) {
+        /*for (Player player : model.getAllPlayers()) {
             model.mapVote(player);
 
             isMapTimerOn = true;
@@ -84,8 +84,9 @@ public class Game implements Runnable{
                     mapTimer.cancel();
                 }
             }
-        }
-        model.setGameBoard(getMapVote());
+        }*/
+        //model.setGameBoard(getMapVote());
+        model.setGameBoard(1);
         while(!model.getTurnManager().isGameOver()){
             Turn currentTurn = new Turn(model,model.getTurnManager().isFrenzy());
             currentTurn.notifyTurn();

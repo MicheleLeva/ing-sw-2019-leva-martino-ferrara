@@ -227,7 +227,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     public void addSelectedPaymentPowerUps(Player currentPlayer, ArrayList<Integer> selectedPowerUps){
         ArrayList<PowerUp> available = getModel().getCurrent().getAvailablePaymentPowerUps();
         for(int i : selectedPowerUps){
-            getModel().getCurrent().addSelectedPaymentPowerUps(getModel().getCurrent().getAvailablePaymentPowerUps().get(i));
+            getModel().getCurrent().addSelectedPaymentPowerUps(available.get(i-1));
         }
     }
 
@@ -263,8 +263,9 @@ public class WeaponController extends Controller implements WeaponObserver {
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String error;
 
-
+        System.out.println("Inizio update");
         for(int i : event.getSelectedPowerUps()){
+            System.out.println("for update");
             if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
                 error = "Invalid input.\n";
                 event.getView().reportError(error);
