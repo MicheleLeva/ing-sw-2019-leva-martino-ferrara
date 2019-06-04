@@ -55,6 +55,10 @@ public class RemoteWeaponHandler extends WeaponNotify implements Observer<Event>
                 PickUpPaymentMessage pickUpPaymentMessage = new PickUpPaymentMessage(inputs[1], Integer.parseInt(inputs[2]));
                 listeners.get(playerColor).update(pickUpPaymentMessage);
                 break;
+            case "ShowPickUpWeaponsMessage":
+                ShowPickUpWeaponsMessage showPickUpWeaponsMessage = new ShowPickUpWeaponsMessage(inputs[1]);
+                listeners.get(playerColor).update(showPickUpWeaponsMessage);
+                break;
             default:
                 System.out.println("A message is in the wrong handler:\n" + inputs[0] + ": " + inputs[1]);
 

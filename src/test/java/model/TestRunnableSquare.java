@@ -17,7 +17,7 @@ public class TestRunnableSquare {
 
     @Before
     public void initMap(){
-        map = new Map(3);
+        map = new Map(1);
         firstSquare = map.getSquareFromCoordinates(0, 0);
 
     }

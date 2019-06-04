@@ -23,7 +23,7 @@ public class TestMap {
        map = new Map(5);
         map = new Map(6);
         map = new Map(7);*/
-        map = new Map(3);
+        map = new Map(1);
     }
 
 

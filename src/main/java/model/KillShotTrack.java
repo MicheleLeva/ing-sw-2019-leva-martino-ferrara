@@ -37,7 +37,6 @@ public class KillShotTrack {
 
         if(lastIndex >= killShotTrack.length){
             model.getTurnManager().setFrenzy(true);
-            model.getTurnManager().setFrenzyActivated(true);
             killShotTrack[killShotTrack.length - 1].addToken();
         }
     }

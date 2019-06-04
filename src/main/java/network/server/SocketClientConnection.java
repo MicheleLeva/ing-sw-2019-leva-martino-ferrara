@@ -42,7 +42,7 @@ public class SocketClientConnection extends Observable<String> implements Client
             if (id != 0 && server.checkAfk(playerName)) {
                     int index = server.getPlayerNames().get(id).indexOf(playerName);
                     this.register(server.getPlayerViews().get(id).get(index));
-                    server.reconnectPlayer(this, id, index);
+                    server.reconnectPlayer(this, id, index, playerName);
 
             } else {
                 server.addPlayer(this, playerName);

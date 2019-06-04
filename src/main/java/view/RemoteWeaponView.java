@@ -49,6 +49,10 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 ChooseWeaponSquareEvent chooseWeaponSquareEvent = new ChooseWeaponSquareEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(chooseWeaponSquareEvent));
                 break;
+            case "ChoosePickUpWeaponEvent":
+                ChoosePickUpWeaponEvent choosePickUpWeaponEvent = new ChoosePickUpWeaponEvent(view, Integer.parseInt(inputs[1]));
+                listeners.forEach(l -> l.update(choosePickUpWeaponEvent));
+                break;
         }
     }
 

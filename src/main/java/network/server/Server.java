@@ -63,9 +63,15 @@ public class Server {
         isServerActive = serverActive;
     }
 
-    public synchronized void reconnectPlayer(ClientConnection c, int pool, int index){
+    public synchronized void reconnectPlayer(ClientConnection c, int pool, int index, String name){
         playingPool.get(pool).remove(index);
         playingPool.get(pool).add(index, c);
+        for (Player player : modelMap.get(pool).getAllPlayers()){
+            if (player.getPlayerName().equals(name) && player.isAfk()){
+                player.setAfk(false);
+            }
+        }
+
     }
 
     /*

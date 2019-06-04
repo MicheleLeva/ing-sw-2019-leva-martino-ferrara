@@ -1,20 +1,26 @@
 package model;
 
+import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class TestGameBoard {
 
     private GameBoard gameBoardTest;
+    private Model modelTest;
+    private ArrayList<Player> players;
 
 
     @Before
     public void initGameBoard(){
-        gameBoardTest = new GameBoard(3,8);
+        modelTest = new Model(players, 8);
+        gameBoardTest = new GameBoard(3,8, modelTest);
     }
 
     @Test

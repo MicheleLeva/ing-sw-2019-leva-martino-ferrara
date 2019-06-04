@@ -1,18 +1,24 @@
 package model;
 
+import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 public class TestKillShotTrack {
 
     private KillShotTrack killShotTrackTest;
+    private Model modelTest;
+    private ArrayList<Player> players;
     @Before
     public void initKillShotTrack(){
-        killShotTrackTest = new KillShotTrack(8);
+        modelTest = new Model(players, 8);
+        killShotTrackTest = new KillShotTrack(8, modelTest);
 
     }
 
