@@ -1,9 +1,6 @@
 package model.notifiers;
 
-import model.exchanges.messages.ChooseActionMessage;
-import model.exchanges.messages.GenericMessage;
-import model.exchanges.messages.PlayerMessage;
-import model.exchanges.messages.SetAfkMessage;
+import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import utils.ViewObservable;
 
@@ -23,6 +20,18 @@ public class ActionNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage messageToOthers = new GenericMessage(toOthers);
         notify(playerMessage, playerColor);
         notifyOthers(messageToOthers, playerColor);
+    }
+
+    public void mapVote(PlayerColor playerColor){
+        String toPlayer = "In which map would you like to play?\n";
+        toPlayer = toPlayer + "Map 1: suggested for 3 players\n";
+        toPlayer = toPlayer + "Map 2: suggested for 4 players\n";
+        toPlayer = toPlayer + "Map 3: suggested for 4 players\n";
+        toPlayer = toPlayer + "Map 4: suggested for 5 players\n";
+        toPlayer = toPlayer + "Insert the number of the chosen map:";
+
+        PlayerMessage playerMessage = new VoteMapMessage(toPlayer);
+        notify(playerMessage, playerColor);
     }
 }
 

@@ -43,6 +43,22 @@ public class RemoteWeaponHandler extends WeaponNotify implements Observer<Event>
                 ChooseWeaponSquareMessage chooseWeaponSquareMessage = new ChooseWeaponSquareMessage(inputs[1]);
                 listeners.get(playerColor).update(chooseWeaponSquareMessage);
                 break;
+            case "WeaponPaymentMessage":
+                WeaponPaymentMessage weaponPaymentMessage = new WeaponPaymentMessage(inputs[1], Integer.parseInt(inputs[2]));
+                listeners.get(playerColor).update(weaponPaymentMessage);
+                break;
+            case "ReloadPaymentMessage":
+                ReloadPaymentMessage reloadPaymentMessage = new ReloadPaymentMessage(inputs[1], Integer.parseInt(inputs[2]));
+                listeners.get(playerColor).update(reloadPaymentMessage);
+                break;
+            case "PickUpPaymentMessage":
+                PickUpPaymentMessage pickUpPaymentMessage = new PickUpPaymentMessage(inputs[1], Integer.parseInt(inputs[2]));
+                listeners.get(playerColor).update(pickUpPaymentMessage);
+                break;
+            default:
+                System.out.println("A message is in the wrong handler:\n" + inputs[0] + ": " + inputs[1]);
+
+
         }
     }
 

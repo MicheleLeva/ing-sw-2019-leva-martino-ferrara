@@ -11,4 +11,9 @@ public class PickUpPaymentMessage extends PlayerMessage {
     public int getSize(){
         return this.size;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "," + getMessage() + "," + getSize();
+    }
 }

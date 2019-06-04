@@ -24,18 +24,9 @@ public class Decks {
     private Model model;
     private Random rand = new Random();
 
-    private static Decks decksInstance = null;
+    public Decks(Model model) {
+        this.model = model;
 
-
-    public static Decks getDecksInstance() {
-        if (decksInstance == null)
-            decksInstance = new Decks();
-        return decksInstance;
-
-    }
-
-
-    public Decks() {
         weaponsDeck = new ArrayList<>();
         powerUpDeck = new ArrayList<>();
         ammoCardDeck = new ArrayList<>();

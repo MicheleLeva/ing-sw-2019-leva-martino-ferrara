@@ -28,17 +28,17 @@ public class Server {
 
     private  ExecutorService games = Executors.newFixedThreadPool( 10);
 
-    private Map<String, ClientConnection> waitingConnection = new HashMap<>();
+    private LinkedHashMap<String, ClientConnection> waitingConnection = new LinkedHashMap<>(); //Players waiting for a game
 
-    private Map<Integer, ArrayList<ClientConnection>> playingPool = new HashMap<>(); //più tavoli di giocatori
+    private LinkedHashMap<Integer, ArrayList<ClientConnection>> playingPool = new LinkedHashMap<>(); //Players currently playing
 
-    private Map<Integer, ArrayList<String>> playerNames = new HashMap<>();
+    private LinkedHashMap<Integer, Model> modelMap = new LinkedHashMap<>(); //List of models for game reconnection
 
-    private Map<Integer, ArrayList<RemoteView>> playerViews = new HashMap<>();
+    private LinkedHashMap<Integer, ArrayList<String>> playerNames = new LinkedHashMap<>(); //List of names for game reconnection
+
+    private LinkedHashMap<Integer, ArrayList<RemoteView>> playerViews = new LinkedHashMap<>(); //List of views for game reconnection
 
     private int lastID;
-
-    private ArrayList<ClientConnection> playingConnection = new ArrayList<>(); //singolo tavolo di giocatori
 
     private boolean isTimerOn;
 
@@ -87,12 +87,25 @@ public class Server {
     }
 
     public int nameAvailable(String name){
-        for (Map.Entry<Integer, ArrayList<String>> entry : playerNames.entrySet()){
-            if (entry.getValue().contains(name)){
-                return entry.getKey();
+        for (Map.Entry<Integer, Model> entry : modelMap.entrySet()){
+            for (Player player : entry.getValue().getAllPlayers()){
+                if (player.getPlayerName().equals(name)){
+                    return entry.getKey();
+                }
             }
         }
         return 0;
+    }
+
+    public boolean checkAfk(String name){
+        for (Map.Entry<Integer, Model> entry : modelMap.entrySet()){
+            for (Player player : entry.getValue().getAllPlayers()){
+                if (player.getPlayerName().equals(name) && player.isAfk()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public synchronized void deregisterPool(int id){
@@ -114,7 +127,7 @@ public class Server {
         checkConnected();
     }
 
-    private void checkConnected() { //todo sistemare, il gioco non parte!
+    private void checkConnected() {
         if (waitingConnection.size() > 2 && !isTimerOn) {
             new Thread(new Runnable() {
                 @Override
@@ -197,7 +210,9 @@ public class Server {
 
         playerViews.put(lastID, remoteViews);
 
-        Model model = new Model(players, 8);
+        Model model = new Model(players, 8); //todo importare il numero di skulls da json
+
+        modelMap.put(lastID, model);
 
         for (RemoteView v : remoteViews){
             model.getGameNotifier().register(v.getPlayerColor(), v.getRemoteGameView());

@@ -10,8 +10,9 @@ public class KillShotTrack {
     private KillShotCell[] killShotTrack;
     private int lastIndex;
     private final String SKULL_CLI = "@";
+    private Model model;
 
-    public KillShotTrack(int size){
+    public KillShotTrack(int size, Model model){
             killShotTrack = new KillShotCell[size];
 
             lastIndex = 0;
@@ -19,6 +20,8 @@ public class KillShotTrack {
             for (int i = 0; i < size; i++) {
                 killShotTrack[i] = new KillShotCell();
             }
+
+            this.model = model;
     }
 
     public KillShotCell[] getKillShotTrack(){
@@ -33,7 +36,8 @@ public class KillShotTrack {
         }
 
         if(lastIndex >= killShotTrack.length){
-            //todo setta frenzy turn
+            model.getTurnManager().setFrenzy(true);
+            model.getTurnManager().setFrenzyActivated(true);
             killShotTrack[killShotTrack.length - 1].addToken();
         }
     }

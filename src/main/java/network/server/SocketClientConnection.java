@@ -33,19 +33,17 @@ public class SocketClientConnection extends Observable<String> implements Client
     @Override
     public void run(){
         Scanner in;
-        String name;
         try{
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
             String read = in.nextLine();
             playerName = read;
             int id = server.nameAvailable(playerName);
-            if (id != 0) {
-                //todo controllare che il giocatore con lo stesso nome sia afk
-                //conviene salvare sul server il model direttamente invece dei playernames
-                int index = server.getPlayerNames().get(id).indexOf(playerName);
-                this.register(server.getPlayerViews().get(id).get(index));
-                server.reconnectPlayer(this, id, index);
+            if (id != 0 && server.checkAfk(playerName)) {
+                    int index = server.getPlayerNames().get(id).indexOf(playerName);
+                    this.register(server.getPlayerViews().get(id).get(index));
+                    server.reconnectPlayer(this, id, index);
+
             } else {
                 server.addPlayer(this, playerName);
             }

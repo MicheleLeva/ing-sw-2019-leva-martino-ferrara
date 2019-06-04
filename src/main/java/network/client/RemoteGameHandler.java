@@ -33,6 +33,8 @@ public class RemoteGameHandler extends GameNotify implements Observer<Event> {
                 ShootMessage shootMessage = new ShootMessage(inputs[1]);
                 listeners.get(playerColor).update(shootMessage);
                 break;
+            default:
+                System.out.println("A message is in the wrong handler:\n" + inputs[0] + ": " + inputs[1]);
         }
     }
 
