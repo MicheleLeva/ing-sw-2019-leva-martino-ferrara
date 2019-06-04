@@ -120,6 +120,18 @@ public class ActionTree {
     }
     //cheks whether or not the input move is valid
     public boolean checkAction(char move){
+        if(move == KeyMap.getEnd()){
+            return true;
+        }
+
+        if(move == KeyMap.getUsePowerUp()) {
+            return true;
+        }
+
+
+        if(isTurnEnded()) {
+            return (move == KeyMap.getReload()); //TODO frenzy
+        }
 
         List<Node<String>> children = lastActionPerformed.getChildren();
 

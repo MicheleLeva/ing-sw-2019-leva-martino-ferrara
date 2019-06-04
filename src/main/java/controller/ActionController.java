@@ -41,7 +41,7 @@ public class ActionController extends Controller implements ActionObserver {
 
         Player player = getModel().getTurnManager().getPlayerFromColor(playerColor); //giocatore che ha mosso
 
-        if(!player.getActionTree().checkAction(move) || move != KeyMap.getUsePowerUp() || move != KeyMap.getEnd()){
+        if(!player.getActionTree().checkAction(move)){
             String error = "You can't perform this move now.\n";
             view.reportError(error);
             getModel().chooseAction(playerColor);
