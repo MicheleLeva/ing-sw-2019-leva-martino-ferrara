@@ -34,6 +34,8 @@ public class TestActionTree {
         assertEquals(1,third.size());
         assertEquals("run",third.get(0).getData());
 
-        assertTrue(third.get(0).getChildren().isEmpty());
+
+
+
     }
 }
