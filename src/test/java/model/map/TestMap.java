@@ -103,7 +103,7 @@ public class TestMap {
        assertEquals(map.getSpawnSquare(SquareColor.BLUE),mapTest[0][2]);
        assertEquals(map.getSpawnSquare(SquareColor.YELLOW),mapTest[2][3]);
 
-   }
+    }
 
 
    @Test(expected = java.io.FileNotFoundException.class)

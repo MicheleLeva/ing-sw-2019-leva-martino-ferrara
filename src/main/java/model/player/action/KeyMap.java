@@ -171,4 +171,34 @@ public class KeyMap {
         return (move == end);
     }
 
+    public static char getShoot()
+    {
+        return shoot;
+    }
+    public static char getMoveUp()
+    {
+        return moveUp;
+    }
+    public static char getMoveDown()
+    {
+        return moveDown;
+    }
+    public static char getMoveRight()
+    {
+        return moveRight;
+    }
+    public static char getMoveLeft()
+    {
+        return moveLeft;
+    }
+    public static char getGrab()
+    {
+        return grab;
+    }
+    public static char getReload()
+    {
+        return reload;
+    }
+
+
 }

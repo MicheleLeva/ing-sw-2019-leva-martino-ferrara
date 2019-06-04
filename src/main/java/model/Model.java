@@ -1016,6 +1016,17 @@ public class Model {
         getPowerUpNotifier().askTagbackGrenade(playerColor, opponentColor, stringBuilder.toString());
     }
 
+    public void showPickUpWeapons(ArrayList<Weapon> payableWeapons,PlayerColor playerColor){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < payableWeapons.size(); i++){
+            stringBuilder.append(i+1 +". ");
+            stringBuilder.append(payableWeapons.get(i).getWeaponName());
+            stringBuilder.append(" ");
+            stringBuilder.append(payableWeapons.get(i).getPickUpCost().toString());
+            stringBuilder.append("\n");
+        }
+        weaponNotifier.showPickUpWeapons(playerColor,stringBuilder.toString());
+    }
 }
 
 

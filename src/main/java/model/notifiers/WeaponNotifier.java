@@ -94,4 +94,9 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         notify(playerMessage, playerColor);
     }
 
+    public void showPickUpWeapons(PlayerColor playerColor,String pickUpWeapons){
+        PlayerMessage playerMessage = new ShowPickUpWeaponsMessage(pickUpWeapons);
+        notify(playerMessage,playerColor);
+
+    }
 }

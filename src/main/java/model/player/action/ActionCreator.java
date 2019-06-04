@@ -1,6 +1,7 @@
 package model.player.action;
 
 public class ActionCreator {
+    //this static method returns the specific action based upon the player's input
     public static Action createAction(char move) {
         if (KeyMap.isShoot(move)){
             return new Shoot();

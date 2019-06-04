@@ -282,7 +282,19 @@ public class WeaponController extends Controller implements WeaponObserver {
             getModel().payPickUp(currentPlayer, weapon);
         }
     }
-
+    @Override
+    public void update(ChoosePickUpWeaponEvent event){
+        int input = event.getInput();
+        if(input < 1 || input > getModel().getCurrent().getPickUpableWeapon().size()){
+            String error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().showPickUpWeapons(getModel().getCurrent().getPickUpableWeapon(),event.getPlayerColor());
+            return;
+        }
+        Weapon selectedWeapon = getModel().getCurrent().getPickUpableWeapon().get(input-1);
+        getModel().getCurrent().setSelectedPickUpWeapon(selectedWeapon);
+        getModel().askPickUpPayment(getModel().getPlayer(event.getPlayerColor()),selectedWeapon);
+    }
     public void checkBaseTargets(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
         for (Integer target : event.getSelectedTargets()) {

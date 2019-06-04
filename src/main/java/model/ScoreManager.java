@@ -9,14 +9,15 @@ import java.util.*;
 public class ScoreManager {
 
     private final Model model;
-
+    //ranking of the player
     private ArrayList<PlayerColor> playerRank = new ArrayList<>();
 
-    private final int frenzyKillShotPoints[] = {8,6,4,2,1};
+    private static final int frenzyKillShotPoints[] = {8,6,4,2,1};
 
     public ScoreManager(Model model){
 
         this.model = model;
+
         for(Player player : model.getTurnManager().getAllPlayers()){
             playerRank.add(player.getPlayerColor());
         }

@@ -34,6 +34,7 @@ public class Current {
     private int alternativeCounter = 0;
     private ArrayList<Square> availableWeaponSquares =  new ArrayList<>();
     private Square selectedWeaponSquare = null;
+    private Weapon selectedPickUpWeapon = null;
     private ArrayList<Player> selectedBaseTargets = new ArrayList<>();
     private ArrayList<Player> availableBaseTargets = new ArrayList<>();
     private ArrayList<Player> selectedAlternativeTargets = new ArrayList<>();
@@ -112,6 +113,7 @@ public class Current {
     private List<WeaponTreeNode<FireMode>> availableFireModes = new ArrayList<>();
 
     private ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
+    private ArrayList<Weapon> pickUpableWeapon = new ArrayList<>();
 
     public ArrayList<Player> getOpponent() {
         return opponent;
@@ -161,7 +163,9 @@ public class Current {
     public void setSelectedBaseTargets(ArrayList<Player> selectedBaseTargets) {
         this.selectedBaseTargets = selectedBaseTargets;
     }
-
+    public void setSelectedPickUpWeapon(Weapon selectedPickUpWeapon){
+        this.selectedPickUpWeapon = selectedPickUpWeapon;
+    }
     public ArrayList<Player> getAvailableBaseTargets() {
         return availableBaseTargets;
     }
@@ -173,7 +177,7 @@ public class Current {
     public ArrayList<Player> getSelectedAlternativeTargets() {
         return selectedAlternativeTargets;
     }
-
+    public Weapon getSelectedPickUpWeapon(){return selectedPickUpWeapon;}
     public void setSelectedAlternativeTargets(ArrayList<Player> selectedAlternativeTargets) {
         this.selectedAlternativeTargets = selectedAlternativeTargets;
     }
@@ -205,11 +209,11 @@ public class Current {
     public ArrayList<Weapon> getReloadableWeapon(){
         return reloadableWeapon;
     }
-
+    public ArrayList<Weapon> getPickUpableWeapon(){return pickUpableWeapon;}
     public void setReloadableWeapon(ArrayList<Weapon> reloadableWeapon){
         this.reloadableWeapon = reloadableWeapon;
     }
-
+    public void setPickUpableWeapon(ArrayList<Weapon> pickUpableWeapon){this.pickUpableWeapon = pickUpableWeapon;}
     public ArrayList<Player> getAvailableAlternativeTargets() {
         return availableAlternativeTargets;
     }

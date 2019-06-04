@@ -22,6 +22,7 @@ public class Square {
         sides = new HashMap<Direction,Square>();
         squareRow = row;
         squareColumn = column;
+        weapons = new Weapon[3];
     }
 
     public void setID(int ID){

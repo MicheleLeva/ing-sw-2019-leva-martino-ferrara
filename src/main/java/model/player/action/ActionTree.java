@@ -11,23 +11,28 @@ import java.io.IOException;
 import java.util.List;
 
 public class ActionTree {
-    //Identificatore dell'albero
-    //1: albero normale
-    //2: albero con una azione potenziata
-    //3: albero con due azioni potenziate
-    //4: albero frenesia per giocatori dopo il 1°
-    //5: albero frenesia per giocatori prima del 1°
+    //Tree ID:
+    //1: standard tree
+    //2: tree with one powered action
+    //3: tree with two powered actions
+    //4: frenzy tree for players whose turn comes after the first player's one
+    //5: frenzy tree for players whose turn comes before the first player's one
     private final int ID;
-
+    //JSON Path used to read the tree
     private String path = null;
-    private Node<String> root = null; //Radice dell'albero
-    private Node<String> lastActionPerformed = null; //Ultima azione inserita
-    private Node<String> lastAction = null; //Ultima azione inserita, ma non ancora performata
-
+    //Tree's root
+    private Node<String> root = null;
+    //Last action selected and performed
+    private Node<String> lastActionPerformed = null;
+    //Last action selected but not yet performed
+    private Node<String> lastAction = null;
+    //number of total action available for the player's turn
     private int actionCounter;
+    //number of action already perfomed by the player in his turn
     private int performedAction;
-    private boolean isMoveEnded = true;
 
+    private boolean isMoveEnded = true;
+    //the builder takes the ID as its input and builds the corresponding action tree
     public ActionTree(int ID){
         this.ID = ID;
         performedAction = 0;
@@ -35,7 +40,7 @@ public class ActionTree {
         parseActionTree();
     }
 
-    //Imposta la destinazione del file JSON
+    //set JSON path
     private void init(){
         switch (ID)
         {
@@ -65,7 +70,7 @@ public class ActionTree {
                 break;
         }
     }
-
+    //helper method used to build the tree
     private void buildTree(Node<String> parent , JSONObject obj){
         JSONArray array = (JSONArray) obj.get("child");
 
@@ -81,7 +86,7 @@ public class ActionTree {
             }
         }
     }
-
+    //builds the action tree
     private void parseActionTree(){
         JSONParser parser = new JSONParser();
 
@@ -109,14 +114,14 @@ public class ActionTree {
             System.out.println(e);
         }
     }
-
+    //returns the tree's root
     public Node<String> getRoot(){
         return root;
     }
-    //Verifica che la mossa sia possibile
+    //cheks whether or not the input move is valid
     public boolean checkAction(char move){
 
-        List<Node<String>> children = lastActionPerformed.getChildren(); //Andrà messo lastActionPerformed al posto di LastAction
+        List<Node<String>> children = lastActionPerformed.getChildren();
 
         for (int i = 0; i < children.size(); i++){
             String type = children.get(i).getData();
@@ -128,7 +133,7 @@ public class ActionTree {
 
         return false;
     }
-    //Se l'azione è stata eseguita, l'albero si aggiorna
+    //after executing the action, the tree updates
     public void updateAction(){
         if (isActionEnded()){
             endAction();
@@ -146,23 +151,50 @@ public class ActionTree {
     public boolean isMoveEnded() {
         return isMoveEnded;
     }
-
-    public String availableAction(){ //Modificare per mostrare tutte le combinazioni
-        String result = "Your available action: \n";
-        result = result +lastActionPerformed.showChildren();
+    //returns a string containing all the possible actions for the player
+    public String availableAction(){
+        StringBuilder result = new StringBuilder();
+        result .append("Your available actions: \n");
+        result.append(availableAction(lastActionPerformed));
+        result.append("Left actions: " +(actionCounter - performedAction) +"\n");
+        return result.toString();
+        /*result = result +lastActionPerformed.showChildren();
         result = result +"Action left: " +(actionCounter-performedAction) +"\n";
+        return result;*/
+    }
+    //helper recursive method called passing lastActionPerformed node
+    private String availableAction(Node<String> node)
+    {
+        if(node.getChildren().isEmpty()){
+            return node.getData();
+        }
+        String result = "";
+        for (int i = 0; i < node.getChildren().size(); i++)
+        {
+            if(!node.getData().equals("root")) {
+                result = result + node.getData();
+                result = result + " " + availableAction(node.getChildren().get(i));
+
+            }
+            else result = result + availableAction(node.getChildren().get(i));
+
+            result = result +"|";
+        }
+
+
+
         return result;
     }
-
+    //returns true if the player has walked the tree to a leaf
     public boolean isActionEnded(){
         return lastActionPerformed.getChildren().isEmpty();
     }
-
+    //resets action
     public void resetAction(){
         performedAction = 0;
         resetLastAction();
     }
-
+    //returns true if the player has done all the actions
     public boolean isTurnEnded(){
         return (performedAction == actionCounter);
     }
@@ -170,16 +202,16 @@ public class ActionTree {
     private void resetLastAction(){
         lastAction = lastActionPerformed = root;
     }
-
+    //called when the player has finished the whole action
     public void endAction(){
         performedAction++;
         resetLastAction();
     }
-
+    //returns the tree's ID
     public int getID(){
         return  ID;
     }
-
+    //returns the last action
     public Node<String> getLastAction() {
         return lastAction;
     }

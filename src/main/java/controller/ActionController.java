@@ -1,12 +1,9 @@
 package controller;
 
 import model.Model;
+import model.adrenaline_exceptions.*;
 import model.exchanges.events.QuitAfkEvent;
 import model.turn.TurnManager;
-import model.adrenaline_exceptions.EmptySquareException;
-import model.adrenaline_exceptions.MaxAmmoException;
-import model.adrenaline_exceptions.NoPowerUpException;
-import model.adrenaline_exceptions.WallException;
 import model.exchanges.events.ActionEvent;
 import model.player.action.Action;
 import model.player.action.ActionCreator;
@@ -56,7 +53,7 @@ public class ActionController extends Controller implements ActionObserver {
             action.perform(getModel() , playerColor);
         }
 
-        catch(EmptySquareException | WallException | NoPowerUpException e){
+        catch(EmptySquareException | WallException | NoPowerUpException | CannotPayException e){
             view.reportError(e.getMessage());
             getModel().chooseAction(playerColor);
         }
