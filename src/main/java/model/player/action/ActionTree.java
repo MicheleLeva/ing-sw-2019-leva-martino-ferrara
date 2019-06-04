@@ -135,12 +135,15 @@ public class ActionTree {
     }
     //after executing the action, the tree updates
     public void updateAction(){
+
+        lastActionPerformed = lastAction;
+
         if (isActionEnded()){
             endAction();
         }
-        else{
+        /*else{
             lastActionPerformed = lastAction;
-        }
+        }*/
         setMoveEnded(true);
     }
 
@@ -154,13 +157,16 @@ public class ActionTree {
     //returns a string containing all the possible actions for the player
     public String availableAction(){
         StringBuilder result = new StringBuilder();
-        result .append("Your available actions: \n");
-        result.append(availableAction(lastActionPerformed));
-        result.append("Left actions: " +(actionCounter - performedAction) +"\n");
+        result.append("Your available actions: \n");
+        if(!isTurnEnded()) {
+            result.append(availableAction(lastActionPerformed));
+            result.append("Left actions: " + (actionCounter - performedAction) + "\n");
+        }
+        else {
+            result.append("|Reload|\n");
+        }
+
         return result.toString();
-        /*result = result +lastActionPerformed.showChildren();
-        result = result +"Action left: " +(actionCounter-performedAction) +"\n";
-        return result;*/
     }
     //helper recursive method called passing lastActionPerformed node
     private String availableAction(Node<String> node)
