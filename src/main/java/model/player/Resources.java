@@ -88,14 +88,10 @@ public class Resources {
 
     public Ammo getAllAmmo(){
 
-        System.out.println("availableammo"+availableAmmo);
         Ammo allAmmo = new Ammo(availableAmmo.getRed(),availableAmmo.getBlue(),availableAmmo.getYellow());
         for (int i = 0; i < powerUp.size(); i++){
-            System.out.println("powerupcost"+powerUp.get(i).getAmmo());
             allAmmo.addAmmo(powerUp.get(i).getAmmo());
         }
-        System.out.println("allammo"+allAmmo);
-
         return allAmmo;
     }
 
@@ -111,9 +107,9 @@ public class Resources {
     }
 
     public void removeFromAvailableAmmo(int red, int blue, int yellow){
-        availableAmmo.setRed(-red);
-        availableAmmo.setBlue(-blue);
-        availableAmmo.setYellow(-yellow);
+        availableAmmo.setRed(availableAmmo.getRed()-red);
+        availableAmmo.setBlue(availableAmmo.getBlue()-blue);
+        availableAmmo.setYellow(availableAmmo.getYellow()-yellow);
     }
 
     public void removeFromAvailableAmmo(Ammo ammo){
@@ -153,14 +149,14 @@ public class Resources {
         return result;
     }
 
-    public String showPowerUp(){
+    /*public String showPowerUp(){
         String result = "";
         for (int i = 0; i < powerUp.size(); i++){
             PowerUp currentPowerUp = powerUp.get(i);
             result = result +currentPowerUp.toString() +" Ammo: " +currentPowerUp.getAmmo().toString() +".\n";
         }
         return result;
-    }
+    }*/
 
     public String printUnloadedWeapons(){
         StringBuilder stringBuilder = new StringBuilder();

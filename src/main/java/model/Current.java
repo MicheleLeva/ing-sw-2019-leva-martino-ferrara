@@ -78,9 +78,9 @@ public class Current {
     private boolean powerUpDiscard = false;
     private boolean powerUpControl = false;
 
-    public Current(){
-        resetCurrent();
-    }
+    //public Current(){
+    //    resetCurrent();
+    //}
 
     public boolean isPowerUpControl(){
         return this.powerUpControl;
@@ -127,7 +127,7 @@ public class Current {
         this.opponent = opponent;
     }
 
-    public void resetCurrent(){ //resetta
+    public void resetCurrent(){  new Current();
          }
 
     public ArrayList<Square> getSquare(){

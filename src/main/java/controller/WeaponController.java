@@ -260,7 +260,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     @Override
     public void update(PickUpPaymentEvent event){
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
-        Weapon weapon = getModel().getCurrent().getSelectedWeapon();
+        Weapon weapon = getModel().getCurrent().getSelectedPickUpWeapon();
         String error;
 
         System.out.println("Inizio update");

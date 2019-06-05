@@ -724,7 +724,7 @@ public class Model {
         int powerUpRED = 0;
         int powerUpBLUE = 0;
         int powerUpYELLOW = 0;
-        Ammo fireModeCost = weapon.getBaseCost();
+        Ammo fireModeCost = weapon.getPickUpCost();
         int fireRED = fireModeCost.getRed();
         int fireBLUE = fireModeCost.getBlue();
         int fireYELLOW = fireModeCost.getYellow();
@@ -748,9 +748,24 @@ public class Model {
         fireRED = fireRED-powerUpRED;
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
-        currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
-        current.resetCurrent();
+        System.out.println("allammo1"+currentPlayer.getResources().getAllAmmo());
+        Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
+        System.out.println("da pagare"+ammo);
+        System.out.println("allammo2"+currentPlayer.getResources().getAllAmmo());
+        currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
+        System.out.println("allammo3"+currentPlayer.getResources().getAllAmmo());
+
         //todo scarta arma
+        for(Weapon spawnWeapon : currentPlayer.getPosition().getWeapon()) {
+            if(spawnWeapon == getCurrent().getSelectedPickUpWeapon()) {
+                currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
+                for(int i = 0; i < 3; i++){
+                    if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
+                        currentPlayer.getPosition().getWeapon()[i] = null;
+                }
+            }
+        }
+        current.resetCurrent();
         updateAction();
 
         //todo richiedi azione dopo aver ricaricato;

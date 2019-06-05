@@ -38,6 +38,7 @@ public abstract class Weapon extends Card {
         this.baseTargetsNumber = baseTargetsNumber;
         this.model = model;
         this.pickUpCost = pickUpCost;
+        this.isReloaded = true;
         //todo assegnare weapontree
     }
 

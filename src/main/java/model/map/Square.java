@@ -104,4 +104,5 @@ public class Square {
     public void removeAmmoCard(){
         ammo = null;
     }
+
 }

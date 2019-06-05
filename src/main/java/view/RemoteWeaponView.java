@@ -63,10 +63,12 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 break;
             case "PickUpPaymentEvent":
                 ArrayList<Integer> selectedChoices = new ArrayList<>();
+                System.out.println("siamo nella remoteview1");
                 for (int i = 1; i<= inputs.length; i++){
+                    System.out.println("siamo nella remoteview2");
                     selectedChoices.add(Integer.parseInt(inputs[i]));
                 }
-                System.out.println("siamo nella remoteview");
+                System.out.println("siamo nella remoteview3");
                 PickUpPaymentEvent pickUpPaymentEvent = new PickUpPaymentEvent(view, selectedChoices);
                 listeners.forEach(l -> l.update(pickUpPaymentEvent));
         }
