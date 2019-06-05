@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TestMap {
     private Map map;
@@ -102,6 +103,8 @@ public class TestMap {
        assertEquals(map.getSpawnSquare(SquareColor.RED),mapTest[1][0]);
        assertEquals(map.getSpawnSquare(SquareColor.BLUE),mapTest[0][2]);
        assertEquals(map.getSpawnSquare(SquareColor.YELLOW),mapTest[2][3]);
+       ArrayList<Integer> allIDs = map.getAllIDs();
+       System.out.println(allIDs);
 
     }
 

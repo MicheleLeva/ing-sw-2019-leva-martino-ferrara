@@ -20,4 +20,6 @@ public interface WeaponObserver {
     void update(PickUpPaymentEvent event);
 
     void update(ChoosePickUpWeaponEvent event);
+
+    void update(WeaponSwapEvent event);
 }

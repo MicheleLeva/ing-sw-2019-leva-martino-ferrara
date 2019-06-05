@@ -264,8 +264,11 @@ public class WeaponController extends Controller implements WeaponObserver {
         String error;
 
         System.out.println("Inizio update");
+        System.out.println(event.getSelectedPowerUps());
+
         for(int i : event.getSelectedPowerUps()){
             System.out.println("for update");
+            System.out.print(i);
             if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
                 error = "Invalid input.\n";
                 event.getView().reportError(error);
@@ -299,6 +302,19 @@ public class WeaponController extends Controller implements WeaponObserver {
         Weapon selectedWeapon = getModel().getCurrent().getPickUpableWeapon().get(input-1);
         getModel().getCurrent().setSelectedPickUpWeapon(selectedWeapon);
         getModel().askPickUpPayment(getModel().getPlayer(event.getPlayerColor()),selectedWeapon);
+    }
+
+    @Override
+    public void update(WeaponSwapEvent event){
+        int input = event.getInput();
+        if(input < 1 || input > 3){
+            String error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().getWeaponNotifier().askWeaponSwap(getModel().getPlayer(event.getPlayerColor()));
+            return;
+        }
+        getModel().swapPickUpWeapon(getModel().getPlayer(event.getPlayerColor()),input);
+
     }
     public void checkBaseTargets(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -399,5 +415,6 @@ public class WeaponController extends Controller implements WeaponObserver {
         getModel().getCurrent().setSelectedOptionalTargets2(selectedPlayers);
         ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
     }
+
 
 }

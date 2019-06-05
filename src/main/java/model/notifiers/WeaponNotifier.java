@@ -1,8 +1,10 @@
 package model.notifiers;
 
 import model.cards.powerups.PowerUp;
+import model.cards.weapons.Weapon;
 import model.exchanges.messages.*;
 import model.map.Square;
+import model.player.Player;
 import model.player.PlayerColor;
 import utils.ViewObservable;
 
@@ -85,7 +87,7 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
 
     public void askPickUpPayment(PlayerColor playerColor, ArrayList<PowerUp> powerUps){
         int size = powerUps.size();
-        String message = "Select the power-ups to pay with :  ";
+        String message = "Select the power-ups to pay with :  \n";
         for(PowerUp powerUp : powerUps){//todo getname powerup
             message = message + powerUp.getClass().getSimpleName() + powerUp.getAmmo().toString()+ "\n";
         }
@@ -98,5 +100,12 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage playerMessage = new ShowPickUpWeaponsMessage(pickUpWeapons);
         notify(playerMessage,playerColor);
 
+    }
+
+    public void askWeaponSwap(Player player){
+        String message = "Choose weapon to swap: \n";
+        message = message + player.getResources().showWeapon();
+        PlayerMessage playerMessage = new WeaponSwapMessage(message);
+        notify(playerMessage, player.getPlayerColor());
     }
 }

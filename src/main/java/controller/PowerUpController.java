@@ -25,6 +25,13 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         Player currentPlayer = getModel().getPlayer(choosePowerUpEvent.getPlayerColor());
         int input = choosePowerUpEvent.getInput();
 
+        if(currentPlayer.getResources().getPowerUp().isEmpty()){
+            String error;
+            error = "You have no powerUps.\n";
+            choosePowerUpEvent.getView().reportError(error);
+            getModel().chooseAction(choosePowerUpEvent.getPlayerColor());
+        }
+
         if (input < 1 || input > currentPlayer.getResources().getPowerUp().size()) {
             String error;
             error = "Invalid input.\n";
@@ -45,12 +52,14 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(ChooseTeleporterSquareEvent chooseTeleporterSquareEvent) {
-        if (0 > 1) { //riempire con: se lo square non esiste, serve una legenda per gli square
+        int input = chooseTeleporterSquareEvent.getInput();
+        ArrayList<Integer> allIDs = getModel().getGameBoard().getMap().getAllIDs();
+
+        if (!allIDs.contains(input)) { //riempire con: se lo square non esiste, serve una legenda per gli square
             chooseTeleporterSquareEvent.getView().reportError("Invalid square.\nInsert another one.\n");
             getModel().useTeleporter(chooseTeleporterSquareEvent.getPlayerColor());
         } else {
-            Square chosenSquare = null;
-            //inizializzare lo square
+            Square chosenSquare = getModel().getGameBoard().getMap().getSquareFromID(input);
             Player currentPlayer = getModel().getPlayer(chooseTeleporterSquareEvent.getPlayerColor());
             currentPlayer.setPosition(chosenSquare);
             getModel().notifyTeleporter(chooseTeleporterSquareEvent.getPlayerColor());

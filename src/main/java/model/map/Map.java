@@ -141,5 +141,25 @@ Map {
     public String printMap(){
         return mapCLI;
     }
+
+    public ArrayList<Integer> getAllIDs(){
+        ArrayList<Integer> allIDs = new ArrayList<>();
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 4; j++)
+                if(map[i][j] != null)
+                    allIDs.add(map[i][j].getID());
+    return allIDs;
+    }
+
+    public Square getSquareFromID(int ID){
+        Square square = null;
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 4; j++)
+                if(map[i][j] != null && map[i][j].getID() == ID) {
+                    square = map[i][j];
+                }
+        return square;
+    }
+
 }
 

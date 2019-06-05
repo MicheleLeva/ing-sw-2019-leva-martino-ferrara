@@ -552,8 +552,9 @@ public class Model {
 
     public void notifyTeleporter(PlayerColor playerColor) {
         String playerName = getPlayer(playerColor).getPlayerName();
-        String newSquare = getPlayer(playerColor).getPosition().toString();
+        String newSquare = String.valueOf(getPlayer(playerColor).getPosition().getID());
         gameNotifier.notifyTeleporter(playerColor, playerName, newSquare);
+        chooseAction(playerColor);
     }
 
     public void chooseAction(PlayerColor playerColor) {
@@ -570,11 +571,22 @@ public class Model {
 
     public void useNewton(PlayerColor playerColor) {
         ArrayList<Player> allPLayers = turnManager.getAllPlayers();
+        ArrayList<Player> allPlayersCopy = new ArrayList<>(allPLayers);
+        for(Player player : allPLayers)
+            if(player.getPosition() == null || player == getPlayer(playerColor))
+                allPlayersCopy.remove(player);
+        if(allPlayersCopy.isEmpty()){
+            //todo richiedi l azione dopo avergli mandato un messaggio di errore
+            getGameNotifier().notifyGeneric("Non hai bersagli da muovere");
+            chooseAction(playerColor);
+            return;
+        }
+
         String opponentList = "";
         for (int i = 0; i < allPLayers.size(); i++) {
-            if (allPLayers.get(i).getPlayerColor() != playerColor) {
-                current.addOpponent(allPLayers.get(i));
-                opponentList = opponentList + allPLayers.get(i).getPlayerName() + " ";
+            if (allPlayersCopy.get(i).getPlayerColor() != playerColor) {
+                current.addOpponent(allPlayersCopy.get(i));
+                opponentList = opponentList + allPlayersCopy.get(i).getPlayerName() + " ";
             }
         }
         powerUpNotifier.chooseNewtonOpponent(playerColor, opponentList);
@@ -656,6 +668,10 @@ public class Model {
             if(red || blue || yellow)
                 getCurrent().addAvailablePaymentPowerUps(powerUp);
         }
+        if(getCurrent().getAvailablePaymentPowerUps().isEmpty()){
+            payReload(currentPlayer,weapon);
+            return;
+        }
         weaponNotifier.askReloadPayment(currentPlayer.getPlayerColor(),currentPlayer.getResources().getPowerUp());
     }
 
@@ -679,10 +695,15 @@ public class Model {
             if(powerUp.getAmmo().toString().equals("YELLOW"))
                 powerUpYELLOW++;
         }
+        for(PowerUp powerUp : getCurrent().getSelectedPaymentPowerUps()){
+            currentPlayer.getResources().removePowerUp(powerUp);
+            getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
+        }
         fireRED = fireRED-powerUpRED;
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
-        currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
+        Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
+        currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         resetCurrent();
         getCurrent().setReceivedInput(true);
     }
@@ -758,17 +779,20 @@ public class Model {
         System.out.println("allammo3"+currentPlayer.getResources().getAllAmmo());
 
         //todo scarta arma
-        for(Weapon spawnWeapon : currentPlayer.getPosition().getWeapon()) {
-            if(spawnWeapon == getCurrent().getSelectedPickUpWeapon()) {
-                currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
-                for(int i = 0; i < 3; i++){
-                    if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
-                        currentPlayer.getPosition().getWeapon()[i] = null;
-                }
-            }
+
+        if(currentPlayer.getResources().getAllWeapon().size() == 3){
+            weaponNotifier.askWeaponSwap(currentPlayer);
+            return;
         }
+        currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
+        for(int i = 0; i < 3; i++){
+            if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
+                currentPlayer.getPosition().getWeapon()[i] = null;
+        }
+
+
         System.out.println("ammo: "+ currentPlayer.getResources().getAvailableAmmo());
-        System.out.println("powerups" + currentPlayer.getResources().showpowerUp());
+        System.out.println("powerups " + currentPlayer.getResources().showpowerUp());
         System.out.println("weapons: " + currentPlayer.getResources().showWeapon());
         resetCurrent();
         updateAction();
@@ -931,7 +955,7 @@ public class Model {
         for (int i = 0; i < num; i++) {
             PowerUp powerUp = gameBoard.getDecks().drawPowerUp();
             drawnPowerUp.add(powerUp);
-            powerUpList = powerUpList + powerUp.toString() + " ";
+            powerUpList = powerUpList + powerUp.getClass().getSimpleName() + powerUp.getAmmo() + " ";
         }
         currentPlayer.getResources().addPowerUp(drawnPowerUp);
 
@@ -1076,6 +1100,20 @@ public class Model {
 
     public void resetCurrent(){
         current = new Current();
+    }
+
+    public void swapPickUpWeapon(Player currentPlayer, int input){
+        currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
+        for(int i = 0; i < 3; i++){
+            if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
+                currentPlayer.getPosition().getWeapon()[i] = currentPlayer.getResources().getAllWeapon().get(input);
+        }
+        currentPlayer.getResources().getAllWeapon().remove(input);
+        System.out.println("ammo: "+ currentPlayer.getResources().getAvailableAmmo());
+        System.out.println("powerups " + currentPlayer.getResources().showpowerUp());
+        System.out.println("weapons: " + currentPlayer.getResources().showWeapon());
+        resetCurrent();
+        updateAction();
     }
 }
 

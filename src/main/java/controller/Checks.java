@@ -175,7 +175,7 @@ public class Checks {
         if (weapon == null){
             weapon = model.getCurrent().getSelectedPickUpWeapon();
         }
-        Ammo fireModeCost = null;
+        Ammo fireModeCost;
         int powerUpRED = 0;
         int powerUpBLUE = 0;
         int powerUpYELLOW = 0;
@@ -189,7 +189,7 @@ public class Checks {
         Boolean B;
         Boolean Y;
         for (int i : choices) {
-            String color = model.getCurrent().getAvailablePaymentPowerUps().get(i).getAmmo().toString();
+            String color = model.getCurrent().getAvailablePaymentPowerUps().get(i-1).getAmmo().toString();
             if (color.equals("RED"))
                 powerUpRED++;
 

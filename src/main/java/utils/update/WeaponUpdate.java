@@ -14,4 +14,6 @@ public interface WeaponUpdate {
     void update(PickUpPaymentMessage message);
 
     void update(ShowPickUpWeaponsMessage message);
+
+    void update(WeaponSwapMessage message);
 }

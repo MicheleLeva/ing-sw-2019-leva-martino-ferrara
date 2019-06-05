@@ -54,9 +54,13 @@ public class ActionController extends Controller implements ActionObserver {
             action.perform(getModel() , playerColor);
         }
 
-        catch(EmptySquareException | WallException | NoPowerUpException | CannotPayException | MaxAmmoException e){
+        catch(EmptySquareException | WallException | NoPowerUpException | CannotPayException e){
             view.reportError(e.getMessage());
             getModel().chooseAction(playerColor);
+        }
+        catch(MaxAmmoException e){
+            view.reportError(e.getMessage());
+            getModel().updateAction();
         }
         catch(Exception e){
         }

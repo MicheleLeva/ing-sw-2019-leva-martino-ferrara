@@ -21,6 +21,10 @@ public class View {
         gameView = new GameView(playerColor , this);
     }
 
+    public Scanner getScanner(){
+        return this.scanner;
+    }
+
     public ActionView getActionView() {
         return actionView;
     }

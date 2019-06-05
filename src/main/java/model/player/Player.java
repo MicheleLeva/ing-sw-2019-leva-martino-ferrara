@@ -31,6 +31,7 @@ public class Player {
         playerBoard = new PlayerBoard();
         score = new Score();
         this.actionTree = new ActionTree(1);
+        this.position = null;
     }
 
     public Score getScore() {

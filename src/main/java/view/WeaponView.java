@@ -143,4 +143,12 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
         Event event = new ChoosePickUpWeaponEvent(view,input);
         notify(event);
     }
+
+    @Override
+    public void update(WeaponSwapMessage message){
+        view.printMessage(message.getMessage());
+        int input = view.inputInt();
+        Event event = new WeaponSwapEvent(view,input);
+        notify(event);
+    }
 }

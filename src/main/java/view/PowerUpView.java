@@ -7,6 +7,8 @@ import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.PowerUpUpdate;
 
+import java.util.Scanner;
+
 public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
     private final PlayerColor playerColor;
     private final View view;

@@ -64,7 +64,7 @@ public class Resources {
         String result = "";
 
         for (int i = 0; i < weapon.size(); i++){
-            result = result + weapon.get(i).getWeaponName() +" | ";
+            result = result + i + " " + weapon.get(i).getWeaponName() +" | ";
         }
 
         return result;
@@ -137,8 +137,17 @@ public class Resources {
     }
 
     public ArrayList<Weapon> getReloadableWeapon(){
+        ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
+        for (int i = 0; i< weapon.size(); i++){
+            if (!weapon.get(i).isReloaded()){
+                reloadableWeapon.add(weapon.get(i));
+            }
+        }
+
         return reloadableWeapon;
     }
+
+    public ArrayList<Weapon> getAllWeapon(){return this.weapon;}
 
     public String showReloadableWeapon(){
         String result = "";
