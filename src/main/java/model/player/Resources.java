@@ -27,13 +27,15 @@ public class Resources {
             return "No PowerUp";
         }
 
-        String result = "";
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < powerUp.size(); i++){
-            result = result + powerUp.get(i).getClass().getSimpleName() + " " + powerUp.get(i).getAmmo() +" | ";
+            stringBuilder.append(i+1 +". ");
+            stringBuilder.append(powerUp.get(i).toString());
+            stringBuilder.append(" ");
         }
 
-        return result;
+        return stringBuilder.toString();
     }
 
     public PowerUp removePowerUp(int index){
