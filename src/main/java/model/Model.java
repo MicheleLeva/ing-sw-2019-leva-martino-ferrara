@@ -396,8 +396,8 @@ public class Model {
         PowerUp discardedPowerUp = player.getResources().removePowerUp(index);
         gameBoard.getDecks().getDiscardedPowerUpDeck().add(discardedPowerUp);
 
-        String toPlayer = "You discarded " + discardedPowerUp.toString();
-        String toOthers = player.getPlayerName() + " discarded " + discardedPowerUp.toString();
+        String toPlayer = "You discarded " + discardedPowerUp.getClass().getSimpleName() + discardedPowerUp.getAmmo();
+        String toOthers = player.getPlayerName() + " discarded " + discardedPowerUp.getClass().getSimpleName();
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
 
         spawnPlayer(player, discardedPowerUp.getAmmo());
@@ -683,11 +683,13 @@ public class Model {
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
         currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
-        current.resetCurrent();
+        resetCurrent();
         getCurrent().setReceivedInput(true);
     }
 
     public void askPickUpPayment(Player currentPlayer, Weapon weapon){
+        System.out.println("Inizio askpickup");
+
         Ammo fireModeCost;
         int fireRED;
         int fireBLUE;
@@ -765,10 +767,11 @@ public class Model {
                 }
             }
         }
-        current.resetCurrent();
+        System.out.println("ammo: "+ currentPlayer.getResources().getAvailableAmmo());
+        System.out.println("powerups" + currentPlayer.getResources().showpowerUp());
+        System.out.println("weapons: " + currentPlayer.getResources().showWeapon());
+        resetCurrent();
         updateAction();
-
-        //todo richiedi azione dopo aver ricaricato;
     }
 
 
@@ -1069,6 +1072,10 @@ public class Model {
             stringBuilder.append("\n");
         }
         weaponNotifier.showPickUpWeapons(playerColor,stringBuilder.toString());
+    }
+
+    public void resetCurrent(){
+        current = new Current();
     }
 }
 

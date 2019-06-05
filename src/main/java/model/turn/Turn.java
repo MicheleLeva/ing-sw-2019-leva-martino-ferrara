@@ -85,7 +85,7 @@ public class Turn {
             //Mostra al giocatore la lista comandi
             getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), currentPlayerColor.toString() + "is viewing its commands.");
 
-            getModel().drawPowerUp(currentPlayerColor, 2);
+            getModel().drawPowerUp(currentPlayerColor, 10); //todo modificato per test
             getModel().requestPowerUpDiscard(currentPlayer);
             getModel().getCurrent().setReceivedInput(false);
             while (!getModel().getCurrent().isReceivedInput()) {
@@ -142,7 +142,7 @@ public class Turn {
 
         }
 
-        if (!isFrenzy){
+        /*if (!isFrenzy){
             getModel().getCurrent().setFinishedReloading(false);
             while (!getModel().getCurrent().isFinishedReloading()){
                 getModel().askReloadEndTurn(currentPlayerColor);
@@ -156,7 +156,7 @@ public class Turn {
                     }
                 }
             }
-        }
+        }*/
 
         timer.cancel();
     }

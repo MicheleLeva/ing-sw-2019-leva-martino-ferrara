@@ -2,11 +2,13 @@ package view;
 
 import model.exchanges.messages.PlayerMessage;
 import model.exchanges.events.*;
+import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
 import utils.observable.WeaponObservable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RemoteWeaponView extends WeaponObservable implements Observer<PlayerMessage> {
 
@@ -39,7 +41,7 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 break;
             case "TargetsSelectionEvent":
                 ArrayList<Integer> selectedTargets = new ArrayList<>();
-                for (int i = 1; i<= inputs.length; i++){
+                for (int i = 1; i<= inputs.length-1; i++){
                     selectedTargets.add(Integer.parseInt(inputs[i]));
                 }
                 TargetsSelectionEvent targetsSelectionEvent = new TargetsSelectionEvent(view, selectedTargets);
@@ -55,7 +57,7 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 break;
             case "WeaponPaymentEvent":
                 ArrayList<Integer> selectedWeapons = new ArrayList<>();
-                for (int i = 1; i<= inputs.length; i++){
+                for (int i = 1; i<= inputs.length-1; i++){
                     selectedWeapons.add(Integer.parseInt(inputs[i]));
                 }
                 WeaponPaymentEvent weaponPaymentEvent = new WeaponPaymentEvent(view, selectedWeapons);
@@ -63,12 +65,9 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 break;
             case "PickUpPaymentEvent":
                 ArrayList<Integer> selectedChoices = new ArrayList<>();
-                System.out.println("siamo nella remoteview1");
-                for (int i = 1; i<= inputs.length; i++){
-                    System.out.println("siamo nella remoteview2");
+                for (int i = 1; i<= inputs.length -1; i++){
                     selectedChoices.add(Integer.parseInt(inputs[i]));
                 }
-                System.out.println("siamo nella remoteview3");
                 PickUpPaymentEvent pickUpPaymentEvent = new PickUpPaymentEvent(view, selectedChoices);
                 listeners.forEach(l -> l.update(pickUpPaymentEvent));
         }

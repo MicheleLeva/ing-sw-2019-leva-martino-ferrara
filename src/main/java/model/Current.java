@@ -127,9 +127,6 @@ public class Current {
         this.opponent = opponent;
     }
 
-    public void resetCurrent(){  new Current();
-         }
-
     public ArrayList<Square> getSquare(){
         return square;
     }

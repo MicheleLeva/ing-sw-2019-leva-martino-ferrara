@@ -30,7 +30,7 @@ public class Resources {
         String result = "";
 
         for (int i = 0; i < powerUp.size(); i++){
-            result = result + powerUp.get(i).toString() +" | ";
+            result = result + powerUp.get(i).getClass().getSimpleName() + " " + powerUp.get(i).getAmmo() +" | ";
         }
 
         return result;
@@ -64,7 +64,7 @@ public class Resources {
         String result = "";
 
         for (int i = 0; i < weapon.size(); i++){
-            result = result + weapon.get(i).toString() +" | ";
+            result = result + weapon.get(i).getWeaponName() +" | ";
         }
 
         return result;

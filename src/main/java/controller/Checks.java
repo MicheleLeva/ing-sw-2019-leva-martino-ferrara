@@ -186,6 +186,9 @@ public class Checks {
 
     public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
         Weapon weapon = model.getCurrent().getSelectedWeapon();
+        if (weapon == null){
+            weapon = model.getCurrent().getSelectedPickUpWeapon();
+        }
         Ammo fireModeCost = null;
         int powerUpRED = 0;
         int powerUpBLUE = 0;

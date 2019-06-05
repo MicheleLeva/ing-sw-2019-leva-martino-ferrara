@@ -101,7 +101,7 @@ public class WeaponController extends Controller implements WeaponObserver {
 
         if(effectType.equals("return")){
             weapon.getWeaponTree().resetAction();
-            getModel().getCurrent().resetCurrent();
+            getModel().resetCurrent();
             getModel().chooseAction(event.getPlayerColor());
         }
 
@@ -129,7 +129,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         if(weapon.getWeaponTree().getRoot().getChildren().contains(weapon.getWeaponTree().getLastAction()) &&
                 support.size() == 1 && support.get(0) == -1){
             weapon.getWeaponTree().resetAction();
-            getModel().getCurrent().resetCurrent();
+            getModel().resetCurrent();
             getModel().getCurrent().setSelectedWeapon(weapon);
             getModel().showFireModes(event.getPlayerColor(),weapon);
             return;
@@ -269,13 +269,17 @@ public class WeaponController extends Controller implements WeaponObserver {
             if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
                 error = "Invalid input.\n";
                 event.getView().reportError(error);
+                getModel().getCurrent().getAvailablePaymentPowerUps().clear();
                 getModel().askPickUpPayment(currentPlayer,weapon);
                 return;
             }
         }
+        System.out.println("superato primo if");
         if(!Checks.validPayment(currentPlayer,event.getSelectedPowerUps(),"pickup",getModel())) {
+            System.out.println("inizio check");
             error = "Invalid input.\n";
             event.getView().reportError(error);
+            getModel().getCurrent().getAvailablePaymentPowerUps().clear();
             getModel().askPickUpPayment(currentPlayer, weapon);
         }
         else{

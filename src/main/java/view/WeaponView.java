@@ -1,11 +1,13 @@
 package view;
 
 import model.exchanges.events.*;
+import model.exchanges.events.Event;
 import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.WeaponUpdate;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class WeaponView extends Observable<Event> implements WeaponUpdate {
@@ -120,14 +122,17 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     public void update(PickUpPaymentMessage message){
         ArrayList<Integer> choices = new ArrayList<>();
         int counter = message.getSize();
-        int selection;
+        System.out.println("Counter size:" + counter);
+        int selection = 1;
         view.printMessage(message.getMessage());
-        while (counter>0){
+        while (counter>0 && selection !=0){
             selection = view.inputInt();
             choices.add(selection);
             counter--;
         }
-        System.out.println("non crashare plz");
+        if (choices.contains(0)){
+            choices.remove(choices.size()-1);
+        }
         Event event = new PickUpPaymentEvent(view, choices);
         notify(event);
     }
