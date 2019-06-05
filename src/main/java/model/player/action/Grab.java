@@ -28,6 +28,10 @@ public class Grab extends Action {
                 AmmoCard currentAmmoCard = currentSquare.getAmmoCard();
                 Ammo currentAmmo = currentAmmoCard.getAmmo();
                 Ammo currentPlayerAmmo = currentPlayer.getResources().getAvailableAmmo();
+
+                System.out.print("Ammo correnti: " +currentPlayerAmmo.toString());
+                System.out.print("\nAmmo sullo square: " +currentAmmo.toString());
+
                 Ammo drawnAmmo = Checks.drawnAmmo(currentAmmo , currentPlayerAmmo);
 
                 model.discardAmmo(currentSquare);
@@ -37,6 +41,8 @@ public class Grab extends Action {
 
                 if(drawnAmmo != null){
                     model.addAmmo(playerColor , drawnAmmo);
+                    currentPlayer.getActionTree().updateAction();
+                    model.chooseAction(currentPlayer.getPlayerColor());
                 }
                 else{
                     throw new MaxAmmoException();

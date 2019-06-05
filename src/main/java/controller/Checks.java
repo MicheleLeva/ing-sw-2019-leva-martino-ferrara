@@ -44,38 +44,24 @@ public class Checks {
         int grabbedBlue = grabbedAmmo.getBlue();
         int grabbedYellow = grabbedAmmo.getYellow();
 
-        int drawnRed = 0;
-        int drawnBlue = 0;
-        int drawnYellow = 0;
+        int drawnRed;
+        int drawnBlue;
+        int drawnYellow;
 
-        if(drawableRed > 0 && grabbedRed > 0){
+        /*if(drawableRed > 0 && grabbedRed > 0){
             if(drawableRed > grabbedRed){
                 drawnRed = grabbedRed;
             }
             else{
                 drawnRed = drawableRed;
             }
-        }
+        }*/
 
-        if(drawableBlue > 0 && grabbedBlue > 0){
-            if(drawableBlue > grabbedBlue){
-                drawnBlue = grabbedBlue;
-            }
-            else{
-                drawnBlue = drawableBlue;
-            }
-        }
+        drawnRed = Integer.min(drawableRed,grabbedRed);
+        drawnBlue = Integer.min(drawableBlue,grabbedBlue);
+        drawnYellow = Integer.min(drawableYellow,grabbedYellow);
 
-        if(drawableYellow > 0 && grabbedYellow > 0){
-            if(drawableYellow > grabbedYellow){
-                drawnYellow = grabbedYellow;
-            }
-            else{
-                drawnYellow = drawableYellow;
-            }
-        }
-
-        if (drawnRed != 0 && drawnBlue != 0 && drawnYellow != 0){
+        if (drawnRed != 0 || drawnBlue != 0 || drawnYellow != 0){
             drawableAmmo = new Ammo(drawnRed , drawnBlue , drawnYellow);
         }
 

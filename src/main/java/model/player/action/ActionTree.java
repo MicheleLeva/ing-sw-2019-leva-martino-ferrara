@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.Model;
 public class ActionTree {
@@ -128,9 +129,8 @@ public class ActionTree {
             return true;
         }
 
-
         if(isTurnEnded()) {
-            return (move == KeyMap.getReload()); //TODO frenzy
+            return (move == KeyMap.getReload());
         }
 
         List<Node<String>> children = lastActionPerformed.getChildren();
@@ -171,38 +171,29 @@ public class ActionTree {
         StringBuilder result = new StringBuilder();
         result.append("Your available actions: \n");
         if(!isTurnEnded()) {
-            result.append(availableAction(lastActionPerformed));
+            result.append(availableAction(lastActionPerformed).replaceAll("root",""));
+            result.append(" |Use PowerUp| |End action|");
             result.append("Left actions: " + (actionCounter - performedAction) + "\n");
         }
         else {
-            result.append("|Reload|\n");
+            result.append("|Reload|");
+            result.append(" |Use PowerUp|");
+            result.append(" |End action|\n");
         }
+
 
         return result.toString();
     }
     //helper recursive method called passing lastActionPerformed node
-    private String availableAction(Node<String> node)
-    {
-        if(node.getChildren().isEmpty()){
-            return node.getData();
-        }
-        String result = "";
-        for (int i = 0; i < node.getChildren().size(); i++)
-        {
-            if(!node.getData().equals("root")) {
-                result = result + node.getData();
-                result = result + " " + availableAction(node.getChildren().get(i));
+    private String availableAction(Node<String> node) {
+    StringBuilder stringBuilder = new StringBuilder();
+     for (int i = 0; i < node.getChildren().size(); i++){
+         stringBuilder.append(node.getChildren().get(i).getData() +" | ");
+     }
 
-            }
-            else result = result + availableAction(node.getChildren().get(i));
-
-            result = result +"|";
-        }
-
-
-
-        return result;
+     return stringBuilder.toString();
     }
+
     //returns true if the player has walked the tree to a leaf
     public boolean isActionEnded(){
         return lastActionPerformed.getChildren().isEmpty();
