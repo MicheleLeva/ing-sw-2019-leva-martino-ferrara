@@ -6,6 +6,8 @@ import utils.Observable;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -36,7 +38,7 @@ public class SocketClientConnection extends Observable<String> implements Client
         try{
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            String read = in.nextLine();
+            /*String read = in.nextLine();
             playerName = read;
             int id = server.nameAvailable(playerName);
             if (id != 0 && server.checkAfk(playerName)) {
@@ -46,7 +48,28 @@ public class SocketClientConnection extends Observable<String> implements Client
 
             } else {
                 server.addPlayer(this, playerName);
+            }*/
+            //todo modificato per velocizzare test
+            int c = 0;
+            for (Map.Entry<String, ClientConnection> entry : server.getWaitingConnection().entrySet()){
+                if (entry.getKey().equals("Asdrubale")){
+                    c ++;
+                }
+                if (entry.getKey().equals("Bruno")){
+                    c ++;
+                }
             }
+            if (c == 0){
+                server.addPlayer(this, "Asdrubale");
+            }
+            if (c == 1){
+                server.addPlayer(this, "Bruno");
+            }
+            if (c == 2){
+                server.addPlayer(this, "Carlo");
+            }
+            String read;
+            //todo modificato per velocizzare test
             System.out.println("The player added their name!");
             asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");
             while(isActive()){

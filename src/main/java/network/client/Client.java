@@ -82,11 +82,11 @@ public class Client extends Observable<String> implements ClientConnection,Runna
         try {
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            System.out.println("Insert your name!");
-            Scanner scanner = new Scanner(System.in);
-            String name = scanner.nextLine();
-            this.asyncSend(name);
-            //scanner.close();
+            //System.out.println("Insert your name!");
+            //Scanner scanner = new Scanner(System.in);
+            //String name = scanner.nextLine();
+            //this.asyncSend(name);
+            //todo commentato per velocizzare test
             String read;
             while(isActive()){
                 read = in.nextLine();

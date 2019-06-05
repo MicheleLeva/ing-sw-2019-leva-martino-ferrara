@@ -42,8 +42,6 @@ public class Server {
 
     private boolean isTimerOn;
 
-    private Timer timer = new Timer();
-
     private TimerTask turnTimerOff = new TimerTask() {
         @Override
         public void run() {
@@ -61,6 +59,10 @@ public class Server {
 
     public void setServerActive(boolean serverActive) {
         isServerActive = serverActive;
+    }
+
+    public LinkedHashMap<String, ClientConnection> getWaitingConnection() {
+        return waitingConnection;
     }
 
     public synchronized void reconnectPlayer(ClientConnection c, int pool, int index, String name){
@@ -134,7 +136,10 @@ public class Server {
     }
 
     private void checkConnected() {
+        System.out.println("Checking connected");
+        System.out.println("Waiting players: " + waitingConnection.size());
         if (waitingConnection.size() > 2 && !isTimerOn) {
+            System.out.println("Enough players to start a game!");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -146,13 +151,19 @@ public class Server {
 
     private void startTimer(){
         isTimerOn = true;
-        timer.schedule(turnTimerOff, 3*1000L);
+        Timer timer = new Timer();
+        timer.schedule(turnTimerOff, 1000L);
         System.out.println("Timer is starting");
         while (isTimerOn) {
             System.out.print("");
             if (waitingConnection.size() == 5) {
                 System.out.println("Reached 5 players!");
-                createGame();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        createGame();
+                    }
+                }).start();
                 isTimerOn = false;
                 timer.cancel();
                 return;
@@ -165,7 +176,12 @@ public class Server {
             }
         }
         System.out.println("Time is up!");
-        createGame();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                createGame();
+            }
+        }).start();
         isTimerOn = false;
         //se finisce il timer faccio un createGame
     }
