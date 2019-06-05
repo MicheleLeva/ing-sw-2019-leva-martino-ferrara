@@ -9,6 +9,7 @@ public class TagbackGrenade extends PowerUp {
 
     public TagbackGrenade(Model model , AmmoColor color){
         super(model , color);
+        this.name = "TagbackGrenade";
     }
     @Override
     public void usePowerUp(PlayerColor playerColor){

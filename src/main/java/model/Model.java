@@ -952,16 +952,17 @@ public class Model {
     public void drawPowerUp(PlayerColor playerColor, int num) {
         Player currentPlayer = getPlayer(playerColor);
         ArrayList<PowerUp> drawnPowerUp = new ArrayList<>();
-        String powerUpList = "";
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < num; i++) {
             PowerUp powerUp = gameBoard.getDecks().drawPowerUp();
             drawnPowerUp.add(powerUp);
-            powerUpList = powerUpList + powerUp.getClass().getSimpleName() + powerUp.getAmmo() + " ";
+            stringBuilder.append(powerUp.toString());
+            stringBuilder.append(" ");
         }
         currentPlayer.getResources().addPowerUp(drawnPowerUp);
 
 
-        gameNotifier.notifyDrawPowerUp(playerColor, currentPlayer.getPlayerName(), powerUpList, num);
+        gameNotifier.notifyDrawPowerUp(playerColor, currentPlayer.getPlayerName(), stringBuilder.toString(), num);
 
     }
 

@@ -190,8 +190,8 @@ public class ActionTree {
      for (int i = 0; i < node.getChildren().size(); i++){
          stringBuilder.append(node.getChildren().get(i).getData() +" | ");
      }
-
      return stringBuilder.toString();
+
     }
 
     //returns true if the player has walked the tree to a leaf

@@ -7,6 +7,7 @@ import model.player.PlayerColor;
 public class TargetingScope  extends PowerUp{
     public TargetingScope(Model model , AmmoColor color){
         super(model , color);
+        this.name = "TargetingScope";
     }
     @Override
     public void usePowerUp(PlayerColor playerColor) throws TargetingScopeException {

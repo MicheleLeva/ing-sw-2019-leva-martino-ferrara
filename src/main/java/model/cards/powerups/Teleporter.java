@@ -6,6 +6,7 @@ import model.player.PlayerColor;
 public class Teleporter extends PowerUp {
     public Teleporter(Model model , AmmoColor color){
         super(model , color);
+        this.name = "Teleporter";
     }
     @Override
     public void usePowerUp(PlayerColor playerColor){
