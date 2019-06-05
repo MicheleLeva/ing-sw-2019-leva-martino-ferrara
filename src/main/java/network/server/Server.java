@@ -42,13 +42,6 @@ public class Server {
 
     private boolean isTimerOn;
 
-    private TimerTask turnTimerOff = new TimerTask() {
-        @Override
-        public void run() {
-            isTimerOn = false;
-        }
-    };
-
     public Map<Integer, ArrayList<RemoteView>> getPlayerViews() {
         return playerViews;
     }
@@ -152,6 +145,12 @@ public class Server {
     private void startTimer(){
         isTimerOn = true;
         Timer timer = new Timer();
+        TimerTask turnTimerOff = new TimerTask() {
+            @Override
+            public void run() {
+                isTimerOn = false;
+            }
+        };
         timer.schedule(turnTimerOff, 1000L);
         System.out.println("Timer is starting");
         while (isTimerOn) {
@@ -246,7 +245,7 @@ public class Server {
             v.getRemoteWeaponView().register(new WeaponController(model));
         }
 
-        games.submit(new Game(lastID, model));
+        games.submit(new Game(lastID, model)); //todo capire perchè il metodo si blocca qua invece di instanziare un nuovo thread
 
         waitingConnection.clear();
     }
