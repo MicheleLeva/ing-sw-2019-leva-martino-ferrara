@@ -10,5 +10,7 @@ public class Teleporter extends PowerUp {
     @Override
     public void usePowerUp(PlayerColor playerColor){
         getModel().useTeleporter(playerColor);
+        getModel().getGameBoard().getDecks().getDiscardedPowerUpDeck().add(this);
+        getModel().getPlayer(playerColor).getResources().getPowerUp().remove(this);
     }
 }

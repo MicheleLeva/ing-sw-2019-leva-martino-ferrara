@@ -11,6 +11,18 @@
   {"name":"tagbackGrenade","color":"YELLOW"},
   {"name":"teleporter","color":"RED"},
   {"name":"teleporter","color":"BLUE"},
+  {"name":"teleporter","color":"YELLOW"},
+  {"name":"targetingScope","color":"RED"},
+  {"name":"targetingScope","color":"BLUE"},
+  {"name":"targetingScope","color":"YELLOW"},
+  {"name":"newton","color":"RED"},
+  {"name":"newton","color":"BLUE"},
+  {"name":"newton","color":"YELLOW"},
+  {"name":"tagbackGrenade","color":"RED"},
+  {"name":"tagbackGrenade","color":"BLUE"},
+  {"name":"tagbackGrenade","color":"YELLOW"},
+  {"name":"teleporter","color":"RED"},
+  {"name":"teleporter","color":"BLUE"},
   {"name":"teleporter","color":"YELLOW"}
 ]
 }

@@ -41,8 +41,9 @@ public class Grab extends Action {
 
                 if(drawnAmmo != null){
                     model.addAmmo(playerColor , drawnAmmo);
-                    currentPlayer.getActionTree().updateAction();
-                    model.chooseAction(currentPlayer.getPlayerColor());
+                    model.updateAction();
+                   // currentPlayer.getActionTree().updateAction();
+                   // model.chooseAction(currentPlayer.getPlayerColor());
                 }
                 else{
                     throw new MaxAmmoException();

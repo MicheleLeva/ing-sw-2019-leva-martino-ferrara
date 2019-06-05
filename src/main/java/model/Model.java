@@ -547,6 +547,7 @@ public class Model {
     }
 
     public void useTeleporter(PlayerColor playerColor) {
+
         powerUpNotifier.chooseTeleporterSquare(playerColor);
     }
 
