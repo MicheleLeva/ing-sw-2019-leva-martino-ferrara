@@ -50,7 +50,18 @@ public class Square {
 
     }
 
+    public boolean hasEmptyWeaponSlot(){
+        for (int i = 0; i<3; i++){
+            if (weapons[i] == null){
+                    return true;
+            }
+        }
+        return false;
+    }
 
+    public boolean hasEmptyAmmoSlot(){
+        return (ammo == null);
+    }
 
     public void setAmmo(AmmoCard ammoCard){
         ammo = ammoCard;

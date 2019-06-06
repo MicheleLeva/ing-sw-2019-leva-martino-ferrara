@@ -42,16 +42,18 @@ public class GameBoard {
     public void setCardsOnMap(){
         for(int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                if(getMap().getMap()[i][j]!=null && getMap().getMap()[i][j].isSpawn) {
-                    getMap().getMap()[i][j].setWeapon(getDecks().drawWeapon());
-                    getMap().getMap()[i][j].setWeapon(getDecks().drawWeapon());
-                    getMap().getMap()[i][j].setWeapon(getDecks().drawWeapon());
-                }
-                else
-                if(getMap().getMap()[i][j]!=null){
-                    getMap().getMap()[i][j].setAmmo(getDecks().drawAmmoCard());
+                Square square = getMap().getMap()[i][j];
+                if (square != null) {
+                    if (square.isSpawn) {
+                        while (square.hasEmptyWeaponSlot()) {
+                            square.setWeapon(getDecks().drawWeapon());
+                        }
+                    } else if (square.hasEmptyAmmoSlot()) {
+                        square.setAmmo(getDecks().drawAmmoCard());
+                    }
                 }
             }
         }
     }
+
 }
