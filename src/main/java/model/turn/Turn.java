@@ -73,19 +73,17 @@ public class Turn {
         PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
         //the player hasn't completed his turn yet
         currentPlayer.getActionTree().setDoneTurn(false);
+        isTimerOn = true;
+        timer.schedule(turnTimerOff, time); //timer thread
+
         if (currentTurnNumber == 1) {
-            getModel().getTurnManager().startFirstTurn(); //serve?
-
-            isTimerOn = true;
-            timer.schedule(turnTimerOff, time); //timer thread
-
             //Show the current player the command list
             StringBuilder toOthers = new StringBuilder();
             toOthers.append(currentPlayer.getColoredName());
             toOthers.append(" is viewing his commands.");
             getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), toOthers.toString());
             //the current player draws two powerups
-            getModel().drawPowerUp(currentPlayerColor, 10); //todo modificato per test
+            getModel().drawPowerUp(currentPlayerColor, 2); //todo modificato per test
             //requests the current player to discard one of his powerup
             getModel().requestPowerUpDiscard(currentPlayer);
             getModel().getCurrent().setReceivedInput(false);
@@ -101,27 +99,23 @@ public class Turn {
         }
         //while the current player hasn't completed his turn
         while (!currentPlayer.getActionTree().hasDoneTurn()){
-            while (!currentPlayer.getActionTree().isActionEnded()){
-                //show the current player his available actions
-                StringBuilder toOthers = new StringBuilder();
-                toOthers.append(currentPlayer.getColoredName());
-                toOthers.append(" is choosing between his actions.");
-                getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), toOthers.toString());
-                //requests the action input
-                getModel().chooseAction(currentPlayerColor);
-                while (!currentPlayer.getActionTree().isMoveEnded()){
-                    System.out.print("");
-                    if (!isTimerOn){
-                        getModel().setPlayerAfk(currentPlayer);
-                        if (currentPlayer.getActionTree().getLastAction().getData().equals("shoot")){
-                            getModel().notifyShoot(currentPlayer);
-                        }
-                        getModel().getTurnManager().update(); // da mettere nell'end turn
-                        return;
+            //show the current player his available actions
+            StringBuilder toOthers = new StringBuilder();
+            toOthers.append(currentPlayer.getColoredName());
+            toOthers.append(" is choosing between his actions.");
+            getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), toOthers.toString());
+            //requests the action input
+            getModel().chooseAction(currentPlayerColor);
+            while (!currentPlayer.getActionTree().isMoveEnded()){
+                System.out.print("");
+                if (!isTimerOn){
+                    getModel().setPlayerAfk(currentPlayer);
+                    if (currentPlayer.getActionTree().getLastAction().getData().equals("shoot")){
+                        getModel().notifyShoot(currentPlayer);
                     }
+                    return;
                 }
             }
-
             //grenadePeopleArray viene popolato da addDamage se il giocatore colpito possiede la granata
             if (!getModel().getCurrent().getGrenadePeopleArray().isEmpty()){
                 for (Player grenadePlayer : getModel().getCurrent().getGrenadePeopleArray()){
@@ -145,22 +139,6 @@ public class Turn {
             }
 
         }
-
-        /*if (!isFrenzy){
-            getModel().getCurrent().setFinishedReloading(false);
-            while (!getModel().getCurrent().isFinishedReloading()){
-                getModel().askReloadEndTurn(currentPlayerColor);
-                getModel().getCurrent().setReceivedInput(false);
-                while (!getModel().getCurrent().isReceivedInput()){
-                    System.out.print("");
-                    if (!isTimerOn){
-                        getModel().setPlayerAfk(currentPlayer);
-                        getModel().getTurnManager().update(); //da mettere nell'end turn
-                        return;
-                    }
-                }
-            }
-        }*/
 
         timer.cancel();
     }
@@ -201,6 +179,8 @@ public class Turn {
     }
 
     public void endTurn(){
+
+        //Respawn
         if (!getModel().getCurrent().getDeadPlayers().isEmpty() && !isFrenzy){
             for (Player deadPlayer : getModel().getCurrent().getDeadPlayers()) {
                 getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
@@ -230,6 +210,16 @@ public class Turn {
         }
 
         //Scoring
-        //Replace ammo and weapon(?) cards on map
+        if (isFrenzy){
+            getModel().getScoreManager().updateScoreFrenzy();
+        } else {
+            getModel().getScoreManager().updateScore();
+        }
+
+        //Replace Ammo and Weapon cards on the map
+        getModel().getGameBoard().setCardsOnMap();
+
+        //
+        getModel().getTurnManager().update();
     }
 }

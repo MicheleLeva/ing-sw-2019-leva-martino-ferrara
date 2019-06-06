@@ -9,6 +9,7 @@ import utils.update.WeaponUpdate;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class WeaponView extends Observable<Event> implements WeaponUpdate {
     private final PlayerColor playerColor;
@@ -122,11 +123,11 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     public void update(PickUpPaymentMessage message){
         ArrayList<Integer> choices = new ArrayList<>();
         int counter = message.getSize();
-        System.out.println("Counter size:" + counter);
         int selection = 1;
         view.printMessage(message.getMessage());
         while (counter>0 && selection !=0){
             selection = view.inputInt();
+
             choices.add(selection);
             counter--;
         }
@@ -139,8 +140,8 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     @Override
     public void update(ShowPickUpWeaponsMessage message){
         view.printMessage(message.getMessage());
-        int input = view.inputInt();
-        Event event = new ChoosePickUpWeaponEvent(view,input);
+
+        Event event = new ChoosePickUpWeaponEvent(view,view.inputInt());
         notify(event);
     }
 

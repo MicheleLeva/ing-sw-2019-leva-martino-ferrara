@@ -89,10 +89,13 @@ public class Ammo {
         String yellow = CLI.getYellow() +getYellow();
 
         stringBuilder.append(blue);
+        stringBuilder.append(CLI.getResetString());
         stringBuilder.append(" ");
         stringBuilder.append(red);
+        stringBuilder.append(CLI.getResetString());
         stringBuilder.append(" ");
         stringBuilder.append(yellow);
+        stringBuilder.append(CLI.getResetString());
 
         return stringBuilder.toString();
 

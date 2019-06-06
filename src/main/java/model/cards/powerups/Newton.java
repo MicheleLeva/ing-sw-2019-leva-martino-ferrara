@@ -2,6 +2,7 @@ package model.cards.powerups;
 
 import model.Model;
 import model.cards.AmmoColor;
+import model.player.Player;
 import model.player.PlayerColor;
 
 public class Newton extends PowerUp {
@@ -12,5 +13,8 @@ public class Newton extends PowerUp {
     @Override
     public void usePowerUp(PlayerColor playerColor){
         getModel().useNewton(playerColor);
+        Player player = getModel().getPlayer(playerColor);
+        player.getResources().removePowerUp(this);
+        getModel().getGameBoard().getDecks().getDiscardedPowerUpDeck().add(this);
     }
 }

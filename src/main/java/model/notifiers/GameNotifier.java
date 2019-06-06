@@ -40,7 +40,7 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
     }
 
-    public void notifyNewton(String playerName , String opponentName , PlayerColor playerColor , PlayerColor opponentColor , String newSquare){
+    public void notifyNewton(String playerName , String opponentName , PlayerColor playerColor , PlayerColor opponentColor , int newSquare){
         String toPlayer ="You moved " +opponentName +" to: " +newSquare +".\n";
         String toOpponent = playerName +" moved you to: " +newSquare +".\n";
         String toOthers = playerName +" moved " +opponentName +" to: " +newSquare +".\n";
@@ -53,6 +53,7 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
         PlayerMessage msgToOthers = new GenericMessage(toOthers);
         notifyOthers(msgToOthers, playerColor, opponentColor);
+
 
     }
     public void notifyDrawPowerUp(PlayerColor playerColor ,String playerName , String powerUpList , int num){

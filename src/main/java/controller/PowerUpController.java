@@ -160,7 +160,12 @@ public class PowerUpController extends Controller implements PowerUpObserver {
             return;
         }
         if (powerUps.get(tagbackGrenadeEvent.getInput() - 1) instanceof TagbackGrenade){
-            ((TagbackGrenade)powerUps.get(tagbackGrenadeEvent.getInput() - 1)).usePowerUp(getModel().getTurnManager().getCurrentPlayerColor());
+            try{
+                ((TagbackGrenade)powerUps.get(tagbackGrenadeEvent.getInput() - 1)).usePowerUp(getModel().getTurnManager().getCurrentPlayerColor());
+            } catch (TagbackGrenadeException e){
+                e.printStackTrace();
+            }
+
         } else {
             tagbackGrenadeEvent.getView().reportError("Invalid input!");
             getModel().tagbackGranadeRequest(tagbackGrenadeEvent.getPlayerColor(), getModel().getTurnManager().getCurrentPlayerColor());

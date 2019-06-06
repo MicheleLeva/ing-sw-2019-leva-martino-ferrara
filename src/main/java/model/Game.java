@@ -25,7 +25,7 @@ public class Game implements Runnable{
         this.model = model;
         run();
     }
-    
+
     public int getMapVote(){
         if (model.getMapVotes().isEmpty()){
             System.out.println("Scelgo mappa a caso");

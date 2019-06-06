@@ -12,14 +12,13 @@ public class EndAction extends Action {
         if(currentPlayer.getActionTree().isTurnEnded()){
             //the player passes the turn
             currentPlayer.getActionTree().setDoneTurn(true);
+            currentPlayer.getActionTree().setMoveEnded(true);
+
         }
         else
         {
             //ends the action on the action tree
             currentPlayer.getActionTree().endAction();
         }
-
-        //updates the turn
-        model.updateTurn();
     }
 }

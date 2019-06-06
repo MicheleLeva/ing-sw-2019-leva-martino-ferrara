@@ -2,6 +2,7 @@ package view;
 
 import model.player.PlayerColor;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class View {
@@ -50,7 +51,19 @@ public class View {
     }
 
     public int inputInt(){
-        return scanner.nextInt();
+        boolean validInput = false;
+        int input = -1;
+        while (!validInput) {
+            try {
+                input = scanner.nextInt();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println();
+                printMessage("Invalid input! Insert a number!");
+            }
+        }
+        return  input;
     }
 
     public char inputChar(){
@@ -60,4 +73,5 @@ public class View {
     public synchronized void printMessage(String message){
         System.out.println(message);
     }
+
 }

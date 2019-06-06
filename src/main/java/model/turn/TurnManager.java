@@ -56,24 +56,19 @@ public class TurnManager {
     }
 
     public synchronized void update(){
-        //todo da fare nell'end turn allPlayers.get(currentPlayerIndex).getActionTree().resetPerformedAction();
+        allPlayers.get(currentPlayerIndex).getActionTree().resetAction();
 
+        //todo controllare se ci sono almeno 3 giocatori
+        //todo passare al prossimo giocatore non afk
         if (currentPlayerIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
         {
             updateCurrentTurnNumber();
             currentPlayerIndex = 0;
-            while (getCurrentPlayer().isAfk()){
-                currentPlayerIndex ++;
-            }
         }
 
         else
         {
             currentPlayerIndex++;
-            while (getCurrentPlayer().isAfk()){
-                currentPlayerIndex ++;
-            }
-
         }
         currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();
     }

@@ -574,22 +574,22 @@ public class Model {
         ArrayList<Player> allPLayers = turnManager.getAllPlayers();
         ArrayList<Player> allPlayersCopy = new ArrayList<>(allPLayers);
         for(Player player : allPLayers)
-            if(player.getPosition() == null || player == getPlayer(playerColor))
+            if(player.getPosition() == null || player.getPlayerColor().equals(playerColor))
                 allPlayersCopy.remove(player);
         if(allPlayersCopy.isEmpty()){
-            //todo richiedi l azione dopo avergli mandato un messaggio di errore
             getGameNotifier().notifyGeneric("Non hai bersagli da muovere");
             chooseAction(playerColor);
             return;
         }
 
         String opponentList = "";
-        for (int i = 0; i < allPLayers.size(); i++) {
+        for (int i = 0; i < allPlayersCopy.size(); i++) {
             if (allPlayersCopy.get(i).getPlayerColor() != playerColor) {
                 current.addOpponent(allPlayersCopy.get(i));
                 opponentList = opponentList + allPlayersCopy.get(i).getPlayerName() + " ";
             }
         }
+        System.out.println("Sto facendo la newton");
         powerUpNotifier.chooseNewtonOpponent(playerColor, opponentList);
     }
 
@@ -607,9 +607,10 @@ public class Model {
     public void notifyNewton(PlayerColor playerColor, Player opponent) {
         String playerName = getPlayer(playerColor).getPlayerName();
         String opponentName = opponent.getPlayerName();
-        String newSquare = opponent.getPosition().toString();
+        int newSquare = opponent.getPosition().getID();
         PlayerColor opponentColor = opponent.getPlayerColor();
         gameNotifier.notifyNewton(playerName, opponentName, playerColor, opponentColor, newSquare);
+        getPlayer(playerColor).getActionTree().setMoveEnded(true);
     }
 
     public void showWeaponCards(PlayerColor playerColor) {
