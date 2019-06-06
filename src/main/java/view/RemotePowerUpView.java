@@ -37,6 +37,18 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
                 ChooseNewtonSquareEvent chooseNewtonSquareEvent = new ChooseNewtonSquareEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(chooseNewtonSquareEvent));
                 break;
+            case "TargetingScopeEvent":
+                TargetingScopeEvent targetingScopeEvent = new TargetingScopeEvent(view, inputs[1].charAt(0));
+                listeners.forEach(l -> l.update(targetingScopeEvent));
+                break;
+            case "TargetingScopeSelectionEvent":
+                TargetingScopeSelectionEvent targetingScopeSelectionEvent = new TargetingScopeSelectionEvent(view, inputs[1].charAt(0));
+                listeners.forEach(l -> l.update(targetingScopeSelectionEvent));
+                break;
+            case "TagbackGrenadeEvent":
+                TagbackGrenadeEvent tagbackGrenadeEvent = new TagbackGrenadeEvent(view, inputs[1].charAt(0));
+                listeners.forEach(l -> l.update(tagbackGrenadeEvent));
+                break;
             case "DiscardPowerUpEvent":
                 DiscardPowerUpEvent discardPowerUpEvent = new DiscardPowerUpEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(discardPowerUpEvent));

@@ -73,11 +73,12 @@ public class ActionController extends Controller implements ActionObserver {
 
     @Override
     public void update(VoteMapEvent voteMapEvent) {
-        if (voteMapEvent.getInput() <1 || voteMapEvent.getInput()>4){
+        int input = Character.getNumericValue(voteMapEvent.getInput());
+        if (input < 1 || input > 4){
             voteMapEvent.getView().reportError("Invalid input!");
             getModel().mapVote(getModel().getPlayer(voteMapEvent.getPlayerColor()));
         } else {
-            getModel().getMapVotes().add(Character.getNumericValue(voteMapEvent.getInput()));
+            getModel().getMapVotes().add(input);
             getModel().getCurrent().setReceivedInput(true);
         }
     }

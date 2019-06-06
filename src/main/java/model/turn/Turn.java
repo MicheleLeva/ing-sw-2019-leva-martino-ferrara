@@ -39,14 +39,7 @@ public class Turn {
     };
     private long grenadeTime = 1000L*10; // 10 sec da ottenere da json
 
-    private Timer respawnTimer = new Timer();
     private boolean isRespawnTimerOn = true;
-    private TimerTask turnRespawnTimerOff = new TimerTask() {
-        @Override
-        public void run() {
-            isRespawnTimerOn = false;
-        }
-    };
     private long respawnTime = 1000L*10; // 10 sec da ottenere da json
 
     public void setFrenzy(boolean frenzy) {
@@ -212,6 +205,14 @@ public class Turn {
             for (Player deadPlayer : getModel().getCurrent().getDeadPlayers()) {
                 getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
                 getModel().requestPowerUpDiscard(deadPlayer);
+
+                Timer respawnTimer = new Timer();
+                TimerTask turnRespawnTimerOff = new TimerTask() {
+                    @Override
+                    public void run() {
+                        isRespawnTimerOn = false;
+                    }
+                };
                 isRespawnTimerOn = true;
                 respawnTimer.schedule(turnRespawnTimerOff, respawnTime);
 

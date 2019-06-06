@@ -11,30 +11,24 @@ public class Game implements Runnable{
 
     private final Model model;
 
-    private Random random;
+    private Random random = new Random();
 
     public int getGameID() {
         return gameID;
     }
 
-    private Timer mapTimer = new Timer();
     private boolean isMapTimerOn = true;
-    private TimerTask turnMapTimerOff = new TimerTask() {
-        @Override
-        public void run() {
-            isMapTimerOn = false;
-        }
-    };
-    private long mapTime = 1000L*10; // 10 sec da ottenere da json
+    private long mapTime = 1000L*100; // 10 sec da ottenere da json
 
     public Game(int gameID, Model model){
         this.gameID = gameID;
         this.model = model;
         run();
     }
-
+    
     public int getMapVote(){
         if (model.getMapVotes().isEmpty()){
+            System.out.println("Scelgo mappa a caso");
             return random.nextInt(3) + 1;
         }
         ArrayList<Integer> countedMapVotes = new ArrayList<>();
@@ -42,31 +36,35 @@ public class Game implements Runnable{
         countedMapVotes.add(0);
         countedMapVotes.add(0);
         countedMapVotes.add(0);
-        countedMapVotes.add(0);
         for(int i : model.getMapVotes()){
-            int temp = countedMapVotes.get(i);
-            countedMapVotes.set(i, temp + 1);
+            int temp = countedMapVotes.get(i-1);
+            countedMapVotes.set(i-1, temp + 1);
         }
+        System.out.println("countedmapvotes: "+ countedMapVotes.toString());
         int maxFreq = Collections.max(countedMapVotes);
         int count = 0;
         for(int i : countedMapVotes){
-            if (countedMapVotes.get(i).equals(maxFreq)){
+            if (i == maxFreq){
                 count++;
             }
         }
+        System.out.println("Count: " + count);
+        System.out.println("Maxfreq: " + maxFreq);
         if (count == 1){
-            return countedMapVotes.indexOf(maxFreq);
+            System.out.println("Scelgo mappa più votata");
+            return countedMapVotes.indexOf(maxFreq) + 1;
         }
         if (count != countedMapVotes.size()){
             ArrayList<Integer> tiebreakers = new ArrayList<>();
-            for(int i : countedMapVotes){
-                if (countedMapVotes.get(i).equals(maxFreq)){
-                    tiebreakers.add(countedMapVotes.indexOf(i) + 1);
+            for(int i = 0; i<countedMapVotes.size(); i++){
+                if (countedMapVotes.get(i) == maxFreq){
+                    tiebreakers.add(i + 1);
                 }
             }
-            return tiebreakers.get(random.nextInt(1));
+            System.out.println("Tiebrakers: " + tiebreakers.toString());
+            return tiebreakers.get(random.nextInt(tiebreakers.size() -1 ));
         }
-
+        System.out.println("Scelgo mappa a caso");
         return random.nextInt(3) + 1;
     }
 
@@ -74,7 +72,14 @@ public class Game implements Runnable{
         /*for (Player player : model.getAllPlayers()) {
             model.mapVote(player);
 
+            Timer mapTimer = new Timer();
             isMapTimerOn = true;
+            TimerTask turnMapTimerOff = new TimerTask() {
+                @Override
+                public void run() {
+                    isMapTimerOn = false;
+                }
+            };
             mapTimer.schedule(turnMapTimerOff, mapTime);
             model.getCurrent().setReceivedInput(false);
             while (!model.getCurrent().isReceivedInput()){
@@ -82,10 +87,14 @@ public class Game implements Runnable{
                 if (!isMapTimerOn){
                     model.setPlayerAfk(player);
                     mapTimer.cancel();
+                    model.getCurrent().setReceivedInput(true);
                 }
             }
-        }*/
-        //model.setGameBoard(getMapVote());
+            mapTimer.cancel();
+        }
+        int vote = getMapVote();
+        System.out.println("Chosen map: " + vote);
+        model.setGameBoard(vote);*/
         model.setGameBoard(1);
         while(!model.getTurnManager().isGameOver()){
             Turn currentTurn = new Turn(model,model.getTurnManager().isFrenzy());

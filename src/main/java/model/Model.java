@@ -46,7 +46,7 @@ public class Model {
 
     private KeyMap keyMap;
 
-    private ArrayList<Integer> mapVotes;
+    private ArrayList<Integer> mapVotes = new ArrayList<>();
 
     private int skulls;
 
