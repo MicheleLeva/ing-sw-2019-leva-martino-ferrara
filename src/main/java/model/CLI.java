@@ -19,7 +19,8 @@ public class CLI {
     private static final String CONT_RED = "\u001B[41m";
     private static final String CONT_YELLOW = "\u001B[42m";
     private static final String CONT_BLUE = "\u001B[44m";
-    private static final String CONT_GREY= "\u001B[47m";
+    private static final String CONT_GREY = "\u001B[47m";
+    private static final String CONT_PURPLE = "\u001B[45m";
     private static final String CONT_TRANSPARENT = "\u001B[48m";
 
     public static String getColor(PlayerColor playerColor){
@@ -79,6 +80,7 @@ public class CLI {
         coloredMap = coloredMap.replaceAll("w",CONT_GREY + "  " +RESET);
         coloredMap = coloredMap.replaceAll("S","  ");
         coloredMap = coloredMap.replaceAll("G",CONT_RED +"  " +RESET); //todo trovare green
+        coloredMap = coloredMap.replaceAll("P", CONT_PURPLE + "  " +RESET);
         return coloredMap;
     }
     public static String buildCLIMap(String CLIMapPath)throws FileNotFoundException,IOException {

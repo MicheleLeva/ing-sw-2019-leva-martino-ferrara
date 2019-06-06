@@ -36,15 +36,18 @@ public class Run extends Action {
         else{
             dir = Direction.EAST;
         }
-
+        //obtain the selected square
         Square newSquare = currentSquare.getSide(dir);
-
+        //if the selected square is a wall, throw an exception
         if (newSquare == null){
             throw new WallException();
         }
         else{
+            //set the new player's position
             currentPlayer.setPosition(newSquare);
+            //notify all the players
             model.updateRun();
+            //action ended
             model.updateAction();
         }
     }

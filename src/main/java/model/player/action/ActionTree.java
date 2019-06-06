@@ -31,7 +31,8 @@ public class ActionTree {
     private int actionCounter;
     //number of action already perfomed by the player in his turn
     private int performedAction;
-
+    //true if the current player has ended his turn
+    private boolean doneTurn = false;
     private boolean isMoveEnded = true;
     //the builder takes the ID as its input and builds the corresponding action tree
     public ActionTree(int ID){
@@ -207,13 +208,19 @@ public class ActionTree {
     public boolean isTurnEnded(){
         return (performedAction == actionCounter);
     }
-
+    public boolean hasDoneTurn(){
+        return doneTurn;
+    }
+    public void setDoneTurn(boolean doneTurn){
+        this.doneTurn = doneTurn;
+    }
     private void resetLastAction(){
         lastAction = lastActionPerformed = root;
     }
     //called when the player has finished the whole action
     public void endAction(){
         performedAction++;
+        setMoveEnded(true);
         resetLastAction();
     }
     //returns the tree's ID

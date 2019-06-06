@@ -396,8 +396,8 @@ public class Model {
         PowerUp discardedPowerUp = player.getResources().removePowerUp(index);
         gameBoard.getDecks().getDiscardedPowerUpDeck().add(discardedPowerUp);
 
-        String toPlayer = "You discarded " + discardedPowerUp.getClass().getSimpleName() + discardedPowerUp.getAmmo();
-        String toOthers = player.getPlayerName() + " discarded " + discardedPowerUp.getClass().getSimpleName();
+        String toPlayer = "You discarded " + discardedPowerUp.toString();
+        String toOthers = player.getPlayerName() + " discarded " + discardedPowerUp.toString();
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
 
         spawnPlayer(player, discardedPowerUp.getAmmo());

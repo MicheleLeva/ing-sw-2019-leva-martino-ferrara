@@ -24,21 +24,21 @@ public class Grab extends Action {
         }
         else{
             if(!currentSquare.isSpawn){
-                //aggiungi ammo e avvisa tutti
+                //ammo card on the current player's square
                 AmmoCard currentAmmoCard = currentSquare.getAmmoCard();
+                //ammo corresponding to the ammocard drawn
                 Ammo currentAmmo = currentAmmoCard.getAmmo();
+                //current player's available ammo
                 Ammo currentPlayerAmmo = currentPlayer.getResources().getAvailableAmmo();
-
-                System.out.print("Ammo correnti: " +currentPlayerAmmo.toString());
-                System.out.print("\nAmmo sullo square: " +currentAmmo.toString());
-
+                //drawable ammo, based on current player's available ammo and the drawn ammocard
                 Ammo drawnAmmo = Checks.drawnAmmo(currentAmmo , currentPlayerAmmo);
-
+                //discard the grabbed ammocard
                 model.discardAmmo(currentSquare);
+                //if the ammocard allows the player to draw a powerup
                 if(currentAmmoCard.hasPowerUp() && !Checks.hasMaxPowerUp(currentPlayer)){
                     model.drawPowerUp(playerColor , 1);
                 }
-
+                //if the player can draw at least one ammo
                 if(drawnAmmo != null){
                     model.addAmmo(playerColor , drawnAmmo);
                     model.updateAction();
@@ -46,19 +46,21 @@ public class Grab extends Action {
                    // model.chooseAction(currentPlayer.getPlayerColor());
                 }
                 else{
+                    //the player cannot draw further ammo
                     throw new MaxAmmoException();
                 }
             }
             else{
-                //richiedi pagamento/scarta arma/...
-                //mostra armi che può pagare tra quelle nel punto generazione
+                //get spawn weapons
                 Weapon spawnWeapon[] = currentSquare.getWeapon();
+                //weapons the current player could pay, among the spawn ammo
                 ArrayList<Weapon> payableWeapon = new ArrayList<Weapon>(3);
                 for (int i = 0; i < 3; i++)
                 {
                     if(spawnWeapon[i] != null)
                     {
                         Ammo allAmmo = currentPlayer.getResources().getAllAmmo();
+                        //checks whether the player can pay the current weapon
                         if(allAmmo.isEnough(spawnWeapon[i].getPickUpCost()))
                         {
                             payableWeapon.add(spawnWeapon[i]);
@@ -66,17 +68,15 @@ public class Grab extends Action {
                     }
                 }
 
-                //for(Weapon weapon : payableWeapon)
-
                 if(payableWeapon.isEmpty())
                 {
+                    //if the player cannot pay any of the spawn weapon
                     throw new CannotPayException();
                 }
-                //seleziona arma
+                //asks the player to select one weapon
                 model.getCurrent().setPickUpableWeapon(payableWeapon);
                 model.showPickUpWeapons(payableWeapon,currentPlayer.getPlayerColor());
-                //paga(askpICKuPpAYMENT)
-                //se ha tre armi chiedi di scartare
+
             }
         }
     }

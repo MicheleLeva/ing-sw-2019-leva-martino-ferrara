@@ -72,20 +72,28 @@ public class Turn {
 
 
     public synchronized void startTurn() {
+        //gets the current turn number
         int currentTurnNumber = getModel().getTurnManager().getCurrentTurnNumber();
-        PlayerColor currentPlayerColor = getModel().getTurnManager().getCurrentPlayerColor();
-        Player currentPlayer = getModel().getTurnManager().getPlayerFromColor(currentPlayerColor);
-
+        //gets the current player
+        Player currentPlayer = getModel().getTurnManager().getCurrentPlayer();
+        //gets the current player's color
+        PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
+        //the player hasn't completed his turn yet
+        currentPlayer.getActionTree().setDoneTurn(false);
         if (currentTurnNumber == 1) {
             getModel().getTurnManager().startFirstTurn(); //serve?
 
             isTimerOn = true;
             timer.schedule(turnTimerOff, time); //timer thread
 
-            //Mostra al giocatore la lista comandi
-            getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), currentPlayerColor.toString() + "is viewing its commands.");
-
+            //Show the current player the command list
+            StringBuilder toOthers = new StringBuilder();
+            toOthers.append(currentPlayer.getColoredName());
+            toOthers.append(" is viewing his commands.");
+            getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), toOthers.toString());
+            //the current player draws two powerups
             getModel().drawPowerUp(currentPlayerColor, 10); //todo modificato per test
+            //requests the current player to discard one of his powerup
             getModel().requestPowerUpDiscard(currentPlayer);
             getModel().getCurrent().setReceivedInput(false);
             while (!getModel().getCurrent().isReceivedInput()) {
@@ -98,12 +106,15 @@ public class Turn {
                 }
             }
         }
-
-        while (!currentPlayer.getActionTree().isTurnEnded()){
+        //while the current player hasn't completed his turn
+        while (!currentPlayer.getActionTree().hasDoneTurn()){
             while (!currentPlayer.getActionTree().isActionEnded()){
-                //ottieni azioni figlie dall'albero e mostrale
-                getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), currentPlayer.getPlayerName()+" choosing action");
-                //Chiedi input
+                //show the current player his available actions
+                StringBuilder toOthers = new StringBuilder();
+                toOthers.append(currentPlayer.getColoredName());
+                toOthers.append(" is choosing between his actions.");
+                getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), toOthers.toString());
+                //requests the action input
                 getModel().chooseAction(currentPlayerColor);
                 while (!currentPlayer.getActionTree().isMoveEnded()){
                     System.out.print("");
