@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TetsSquare {
+public class TestSquare {
 
     Square squareTest;
 
@@ -26,7 +26,7 @@ public class TetsSquare {
 
         }
 
-        @Test @Ignore
+        @Test
         public void testSquare(){
         assertEquals(squareTest.getColor(),SquareColor.BLUE);
         assertEquals(squareTest.getSquareColumn(),3);

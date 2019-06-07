@@ -7,6 +7,8 @@ import model.turn.TurnManager;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static model.Model.runnableSquare;
 import static org.junit.Assert.*;
 
 
@@ -24,7 +26,7 @@ public class TestModel {
 
     @Before
     public void setUp() throws Exception {
-        map = new model.map.Map(3);
+        map = new model.map.Map(1);
         squares = map.getMap();
         player1 = new Player("player1",PlayerColor.BLUE);
         player2 = new Player("player2",PlayerColor.GREEN);
@@ -159,5 +161,35 @@ public class TestModel {
         assertEquals(visiblePlayers.size(),1);
     }
 
+    @Test
+    public void testRunnableSquare(){
+
+        ArrayList<Square> test = new ArrayList<>();
+
+        Square firstSquare = map.getSquareFromCoordinates(0, 0);
+
+        test.add(firstSquare);
+        assertEquals(runnableSquare(0, firstSquare), test);
+
+        test.add(map.getSquareFromCoordinates(0,1));
+        test.add(map.getSquareFromCoordinates(1,0));
+        assertTrue(test.containsAll(runnableSquare(1,firstSquare)));
+        assertEquals(test.size(), runnableSquare(1,firstSquare).size());
+
+        test.add(map.getSquareFromCoordinates(0, 2));
+        test.add(map.getSquareFromCoordinates(1, 1));
+        assertTrue(test.containsAll(runnableSquare(2, firstSquare)));
+        assertEquals(test.size(), runnableSquare(2, firstSquare).size());
+
+        test.add(map.getSquareFromCoordinates(1, 2));
+        test.add(map.getSquareFromCoordinates(2, 1));
+        assertTrue(test.containsAll(runnableSquare(3, firstSquare)));
+        assertEquals(test.size(), runnableSquare(3, firstSquare).size());
+
+        test.add(map.getSquareFromCoordinates(1,3));
+        test.add(map.getSquareFromCoordinates(2,2));
+        assertTrue(test.containsAll(runnableSquare(4, firstSquare)));
+        assertEquals(test.size(), runnableSquare(4, firstSquare).size());
+    }
 
 }

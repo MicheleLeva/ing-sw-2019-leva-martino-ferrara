@@ -21,7 +21,7 @@ public class TestRunnableSquare {
         firstSquare = map.getSquareFromCoordinates(0, 0);
 
     }
-    @Test
+    @Test //todo da togliere, messo in testmodel
     public void testRunnableSquare(){
 
         ArrayList<Square> test = new ArrayList<>();

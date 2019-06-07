@@ -18,7 +18,6 @@ public class Resources {
         weapon = new ArrayList<>();
         powerUp = new ArrayList<>();
         reloadableWeapon = new ArrayList<>();
-        //todo rivelere reloadable
     }
 
 
@@ -103,9 +102,9 @@ public class Resources {
 
     public void addToAvailableAmmo(int red, int blue, int yellow){
 
-        availableAmmo.setRed(red);
-        availableAmmo.setBlue(blue);
-        availableAmmo.setYellow(yellow);
+        availableAmmo.addRed(red);
+        availableAmmo.addBlue(blue);
+        availableAmmo.addYellow(yellow);
     }
 
     public void removeFromAvailableAmmo(int red, int blue, int yellow){

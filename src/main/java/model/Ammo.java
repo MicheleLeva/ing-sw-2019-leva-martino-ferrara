@@ -59,7 +59,7 @@ public class Ammo {
     }
 
     public void addYellow(int num){
-        int number = num + ammo.get(AmmoColor.BLUE);
+        int number = num + ammo.get(AmmoColor.YELLOW);
         setYellow(number);
     }
 

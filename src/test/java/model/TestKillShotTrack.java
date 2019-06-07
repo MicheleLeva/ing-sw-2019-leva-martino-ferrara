@@ -13,10 +13,19 @@ import static org.junit.Assert.*;
 public class TestKillShotTrack {
 
     private KillShotTrack killShotTrackTest;
+    private Player player1 ;
+    private Player player2;
+    private Player player3;
     private Model modelTest;
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<>();
     @Before
     public void initKillShotTrack(){
+        player1 = new Player("player1",PlayerColor.BLUE);
+        player2 = new Player("player2",PlayerColor.GREEN);
+        player3 = new Player("player3",PlayerColor.YELLOW);
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
         modelTest = new Model(players, 8);
         killShotTrackTest = new KillShotTrack(8, modelTest);
 
