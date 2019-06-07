@@ -37,7 +37,7 @@ public class Turn {
             isGrenadeTimerOn = false;
         }
     };
-    private long grenadeTime = 1000L*10; // 10 sec da ottenere da json
+    private long grenadeTime = 1000L*60; // 10 sec da ottenere da json
 
     private boolean isRespawnTimerOn = true;
     private long respawnTime = 1000L*10; // 10 sec da ottenere da json
@@ -117,7 +117,7 @@ public class Turn {
                 }
             }
             //grenadePeopleArray viene popolato da addDamage se il giocatore colpito possiede la granata
-            if (!getModel().getCurrent().getGrenadePeopleArray().isEmpty()){
+            /*if (!getModel().getCurrent().getGrenadePeopleArray().isEmpty()){
                 for (Player grenadePlayer : getModel().getCurrent().getGrenadePeopleArray()){
                     getModel().tagbackGranadeRequest(grenadePlayer.getPlayerColor(), currentPlayerColor);
                 }
@@ -136,7 +136,7 @@ public class Turn {
                     }
                 }
                 grenadeTimer.cancel();
-            }
+            }*/
 
         }
 

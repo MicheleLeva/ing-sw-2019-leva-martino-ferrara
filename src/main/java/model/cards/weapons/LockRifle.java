@@ -14,11 +14,6 @@ public class LockRifle extends WeaponOptional1 {
         super(name,pickUpCost,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,
                 optionalTargetsNumber1,model);
     }
-
-    public void start(Player player){
-        askBaseRequirements(player);
-    }
-
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -27,31 +22,34 @@ public class LockRifle extends WeaponOptional1 {
             getModel().getCurrent().incrementBaseCounter();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
         }
-        else
-            useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
+        else {
+            useBaseFireMode(currentPlayer, getModel().getCurrent().getSelectedBaseTargets());
+        }
     }
 
 
     public void askOptionalRequirements1(Player currentPlayer){
         if(getModel().getCurrent().getOptionalCounter1() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+            availableTargets.remove(getModel().getCurrent().getSelectedBaseTargets().get(0));
             getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
             getModel().getCurrent().incrementOptionalCounter1();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getOptionalTargetsNumber1());
         }
-        else
-            useOptionalFireMode1(currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
+        else {
+            useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
+
+        }
     }
 
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
         for (Player target : selectedTargets) {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseMarks());
+
         }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+
     }
 
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){

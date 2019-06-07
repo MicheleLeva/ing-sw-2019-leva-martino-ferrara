@@ -8,7 +8,9 @@ import model.map.Square;
 import model.player.Player;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Current {
                         ///For PowerUps///
@@ -65,7 +67,12 @@ public class Current {
     }
 
     public ArrayList<Player> getAllDamagedPlayer() {
-        return allDamagedPlayer;
+        Set<Player> set = new LinkedHashSet<Player>(getSelectedBaseTargets());
+        set.addAll(getSelectedAlternativeTargets());
+        set.addAll(getSelectedOptionalTargets1());
+        set.addAll(getSelectedOptionalTargets2());
+        ArrayList<Player> targets = new ArrayList<>(set);
+        return targets;
     }
 
     public void setAllDamagedPlayer(ArrayList<Player> allDamagedPlayer) {

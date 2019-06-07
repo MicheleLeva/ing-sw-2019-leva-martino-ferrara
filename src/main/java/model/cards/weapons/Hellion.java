@@ -59,6 +59,7 @@ public class Hellion extends WeaponAlternative {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+
             ArrayList<Player> finalList = new ArrayList<>();
             ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(1,currentPlayer));
             ArrayList<Player> availableTargets = new ArrayList<>(getModel().getVisiblePlayers(currentPlayer));

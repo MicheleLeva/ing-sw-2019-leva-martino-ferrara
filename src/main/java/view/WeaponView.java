@@ -40,27 +40,30 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     public void update(TargetsSelectionMessage message){
         ArrayList<Integer> selectedTargets = new ArrayList<>();
         int counter = message.getTargetsNumber();
-        int selection;
+        int selection = 1;
         String temp = message.getMessage();
-        if(temp.equals("Choose a target: \n")){
+        /*if(temp.equals("Choose a target: \n")){
             view.printMessage("No available targets for this fire mode \n");
             selectedTargets.add(-1);
 
             Event event = new TargetsSelectionEvent(view,selectedTargets);
+
             notify(event);
             }
 
-        else{
+        else{*/
+            System.out.println("targetsselection message  in weaponview");
             view.printMessage(message.getMessage());
-            while(counter>0){
+            while(counter>0 && selection !=0){
                 selection = view.inputInt();
                 selectedTargets.add(selection);
                 counter--;
             }
-
+            if(selectedTargets.contains(0))
+                selectedTargets.remove(0);
             Event event = new TargetsSelectionEvent(view,selectedTargets);
             notify(event);
-        }
+        //}
     }
 
     @Override
@@ -93,15 +96,18 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     }
     @Override
     public void update(WeaponPaymentMessage message) {
+        System.out.println("weaponpaymentmessage in weaponview");
         ArrayList<Integer> choices = new ArrayList<>();
         int counter = message.getSize();
-        int selection;
+        int selection = 1;
         view.printMessage(message.getMessage());
-        while (counter>0){
+        while (counter>0 && selection !=0){
             selection = view.inputInt();
             choices.add(selection);
             counter--;
         }
+        if(choices.contains(0))
+            choices.remove(0);
         Event event = new WeaponPaymentEvent(view, choices);
         notify(event);
     }
@@ -109,13 +115,15 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     public void update(ReloadPaymentMessage message){
         ArrayList<Integer> choices = new ArrayList<>();
         int counter = message.getSize();
-        int selection;
+        int selection = 1;
         view.printMessage(message.getMessage());
-        while (counter>0){
+        while (counter>0 && selection !=0){
             selection = view.inputInt();
             choices.add(selection);
             counter--;
         }
+        if(choices.contains(0))
+            choices.remove(0);
         Event event = new ReloadPaymentEvent(view, choices);
         notify(event);
     }

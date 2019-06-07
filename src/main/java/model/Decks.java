@@ -34,10 +34,10 @@ public class Decks {
         discardedPowerUpDeck = new ArrayList<>();
         createPowerUpDeck();
         createAmmoCardDeck();
-        addBasicWeapons();
-        addAlternativeWeapons();
+        //addBasicWeapons();
+       // addAlternativeWeapons();
         addOptionalWeapons1();
-        addOptionalWeapons2();
+        //addOptionalWeapons2();
     }
 
     //todo
@@ -299,7 +299,7 @@ public class Decks {
                 int optionalMarks1 = ((Long) result2.get("MARKS1")).intValue();
                 int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
                 int optionalTargetsNumber1 = ((Long) result2.get("TARGETSNUMBER1")).intValue();
-                if(result2.get("name").equals("LOCKRIFLE")) {
+                if(result2.get("name").equals("LOCK RIFLE")) {
                     weaponsDeck.add(new LockRifle(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Lockrifle.json"));
                 }

@@ -32,7 +32,9 @@ public class MarkCounter {
     }
 
     public int getMarkFromColor(PlayerColor playerColor){
+        if(markList.containsKey(playerColor))
         return markList.get(playerColor);
+        else return 0;
     }
 
     public String printMarkCounter(){

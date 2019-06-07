@@ -87,6 +87,7 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
     }
 
     public void notifyShoot(Player currentPlayer, ArrayList<Player> targets, ArrayList<Player> allPlayers){
+        System.out.println("notifyshoot 1 in gamenotifier");
         ArrayList<PlayerColor> targetsColor = new ArrayList<>();
         String toPlayer ="You shot: ";
         String toOpponent = currentPlayer.getPlayerName() +" shot you";
@@ -96,23 +97,29 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
             targetsColor.add(player.getPlayerColor());
             }
         for(Player player : allPlayers){
-            String name = player.getPlayerName();
             toOthers = toOthers+player.getPlayerName();
             int damage = player.getPlayerBoard().getDamageCounter().getDamageCounter().size();
             while(damage>0){
-                toOthers = toOthers+" *";
+                toOthers = toOthers+"*";
                 damage--;
             }
+            System.out.println("notifyshoot 2 in gamenotifier");
             HashMap<PlayerColor,Integer> marks = new HashMap<>(player.getPlayerBoard().getMarkCounter().getMarkCounter());
             for(PlayerColor color : marks.keySet()){
+                System.out.println("notifyshoot 3 in gamenotifier");
                 int num = marks.get(color);
+                System.out.println("notifyshoot 4 in gamenotifier");
                 while(num>0){
                     toOthers = toOthers+color.toString().charAt(0);
+                    num--;
+                    System.out.println("notifyshoot 5 in gamenotifier");
+
                 }
             }
             toOthers = toOthers+"\n";
         }
 
+        System.out.println("notifyshoot  in gamenotifier");
 
         PlayerMessage msgToPlayer = new GenericMessage(toPlayer+"\n"+toOthers);
         notify(msgToPlayer, currentPlayer.getPlayerColor());
@@ -121,14 +128,17 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage msgToOthers = new GenericMessage(toOthers);
 
         for(Player player : allPlayers){
-            if(targetsColor.contains(currentPlayer.getPlayerColor())){
+            if(!player.getPlayerColor().equals(currentPlayer.getPlayerColor())) {
+                if (targetsColor.contains(currentPlayer.getPlayerColor())) {
 
-                notify(msgToOpponent, player.getPlayerColor());
-            }
-            else{
-                notify(msgToOthers, player.getPlayerColor());
+                    notify(msgToOpponent, player.getPlayerColor());
+                } else {
+                    notify(msgToOthers, player.getPlayerColor());
+                }
             }
         }
+
+        currentPlayer.getActionTree().updateAction();
 
         //todo
         /*for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){

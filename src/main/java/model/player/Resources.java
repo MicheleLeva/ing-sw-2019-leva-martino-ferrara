@@ -65,7 +65,8 @@ public class Resources {
         String result = "";
 
         for (int i = 0; i < weapon.size(); i++){
-            result = result + i + " " + weapon.get(i).getWeaponName() +" | ";
+            int j = i+1;
+            result = result + j + " " + weapon.get(i).getWeaponName() +" | ";
         }
 
         return result;
@@ -151,10 +152,11 @@ public class Resources {
     public ArrayList<Weapon> getAllWeapon(){return this.weapon;}
 
     public String showReloadableWeapon(){
+        ArrayList<Weapon> reloadableWeapons = getReloadableWeapon();
         String result = "";
-        for (int i = 0; i < reloadableWeapon.size(); i++){
-            Weapon currentWeapon = reloadableWeapon.get(i);
-            result = result +(i + 1) +". " +currentWeapon.toString() +" Reload Cost: " +currentWeapon.getBaseCost().toString() +".\n";
+        for (int i = 0; i < reloadableWeapons.size(); i++){
+            Weapon currentWeapon = reloadableWeapons.get(i);
+            result = result +(i + 1) +". " +currentWeapon.getWeaponName() +" Reload Cost: " +currentWeapon.getBaseCost() +".\n";
         }
         return result;
     }

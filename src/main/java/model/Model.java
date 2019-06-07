@@ -4,6 +4,7 @@ import controller.Checks;
 import model.cards.*;
 import model.cards.powerups.PowerUp;
 import model.cards.powerups.TagbackGrenade;
+import model.cards.powerups.TargetingScope;
 import model.cards.weapons.FireMode;
 import model.cards.weapons.Weapon;
 import model.cards.weapons.*;
@@ -589,14 +590,14 @@ public class Model {
                 opponentList = opponentList + allPlayersCopy.get(i).getPlayerName() + " ";
             }
         }
-        System.out.println("Sto facendo la newton");
         powerUpNotifier.chooseNewtonOpponent(playerColor, opponentList);
     }
 
     public void chooseNewtonSquare(PlayerColor playerColor, Player opponent) {
         Square currentOpponentSquare = opponent.getPosition();
-        ArrayList<Square> possibleSquare = runnableSquare(2, currentOpponentSquare);
+        ArrayList<Square> possibleSquare = getSquaresInCardinal2(opponent);
         current.setSquare(possibleSquare);
+        possibleSquare.remove(currentOpponentSquare);
         String squareList = "";
         for (int i = 0; i < possibleSquare.size(); i++) {
             squareList = squareList + possibleSquare.get(i).getID() + " ";
@@ -621,6 +622,38 @@ public class Model {
 
     public void selectTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber) {
         String opponentList = "";
+        Player currentPlayer = getPlayer(playerColor);
+        Weapon weapon = current.getSelectedWeapon();
+        String effectType = weapon.getWeaponTree().getLastAction().getData().getType();
+        if(availableTargets.isEmpty()){
+            if(weapon.getWeaponTree().getRoot().getChildren().contains(weapon.getWeaponTree().getLastAction())){
+                getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+                weapon.getWeaponTree().resetAction();
+                resetCurrent();
+                getCurrent().setSelectedWeapon(weapon);
+                showFireModes(playerColor,weapon);
+                return;
+            }
+            else{
+                getGameNotifier().notifyGeneric("No available targets with this Fire Mode you didn't hit anybody");
+                switch (effectType){
+                    case "base":
+                        weapon.askBaseRequirements(currentPlayer);
+                        return;
+                    case "alternative":
+                        ((WeaponAlternative) weapon).askAlternativeRequirements(currentPlayer);
+                        return;
+                    case "optional1":
+
+                        ((WeaponOptional1) weapon).askOptionalRequirements1(currentPlayer);
+                        return;
+                    case "optional2":
+                        ((WeaponOptional2) weapon).askOptionalRequirements2(currentPlayer);
+                        return;
+                }
+
+            }
+        }
         for (int i = 0; i < availableTargets.size(); i++) {
             if (availableTargets.get(i).getPlayerColor() != playerColor) {
                 current.addOpponent(availableTargets.get(i));
@@ -707,11 +740,12 @@ public class Model {
         Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         resetCurrent();
-        getCurrent().setReceivedInput(true);
+        //todo controllare
+        //getCurrent().setReceivedInput(true);
+        updateAction();
     }
 
     public void askPickUpPayment(Player currentPlayer, Weapon weapon){
-        System.out.println("Inizio askpickup");
 
         Ammo fireModeCost;
         int fireRED;
@@ -773,12 +807,8 @@ public class Model {
         fireRED = fireRED-powerUpRED;
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
-        System.out.println("allammo1"+currentPlayer.getResources().getAllAmmo());
         Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
-        System.out.println("da pagare"+ammo);
-        System.out.println("allammo2"+currentPlayer.getResources().getAllAmmo());
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
-        System.out.println("allammo3"+currentPlayer.getResources().getAllAmmo());
 
         //todo scarta arma
 
@@ -793,9 +823,6 @@ public class Model {
         }
 
 
-        System.out.println("ammo: "+ currentPlayer.getResources().getAvailableAmmo());
-        System.out.println("powerups " + currentPlayer.getResources().showpowerUp());
-        System.out.println("weapons: " + currentPlayer.getResources().showWeapon());
         resetCurrent();
         updateAction();
     }
@@ -844,9 +871,11 @@ public class Model {
         fireRED = fireRED-powerUpRED;
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
-        currentPlayer.getResources().removeFromAvailableAmmo(new Ammo(fireRED,fireBLUE,fireYELLOW));
+        Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
+        currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         current.getSelectedPaymentPowerUps().clear();
         current.getAvailablePaymentPowerUps().clear();
+
     }
 
     public void askFireModePayment(Player currentPlayer,Weapon weapon,String effectType){
@@ -884,7 +913,21 @@ public class Model {
                 getCurrent().addAvailablePaymentPowerUps(powerUp);
         }
 
-
+        if(getCurrent().getAvailablePaymentPowerUps().isEmpty()){
+            payFireMode(currentPlayer,weapon);
+            switch (effectType){
+                case("alternative"):
+                    ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
+                    break;
+                case("optional1"):
+                    ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
+                    break;
+                case("optional2"):
+                    ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
+                    break;
+            }
+            return;
+        }
         weaponNotifier.askWeaponPayment(currentPlayer.getPlayerColor(),getCurrent().getAvailablePaymentPowerUps());
     }
 
@@ -935,10 +978,20 @@ public class Model {
     }
 
     public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
+        weapon.unload();
         weapon.getWeaponTree().updateLastActionPerformed();
+
         if (weapon.getWeaponTree().isActionEnded()) {
             weapon.getWeaponTree().resetAction();
-            powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor());
+            for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
+                if(powerUp instanceof TargetingScope){
+                    powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor());
+                    return;
+                }
+                else{
+                    notifyShoot(currentPlayer);
+                }
+            }
         }
         else
             weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon);
@@ -969,7 +1022,7 @@ public class Model {
 
     public void addAmmo(PlayerColor playerColor, Ammo ammo) {
         Player currentPlayer = getPlayer(playerColor);
-        currentPlayer.getResources().addAmmo(ammo);
+        currentPlayer.getResources().addToAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         gameNotifier.notifyDrawAmmo(playerColor, currentPlayer.getPlayerName(), ammo.toString());
     }
 
@@ -1045,6 +1098,9 @@ public class Model {
 
     public ArrayList<Player> getAllPlayers() {
         ArrayList<Player> def = new ArrayList<Player>(players.values());
+        for(Player player : players.values())
+            if(player.getPosition() == null)
+                def.remove(player);
         return def;
     }
 
@@ -1112,9 +1168,6 @@ public class Model {
                 currentPlayer.getPosition().getWeapon()[i] = currentPlayer.getResources().getAllWeapon().get(input);
         }
         currentPlayer.getResources().getAllWeapon().remove(input);
-        System.out.println("ammo: "+ currentPlayer.getResources().getAvailableAmmo());
-        System.out.println("powerups " + currentPlayer.getResources().showpowerUp());
-        System.out.println("weapons: " + currentPlayer.getResources().showWeapon());
         resetCurrent();
         updateAction();
     }

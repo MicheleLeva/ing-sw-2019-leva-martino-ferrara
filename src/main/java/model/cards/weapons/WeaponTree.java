@@ -100,7 +100,7 @@ public class WeaponTree {
             if(lastActionPerformed.getChildren().isEmpty())
                 return true;
             else if(lastActionPerformed.getChildren().size()==1 &&
-                    lastActionPerformed.getChildren().get(0).getData().getType()=="end")
+                    lastActionPerformed.getChildren().get(0).getData().getType().equals("end"))
                 return true;
             else
                 return false;

@@ -42,7 +42,7 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
                 listeners.forEach(l -> l.update(targetingScopeEvent));
                 break;
             case "TargetingScopeSelectionEvent":
-                TargetingScopeSelectionEvent targetingScopeSelectionEvent = new TargetingScopeSelectionEvent(view, inputs[1].charAt(0));
+                TargetingScopeSelectionEvent targetingScopeSelectionEvent = new TargetingScopeSelectionEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(targetingScopeSelectionEvent));
                 break;
             case "TagbackGrenadeEvent":

@@ -3,10 +3,11 @@ package model.exchanges.events;
 import view.View;
 
 public class WeaponSelectionEvent extends Event {
-    private int index;
+    private final int index;
 
     public WeaponSelectionEvent(View view, int index) {
         super(view);
+        this.index = index;
     }
 
     public int getIndex() {
