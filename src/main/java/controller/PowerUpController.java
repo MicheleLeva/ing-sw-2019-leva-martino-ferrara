@@ -22,6 +22,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(ChoosePowerUpEvent choosePowerUpEvent) {
+        if (getModel().getPlayer(choosePowerUpEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(choosePowerUpEvent.getPlayerColor());
         int input = choosePowerUpEvent.getInput();
 
@@ -52,6 +55,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(ChooseTeleporterSquareEvent chooseTeleporterSquareEvent) {
+        if (getModel().getPlayer(chooseTeleporterSquareEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         int input = chooseTeleporterSquareEvent.getInput();
         ArrayList<Integer> allIDs = getModel().getGameBoard().getMap().getAllIDs();
 
@@ -68,6 +74,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(ChooseNewtonOpponentEvent chooseNewtonOpponentEvent) {
+        if (getModel().getPlayer(chooseNewtonOpponentEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         PlayerColor currentPlayerColor = chooseNewtonOpponentEvent.getPlayerColor();
         int input = chooseNewtonOpponentEvent.getInput();
 
@@ -84,6 +93,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(ChooseNewtonSquareEvent chooseNewtonSquareEvent) {
+        if (getModel().getPlayer(chooseNewtonSquareEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         PlayerColor currentPlayerColor = chooseNewtonSquareEvent.getPlayerColor();
         int input = chooseNewtonSquareEvent.getInput();
         Player opponent = getModel().getCurrent().getOpponent().get(0);
@@ -99,6 +111,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(TargetingScopeEvent event) {
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         char choice = event.getChoice();
         if (choice != 'Y' && choice != 'N') {
             event.getView().reportError("Invalid input");
@@ -115,6 +130,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
     }
     @Override
     public void update(TargetingScopeSelectionEvent event) {
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         int input = event.getInput();
 
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
@@ -153,9 +171,12 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(TagbackGrenadeEvent tagbackGrenadeEvent) {
+        if (getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         Player player = getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor());
         ArrayList<PowerUp> powerUps = player.getResources().getPowerUp();
-        getModel().getCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
+        getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
         if (tagbackGrenadeEvent.getInput() == '0'){
             return;
         }
@@ -174,6 +195,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     @Override
     public void update(DiscardPowerUpEvent discardPowerUpEvent){
+        if (getModel().getPlayer(discardPowerUpEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(discardPowerUpEvent.getPlayerColor());
         int input = discardPowerUpEvent.getInput();
 

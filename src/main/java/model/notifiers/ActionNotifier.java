@@ -8,18 +8,16 @@ public class ActionNotifier extends ViewObservable<PlayerMessage> {
 
     public void chooseAction(PlayerColor playerColor , String availableAction){
         String message = "Choose an action\n";
-        message = message +availableAction +".\n";
+        message = message + availableAction;
         PlayerMessage playerMessage = new ChooseActionMessage(message);
         notify(playerMessage, playerColor);
     }
 
     public void setPlayerAfk(PlayerColor playerColor){
         String message = "You're afk. If you want to go back to the game insert a character and press enter";
-        String toOthers = playerColor.toString() + "is afk. Their turn will be skipped";
         PlayerMessage playerMessage = new SetAfkMessage(message);
-        PlayerMessage messageToOthers = new GenericMessage(toOthers);
+
         notify(playerMessage, playerColor);
-        notifyOthers(messageToOthers, playerColor);
     }
 
     public void mapVote(PlayerColor playerColor){

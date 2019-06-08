@@ -73,7 +73,7 @@ public class Resources {
     }
 
     public String showAmmo(){
-        return ("Available Ammo:\n" +availableAmmo.toString());
+        return ("Available Ammo: " +availableAmmo.toString());
     }
 
     public ArrayList<PowerUp> getPowerUp(){

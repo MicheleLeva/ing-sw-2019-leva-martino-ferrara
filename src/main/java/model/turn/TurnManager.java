@@ -58,8 +58,32 @@ public class TurnManager {
     public synchronized void update(){
         allPlayers.get(currentPlayerIndex).getActionTree().resetAction();
 
-        //todo controllare se ci sono almeno 3 giocatori
-        //todo passare al prossimo giocatore non afk
+        int count = 0;
+        for (Player player : getAllPlayers()){
+            if (player.isAfk()){
+                count++;
+            }
+        }
+
+        if (count > 2){ //todo modificare
+            System.out.println(count + " AFK players!");
+            System.out.println("Game over!");
+            setGameOver(true);
+            return;
+        }
+        System.out.println(count + " AFK players!");
+
+        getNextPlayer();
+        while (allPlayers.get(currentPlayerIndex).isAfk()){
+            System.out.println(allPlayers.get(currentPlayerIndex).getPlayerName() + "is afk, getting next player");
+            getNextPlayer();
+        }
+
+        currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();
+    }
+
+    public void getNextPlayer(){
+
         if (currentPlayerIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
         {
             updateCurrentTurnNumber();
@@ -70,7 +94,6 @@ public class TurnManager {
         {
             currentPlayerIndex++;
         }
-        currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();
     }
 
     public ArrayList<Player> getAllPlayers(){

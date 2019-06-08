@@ -38,8 +38,6 @@ public class ActionView extends Observable<Event> implements ActionUpdate {
     @Override
     public void update(SetAfkMessage setAfkMessage){
         view.printMessage(setAfkMessage.getMessage());
-        view.getScanner().nextLine();
-        System.out.println();
         Event event = new QuitAfkEvent(view, view.inputChar());
         this.notify(event);
     }

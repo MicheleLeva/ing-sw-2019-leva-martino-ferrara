@@ -21,6 +21,9 @@ public class ActionController extends Controller implements ActionObserver {
     }
 
     public void update(ActionEvent actionEvent){
+        if (getModel().getPlayer(actionEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         PlayerColor playerColor = actionEvent.getPlayerColor();
         View view = actionEvent.getView();
         char move = actionEvent.getInput();
@@ -74,13 +77,16 @@ public class ActionController extends Controller implements ActionObserver {
 
     @Override
     public void update(VoteMapEvent voteMapEvent) {
+        if (getModel().getPlayer(voteMapEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         int input = Character.getNumericValue(voteMapEvent.getInput());
         if (input < 1 || input > 4){
             voteMapEvent.getView().reportError("Invalid input!");
             getModel().mapVote(getModel().getPlayer(voteMapEvent.getPlayerColor()));
         } else {
             getModel().getMapVotes().add(input);
-            getModel().getCurrent().setReceivedInput(true);
+            getModel().getTurnCurrent().setReceivedInput(true);
         }
     }
 }

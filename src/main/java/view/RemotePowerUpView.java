@@ -16,6 +16,10 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
         this.view = view;
     }
 
+    public void setClientConnection(ClientConnection clientConnection) {
+        this.clientConnection = clientConnection;
+    }
+
     public void stringToMessage(String[] inputs){
 
         switch(inputs[0]) {

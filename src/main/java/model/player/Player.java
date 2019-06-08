@@ -124,22 +124,26 @@ public class Player {
     public String printPlayerInfo(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getColoredName());
-        stringBuilder.append("\n");
+        stringBuilder.append(" | ");
         stringBuilder.append("Position: ");
-        stringBuilder.append(getPosition().getID());
-        stringBuilder.append("\n");
+        if (getPosition() == null){
+            stringBuilder.append("Not spawned yet.");
+        } else {
+            stringBuilder.append(getPosition().getID());
+        }
+        stringBuilder.append(" | ");
         stringBuilder.append(getPlayerBoard().getDamageCounter().printDamageCounter());
-        stringBuilder.append("\n");
+        stringBuilder.append(" | ");
         stringBuilder.append(getPlayerBoard().getMarkCounter().printMarkCounter());
-        stringBuilder.append("\n");
+        stringBuilder.append(" | ");
         stringBuilder.append("Points: ");
         stringBuilder.append(getPlayerBoard().getPoints().printPoints());
-        stringBuilder.append("\n");
+        stringBuilder.append(" | ");
         stringBuilder.append(getResources().showAmmo());
-        stringBuilder.append("\n");
+        stringBuilder.append(" | ");
         stringBuilder.append("Unloaded weapons: ");
         stringBuilder.append(getResources().printUnloadedWeapons());
-        stringBuilder.append("\n");
+        stringBuilder.append(" | ");
 
         return stringBuilder.toString();
     }

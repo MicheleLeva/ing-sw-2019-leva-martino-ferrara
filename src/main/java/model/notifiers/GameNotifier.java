@@ -162,6 +162,16 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         notify(playerMessage);
     }
 
+    public void notifyPlayer(String message, PlayerColor playerColor){
+        PlayerMessage playerMessage = new GenericMessage(message);
+        notify(playerMessage, playerColor);
+    }
+
+    public void notifyOtherPlayers(String message, PlayerColor playerColor){
+        PlayerMessage playerMessage = new GenericMessage(message);
+        notifyOthers(playerMessage, playerColor);
+    }
+
     public void notifyGrenade(PlayerColor user, PlayerColor victim){
         String toOthers = user.toString() + "has used a grenade on" + victim.toString();
         String toPlayer = "You used a grenade on" + victim.toString();

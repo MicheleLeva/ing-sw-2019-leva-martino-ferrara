@@ -14,7 +14,7 @@ public class TagbackGrenade extends PowerUp {
     }
     @Override
     public void usePowerUp(PlayerColor playerColor) throws TagbackGrenadeException {
-        if (!getModel().getCurrent().getGrenadePeopleArray().isEmpty()) {
+        if (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()) {
             Player player = getModel().getPlayer(playerColor);
             getModel().addMark(playerColor, getModel().getTurnManager().getCurrentPlayerColor(), 1);
             getModel().getGameNotifier().notifyGrenade(playerColor, getModel().getTurnManager().getCurrentPlayerColor());

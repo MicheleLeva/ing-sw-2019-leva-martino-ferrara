@@ -41,6 +41,8 @@ public class Model {
 
     private Current current;
 
+    private TurnCurrent turnCurrent;
+
     private WeaponNotifier weaponNotifier;
 
     private ScoreManager scoreManager;
@@ -93,6 +95,7 @@ public class Model {
 
         this.skulls = skulls;
         current = new Current();
+        turnCurrent = new TurnCurrent();
 
         keyMap = new KeyMap();
 
@@ -112,6 +115,10 @@ public class Model {
 
     public TurnManager getTurnManager() {
         return turnManager;
+    }
+
+    public TurnCurrent getTurnCurrent() {
+        return turnCurrent;
     }
 
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare) {
@@ -402,7 +409,7 @@ public class Model {
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
 
         spawnPlayer(player, discardedPowerUp.getAmmo());
-        getCurrent().setReceivedInput(true);
+        getTurnCurrent().setReceivedInput(true);
 
     }
 
@@ -564,6 +571,8 @@ public class Model {
         String availableAction = currentPlayer.getActionTree().availableAction();
         currentPlayer.getActionTree().setMoveEnded(false);
         actionNotifier.chooseAction(playerColor, availableAction);
+        String toOthers = currentPlayer.getColoredName() + " is choosing between his actions.";
+        getGameNotifier().notifyOtherPlayers(toOthers, playerColor);
 
     }
 
@@ -1032,8 +1041,8 @@ public class Model {
             String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
             weaponNotifier.askReload(playerColor, reloadableWeapon);
         } else {
-            getCurrent().setFinishedReloading(true);
-            getCurrent().setReceivedInput(true);
+            getTurnCurrent().setFinishedReloading(true);
+            getTurnCurrent().setReceivedInput(true);
         }
     }
 
@@ -1069,7 +1078,7 @@ public class Model {
                 }
             }
         if (getPlayer(opponentColor).hasTagBackGrenade()) {
-            getCurrent().getGrenadePeopleArray().add(getPlayer(opponentColor));
+            getTurnCurrent().getGrenadePeopleArray().add(getPlayer(opponentColor));
         }
         }
 
@@ -1114,9 +1123,12 @@ public class Model {
     public void setPlayerAfk(Player player){
         player.setAfk(true);
         getActionNotifier().setPlayerAfk(player.getPlayerColor());
+        String toOthers = player.getPlayerColor().toString() + " is afk. Their turn will be skipped";
+        getGameNotifier().notifyOtherPlayers(toOthers, player.getPlayerColor());
     }
 
     public void wakeUpPlayer(Player player){
+        System.out.println("Waking up " + player.getPlayerName());
         player.setAfk(false);
     }
 

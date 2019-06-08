@@ -27,7 +27,7 @@ public class Turn {
             isTimerOn = false;
         }
     };
-    private long time = 1000L*300; // 5 minuti
+    private long time = 1000L*300; // 5 minuti //todo modificato per test
 
     private Timer grenadeTimer = new Timer();
     private boolean isGrenadeTimerOn = true;
@@ -86,24 +86,20 @@ public class Turn {
             getModel().drawPowerUp(currentPlayerColor, 2); //todo modificato per test
             //requests the current player to discard one of his powerup
             getModel().requestPowerUpDiscard(currentPlayer);
-            getModel().getCurrent().setReceivedInput(false);
-            while (!getModel().getCurrent().isReceivedInput()) {
+            getModel().getTurnCurrent().setReceivedInput(false);
+            while (!getModel().getTurnCurrent().isReceivedInput()) {
                 System.out.print("");
                 if (!isTimerOn) {
                     getModel().discardPowerUp(currentPlayer, random.nextInt(2));
                     getModel().setPlayerAfk(currentPlayer);
-                    getModel().getTurnManager().update(); //da mettere nell'end turn
                     return;
                 }
             }
         }
         //while the current player hasn't completed his turn
         while (!currentPlayer.getActionTree().hasDoneTurn()){
+
             //show the current player his available actions
-            StringBuilder toOthers = new StringBuilder();
-            toOthers.append(currentPlayer.getColoredName());
-            toOthers.append(" is choosing between his actions.");
-            getModel().printMessage(currentPlayerColor, currentPlayer.getActionTree().availableAction(), toOthers.toString());
             //requests the action input
             getModel().chooseAction(currentPlayerColor);
             while (!currentPlayer.getActionTree().isMoveEnded()){
@@ -117,8 +113,8 @@ public class Turn {
                 }
             }
             //grenadePeopleArray viene popolato da addDamage se il giocatore colpito possiede la granata
-            /*if (!getModel().getCurrent().getGrenadePeopleArray().isEmpty()){
-                for (Player grenadePlayer : getModel().getCurrent().getGrenadePeopleArray()){
+            /*if (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
+                for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
                     getModel().tagbackGranadeRequest(grenadePlayer.getPlayerColor(), currentPlayerColor);
                 }
                 isGrenadeTimerOn = true;
@@ -126,13 +122,13 @@ public class Turn {
 
                 //finchè l'array è popolato continuo con il timer
                 //l'input di un grenade player lo fa rimuovere dall'array
-                while (!getModel().getCurrent().getGrenadePeopleArray().isEmpty()){
+                while (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
                     System.out.print("");
                     if (!isGrenadeTimerOn){
-                        for (Player grenadePlayer : getModel().getCurrent().getGrenadePeopleArray()){
+                        for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
                             getModel().setPlayerAfk(grenadePlayer);
                         }
-                        getModel().getCurrent().getGrenadePeopleArray().clear();
+                        getModel().getTurnCurrent().getGrenadePeopleArray().clear();
                     }
                 }
                 grenadeTimer.cancel();
@@ -175,14 +171,18 @@ public class Turn {
                 stringBuilder.append("\n");
             }
         }
-        getModel().getGameNotifier().notifyGeneric(stringBuilder.toString());
+        for (Player player : model.getAllPlayers()){
+            if (!player.isAfk()){
+                getModel().getGameNotifier().notifyPlayer(stringBuilder.toString(), player.getPlayerColor());
+            }
+        }
     }
 
     public void endTurn(){
 
         //Respawn
-        if (!getModel().getCurrent().getDeadPlayers().isEmpty() && !isFrenzy){
-            for (Player deadPlayer : getModel().getCurrent().getDeadPlayers()) {
+        if (!getModel().getTurnCurrent().getDeadPlayers().isEmpty() && !isFrenzy){
+            for (Player deadPlayer : getModel().getTurnCurrent().getDeadPlayers()) {
                 getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
                 getModel().requestPowerUpDiscard(deadPlayer);
 
@@ -196,13 +196,13 @@ public class Turn {
                 isRespawnTimerOn = true;
                 respawnTimer.schedule(turnRespawnTimerOff, respawnTime);
 
-                getModel().getCurrent().setReceivedInput(false);
-                while (!getModel().getCurrent().isReceivedInput()){
+                getModel().getTurnCurrent().setReceivedInput(false);
+                while (!getModel().getTurnCurrent().isReceivedInput()){
                     System.out.print("");
                     if (!isRespawnTimerOn){
                         getModel().discardPowerUp(deadPlayer, random.nextInt(deadPlayer.getResources().getPowerUp().size()));
                         getModel().setPlayerAfk(deadPlayer);
-                        getModel().getTurnManager().update();
+                        getModel().getTurnCurrent().setReceivedInput(true);
                     }
                 }
                 respawnTimer.cancel();
@@ -219,7 +219,7 @@ public class Turn {
         //Replace Ammo and Weapon cards on the map
         getModel().getGameBoard().setCardsOnMap();
 
-        //
+        //updating turn number
         getModel().getTurnManager().update();
     }
 }

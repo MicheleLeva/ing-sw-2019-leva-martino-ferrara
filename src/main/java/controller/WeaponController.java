@@ -28,6 +28,9 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
     @Override
     public void update(WeaponSelectionEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         int input = event.getIndex();
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         if (input < 1 || input > currentPlayer.getResources().getReloadedWeapon().size()){
@@ -50,6 +53,9 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     @Override
     public void update(ReloadEndTurnEvent reloadEndTurnEvent){
+        if (getModel().getPlayer(reloadEndTurnEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         char input = reloadEndTurnEvent.getInput();
         PlayerColor currentPlayerColor = reloadEndTurnEvent.getPlayerColor();
 
@@ -60,7 +66,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
 
         if (input == 'N'){
-            getModel().getCurrent().setFinishedReloading(true);
+            getModel().getTurnCurrent().setFinishedReloading(true);
         }
         else{
             getModel().requestWeaponReload(currentPlayerColor);
@@ -69,6 +75,9 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     @Override
     public void update(WeaponReloadEvent weaponReloadEvent){
+        if (getModel().getPlayer(weaponReloadEvent.getPlayerColor()).isAfk()){
+            return;
+        }
         int input = weaponReloadEvent.getInput();
         PlayerColor currentPlayerColor = weaponReloadEvent.getPlayerColor();
         Player currentPlayer = getModel().getPlayer(currentPlayerColor);
@@ -85,6 +94,9 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
     @Override
     public void update(OptionalFireModesEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         int input = event.getInput();
@@ -124,6 +136,9 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
     @Override
     public void update(TargetsSelectionEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String type = weapon.getWeaponTree().getLastAction().getData().getType();
@@ -157,6 +172,9 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
     @Override
     public void update(ChooseWeaponSquareEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         int input = event.getInput();
         Square square = getModel().getCurrent().getWeaponSquareFromID(input);
@@ -190,6 +208,9 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     @Override
     public void update(WeaponPaymentEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String error;
@@ -241,6 +262,9 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     @Override
     public void update(ReloadPaymentEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String error;
@@ -266,6 +290,9 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
     @Override
     public void update(PickUpPaymentEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedPickUpWeapon();
         String error;
@@ -292,6 +319,9 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
     @Override
     public void update(ChoosePickUpWeaponEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         int input = event.getInput();
         if(input < 1 || input > getModel().getCurrent().getPickUpableWeapon().size()){
             String error = "Invalid input.\n";
@@ -306,6 +336,9 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     @Override
     public void update(WeaponSwapEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
         int input = event.getInput();
         if(input < 1 || input > 3){
             String error = "Invalid input.\n";

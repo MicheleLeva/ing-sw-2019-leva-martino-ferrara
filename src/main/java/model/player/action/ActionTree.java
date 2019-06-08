@@ -173,8 +173,10 @@ public class ActionTree {
         result.append("Your available actions: \n");
         if(!isTurnEnded()) {
             result.append(availableAction(lastActionPerformed).replaceAll("root",""));
-            result.append(" |Use PowerUp| |End action|");
-            result.append("Left actions: " + (actionCounter - performedAction) + "\n");
+            result.append(" |Use PowerUp| |End action| ");
+            result.append("Left actions: ");
+            result.append((actionCounter - performedAction));
+            result.append("\n");
         }
         else {
             result.append("|Reload|");
@@ -189,7 +191,8 @@ public class ActionTree {
     private String availableAction(Node<String> node) {
     StringBuilder stringBuilder = new StringBuilder();
      for (int i = 0; i < node.getChildren().size(); i++){
-         stringBuilder.append(node.getChildren().get(i).getData() +" | ");
+         stringBuilder.append(node.getChildren().get(i).getData());
+         stringBuilder.append(" | ");
      }
      return stringBuilder.toString();
 

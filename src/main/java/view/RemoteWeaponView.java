@@ -20,6 +20,10 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
         this.view = view;
     }
 
+    public void setClientConnection(ClientConnection clientConnection) {
+        this.clientConnection = clientConnection;
+    }
+
     public void stringToMessage(String[] inputs){
 
         switch(inputs[0]) {
