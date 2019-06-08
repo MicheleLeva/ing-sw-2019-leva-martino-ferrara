@@ -141,6 +141,7 @@ public class Turn {
 
 
     public void notifyTurn(){
+        System.out.println("Notify turn");
         //print the game status
         StringBuilder stringBuilder  = new StringBuilder();
         //print current turn number
@@ -171,9 +172,10 @@ public class Turn {
                 stringBuilder.append("\n");
             }
         }
-        for (Player player : model.getAllPlayers()){
+        for (Player player : model.getEachPlayer()){
             if (!player.isAfk()){
                 getModel().getGameNotifier().notifyPlayer(stringBuilder.toString(), player.getPlayerColor());
+                System.out.println("Messaggio al giocatore");
             }
         }
     }

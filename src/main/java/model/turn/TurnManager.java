@@ -11,7 +11,7 @@ public class TurnManager {
 
     private  ArrayList<Player> allPlayers; //Lista di tutti i giocatori in ordine di turno
 
-    private  static PlayerColor currentPlayerColor;
+    private static PlayerColor currentPlayerColor;
 
     private  int currentPlayerIndex;
 
@@ -71,11 +71,13 @@ public class TurnManager {
             setGameOver(true);
             return;
         }
-        System.out.println(count + " AFK players!");
+
+        if (count > 0) {
+            System.out.println(count + " AFK players!");
+        }
 
         getNextPlayer();
         while (allPlayers.get(currentPlayerIndex).isAfk()){
-            System.out.println(allPlayers.get(currentPlayerIndex).getPlayerName() + "is afk, getting next player");
             getNextPlayer();
         }
 

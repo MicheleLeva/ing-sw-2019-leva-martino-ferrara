@@ -1115,11 +1115,19 @@ public class Model {
 
 
     public ArrayList<Player> getAllPlayers() {
-        ArrayList<Player> def = new ArrayList<Player>(players.values());
+        ArrayList<Player> def = new ArrayList<>(players.values());
         for(Player player : players.values())
             if(player.getPosition() == null)
                 def.remove(player);
         return def;
+    }
+
+    public List<Player> getEachPlayer(){
+        ArrayList<Player> temp = new ArrayList<>();
+        for(Player player : players.values()){
+            temp.add(player);
+        }
+        return temp;
     }
 
     public void targetingScopeTargets(PlayerColor playerColor, ArrayList<Player> damagedPlayers){
