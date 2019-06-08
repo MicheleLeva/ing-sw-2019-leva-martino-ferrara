@@ -16,12 +16,5 @@ public class Shoot extends Action {
         if(currentPlayer.getResources().getReloadedWeapon().isEmpty())
             throw new NoReloadableWeaponsException();
         model.showWeaponCards(playerColor);
-        /*for(Weapon weapon : weapons) {
-            messages = messages+count+")"+weapons.get(count).getWeaponName()+"\n";
-            count++;
-        }*/
-        //model.getWeaponNotifier().notifyShowWeaponCards(messages,currentPlayer.getPlayerName());
-
-        //todo chiamare gli update in model (shoot, action, turn)
     }
 }

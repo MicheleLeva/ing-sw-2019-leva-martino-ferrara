@@ -115,9 +115,9 @@ public class Resources {
     }
 
     public void removeFromAvailableAmmo(Ammo ammo){
-        availableAmmo.setRed(-ammo.getRed());
-        availableAmmo.setBlue(-ammo.getBlue());
-        availableAmmo.setYellow(-ammo.getYellow());
+        availableAmmo.setRed(availableAmmo.getRed()-ammo.getRed());
+        availableAmmo.setBlue(availableAmmo.getBlue()-ammo.getBlue());
+        availableAmmo.setYellow(availableAmmo.getYellow()-ammo.getYellow());
     }
 
     public void addAmmo(Ammo ammoColor){

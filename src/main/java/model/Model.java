@@ -679,7 +679,7 @@ public class Model {
             if(Checks.canUseFireMode(getPlayer(playerColor),weapon, fireMode.getData().getType()))
                 FireModes.add(fireMode);
         }
-        getCurrent().setAvailableFireModes(availableFireModes);
+        getCurrent().setAvailableFireModes(FireModes);
         String result = "Your available fire modes: \n";
         for (WeaponTreeNode<FireMode> child : availableFireModes) {
             result = result + child.getData().getEffectName();
@@ -705,9 +705,9 @@ public class Model {
         }
 
         for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-            boolean red = fireRED > 0 && powerUp.getAmmo().toString().equals("RED");
-            boolean blue = fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE");
-            boolean yellow = fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW");
+            boolean red = (fireRED > 0 && powerUp.getAmmo().toString().equals("RED"));
+            boolean blue = (fireBLUE > 0 && powerUp.getAmmo().toString().equals("BLUE"));
+            boolean yellow = (fireYELLOW > 0 && powerUp.getAmmo().toString().equals("YELLOW"));
 
             if(red || blue || yellow)
                 getCurrent().addAvailablePaymentPowerUps(powerUp);
@@ -716,7 +716,7 @@ public class Model {
             payReload(currentPlayer,weapon);
             return;
         }
-        weaponNotifier.askReloadPayment(currentPlayer.getPlayerColor(),currentPlayer.getResources().getPowerUp());
+        weaponNotifier.askReloadPayment(currentPlayer.getPlayerColor(),current.getAvailablePaymentPowerUps());
     }
 
     public void payReload(Player currentPlayer, Weapon weapon){
@@ -748,6 +748,7 @@ public class Model {
         fireYELLOW = fireYELLOW-powerUpYELLOW;
         Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
+        weapon.reload();
         resetCurrent();
         //todo controllare
         //getCurrent().setReceivedInput(true);
@@ -863,6 +864,7 @@ public class Model {
             }
             default: fireModeCost = new Ammo(0,0,0);
         }
+            System.out.println(fireModeCost);
             fireRED = fireModeCost.getRed();
             fireBLUE = fireModeCost.getBlue();
             fireYELLOW = fireModeCost.getYellow();
@@ -877,9 +879,15 @@ public class Model {
             if(powerUp.getAmmo().toString().equals("YELLOW"))
                 powerUpYELLOW++;
             }
+        System.out.println(powerUpRED);
+        System.out.println(powerUpBLUE);
+        System.out.println(powerUpYELLOW);
         fireRED = fireRED-powerUpRED;
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
+        System.out.println(fireRED);
+        System.out.println(fireBLUE);
+        System.out.println(fireYELLOW);
         Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         current.getSelectedPaymentPowerUps().clear();
@@ -983,6 +991,7 @@ public class Model {
         set.addAll(current.getSelectedOptionalTargets2());
         ArrayList<Player> targets = new ArrayList<>(set);
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
+        resetCurrent();
         gameNotifier.notifyShoot(currentPlayer, targets, allPlayers);
     }
 

@@ -81,41 +81,38 @@ public class Checks {
 
 
     public static boolean canUseFireMode(Player player, Weapon currentWeapon, String effectType){
-        int RED = 0;
-        int YELLOW = 0;
-        int BLUE = 0;
-        Ammo playerAmmo = player.getResources().getAvailableAmmo();
-
-
-        for(PowerUp powerUp : player.getResources().getPowerUp()){
-            if(powerUp.getAmmo().toString().equals("RED"))
-                RED++;
-            else if(powerUp.getAmmo().toString().equals("BLUE"))
-                BLUE++;
-            else
-                YELLOW++;
-        }
+        int RED ;
+        int YELLOW ;
+        int BLUE ;
+        Ammo playerAmmo = player.getResources().getAllAmmo();
+        RED = playerAmmo.getRed();
+        YELLOW = playerAmmo.getYellow();
+        BLUE = playerAmmo.getBlue();
 
         switch (effectType) {
+            case "return":
+                return true;
+            case "end":
+                return true;
             case "base":
                 return true;
             case "alternative": {
                 Ammo cost = ((WeaponAlternative) currentWeapon).getAlternativeCost();
-                if (cost.getRed() <= (RED + playerAmmo.getRed()) && cost.getBlue() <= (BLUE + playerAmmo.getBlue()) && cost.getYellow() <= (YELLOW + playerAmmo.getYellow()))
+                if (cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW)
                     return true;
                 else
                     return false;
             }
             case "optional1": {
                 Ammo cost = ((WeaponOptional1) currentWeapon).getOptionalCost1();
-                if (cost.getRed() <= (RED + playerAmmo.getRed()) && cost.getBlue() <= (BLUE + playerAmmo.getBlue()) && cost.getYellow() <= (YELLOW + playerAmmo.getYellow()))
+                if (cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW)
                     return true;
                 else
                     return false;
             }
             case "optional2": {
                 Ammo cost = ((WeaponOptional2) currentWeapon).getOptionalCost2();
-                if (cost.getRed() <= (RED + playerAmmo.getRed()) && cost.getBlue() <= (BLUE + playerAmmo.getBlue()) && cost.getYellow() <= (YELLOW + playerAmmo.getYellow()))
+                if (cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW)
                     return true;
                 else
                     return false;
