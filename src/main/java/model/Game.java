@@ -1,7 +1,7 @@
 package model;
 
+import model.player.Player;
 import model.turn.Turn;
-import network.server.Server;
 
 import java.util.*;
 
@@ -13,8 +13,6 @@ public class Game implements Runnable{
 
     private Random random = new Random();
 
-    private Server server;
-
     public int getGameID() {
         return gameID;
     }
@@ -22,13 +20,10 @@ public class Game implements Runnable{
     private boolean isMapTimerOn = true;
     private long mapTime = 1000L*100; // 10 sec da ottenere da json
 
-    public Game(int gameID, Model model, Server server){
+    public Game(int gameID, Model model){
         this.gameID = gameID;
         this.model = model;
-    }
-
-    public Model getModel(){
-        return this.model;
+        run();
     }
 
     public int getMapVote(){
@@ -107,11 +102,8 @@ public class Game implements Runnable{
             currentTurn.startTurn();
             currentTurn.endTurn();
         }
-        System.out.println("Out of Game loop!");
         //manda punteggi
         //clear game dal server
-        model.getGameNotifier().notifyGeneric("The game has ended!");
-        //server.closeGame(this); todo nullpointer Exception!
     }
 
 

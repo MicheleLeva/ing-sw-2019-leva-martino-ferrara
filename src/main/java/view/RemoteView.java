@@ -32,14 +32,6 @@ public class RemoteView extends View implements Observer<String> {
         return remoteWeaponView;
     }
 
-    public void setClientConnection(ClientConnection c) {
-        this.clientConnection = c;
-        remoteActionView.setClientConnection(c);
-        remoteGameView.setClientConnection(c);
-        remotePowerUpView.setClientConnection(c);
-        remoteWeaponView.setClientConnection(c);
-    }
-
     public RemoteView(PlayerColor playerColor, ClientConnection c) {
 
         super(playerColor);

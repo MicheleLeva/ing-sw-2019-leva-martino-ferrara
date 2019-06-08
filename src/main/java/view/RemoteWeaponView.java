@@ -20,10 +20,6 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
         this.view = view;
     }
 
-    public void setClientConnection(ClientConnection clientConnection) {
-        this.clientConnection = clientConnection;
-    }
-
     public void stringToMessage(String[] inputs){
 
         switch(inputs[0]) {
@@ -44,6 +40,7 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 listeners.forEach(l -> l.update(optionalFireModesEvent));
                 break;
             case "TargetsSelectionEvent":
+                System.out.println("targetsselectionevent in weaponviewremote");
                 ArrayList<Integer> selectedTargets = new ArrayList<>();
                 for (int i = 1; i<= inputs.length-1; i++){
                     selectedTargets.add(Integer.parseInt(inputs[i]));

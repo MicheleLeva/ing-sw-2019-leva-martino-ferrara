@@ -21,8 +21,6 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     private boolean active = true;
 
-    private boolean nameAccepted = false;
-
     String playerName;
 
     public SocketClientConnection(Socket socket, Server server) {
@@ -40,21 +38,17 @@ public class SocketClientConnection extends Observable<String> implements Client
         try{
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            /*while (!nameAccepted){
-                playerName= in.nextLine();
-                if (server.nameAvailable(playerName)){
-                    if(server.checkAfk(playerName)){
-                        server.reconnectPlayer(this, playerName);
-                    } else {
-                        server.addPlayer(this, playerName);
-                    }
-                    asyncSend("ok");
-                    nameAccepted = true;
-                } else {
-                    asyncSend("no");
-                }
-            }
-            String read;*/
+            /*String read = in.nextLine();
+            playerName = read;
+            int id = server.nameAvailable(playerName);
+            if (id != 0 && server.checkAfk(playerName)) {
+                    int index = server.getPlayerNames().get(id).indexOf(playerName);
+                    this.register(server.getPlayerViews().get(id).get(index));
+                    server.reconnectPlayer(this, id, index, playerName);
+
+            } else {
+                server.addPlayer(this, playerName);
+            }*/
             //todo modificato per velocizzare test
             int c = 0;
             for (Map.Entry<String, ClientConnection> entry : server.getWaitingConnection().entrySet()){
@@ -92,11 +86,18 @@ public class SocketClientConnection extends Observable<String> implements Client
     private synchronized void send(String message) {
         message = message.replaceAll("\n","°");
         message = message.replaceAll("\r", "§");
+        //System.out.println(message);
         out.println(message);
         out.flush();
     }
 
     public synchronized void asyncSend(final String message){
+       /* new Thread(new Runnable() {
+            @Override
+            public void run() {
+                send(message);
+            }
+        }).start();*/
         send(message);
     }
 
@@ -110,8 +111,7 @@ public class SocketClientConnection extends Observable<String> implements Client
         active = false;
     }
 
-    //Close Connection
-    private void close() {
+    private void close() { //chiudo la connessione
         closeConnection();
         System.out.println("Deregistering of the connection!");
         server.deregisterConnection(this);
