@@ -18,6 +18,8 @@ public class Client extends Observable<String> implements ClientConnection,Runna
 
     private boolean active = true;
 
+    private boolean nameAccepted = false;
+
     private View view;
 
     //da recuperare effettivi dati per connessione
@@ -82,10 +84,18 @@ public class Client extends Observable<String> implements ClientConnection,Runna
         try {
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            //System.out.println("Insert your name!");
-            //Scanner scanner = new Scanner(System.in);
-            //String name = scanner.nextLine();
-            //this.asyncSend(name);
+            /*while (!nameAccepted){
+                System.out.println("Insert your name!");
+                Scanner scanner = new Scanner(System.in);
+                String name = scanner.nextLine();
+                this.asyncSend(name);
+                String read = in.nextLine();
+                if (read.equals("ok")){
+                    nameAccepted = true;
+                } else{
+                    System.out.println("Name already taken!");
+                }
+            }*/
             //todo commentato per velocizzare test
             String read;
             while(isActive()){

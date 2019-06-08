@@ -19,6 +19,10 @@ public class RemoteActionView  extends ActionObservable implements Observer<Play
         this.view = view;
     }
 
+    public void setClientConnection(ClientConnection clientConnection) {
+        this.clientConnection = clientConnection;
+    }
+
     public void stringToMessage(String[] inputs){
 
         switch(inputs[0]) {
@@ -26,7 +30,7 @@ public class RemoteActionView  extends ActionObservable implements Observer<Play
                 ActionEvent actionEvent = new ActionEvent(view, inputs[1].charAt(0));
                 listeners.forEach(l -> l.update(actionEvent));
                 break;
-            case "SetAfkEvent":
+            case "QuitAfkEvent":
                 QuitAfkEvent quitAfkEvent = new QuitAfkEvent(view, inputs[1].charAt(0));
                 listeners.forEach(l -> l.update(quitAfkEvent));
                 break;

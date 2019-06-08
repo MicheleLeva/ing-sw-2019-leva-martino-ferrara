@@ -26,52 +26,52 @@ public class Server {
 
     private ExecutorService executor = Executors.newFixedThreadPool(128);
 
-    private  ExecutorService games = Executors.newFixedThreadPool( 10);
+    private  ArrayList<Game> games = new ArrayList<>();
+
+    private LinkedHashMap<String, ClientConnection> playerLobby = new LinkedHashMap<>();
 
     private LinkedHashMap<String, ClientConnection> waitingConnection = new LinkedHashMap<>(); //Players waiting for a game
 
     private LinkedHashMap<Integer, ArrayList<ClientConnection>> playingPool = new LinkedHashMap<>(); //Players currently playing
 
-    private LinkedHashMap<Integer, Model> modelMap = new LinkedHashMap<>(); //List of models for game reconnection
-
-    private LinkedHashMap<Integer, ArrayList<String>> playerNames = new LinkedHashMap<>(); //List of names for game reconnection
-
-    private LinkedHashMap<Integer, ArrayList<RemoteView>> playerViews = new LinkedHashMap<>(); //List of views for game reconnection
+    private LinkedHashMap<String, RemoteView> playerViews = new LinkedHashMap<>(); //List of views for game reconnection
 
     private int lastID;
 
     private boolean isTimerOn;
 
-    public Map<Integer, ArrayList<RemoteView>> getPlayerViews() {
-        return playerViews;
-    }
-
-    public Map<Integer, ArrayList<String>> getPlayerNames() {
-        return playerNames;
-    }
-
     public void setServerActive(boolean serverActive) {
         isServerActive = serverActive;
     }
 
+    //todo usato per test
     public LinkedHashMap<String, ClientConnection> getWaitingConnection() {
         return waitingConnection;
     }
 
-    public synchronized void reconnectPlayer(ClientConnection c, int pool, int index, String name){
-        playingPool.get(pool).remove(index);
-        playingPool.get(pool).add(index, c);
-        for (Player player : modelMap.get(pool).getAllPlayers()){
-            if (player.getPlayerName().equals(name) && player.isAfk()){
-                player.setAfk(false);
+    public synchronized void reconnectPlayer(ClientConnection c, String name){
+        System.out.println("Reconnecting "+ name);
+        playerLobby.put(name, c);
+        c.register(playerViews.get(name));
+        playerViews.get(name).setClientConnection(c);
+        System.out.println("playerview registered!");
+        int pool = -1;
+        for (Game game : games){
+            for (Player player : game.getModel().getAllPlayers()){
+                if (player.getPlayerName().equals(name) && player.isAfk()){
+                    game.getModel().wakeUpPlayer(player);
+                    pool = game.getGameID();
+                }
             }
         }
-
+        try {
+            playingPool.get(pool).add(c);
+        } catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
     }
 
-    /*
-     * Deregistro una connessione
-     */
+    //Deregistering a single connection
     public synchronized void deregisterConnection(ClientConnection c) {
         for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()){
             if (entry.getValue().contains(c)){
@@ -80,27 +80,33 @@ public class Server {
             }
         }
         for (Map.Entry<String, ClientConnection> entry : waitingConnection.entrySet()){
-            if (entry.getValue() == c){
+            if (entry.getValue().equals(c)){
                 waitingConnection.remove(entry.getKey());
+                c.closeConnection();
+            }
+        }
+        for (Map.Entry<String, ClientConnection> entry : playerLobby.entrySet()){
+            if (entry.getValue().equals(c)){
+                playerLobby.remove(entry.getKey());
                 c.closeConnection();
             }
         }
     }
 
-    public int nameAvailable(String name){
-        for (Map.Entry<Integer, Model> entry : modelMap.entrySet()){
-            for (Player player : entry.getValue().getAllPlayers()){
-                if (player.getPlayerName().equals(name)){
-                    return entry.getKey();
-                }
+    //Checks if a name is available
+    public boolean nameAvailable(String name){
+        for (Map.Entry<String, ClientConnection> entry : playerLobby.entrySet()){
+            if (entry.getKey().equals(name)){
+                return false;
             }
         }
-        return 0;
+        return true;
     }
 
+    //Check if a player is afk
     public boolean checkAfk(String name){
-        for (Map.Entry<Integer, Model> entry : modelMap.entrySet()){
-            for (Player player : entry.getValue().getAllPlayers()){
+        for (Game game : games){
+            for (Player player : game.getModel().getAllPlayers()){
                 if (player.getPlayerName().equals(name) && player.isAfk()){
                     return true;
                 }
@@ -109,6 +115,7 @@ public class Server {
         return false;
     }
 
+    //Deregister a game
     public synchronized void deregisterPool(int id){
         for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()){
             if (entry.getKey() == id){
@@ -124,7 +131,9 @@ public class Server {
     }
 
     public void  addPlayer(ClientConnection c, String name){
+        System.out.println(name + " entered the game!");
         waitingConnection.put(name, c);
+        playerLobby.put(name, c);
         checkConnected();
     }
 
@@ -133,12 +142,7 @@ public class Server {
         System.out.println("Waiting players: " + waitingConnection.size());
         if (waitingConnection.size() > 2 && !isTimerOn) {
             System.out.println("Enough players to start a game!");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    startTimer();
-                }
-            }).start();
+            startTimer();
         }
     }
 
@@ -196,7 +200,6 @@ public class Server {
             lastID = 1;
         }
         playingPool.put(lastID, new ArrayList<>());
-        playerNames.put(lastID, new ArrayList<>());
 
         List<String> keys = new ArrayList<>(waitingConnection.keySet());
         for (String key : keys){
@@ -206,34 +209,35 @@ public class Server {
         ArrayList<Player> players= new ArrayList<>();
 
         players.add(new Player(keys.get(0), PlayerColor.BLUE));
-        playerNames.get(lastID).add(keys.get(0));
-        remoteViews.add(new RemoteView(PlayerColor.BLUE, playingPool.get(lastID).get(0)));
+        RemoteView blueView = new RemoteView(PlayerColor.BLUE, playingPool.get(lastID).get(0));
+        remoteViews.add(blueView);
+        playerViews.put(keys.get(0), blueView);
 
         players.add(new Player(keys.get(1), PlayerColor.GREEN));
-        playerNames.get(lastID).add(keys.get(1));
-        remoteViews.add(new RemoteView(PlayerColor.GREEN, playingPool.get(lastID).get(1)));
+        RemoteView greenView = new RemoteView(PlayerColor.GREEN, playingPool.get(lastID).get(1));
+        remoteViews.add(greenView);
+        playerViews.put(keys.get(0), greenView);
 
         players.add(new Player(keys.get(2), PlayerColor.PURPLE));
-        playerNames.get(lastID).add(keys.get(2));
-        remoteViews.add(new RemoteView(PlayerColor.PURPLE, playingPool.get(lastID).get(2)));
+        RemoteView purpleView = new RemoteView(PlayerColor.PURPLE, playingPool.get(lastID).get(2));
+        remoteViews.add(purpleView);
+        playerViews.put(keys.get(0), purpleView);
 
         if (waitingConnection.size()== 4){
             players.add(new Player(keys.get(3), PlayerColor.YELLOW));
-            playerNames.get(lastID).add(keys.get(3));
-            remoteViews.add(new RemoteView(PlayerColor.YELLOW, playingPool.get(lastID).get(3)));
+            RemoteView yellowView = new RemoteView(PlayerColor.YELLOW, playingPool.get(lastID).get(3));
+            remoteViews.add(yellowView);
+            playerViews.put(keys.get(0), yellowView);
         }
 
         if (waitingConnection.size()== 5){
             players.add(new Player(keys.get(4), PlayerColor.GREY));
-            playerNames.get(lastID).add(keys.get(4));
-            remoteViews.add(new RemoteView(PlayerColor.YELLOW,playingPool.get(lastID).get(4)));
+            RemoteView greyView = new RemoteView(PlayerColor.YELLOW,playingPool.get(lastID).get(4));
+            remoteViews.add(greyView);
+            playerViews.put(keys.get(0), greyView);
         }
 
-        playerViews.put(lastID, remoteViews);
-
         Model model = new Model(players, 8); //todo importare il numero di skulls da json
-
-        modelMap.put(lastID, model);
 
         for (RemoteView v : remoteViews){
             model.getGameNotifier().register(v.getPlayerColor(), v.getRemoteGameView());
@@ -245,9 +249,31 @@ public class Server {
             v.getRemoteWeaponView().register(new WeaponController(model));
         }
 
-        games.submit(new Game(lastID, model)); //todo capire perchè il metodo si blocca qua invece di instanziare un nuovo thread
+        Game game = new Game(lastID, model, this);
+        games.add(game);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                 game.run();
+            }
+        }).start();
 
         waitingConnection.clear();
+        System.out.println("Clearing the waiting room!");
+    }
+
+    public void closeGame(Game game){
+        int id = game.getGameID();
+        deregisterPool(id);
+        ArrayList<String> playerNames = new ArrayList<>();
+        for (Player player : game.getModel().getAllPlayers()){
+            playerNames.add(player.getPlayerName());
+        }
+        games.remove(game);
+        for (String name : playerNames){
+            playerViews.remove(name);
+        }
     }
 
     public void run(){

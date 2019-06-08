@@ -16,6 +16,10 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
         this.view = view;
     }
 
+    public void setClientConnection(ClientConnection clientConnection) {
+        this.clientConnection = clientConnection;
+    }
+
     public void stringToMessage(String[] inputs){
 
         switch(inputs[0]) {
@@ -42,7 +46,7 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
                 listeners.forEach(l -> l.update(targetingScopeEvent));
                 break;
             case "TargetingScopeSelectionEvent":
-                TargetingScopeSelectionEvent targetingScopeSelectionEvent = new TargetingScopeSelectionEvent(view, Integer.parseInt(inputs[1]));
+                TargetingScopeSelectionEvent targetingScopeSelectionEvent = new TargetingScopeSelectionEvent(view, inputs[1].charAt(0));
                 listeners.forEach(l -> l.update(targetingScopeSelectionEvent));
                 break;
             case "TagbackGrenadeEvent":
