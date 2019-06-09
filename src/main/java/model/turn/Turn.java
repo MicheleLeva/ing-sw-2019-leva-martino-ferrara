@@ -27,7 +27,7 @@ public class Turn {
             isTimerOn = false;
         }
     };
-    private long time = 1000L*300; // 5 minuti //todo modificato per test
+    private long time = 1000L*300; // 5 minuti
 
     private Timer grenadeTimer = new Timer();
     private boolean isGrenadeTimerOn = true;
@@ -37,7 +37,7 @@ public class Turn {
             isGrenadeTimerOn = false;
         }
     };
-    private long grenadeTime = 1000L*60; // 10 sec da ottenere da json
+    private long grenadeTime = 1000L*10; // 10 sec da ottenere da json
 
     private boolean isRespawnTimerOn = true;
     private long respawnTime = 1000L*10; // 10 sec da ottenere da json
@@ -83,7 +83,7 @@ public class Turn {
             toOthers.append(" is viewing his commands.");
             getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), toOthers.toString());
             //the current player draws two powerups
-            getModel().drawPowerUp(currentPlayerColor, 2); //todo modificato per test
+            getModel().drawPowerUp(currentPlayerColor, 5); //todo modificato per test
             //requests the current player to discard one of his powerup
             getModel().requestPowerUpDiscard(currentPlayer);
             getModel().getTurnCurrent().setReceivedInput(false);
@@ -112,10 +112,11 @@ public class Turn {
                     return;
                 }
             }
+            getModel().resetCurrent();
             //grenadePeopleArray viene popolato da addDamage se il giocatore colpito possiede la granata
-            /*if (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
+            if (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
                 for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
-                    getModel().tagbackGranadeRequest(grenadePlayer.getPlayerColor(), currentPlayerColor);
+                    getModel().tagbackGranadeRequest(grenadePlayer, currentPlayer);
                 }
                 isGrenadeTimerOn = true;
                 grenadeTimer.schedule(turnGrenadeTimerOff, grenadeTime); //start of timer thread
@@ -132,7 +133,7 @@ public class Turn {
                     }
                 }
                 grenadeTimer.cancel();
-            }*/
+            }
 
         }
 
@@ -141,7 +142,6 @@ public class Turn {
 
 
     public void notifyTurn(){
-        System.out.println("Notify turn");
         //print the game status
         StringBuilder stringBuilder  = new StringBuilder();
         //print current turn number
@@ -175,7 +175,6 @@ public class Turn {
         for (Player player : model.getEachPlayer()){
             if (!player.isAfk()){
                 getModel().getGameNotifier().notifyPlayer(stringBuilder.toString(), player.getPlayerColor());
-                System.out.println("Messaggio al giocatore");
             }
         }
     }
@@ -217,6 +216,9 @@ public class Turn {
         } else {
             getModel().getScoreManager().updateScore();
         }
+
+        //Resetting the current
+        getModel().resetCurrent();
 
         //Replace Ammo and Weapon cards on the map
         getModel().getGameBoard().setCardsOnMap();

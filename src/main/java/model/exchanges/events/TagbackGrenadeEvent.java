@@ -4,13 +4,13 @@ import view.View;
 
 public class TagbackGrenadeEvent extends Event {
 
-    private char input;
-    public TagbackGrenadeEvent(View view, char input) {
+    private int input;
+    public TagbackGrenadeEvent(View view, int input) {
         super(view);
         this.input = input;
     }
 
-    public char getInput(){
+    public int getInput(){
         return this.input;
     }
 

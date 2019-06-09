@@ -176,20 +176,22 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
         Player player = getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor());
         ArrayList<PowerUp> powerUps = player.getResources().getPowerUp();
-        getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
-        if (tagbackGrenadeEvent.getInput() == '0'){
+        int input = tagbackGrenadeEvent.getInput();
+        if (input == 0){
+            getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
             return;
         }
-        if (powerUps.get(tagbackGrenadeEvent.getInput() - 1) instanceof TagbackGrenade){
+        if (powerUps.get(input - 1) instanceof TagbackGrenade){
             try{
-                ((TagbackGrenade)powerUps.get(tagbackGrenadeEvent.getInput() - 1)).usePowerUp(getModel().getTurnManager().getCurrentPlayerColor());
+                ((TagbackGrenade)powerUps.get(input - 1)).usePowerUp(player.getPlayerColor());
+                getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
             } catch (TagbackGrenadeException e){
                 e.printStackTrace();
             }
 
         } else {
             tagbackGrenadeEvent.getView().reportError("Invalid input!");
-            getModel().tagbackGranadeRequest(tagbackGrenadeEvent.getPlayerColor(), getModel().getTurnManager().getCurrentPlayerColor());
+            getModel().tagbackGranadeRequest(player, getModel().getTurnManager().getCurrentPlayer());
         }
     }
 
