@@ -25,6 +25,7 @@ public class Game implements Runnable{
     public Game(int gameID, Model model, Server server){
         this.gameID = gameID;
         this.model = model;
+        this.server = server;
     }
 
     public Model getModel(){
@@ -111,7 +112,7 @@ public class Game implements Runnable{
         //manda punteggi
         //clear game dal server
         model.getGameNotifier().notifyGeneric("The game has ended!");
-        //server.closeGame(this); todo nullpointer Exception!
+        server.closeGame(gameID);
     }
 
 

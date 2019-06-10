@@ -1195,6 +1195,10 @@ public class Model {
     }
 
     public void setPlayerAfk(Player player){
+        if (player.isAfk()){
+            return;
+        }
+        System.out.println(player.getPlayerName() + " is afk!");
         player.setAfk(true);
         getActionNotifier().setPlayerAfk(player.getPlayerColor());
         String toOthers = player.getPlayerColor().toString() + " is afk. Their turn will be skipped";
@@ -1206,21 +1210,19 @@ public class Model {
         player.setAfk(false);
     }
 
-    public void tagbackGranadeRequest(PlayerColor playerColor, PlayerColor opponentColor){
+    public void tagbackGranadeRequest(Player player, Player opponent){
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
-        for (PowerUp currentPowerUp : getPlayer(playerColor).getResources().getPowerUp()){
+        for (PowerUp currentPowerUp : player.getResources().getPowerUp()){
             if (currentPowerUp instanceof TagbackGrenade){
                 stringBuilder.append(i);
                 stringBuilder.append(": ");
                 stringBuilder.append(currentPowerUp.toString());
-                stringBuilder.append(" Ammo: ");
-                stringBuilder.append(currentPowerUp.getAmmo().toString());
-                stringBuilder.append(".\n");
-                i++;
+                stringBuilder.append(" ");
             }
+            i++;
         }
-        getPowerUpNotifier().askTagbackGrenade(playerColor, opponentColor, stringBuilder.toString());
+        getPowerUpNotifier().askTagbackGrenade(player, opponent, stringBuilder.toString());
     }
 
     public void mapVote(Player player){

@@ -23,7 +23,7 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     private boolean nameAccepted = false;
 
-    String playerName;
+    private String playerName;
 
     public SocketClientConnection(Socket socket, Server server) {
         this.socket = socket;
@@ -41,20 +41,24 @@ public class SocketClientConnection extends Observable<String> implements Client
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
             /*while (!nameAccepted){
-                playerName= in.nextLine();
+                playerName = in.nextLine();
                 if (server.nameAvailable(playerName)){
                     if(server.checkAfk(playerName)){
                         server.reconnectPlayer(this, playerName);
+                        System.out.println("The player " + playerName + " is reconnecting!");
+                        asyncSend("ok");
+                        asyncSend("GAME,GenericMessage,Connected to the server! Waiting for reconnection...");
                     } else {
                         server.addPlayer(this, playerName);
+                        System.out.println("The player " + playerName + " entered the lobby!");
+                        asyncSend("ok");
+                        asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");
                     }
-                    asyncSend("ok");
                     nameAccepted = true;
                 } else {
                     asyncSend("no");
                 }
             }
-
             String read;*/
             //todo modificato per velocizzare test
             int c = 0;
@@ -67,18 +71,22 @@ public class SocketClientConnection extends Observable<String> implements Client
                 }
             }
             if (c == 0){
+                playerName = "Asdrubale";
                 server.addPlayer(this, "Asdrubale");
+
             }
             if (c == 1){
+                playerName = "Bruno";
                 server.addPlayer(this, "Bruno");
             }
             if (c == 2){
+                playerName = "Carlo";
                 server.addPlayer(this, "Carlo");
             }
             String read;
-            //todo modificato per velocizzare test
-            System.out.println("The player added their name!");
             asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");
+
+            //todo modificato per velocizzare test
             while(isActive()){
                 read = in.nextLine();
                 notify(read);
@@ -113,6 +121,7 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     //Close Connection
     private void close() {
+        server.setPlayerAFK(playerName);
         closeConnection();
         System.out.println("Deregistering of the connection!");
         server.deregisterConnection(this);
