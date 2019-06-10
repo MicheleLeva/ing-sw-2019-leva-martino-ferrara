@@ -19,15 +19,34 @@ public class Furnace extends WeaponAlternative {
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
-            ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
-            ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
-            for(Player player : temp){
-                if(availableTargets.contains(player))
-                    availableTargets.remove(player);
+            ArrayList<Square> squares = getModel().runnableSquare(1,currentPlayer.getPosition());
+            ArrayList<Square> squaresCopy = new ArrayList<>(squares);
+            squares.remove(currentPlayer.getPosition());
+            boolean flag;
+            for(Square square : squaresCopy) {
+                flag = false;
+                for(Player player : getModel().getAllPlayers()){
+                    if(player.getPosition()==square) {
+                        flag = true;
+                        break;
+                    }
+
+                }
+            if(flag == true)continue;
+            else squares.remove(square);
             }
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
+            if(squares.isEmpty()){
+                getModel().getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+                this.getWeaponTree().resetAction();
+                getModel().resetCurrent();
+                getModel().getCurrent().setSelectedWeapon(this);
+                getModel().showFireModes(currentPlayer.getPlayerColor(),this);
+                return;
+            }
+
+            getModel().getCurrent().setAvailableWeaponSquares(squares);
             getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+            getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(),squares);
         }
         else
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
@@ -44,9 +63,7 @@ public class Furnace extends WeaponAlternative {
             }
         }
 
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getAlternativeCost());
-        //
+        getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
@@ -59,6 +76,14 @@ public class Furnace extends WeaponAlternative {
                 if(!squares.contains(player.getPosition()))
                     squares.add(player.getPosition());
             }
+            if(squares.isEmpty()){
+                getModel().getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+                this.getWeaponTree().resetAction();
+                getModel().resetCurrent();
+                getModel().getCurrent().setSelectedWeapon(this);
+                getModel().showFireModes(currentPlayer.getPlayerColor(),this);
+                return;
+            }
             getModel().getCurrent().setAvailableWeaponSquares(squares);
             getModel().getCurrent().incrementBaseCounter();
             getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
@@ -70,17 +95,15 @@ public class Furnace extends WeaponAlternative {
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         ArrayList<Player> allPlayers = getModel().getAllPlayers();
-
         for(Player target : allPlayers){
             if(target.getPosition()==getModel().getCurrent().getSelectedWeaponSquare()) {
                 getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
                 getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
             }
         }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
+
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
+
 
 }

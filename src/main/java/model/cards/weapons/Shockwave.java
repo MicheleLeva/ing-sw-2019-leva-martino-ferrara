@@ -12,16 +12,16 @@ public class Shockwave extends WeaponAlternative {
 
     }
 
+    ArrayList<Player > finalTargets = new ArrayList<>();
 
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
-            ArrayList<Player> availableTargets = new ArrayList<>();
-            ArrayList<Player> copy = getModel().getPlayersAtDistance(1,currentPlayer);
+            ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
             ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
-            for(Player player : copy){
-                if(!temp.contains(player))
-                    availableTargets.add(player);
+            for(Player player : temp){
+                if(availableTargets.contains(player))
+                    availableTargets.remove(player);
             }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
@@ -37,32 +37,59 @@ public class Shockwave extends WeaponAlternative {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
-            ArrayList<Player> availableTargets = new ArrayList<>();
-            ArrayList<Player> copy = getModel().getPlayersAtDistance(1,currentPlayer);
+            ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
             ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
-            for(Player player : copy) {
-                if (!temp.contains(player))
-                    availableTargets.add(player);
+            for(Player player : temp){
+                if(availableTargets.contains(player))
+                    availableTargets.remove(player);
             }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
-        /*if(getModel().getCurrent().getBaseCounter() == 1) {
-            for(Player player : getModel().getCurrent().getSelectedBaseTargets())
-                for(Player player2 : getModel().getCurrent().getSelectedBaseTargets())
-                    if(player != player2 && player.getPosition()==player2.getPosition()){
-                        getModel().getCurrent().decreaseBaseCounter();
-                        //todo shockwave targets
+        if(getModel().getCurrent().getBaseCounter() == 1) {
+            finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
+            ArrayList<Player> availableTargets = new ArrayList<>();
+            for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {
+                boolean flag = false;
+                for (Player player2 : finalTargets)
+                    if (player2.getPosition() == player.getPosition()) {
+                        flag = true;
                     }
-
+                if(flag == false)
+                    availableTargets.add(player);
+            }
+            if(availableTargets.isEmpty()){
+                getModel().getCurrent().incrementBaseCounter();
+                getModel().getCurrent().incrementBaseCounter();
+                askBaseRequirements(currentPlayer);
+            }
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+            return;
         }
-*/
+        if(getModel().getCurrent().getBaseCounter() == 2) {
+            finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
+            ArrayList<Player> availableTargets = new ArrayList<>();
+            for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {
+                boolean flag = false;
+                for (Player player2 : finalTargets)
+                    if (player2.getPosition() == player.getPosition()) {
+                        flag = true;
+                    }
+                if(flag == false)
+                    availableTargets.add(player);
+            }
+            if(availableTargets.isEmpty()){
+                getModel().getCurrent().incrementBaseCounter();
+                askBaseRequirements(currentPlayer);
+            }
+            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+        }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
+        generalUse(currentPlayer, finalTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 }

@@ -15,11 +15,17 @@ public class Grenadelauncher extends WeaponOptional1 {
         super(name,pickUpCost,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,
                 optionalTargetsNumber1,model);
     }
-
+//todo controllare la notifyshoot in askbasereuirements
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+            if(availableTargets.isEmpty()){
+                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                this.getWeaponTree().resetAction();
+                getModel().notifyShoot(currentPlayer);
+                return;
+            }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         if(getModel().getCurrent().getBaseCounter() == 1) {
@@ -45,7 +51,14 @@ public class Grenadelauncher extends WeaponOptional1 {
     }
 
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){
-        changePlayerPositionUse(currentPlayer,selectedTargets);
+        for(Player player : getModel().getAllPlayers()){
+            if(player != currentPlayer && getModel().getCurrent().getSelectedWeaponSquare() == player.getPosition()){
+                getModel().addDamage(currentPlayer.getPlayerColor(), player.getPlayerColor(), this.getOptionalDamage1());
+                getModel().addMark(currentPlayer.getPlayerColor(), player.getPlayerColor(), this.getOptionalMarks1());
+            }
+        }
+        getModel().payFireMode(currentPlayer,this);
+        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
     }
 
 }

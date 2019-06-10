@@ -16,12 +16,28 @@ public class Electroscythe extends WeaponAlternative {
 
     public void askBaseRequirements(Player currentPlayer){
         ArrayList<Player> selectedTargets = getModel().getPlayersInSameSquare(currentPlayer);
+        if(selectedTargets.isEmpty()){
+            getModel().getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+            this.getWeaponTree().resetAction();
+            getModel().resetCurrent();
+            getModel().getCurrent().setSelectedWeapon(this);
+            getModel().showFireModes(currentPlayer.getPlayerColor(),this);
+            return;
+        }
         useBaseFireMode(currentPlayer, selectedTargets);
     }
 
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
             ArrayList<Player> selectedTargets = getModel().getPlayersInSameSquare(currentPlayer);
+        if(selectedTargets.isEmpty()){
+            getModel().getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+            this.getWeaponTree().resetAction();
+            getModel().resetCurrent();
+            getModel().getCurrent().setSelectedWeapon(this);
+            getModel().showFireModes(currentPlayer.getPlayerColor(),this);
+            return;
+        }
             useAlternativeFireMode(currentPlayer, selectedTargets);
     }
 
@@ -31,20 +47,10 @@ public class Electroscythe extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 }

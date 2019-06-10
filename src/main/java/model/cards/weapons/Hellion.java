@@ -18,16 +18,17 @@ public class Hellion extends WeaponAlternative {
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
+            System.out.println("askalternative hellion");
             ArrayList<Player> finalList = new ArrayList<>();
-            ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(1,currentPlayer));
+            ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(0,currentPlayer));
             ArrayList<Player> availableTargets = new ArrayList<>(getModel().getVisiblePlayers(currentPlayer));
-            for(Player player : availableTargets){
-                if(temp.contains(player))
+            for(Player player : temp){
+                if(availableTargets.contains(player))
                     finalList.add(player);
             }
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
+            getModel().getCurrent().setAvailableAlternativeTargets(finalList);
             getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+            getModel().selectTargets(currentPlayer.getPlayerColor(), finalList, this.getAlternativeTargetsNumber());
         }
         else
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
@@ -42,7 +43,6 @@ public class Hellion extends WeaponAlternative {
         }
         for(Player player : getModel().getAllPlayers()){
             if(player.getPosition()==selectedTargets.get(0).getPosition() && player!=currentPlayer && !selectedTargets.contains(player)){
-                player.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getAlternativeMarks());
                 finalList.add(player);
             }
         }
@@ -50,26 +50,24 @@ public class Hellion extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), 0);
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
         }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getAlternativeCost());
-        //
+        getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
-
+            System.out.println("askbase hellion");
             ArrayList<Player> finalList = new ArrayList<>();
-            ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(1,currentPlayer));
+            ArrayList<Player> temp = new ArrayList<>(getModel().getPlayersAtDistanceMore(0,currentPlayer));
             ArrayList<Player> availableTargets = new ArrayList<>(getModel().getVisiblePlayers(currentPlayer));
-            for(Player player : availableTargets){
-                if(temp.contains(player))
+            for(Player player : temp){
+                if(availableTargets.contains(player))
                     finalList.add(player);
             }
-            getModel().getCurrent().setAvailableBaseTargets(availableTargets);
+            getModel().getCurrent().setAvailableBaseTargets(finalList);
             getModel().getCurrent().incrementBaseCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            getModel().selectTargets(currentPlayer.getPlayerColor(), finalList, this.getBaseTargetsNumber());
         }
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
@@ -84,7 +82,6 @@ public class Hellion extends WeaponAlternative {
         }
         for(Player player : getModel().getAllPlayers()){
             if(player.getPosition()==selectedTargets.get(0).getPosition() && player!=currentPlayer && !selectedTargets.contains(player)){
-                player.getPlayerBoard().getMarkCounter().addMarks(currentPlayer.getPlayerColor(),getBaseMarks());
                 finalList.add(player);
             }
         }
@@ -92,9 +89,6 @@ public class Hellion extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), 0);
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 }

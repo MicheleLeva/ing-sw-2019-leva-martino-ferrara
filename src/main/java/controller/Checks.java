@@ -88,6 +88,8 @@ public class Checks {
         RED = playerAmmo.getRed();
         YELLOW = playerAmmo.getYellow();
         BLUE = playerAmmo.getBlue();
+        System.out.println("checks" + effectType);
+
 
         switch (effectType) {
             case "return":
@@ -97,6 +99,7 @@ public class Checks {
             case "base":
                 return true;
             case "alternative": {
+                System.out.println("alternative in checks");
                 Ammo cost = ((WeaponAlternative) currentWeapon).getAlternativeCost();
                 if (cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW)
                     return true;
@@ -182,9 +185,10 @@ public class Checks {
         int fireRED;
         int fireBLUE;
         int fireYELLOW;
-        Boolean R;
-        Boolean B;
-        Boolean Y;
+        boolean R;
+        boolean B;
+        boolean Y;
+        System.out.println("effecttype in checkvalid" + effectType);
         for (int i : choices) {
             String color = model.getCurrent().getAvailablePaymentPowerUps().get(i-1).getAmmo().toString();
             if (color.equals("RED"))
@@ -196,6 +200,7 @@ public class Checks {
             if (color.equals("YELLOW"))
                 powerUpYELLOW++;
         }
+        System.out.println("pagamento senza selezione in checksvalid");
 
         switch (effectType) {
             case "reload" :{
@@ -208,6 +213,8 @@ public class Checks {
             }
             case "alternative": {
                 fireModeCost = ((WeaponAlternative) weapon).getAlternativeCost();
+                System.out.println("alternative in checks valid" );
+
                 break;
             }
             case "optional1": {
@@ -224,6 +231,16 @@ public class Checks {
         fireRED = fireModeCost.getRed();
         fireBLUE = fireModeCost.getBlue();
         fireYELLOW = fireModeCost.getYellow();
+        System.out.println("fireRED" + fireRED);
+        System.out.println("fireBLUE" + fireBLUE);
+        System.out.println("fireYELLOw" + fireYELLOW);
+        System.out.println("poiwerupred" + powerUpRED);
+        System.out.println("powerupblue" + powerUpBLUE);
+        System.out.println("powerupyellow" + powerUpYELLOW);
+        System.out.println("playerred" + playerRED);
+        System.out.println("playerblbue" + playerBLUE);
+        System.out.println("playeryellow" + playerYELLOW);
+
 
 
         if(fireRED-powerUpRED==0)

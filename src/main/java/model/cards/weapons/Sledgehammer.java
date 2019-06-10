@@ -20,6 +20,7 @@ public class Sledgehammer extends WeaponAlternative {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+            return;
         }
         if(getModel().getCurrent().getAlternativeCounter() == 1) {
             ArrayList<Square> squares = getModel().getSquaresInCardinal2(currentPlayer);
@@ -34,9 +35,7 @@ public class Sledgehammer extends WeaponAlternative {
         Player selectedPlayer = getModel().getCurrent().getSelectedAlternativeTargets().get(0);
         selectedPlayer.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
 
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getAlternativeCost());
-        //
+        getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
@@ -52,6 +51,10 @@ public class Sledgehammer extends WeaponAlternative {
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
-    }
+        for (Player target : selectedTargets) {
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseMarks());
+        }
+
+        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);    }
 }

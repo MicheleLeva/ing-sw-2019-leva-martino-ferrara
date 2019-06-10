@@ -35,20 +35,22 @@ public class Tractorbeam extends WeaponAlternative {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
         }
 
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getAlternativeCost());
-        //
+        getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
     @Override
     public void askBaseRequirements(Player currentPlayer) {
+        System.out.println("tractorbeam 1");
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Square> visibleSquares = getModel().getVisibleSquares(currentPlayer);
+            for(Square square : visibleSquares)
+                System.out.println("visiible square" + square.getID());
+            System.out.println("tractorbeam 1abc");
             ArrayList<Player> allTargets = getModel().getAllPlayers();
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : allTargets){
-                ArrayList<Square> playerSquares = getModel().getVisibleSquares(player);
+                ArrayList<Square> playerSquares = getModel().runnableSquare(2,player.getPosition());
                 for(Square square : playerSquares){
                     if(visibleSquares.contains(square) && player != currentPlayer) {
                         availableTargets.add(player);
@@ -56,19 +58,25 @@ public class Tractorbeam extends WeaponAlternative {
                     }
                 }
             }
+            System.out.println("tractorbeam 1a");
 
             getModel().getCurrent().setAvailableBaseTargets(availableTargets);
+            System.out.println("tractorbeam 1b");
             getModel().getCurrent().incrementBaseCounter();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
+            System.out.println("tractorbeam 1c");
+            return;
         }
         if(getModel().getCurrent().getBaseCounter()==1){
+            System.out.println("tractorbeam 2");
+
             ArrayList<Square> selectedSquares = new ArrayList<>();
             ArrayList<Square> visibleSquares = getModel().getVisibleSquares(currentPlayer);
             Player selectedTarget = getModel().getCurrent().getSelectedBaseTargets().get(0);
-            ArrayList<Square> playerSquares = getModel().getVisibleSquares(selectedTarget);
+            ArrayList<Square> playerSquares = getModel().runnableSquare(2,selectedTarget.getPosition());
             for(Square square : playerSquares)
             {
-                if(visibleSquares.contains(square) ) {
+                if(visibleSquares.contains(square)) {
                     selectedSquares.add(square);
                 }
             }
@@ -81,17 +89,15 @@ public class Tractorbeam extends WeaponAlternative {
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        ArrayList<Player> finalList = new ArrayList<>();
-        currentPlayer.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
+        System.out.println("tractorbeam 3");
+
+        selectedTargets.get(0).setPosition(getModel().getCurrent().getSelectedWeaponSquare());
 
         for(Player target : selectedTargets){
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
 
-        //sistemare il pagamento
-        currentPlayer.getResources().removeFromAvailableAmmo(this.getBaseCost());
-        //
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 }

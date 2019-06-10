@@ -20,7 +20,8 @@ public class Plasmagun extends WeaponOptional2 {
     public void askOptionalRequirements2(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter2()== 0) {
             ArrayList<Player> availableTargets = getModel().getCurrent().getSelectedBaseTargets();
-            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+            getModel().getCurrent().incrementOptionalCounter2();
+            useOptionalFireMode2(currentPlayer,availableTargets);
         }
     }
 
@@ -33,7 +34,7 @@ public class Plasmagun extends WeaponOptional2 {
     public void askOptionalRequirements1(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter1()== 0) {
             ArrayList<Square> squares = getModel().runnableSquare(2, currentPlayer.getPosition());
-        endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
+            endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
 
         else
@@ -49,6 +50,12 @@ public class Plasmagun extends WeaponOptional2 {
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+            if(availableTargets.isEmpty()&&getModel().getCurrent().getSelectedWeaponSquare()!=null){
+                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                getModel().payFireMode(currentPlayer,this);
+                getModel().notifyShoot(currentPlayer);
+                return;
+            }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else

@@ -4,7 +4,8 @@
       {"type" : "optional2" , "name" : "| Charged Shot |" , "child" :  []}
     ]},
     {"type" : "optional2" , "name" : "| Charged Shot |" , "child" :  [
-      {"type" : "optional1" , "name" : "| Phase Glide |" , "child" :  []}
+      {"type" : "optional1" , "name" : "| Phase Glide |" , "child" :  []},
+      {"type" : "end" , "name" : "| End |" , "child" :  []}
     ]},
     {"type" : "end" , "name" : "| End |" , "child" :  []}
   ]},

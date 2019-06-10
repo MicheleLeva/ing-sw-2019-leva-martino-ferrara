@@ -16,14 +16,17 @@ public class Rocketlauncher extends WeaponOptional2 {
                 baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model);
     }
 
+    private Square originalSquare;
+
     @Override
     public void askOptionalRequirements2(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter2()== 0) {
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : getModel().getAllPlayers())
-                if(player.getPosition() == getModel().getCurrent().getRocketlauncherSquare())
+                if(player.getPosition() == originalSquare && player!=currentPlayer)
                     availableTargets.add(player);
-            availableTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
+            if(!availableTargets.contains(getModel().getCurrent().getSelectedBaseTargets().get(0)))
+                availableTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             getModel().getCurrent().setAvailableOptionalTargets2(availableTargets);
             getModel().getCurrent().incrementOptionalCounter2();
             useOptionalFireMode2(currentPlayer,availableTargets);
@@ -43,7 +46,7 @@ public class Rocketlauncher extends WeaponOptional2 {
         }
 
         else
-            useOptionalFireMode1(currentPlayer,null);
+            useOptionalFireMode1(currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
     }
 
     @Override
@@ -54,13 +57,25 @@ public class Rocketlauncher extends WeaponOptional2 {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            ArrayList<Player> sameSquarePlayers = getModel().getPlayersInSameSquare(currentPlayer);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
-            if(availableTargets.contains(currentPlayer))
-                availableTargets.remove(currentPlayer);
+            if(sameSquarePlayers.contains(currentPlayer))
+                sameSquarePlayers.remove(currentPlayer);
+            for(Player player : sameSquarePlayers)
+                if(availableTargets.contains(player))
+                    availableTargets.remove(player);
+
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+            return;
         }
         if(getModel().getCurrent().getBaseCounter()== 1) {
-            ArrayList<Square> squares = getModel().runnableSquare(1, currentPlayer.getPosition());
+            if(getModel().getCurrent().getSelectedBaseTargets().isEmpty()){
+                getModel().getCurrent().incrementBaseCounter();
+                askBaseRequirements(currentPlayer);
+                return;
+            }
+            originalSquare = getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition();
+            ArrayList<Square> squares = getModel().runnableSquare(1, getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -69,17 +84,18 @@ public class Rocketlauncher extends WeaponOptional2 {
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-
-        for(Player target : selectedTargets){
-            getModel().getCurrent().setRocketlauncherSquare(currentPlayer.getPosition());
-            target.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
-            getModel().addDamage(currentPlayer.getPlayerColor(),target.getPlayerColor(),this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(),target.getPlayerColor(),getBaseMarks());
+        if(!getModel().getCurrent().getSelectedBaseTargets().isEmpty()) {
+            for (Player target : selectedTargets) {
+                target.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
+                getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
+                getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
+            }
+            getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
         }
-        //sistemare il pagamento
-        getModel().payFireMode(currentPlayer,this);
-        //
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        else{
+            this.getWeaponTree().resetAction();
+            getModel().notifyShoot(currentPlayer);
+        }
     }
 
 }
