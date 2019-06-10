@@ -34,10 +34,14 @@ public class Decks {
         discardedPowerUpDeck = new ArrayList<>();
         createPowerUpDeck();
         createAmmoCardDeck();
-        //addBasicWeapons();
-        //addAlternativeWeapons();
+        addBasicWeapons();
+        System.out.println("1decks");
+        addAlternativeWeapons();
+        System.out.println("2decks");
         addOptionalWeapons1();
-        //addOptionalWeapons2();
+        System.out.println("3decks");
+        addOptionalWeapons2();
+        System.out.println("4decks");
     }
 
     //todo
