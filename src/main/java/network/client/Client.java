@@ -23,9 +23,9 @@ public class Client extends Observable<String> implements ClientConnection,Runna
     private View view;
 
     //da recuperare effettivi dati per connessione
-    private String ip = "localhost";
+    private String ip = "192.168.1.9";
 
-    private int port = 6868;
+    private int port = 80;
 
     private boolean isActive(){
         return active;
@@ -45,7 +45,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
         try {
             socket.close();
         } catch (IOException e) {
-            System.err.println("Error closign connection!");
+            System.err.println("Error closing connection!");
         }
         active = false;
     }

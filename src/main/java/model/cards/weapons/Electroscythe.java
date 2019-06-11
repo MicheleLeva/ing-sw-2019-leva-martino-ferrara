@@ -43,11 +43,7 @@ public class Electroscythe extends WeaponAlternative {
 
 
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
-        for (Player target : selectedTargets) {
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-        }
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){

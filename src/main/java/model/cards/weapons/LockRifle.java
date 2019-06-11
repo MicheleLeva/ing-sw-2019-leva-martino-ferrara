@@ -31,7 +31,8 @@ public class LockRifle extends WeaponOptional1 {
     public void askOptionalRequirements1(Player currentPlayer){
         if(getModel().getCurrent().getOptionalCounter1() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
-            availableTargets.remove(getModel().getCurrent().getSelectedBaseTargets().get(0));
+            if(!getModel().getCurrent().getSelectedBaseTargets().isEmpty())
+                availableTargets.remove(getModel().getCurrent().getSelectedBaseTargets().get(0));
             getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
             getModel().getCurrent().incrementOptionalCounter1();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getOptionalTargetsNumber1());

@@ -59,9 +59,7 @@ public class Flamethrower extends WeaponAlternative {
                 }
             }
         }
-        //sistemare il pagamento
         getModel().payFireMode(currentPlayer,this);
-        //
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 

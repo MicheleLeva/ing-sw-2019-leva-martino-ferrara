@@ -12,11 +12,16 @@ import model.player.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Support class that checks the vallidity of multiple actions
+ * @author Marco Maria Ferrara
+ * @author Stefano Martino
+ */
 public class Checks {
 
-    public static boolean enoughAmmo(Card card, Ammo ammo){
-        return true;
-    }
+    //public static boolean enoughAmmo(Card card, Ammo ammo){
+    //    return true;
+    //}
     private static final int MAX_AMMO = 3;
     private static final int MAX_POWERUP = 3;
     private static final int FIRST_DAMAGE_TRESHOLD = 2;
@@ -26,11 +31,24 @@ public class Checks {
     private static final int KILLSHOT = 11;
     private static final int DOUBLEKILLSHOT = 2;
 
+    /**
+     * Checks if the player has the max number of powerUps
+     * @param player selected player
+     * @return the result is true if the player has 3 powerUps, false otherwise
+     * @author Stefano Martino
+     */
     public static boolean hasMaxPowerUp(Player player){
         return (player.getResources().getPowerUp().size() == MAX_POWERUP);
     }
 
+    /**
+     * Returns the number of ammos actually drawn from the picked up Ammo Card
+     * @param grabbedAmmo number of ammos drawn from an Ammo card
+     * @param playerAmmo number of ammos the player holds
+     * @author Stefano Martino
+     */
     public static Ammo drawnAmmo(Ammo grabbedAmmo , Ammo playerAmmo){
+        Checks checks = new Checks();
         Ammo drawableAmmo = null;
         int drawableRed;
         int drawableBlue;
@@ -48,15 +66,6 @@ public class Checks {
         int drawnBlue;
         int drawnYellow;
 
-        /*if(drawableRed > 0 && grabbedRed > 0){
-            if(drawableRed > grabbedRed){
-                drawnRed = grabbedRed;
-            }
-            else{
-                drawnRed = drawableRed;
-            }
-        }*/
-
         drawnRed = Integer.min(drawableRed,grabbedRed);
         drawnBlue = Integer.min(drawableBlue,grabbedBlue);
         drawnYellow = Integer.min(drawableYellow,grabbedYellow);
@@ -68,6 +77,13 @@ public class Checks {
         return drawableAmmo;
     }
 
+    /**
+     * Checks if the player can reload one of his weapons
+     * @param weapon list of the reloadable weapons that the player holds
+     * @param allAmmo Sum of players ammos and powerUps
+     * @return true if the player can reload, false otherwise
+     * @author Stefano Martino
+     */
     public static boolean canReload(ArrayList<Weapon> weapon , Ammo allAmmo){
         for (int i = 0; i < weapon.size(); i++){
             Ammo reloadCost = weapon.get(i).getBaseCost(); //todo ritornare il costo di ricarica
@@ -79,7 +95,13 @@ public class Checks {
     }
 
 
-
+    /**
+     * Checks if the current player can use the selected Fire Mode
+     * @param player current player
+     * @param currentWeapon weapon selected by the current player
+     * @param effectType string that indicates the type of fire mode selected
+     * @return true if the fire mode is ussable, false otherwise
+     */
     public static boolean canUseFireMode(Player player, Weapon currentWeapon, String effectType){
         int RED ;
         int YELLOW ;
@@ -88,7 +110,6 @@ public class Checks {
         RED = playerAmmo.getRed();
         YELLOW = playerAmmo.getYellow();
         BLUE = playerAmmo.getBlue();
-        System.out.println("checks" + effectType);
 
 
         switch (effectType) {
@@ -99,26 +120,16 @@ public class Checks {
             case "base":
                 return true;
             case "alternative": {
-                System.out.println("alternative in checks");
                 Ammo cost = ((WeaponAlternative) currentWeapon).getAlternativeCost();
-                if (cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW)
-                    return true;
-                else
-                    return false;
+                return cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW;
             }
             case "optional1": {
                 Ammo cost = ((WeaponOptional1) currentWeapon).getOptionalCost1();
-                if (cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW)
-                    return true;
-                else
-                    return false;
+                return cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW;
             }
             case "optional2": {
                 Ammo cost = ((WeaponOptional2) currentWeapon).getOptionalCost2();
-                if (cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW)
-                    return true;
-                else
-                    return false;
+                return cost.getRed() <= RED && cost.getBlue() <= BLUE && cost.getYellow() <= YELLOW;
             }
 
             default:
@@ -127,6 +138,11 @@ public class Checks {
         }
     }
 
+    /**
+     * Returns the amount of damage actually given to an opponent
+     * @param playerDamage the damage on the opponents' board
+     * @param damage the damage given to the opponent
+     */
     public static int givenDamage(int playerDamage , int damage){
         if (MAX_DAMAGE - playerDamage < damage){
             return (MAX_DAMAGE - playerDamage);
@@ -136,6 +152,11 @@ public class Checks {
         }
     }
 
+    /**
+     * Returns the number of marks actually given to an opponent
+     * @param playerMark the marks on the opponents' board
+     * @param mark the marks given to the opponent
+     */
     public static int givenMark(int playerMark , int mark){
         if(MAX_MARK_FOR_COLOR - playerMark < mark){
             return (MAX_MARK_FOR_COLOR - playerMark);
@@ -145,6 +166,11 @@ public class Checks {
         }
     }
 
+    /**
+     * Finds the available actions based on the amount of damage received by the player
+     * @param player cuurrent player
+     * @return an integer that indicated the set of actions available to the player
+     */
     public static int verifyNewAction(Player player){
         int currentPlayerDamage = player.getPlayerBoard().getDamageCounter().getDamage();
         if(currentPlayerDamage < FIRST_DAMAGE_TRESHOLD){
@@ -158,18 +184,34 @@ public class Checks {
         }
     }
 
+    /**
+     * @return an integer that indicated the max damage receivable
+     */
     public static int getMaxDamage(){
         return MAX_DAMAGE;
     }
 
+    /**
+     * @return an integer that indicated the amount of damage receivable before getting killed
+     */
     public static int getKillshot(){
         return KILLSHOT;
     }
 
+    /**
+     * @return the points received from a double kill
+     */
     public static int getDoubleKillShot(){
         return DOUBLEKILLSHOT;
     }
 
+    /**
+     * Checks if a selected payment is valid or not
+     * @param currentPlayer current player in the game
+     * @param choices integer that indicates the powerUps selected for a payment
+     * @param effectType integer that indicates the type of fire mode selected
+     * @return true if the selected payment is valid, flse otherwise
+     */
     public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
         Weapon weapon = model.getCurrent().getSelectedWeapon();
         if (weapon == null){
@@ -188,7 +230,6 @@ public class Checks {
         boolean R;
         boolean B;
         boolean Y;
-        System.out.println("effecttype in checkvalid" + effectType);
         for (int i : choices) {
             String color = model.getCurrent().getAvailablePaymentPowerUps().get(i-1).getAmmo().toString();
             if (color.equals("RED"))
@@ -200,7 +241,6 @@ public class Checks {
             if (color.equals("YELLOW"))
                 powerUpYELLOW++;
         }
-        System.out.println("pagamento senza selezione in checksvalid");
 
         switch (effectType) {
             case "reload" :{
@@ -231,52 +271,56 @@ public class Checks {
         fireRED = fireModeCost.getRed();
         fireBLUE = fireModeCost.getBlue();
         fireYELLOW = fireModeCost.getYellow();
-        System.out.println("fireRED" + fireRED);
-        System.out.println("fireBLUE" + fireBLUE);
-        System.out.println("fireYELLOw" + fireYELLOW);
-        System.out.println("poiwerupred" + powerUpRED);
-        System.out.println("powerupblue" + powerUpBLUE);
-        System.out.println("powerupyellow" + powerUpYELLOW);
-        System.out.println("playerred" + playerRED);
-        System.out.println("playerblbue" + playerBLUE);
-        System.out.println("playeryellow" + playerYELLOW);
 
+        R = checkValidRed(fireRED,powerUpRED,playerRED);
+        B = checkValidBlue(fireBLUE,powerUpBLUE,playerBLUE);
+        Y = checkValidYellow(fireYELLOW,powerUpYELLOW,playerYELLOW);
 
+        return R&&B&&Y;
+    }
 
-        if(fireRED-powerUpRED==0)
-            R = true;
+    /**
+     * calculates if the sum of red powerups and red ammos is enough to pay the red fire mode ammo
+     */
+    private static boolean checkValidRed(int fireRED, int powerUpRED, int playerRED) {
+
+        if (fireRED - powerUpRED == 0)
+            return true;
         else {
             if (fireRED - powerUpRED > 0) {
-                if (fireRED - powerUpRED - playerRED <= 0)
-                    R = true;
-                else
-                    R = false;
+                return fireRED - powerUpRED - playerRED <= 0;
             } else
-                R = false;
+                return false;
         }
+    }
+
+    /**
+     * calculates if the sum of blue powerups and blue ammos is enough to pay the blue fire mode ammo
+     */
+    private static boolean checkValidBlue (int fireBLUE, int powerUpBLUE, int playerBLUE){
+
         if(fireBLUE-powerUpBLUE==0)
-            B = true;
-        else{
-            if(fireBLUE-powerUpBLUE>0) {
-                if (fireBLUE - powerUpBLUE - playerBLUE <= 0)
-                    B = true;
-                else
-                    B = false;
-            }
-            else
-                B = false;
+            return true;
+        else {
+            if (fireBLUE - powerUpBLUE > 0) {
+                return fireBLUE - powerUpBLUE - playerBLUE <= 0;
+            } else
+                return false;
         }
+    }
+
+    /**
+     * calculates if the sum of yellow powerups and yellow ammos is enough to pay the yellow fire mode ammo
+     */
+    private static boolean checkValidYellow (int fireYELLOW, int powerUpYELLOW, int playerYELLOW){
+
         if(fireYELLOW-powerUpYELLOW==0)
-            Y = true;
+            return true;
         else {
             if (fireYELLOW - powerUpYELLOW > 0) {
-                if (fireYELLOW - powerUpYELLOW - playerYELLOW <= 0)
-                    Y = true;
-                else
-                    Y = false;
+                return fireYELLOW - powerUpYELLOW - playerYELLOW <= 0;
             } else
-                Y = false;
+                return false;
         }
-        return R&&B&&Y;
     }
 }
