@@ -53,7 +53,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
                 selectedTargets.remove(Integer.valueOf(0));
             Event event = new TargetsSelectionEvent(view,selectedTargets);
             notify(event);
-        //}
+
     }
 
     @Override

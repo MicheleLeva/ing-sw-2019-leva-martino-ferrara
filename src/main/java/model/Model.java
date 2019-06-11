@@ -654,8 +654,12 @@ public class Model {
     }
 
     public void showWeaponCards(PlayerColor playerColor) {
-        String availableWeapons;
-        availableWeapons = getPlayer(playerColor).getResources().showWeapon();
+        String availableWeapons = "";
+        ArrayList<Weapon> weapons = getPlayer(playerColor).getResources().getReloadedWeapon();
+        for(Weapon weapon : weapons){
+            int i = 1;
+            availableWeapons = i + availableWeapons + weapon.getWeaponName();
+        }
         weaponNotifier.showWeaponCards(playerColor, availableWeapons);
     }
 
@@ -699,6 +703,7 @@ public class Model {
                 opponentList = opponentList + availableTargets.get(i).getPlayerName() + " ";
             }
         }
+        System.out.println("selecttargets in model ");
         weaponNotifier.selectTargets(playerColor, opponentList, targetsNumber);
     }
 
@@ -1036,6 +1041,7 @@ public class Model {
 
     public void chooseWeaponSquare(PlayerColor playerColor, ArrayList<Square> squares) {
         current.setAvailableWeaponSquares(squares);
+        System.out.println("chooseweaponsquare base");
         weaponNotifier.chooseWeaponSquare(playerColor, squares);
     }
 

@@ -161,14 +161,52 @@ public class WeaponController extends Controller implements WeaponObserver {
         if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
             return;
         }
+        System.out.println("selectedtargets IN WEAPONCONTROLLER" + event.getSelectedTargets());
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String type = weapon.getWeaponTree().getLastAction().getData().getType();
         Current current = getModel().getCurrent();
         System.out.println("targetsselectionevent" + type);
 
+        if(event.getSelectedTargets().isEmpty() && !(weapon instanceof Powerglove)){
+            event.getView().reportError("You didn't select any targets, try again!");
+            switch (type){
+                case BASE:
+                    getModel().getCurrent().decrementBaseCounter();
+                    weapon.askBaseRequirements(currentPlayer);
+                    return;
+                case ALTERNATIVE:
+                    getModel().getCurrent().decrementAlternativeCounter();
+                    ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
+                    return;
+                case OPTIONAL1:
+                    getModel().getCurrent().decrementOptionalCounter1();
+                    ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
+                    return;
+                case OPTIONAL2:
+                    getModel().getCurrent().decrementOptionalCounter2();
+                    ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
+                    return;
+            }
+        }
+        if(event.getSelectedTargets().isEmpty() && !(weapon instanceof Powerglove)){
+            switch (type){
+                case BASE:
+                    weapon.askBaseRequirements(currentPlayer);
+                    return;
+                case ALTERNATIVE:
+                    ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
+                    return;
+                case OPTIONAL1:
+                    ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
+                    return;
+                case OPTIONAL2:
+                    ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
+                    return;
+            }
+        }
         if(type.equals(BASE)) {
-
+            System.out.println("base in targetsselectionevent");
             checkBaseTargets(event,weapon,current,currentPlayer);
             return;
         }

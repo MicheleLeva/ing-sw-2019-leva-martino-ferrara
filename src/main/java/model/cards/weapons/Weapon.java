@@ -175,6 +175,7 @@ public abstract class Weapon extends Card {
                 getModel().getCurrent().incrementOptionalCounter2();
                 break;
         }
+        System.out.println("endasksquares");
         getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
     }
 

@@ -16,7 +16,12 @@ public class Whisper extends Weapon {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
-            ArrayList<Player> availableTargets = getModel().getPlayersAtDistanceMore(2,currentPlayer);
+            ArrayList<Player> availableTargets = new ArrayList<>();
+            ArrayList<Player> visiblePlayers = getModel().getVisiblePlayers(currentPlayer);
+            ArrayList<Player> availableTargetsBase = getModel().getPlayersAtDistanceMore(2,currentPlayer);
+            for(Player player : availableTargetsBase)
+                if(visiblePlayers.contains(player))
+                    availableTargets.add(player);
             getModel().getCurrent().setAvailableBaseTargets(availableTargets);
             getModel().getCurrent().incrementBaseCounter();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());

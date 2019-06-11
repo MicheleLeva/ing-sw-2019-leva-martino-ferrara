@@ -35,13 +35,9 @@ public class Decks {
         createPowerUpDeck();
         createAmmoCardDeck();
         addBasicWeapons();
-        System.out.println("1decks");
         addAlternativeWeapons();
-        System.out.println("2decks");
         addOptionalWeapons1();
-        System.out.println("3decks");
         addOptionalWeapons2();
-        System.out.println("4decks");
     }
 
     //todo
