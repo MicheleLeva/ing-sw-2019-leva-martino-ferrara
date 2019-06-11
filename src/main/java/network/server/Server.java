@@ -11,6 +11,7 @@ import network.ClientConnection;
 import view.*;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -148,6 +149,7 @@ public class Server {
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
+        System.out.println(InetAddress.getLocalHost());
     }
 
     public void  addPlayer(ClientConnection c, String name){
@@ -236,6 +238,7 @@ public class Server {
         RemoteView blueView = new RemoteView(PlayerColor.BLUE, playingPool.get(lastID).get(0));
         remoteViews.add(blueView);
         playerViews.put(keys.get(0), blueView);
+        players.get(0).setFirst();
 
         players.add(new Player(keys.get(1), PlayerColor.GREEN));
         RemoteView greenView = new RemoteView(PlayerColor.GREEN, playingPool.get(lastID).get(1));

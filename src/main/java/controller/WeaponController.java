@@ -340,6 +340,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         if(!Checks.validPayment(currentPlayer,event.getSelectedPowerUps(),"reload",getModel())) {
             error = "Invalid input.\n";
             event.getView().reportError(error);
+            getModel().getCurrent().getAvailablePaymentPowerUps().clear();
             getModel().askReloadPayment(currentPlayer, weapon);
         }
         else{

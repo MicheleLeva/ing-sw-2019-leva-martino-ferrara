@@ -126,9 +126,6 @@ public class Turn {
                 while (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
                     System.out.print("");
                     if (!isGrenadeTimerOn){
-                        for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
-                            getModel().setPlayerAfk(grenadePlayer);
-                        }
                         getModel().getTurnCurrent().getGrenadePeopleArray().clear();
                     }
                 }
@@ -181,6 +178,16 @@ public class Turn {
 
     public void endTurn(){
 
+        //Scoring
+        getModel().getScoreManager().updateScore();
+
+
+        for (Player player : getModel().getEachPlayer()){
+            if (player.isDead() || player.isKillShot()){
+                getModel().getTurnCurrent().getDeadPlayers().add(player);
+            }
+        }
+
         //Respawn
         if (!getModel().getTurnCurrent().getDeadPlayers().isEmpty() && !isFrenzy){
             for (Player deadPlayer : getModel().getTurnCurrent().getDeadPlayers()) {
@@ -207,15 +214,12 @@ public class Turn {
                     }
                 }
                 respawnTimer.cancel();
+                deadPlayer.setAlive();
             }
+            getModel().getTurnCurrent().getDeadPlayers().clear();
         }
 
-        //Scoring
-        if (isFrenzy){
-            getModel().getScoreManager().updateScoreFrenzy();
-        } else {
-            getModel().getScoreManager().updateScore();
-        }
+
 
         //Resetting the current
         getModel().resetCurrent();
