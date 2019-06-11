@@ -473,7 +473,7 @@ public class Model {
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
     }
 
-    private boolean canRecharge(Player player) {
+    private boolean canRecharge(Player player) { //todo rivedere
         ArrayList<Weapon> reloadableWeapon = player.getResources().getReloadableWeapon();
         Ammo allAmmoAvailable = new Ammo(player.getResources().getAvailableAmmo());
         ArrayList<PowerUp> powerUp = player.getResources().getPowerUp();
@@ -495,54 +495,6 @@ public class Model {
         return result;
     }
 
-    public void endTurn(Player player) {
-        //2 casi:
-        //1. piò ricaricare
-        //2: non può      ricordarsi di notify
-
-        if (canRecharge(player)) {
-            //todo
-        }
-
-        String toPlayer;
-        String toOthers;
-        toPlayer = "Your turn has ended\n";
-        toOthers = player.getPlayerName() + "'s turn has ended\n";
-        //todo notify
-        turnManager.update();
-
-    }
-
-    public void endFrenzyTurn(Player player) {
-        String toPlayer;
-        String toOthers;
-        toPlayer = "Your frenzy turn has ended\n";
-        toOthers = player.getPlayerName() + "'s frenzy turn has ended\n";
-        //notify (new Message(player.getPlayerColor() , toPlayer , toOthers));
-
-        if (player.getPlayerColor() == turnManager.getLastPlayerColor()) {
-            turnManager.setGameOver(true);
-        } else {
-            turnManager.update();
-        }
-    }
-
-    public void endGame() {
-        //Calcolo classifica
-        //Notifica
-
-        ArrayList<Player> rank = new ArrayList<>();
-
-        ArrayList<Player> allPlayer = turnManager.getAllPlayers();
-
-        for (int i = 0; i < allPlayer.size(); i++) {
-            //todo classifica
-        }
-
-
-    }
-
-
     public void updateRun() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
@@ -552,30 +504,6 @@ public class Model {
     public void updateAction() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         currentPlayer.getActionTree().updateAction();
-    }
-
-    public void updateTurn() { //todo controllare se serve ancora
-       Player currentPlayer = turnManager.getCurrentPlayer();
-  /*       if (currentPlayer.getActionTree().isTurnEnded()) {
-            ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
-            Ammo allAmmo = currentPlayer.getResources().getAllAmmo();
-            if (Checks.canReload(reloadableWeapon, allAmmo)) {
-                //chiedi di ricaricare
-                askReloadEndTurn(currentPlayer.getPlayerColor());
-            } else {
-                endTurn();
-            }
-        } else {*/
-            chooseAction(currentPlayer.getPlayerColor());
-        //}
-    }
-
-    public void endTurn() { //todo riempire metodo
-        //cambia giocatore
-        //notifica nuovo turno
-        //stampa lo stato del gioco
-        //calcola punteggi
-        //ridistribuisci le ammo sulla mappa
     }
 
     public void choosePowerUp(PlayerColor playerColor) {
@@ -800,8 +728,6 @@ public class Model {
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         weapon.reload();
         resetCurrent();
-        //todo controllare
-        //getCurrent().setReceivedInput(true);
         updateAction();
     }
 
@@ -1138,7 +1064,7 @@ public class Model {
         if (givenDamage != 0) {
             damageCounter.addDamage(shooterColor, givenDamage);
             if (damageCounter.getDamage() >= Checks.getKillshot()) {
-                opponent.setKillshot();
+                opponent.setKillshot(true);
 
                 if(damageCounter.getDamage() == Checks.getKillshot()) {
                     turnManager.addKillShot(shooterColor);
@@ -1149,8 +1075,8 @@ public class Model {
                     opponent.setDead();
                 }
             }
-        if (getPlayer(opponentColor).hasTagBackGrenade()) {
-            getTurnCurrent().getGrenadePeopleArray().add(getPlayer(opponentColor));
+        if (getPlayer(opponentColor).hasTagBackGrenade() && !getTurnCurrent().getGrenadePeopleArray().contains(opponent)) {
+            getTurnCurrent().getGrenadePeopleArray().add(opponent);
         }
         }
 

@@ -27,7 +27,7 @@ public class ScoreManager {
         ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
 
         for (int i = 0; i < allPlayer.size(); i++){
-            if(allPlayer.get(i).isKillShot()){
+            if(allPlayer.get(i).isKillShot() || allPlayer.get(i).isDead()){
                 computePoints(allPlayer.get(i));
 
                 //remove skull and add token
@@ -77,8 +77,24 @@ public class ScoreManager {
         }
 
         updatePlayerRank();
+
+        ArrayList<PlayerColor> afkPlayers = new ArrayList<>();
+        for (PlayerColor player : playerRank){
+            if (model.getPlayer(player).isAfk()){
+                afkPlayers.add(player);
+            }
+        }
+        for (PlayerColor playerColor : afkPlayers){
+            playerRank.remove(playerColor);
+        }
+        //todo rivedere
+        model.getGameNotifier().notifyGeneric(model.getPlayer(getWinner()).getColoredName() + " has won the game!");
     }
 
+    public PlayerColor getWinner(){
+        return playerRank.get(0);
+        //todo ties
+    }
 
     private void computePoints(Player player){
 

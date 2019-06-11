@@ -8,6 +8,7 @@ import view.View;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Client extends Observable<String> implements ClientConnection,Runnable{
@@ -102,7 +103,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
                 read = in.nextLine();
                 notify(read);
             }
-        } catch (IOException e) {
+        } catch (IOException | NoSuchElementException e) {
             System.out.println("Connection error!");
         }
     }

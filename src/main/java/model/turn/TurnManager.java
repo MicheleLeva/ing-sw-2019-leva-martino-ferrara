@@ -15,7 +15,7 @@ public class TurnManager {
 
     private  int currentPlayerIndex;
 
-    private PlayerColor lastPlayerColor; //Ultimo giocatore della partita (usato per il turno frenesia)
+    private int lastPlayerIndex; //Ultimo giocatore della partita (usato per il turno frenesia)
 
     private boolean gameOver = false;
 
@@ -32,6 +32,8 @@ public class TurnManager {
     private boolean killshot;
 
     private boolean frenzy;
+
+    private boolean isGameEnded = false;
 
     private ArrayList<PlayerColor> currentTurnKillShots;
 
@@ -53,10 +55,20 @@ public class TurnManager {
         currentPlayerColor = allPlayers.get(0).getPlayerColor();
         currentTurnNumber = 1;
         currentTurnKillShots = new ArrayList<>();
+
     }
 
     public synchronized void update(){
         allPlayers.get(currentPlayerIndex).getActionTree().resetAction();
+
+        if (isFrenzy() && currentPlayerIndex == lastPlayerIndex){
+            if (isGameEnded){
+                setGameOver(true);
+                return;
+            } else {
+                isGameEnded = true;
+            }
+        }
 
         int count = 0;
         for (Player player : getAllPlayers()){
@@ -122,10 +134,6 @@ public class TurnManager {
         return allPlayers.get(currentPlayerIndex);
     }
 
-    public PlayerColor getLastPlayerColor(){
-        return lastPlayerColor;
-    }
-
     public void setGameOver(boolean gameOver){
         this.gameOver = gameOver;
     }
@@ -180,5 +188,13 @@ public class TurnManager {
 
     public void setFrenzy(boolean frenzy){
         this.frenzy = frenzy;
+        lastPlayerIndex = currentPlayerIndex;
+        for (int i =0; i<allPlayers.size(); i++){
+            if (i > lastPlayerIndex){
+                allPlayers.get(i).setActionTree(5);
+            } else {
+                allPlayers.get(i).setActionTree(4);
+            }
+        }
     }
 }

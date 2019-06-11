@@ -32,6 +32,7 @@ public class Player {
         score = new Score();
         this.actionTree = new ActionTree(1);
         this.position = null;
+        isFirst = false;
     }
 
     public Score getScore() {
@@ -89,13 +90,18 @@ public class Player {
 
     public void setDead(){
         isDead = true;
+        position = null;
     }
 
     public void setAlive(){
         isDead = false;
         isKillShot = false;
+        playerBoard.getDamageCounter().clearDamage();
     }
 
+    public void setFirst(){
+        isFirst = true;
+    }
     public void setAfk(boolean afk) {
         this.afk = afk;
     }
@@ -104,8 +110,8 @@ public class Player {
         return afk;
     }
 
-    public void setKillshot(){
-        isKillShot = true;
+    public void setKillshot(boolean killshot){
+        isKillShot = killshot;
     }
 
     public boolean isKillShot(){

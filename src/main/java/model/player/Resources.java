@@ -172,8 +172,8 @@ public class Resources {
 
     public String printUnloadedWeapons(){
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < reloadableWeapon.size(); i++){
-            stringBuilder.append(reloadableWeapon.get(i).toString());
+        for (int i = 0; i < getReloadableWeapon().size(); i++){
+            stringBuilder.append(getReloadableWeapon().get(i).toString());
             stringBuilder.append(" ");
         }
 

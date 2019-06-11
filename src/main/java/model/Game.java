@@ -109,8 +109,7 @@ public class Game implements Runnable{
             currentTurn.endTurn();
         }
         System.out.println("Out of Game loop!");
-        //manda punteggi
-        //clear game dal server
+        getModel().getScoreManager().updateScoreFrenzy();
         model.getGameNotifier().notifyGeneric("The game has ended!");
         server.closeGame(gameID);
     }
