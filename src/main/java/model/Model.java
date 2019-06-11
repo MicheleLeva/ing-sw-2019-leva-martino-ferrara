@@ -169,18 +169,22 @@ public class Model {
     }
 
     public ArrayList<Square> getVisibleSquares(Player currentPlayer){
+        System.out.println("visible squares 1");
         Square currentSquare = currentPlayer.getPosition();
+        System.out.println("visible squares 2");
         ArrayList<Square> visibleSquares = new ArrayList<>();
         Square[][] allSquares = getGameBoard().getMap().getMap();
+        System.out.println("visible squares 3");
 
-        for (int row = 0; row < allSquares.length; row++) {
-            for (int col = 0; col < allSquares[row].length; col++) {
-                if(currentSquare.getColor().equals(allSquares[row][col].getColor()))
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 4; col++) {
+                if(allSquares[row][col]!=null && currentSquare.getColor().equals(allSquares[row][col].getColor()))
                     visibleSquares.add(allSquares[row][col]);
                 else
                     for (Direction direction : Direction.values()) {
-                        if (    currentSquare.getSide(direction)!=null && currentSquare.getSide(direction).getColor()!=allSquares[row][col].getColor() &&
-                                currentSquare.getSide(direction).getColor() == allSquares[row][col].getColor())
+                        if (    allSquares[row][col]!=null &&
+                                currentSquare.getSide(direction)!=null &&
+                                currentSquare.getSide(direction).getColor().equals(allSquares[row][col].getColor()))
                             visibleSquares.add(allSquares[row][col]);
                     }
             }
@@ -227,7 +231,7 @@ public class Model {
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistance = new ArrayList<>();
-        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
         for (Player player : allPlayers) {
             if (runnableSquare(distance, square).contains(player.getPosition()) && player != currentPlayer) {
                 playersAtDistance.add(player);
@@ -285,16 +289,20 @@ public class Model {
 
     public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer){
         Square square = currentPlayer.getPosition();
-        ArrayList<Player> playersAtDistanceMore;
+        ArrayList<Player> playersAtDistanceMore = new ArrayList<>();
         ArrayList<Player> playersAtDistance = getPlayersAtDistance(distance, currentPlayer);
-        ArrayList<Player> allPlayers = getAllPlayers();
-        for (Player player : playersAtDistance) {
-            if (allPlayers.contains(player))
-                allPlayers.remove(player);
+        for(Player player : playersAtDistance)
+            System.out.println("name 1:" + player.getPlayerName());
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
+        for (Player player : allPlayers) {
+            if (!playersAtDistance.contains(player))
+                playersAtDistanceMore.add(player);
         }
-        if (allPlayers.contains(currentPlayer))
-            allPlayers.remove(currentPlayer);
-        return allPlayers;
+        if (playersAtDistanceMore.contains(currentPlayer))
+            playersAtDistanceMore.remove(currentPlayer);
+        for(Player player : playersAtDistanceMore)
+            System.out.println("name 2:" + player.getPlayerName());
+        return playersAtDistanceMore;
     }
 
     //Metodo che ritorna una lista dei giocatori
@@ -303,11 +311,12 @@ public class Model {
     public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInCardinalDirection = new ArrayList<>();
-        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
 
         for (Player player : allPlayers) {
-            if (player.getPosition().getSquareRow() == square.getSquareRow() ||
-                    player.getPosition().getSquareColumn() == square.getSquareColumn()) {
+            if (    player.getPosition()!=null &&
+                    (player.getPosition().getSquareRow() == square.getSquareRow() ||
+                    player.getPosition().getSquareColumn() == square.getSquareColumn())) {
                 playersInCardinalDirection.add(player);
             }
         }
@@ -317,8 +326,9 @@ public class Model {
     }
 
     public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal) {
-        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
         ArrayList<Player> finalPlayers = new ArrayList<>();
+        System.out.println("cardinal : " + cardinal);
         if (cardinal == 'n') {
             for (Player player : allPlayers)
                 if (player.getPosition().getSquareColumn() == currentPlayer.getPosition().getSquareColumn() &&
@@ -389,6 +399,26 @@ public class Model {
         return nonVisiblePlayers;
     }
 
+    public Square getNextPowerGloveSquare(Square playerSquare, Square secondSquare){
+        if(playerSquare.getSquareRow()==secondSquare.getSquareRow()) {
+            if (playerSquare.getSquareColumn() > secondSquare.getSquareColumn())
+                if (secondSquare.getSide(Direction.WEST) != null)
+                    return secondSquare.getSide(Direction.WEST);
+            if (playerSquare.getSquareColumn() < secondSquare.getSquareColumn())
+                if (secondSquare.getSide(Direction.EAST) != null)
+                    return secondSquare.getSide(Direction.EAST);
+        }
+        if (playerSquare.getSquareColumn() == secondSquare.getSquareColumn()) {
+            if (playerSquare.getSquareRow() > secondSquare.getSquareRow())
+                if (secondSquare.getSide(Direction.NORTH) != null)
+                    return secondSquare.getSide(Direction.NORTH);
+                if (playerSquare.getSquareRow() < secondSquare.getSquareRow())
+                    if (secondSquare.getSide(Direction.SOUTH) != null)
+                        return secondSquare.getSide(Direction.SOUTH);
+            }
+        return null;
+
+    }
     public void requestPowerUpDiscard(Player player) {
         String powerUpList = player.getResources().showpowerUp();
         int num = player.getResources().getPowerUp().size();
@@ -624,8 +654,12 @@ public class Model {
     }
 
     public void showWeaponCards(PlayerColor playerColor) {
-        String availableWeapons;
-        availableWeapons = getPlayer(playerColor).getResources().showWeapon();
+        String availableWeapons = "";
+        ArrayList<Weapon> weapons = getPlayer(playerColor).getResources().getReloadedWeapon();
+        for(Weapon weapon : weapons){
+            int i = 1;
+            availableWeapons = i + availableWeapons + weapon.getWeaponName();
+        }
         weaponNotifier.showWeaponCards(playerColor, availableWeapons);
     }
 
@@ -669,6 +703,7 @@ public class Model {
                 opponentList = opponentList + availableTargets.get(i).getPlayerName() + " ";
             }
         }
+        System.out.println("selecttargets in model ");
         weaponNotifier.selectTargets(playerColor, opponentList, targetsNumber);
     }
 
@@ -676,12 +711,27 @@ public class Model {
         List<WeaponTreeNode<FireMode>> FireModes = new ArrayList<>();
         List<WeaponTreeNode<FireMode>> availableFireModes = weapon.getWeaponTree().getLastActionPerformed().getChildren();
         for(WeaponTreeNode<FireMode> fireMode : availableFireModes){
-            if(Checks.canUseFireMode(getPlayer(playerColor),weapon, fireMode.getData().getType()))
+            System.out.println("available showfiremodes " + fireMode.getData().getType());
+            if(Checks.canUseFireMode(getPlayer(playerColor),weapon, fireMode.getData().getType()) == true)
                 FireModes.add(fireMode);
         }
+        System.out.println("POST available showfiremodes " + FireModes.get(0).getData().getType() + FireModes.size());
+        if(FireModes.size()==1 && FireModes.get(0).getData().getType().equals("end")){
+            for(PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()){
+                System.out.println(powerUp.toString());
+                if(powerUp instanceof TargetingScope){
+                    powerUpNotifier.askTargetingScope(getPlayer(playerColor).getPlayerColor());
+                    return;
+                }
+            }
+            System.out.println("checknextweaponactionnotifyshoot");
+            notifyShoot(getPlayer(playerColor));
+            return;
+        }
+
         getCurrent().setAvailableFireModes(FireModes);
         String result = "Your available fire modes: \n";
-        for (WeaponTreeNode<FireMode> child : availableFireModes) {
+        for (WeaponTreeNode<FireMode> child : FireModes) {
             result = result + child.getData().getEffectName();
         }
         weaponNotifier.showFireModes(playerColor, result);
@@ -878,7 +928,14 @@ public class Model {
             else
             if(powerUp.getAmmo().toString().equals("YELLOW"))
                 powerUpYELLOW++;
+
             }
+        for(PowerUp powerUp : getCurrent().getSelectedPaymentPowerUps()){
+            currentPlayer.getResources().removePowerUp(powerUp);
+            getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
+        }
+        System.out.println(currentPlayer.getResources().getAllAmmo());
+        System.out.println(currentPlayer.getResources().getAvailableAmmo());
         System.out.println(powerUpRED);
         System.out.println(powerUpBLUE);
         System.out.println(powerUpYELLOW);
@@ -907,8 +964,10 @@ public class Model {
         fireYELLOW = fireModeCost.getYellow();
 
         if(currentPlayer.getResources().getPowerUp().isEmpty()){
+            System.out.println("sono in askfiremodepayment1");
             switch (effectType){
                 case("alternative"):
+                    System.out.println("sono in askfiremodepayment2");
                     ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
                     break;
                 case("optional1"):
@@ -931,12 +990,13 @@ public class Model {
         }
 
         if(getCurrent().getAvailablePaymentPowerUps().isEmpty()){
-            payFireMode(currentPlayer,weapon);
+            System.out.println("sono in askfiremodepayment3");
             switch (effectType){
                 case("alternative"):
                     ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
                     break;
                 case("optional1"):
+                    System.out.println("asfiremodepayment in model" + currentPlayer.getResources().getAvailableAmmo());
                     ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
                     break;
                 case("optional2"):
@@ -981,6 +1041,7 @@ public class Model {
 
     public void chooseWeaponSquare(PlayerColor playerColor, ArrayList<Square> squares) {
         current.setAvailableWeaponSquares(squares);
+        System.out.println("chooseweaponsquare base");
         weaponNotifier.chooseWeaponSquare(playerColor, squares);
     }
 
@@ -997,19 +1058,21 @@ public class Model {
 
     public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
         weapon.unload();
+        System.out.println("checknexweapon action inizio"+weapon.getWeaponTree().getLastAction().getData().getType());
         weapon.getWeaponTree().updateLastActionPerformed();
 
         if (weapon.getWeaponTree().isActionEnded()) {
+            System.out.println("shootended");
             weapon.getWeaponTree().resetAction();
             for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
+                System.out.println(powerUp.toString());
                 if(powerUp instanceof TargetingScope){
                     powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor());
                     return;
                 }
-                else{
-                    notifyShoot(currentPlayer);
-                }
             }
+            System.out.println("checknextweaponactionnotifyshoot");
+            notifyShoot(currentPlayer);
         }
         else
             weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon);

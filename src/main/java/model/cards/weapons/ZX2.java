@@ -42,7 +42,10 @@ public class ZX2 extends WeaponAlternative{
 
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
-    }
+        for (Player target : selectedTargets) {
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseMarks());
+        }
+        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);    }
 
 }

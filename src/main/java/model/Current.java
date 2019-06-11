@@ -290,6 +290,21 @@ public class Current {
         this.alternativeCounter++;
     }
 
+    public void decrementBaseCounter(){
+        this.baseCounter--;
+    }
+
+    public void decrementOptionalCounter1(){
+        this.optionalCounter1--;
+    }
+
+    public void decrementOptionalCounter2(){
+        this.optionalCounter2--;
+    }
+    public void decrementAlternativeCounter(){
+        this.alternativeCounter--;
+    }
+
     public boolean isDealtDamage(){ return this.isDealtDamage();}
 
     public void setDealtDamage(boolean choice){ this.dealtDamage = choice;}

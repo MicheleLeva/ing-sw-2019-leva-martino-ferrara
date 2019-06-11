@@ -9,6 +9,7 @@ import utils.update.WeaponUpdate;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class WeaponView extends Observable<Event> implements WeaponUpdate {
@@ -41,17 +42,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
         ArrayList<Integer> selectedTargets = new ArrayList<>();
         int counter = message.getTargetsNumber();
         int selection = 1;
-        String temp = message.getMessage();
-        /*if(temp.equals("Choose a target: \n")){
-            view.printMessage("No available targets for this fire mode \n");
-            selectedTargets.add(-1);
-
-            Event event = new TargetsSelectionEvent(view,selectedTargets);
-
-            notify(event);
-            }
-
-        else{*/
             System.out.println("targetsselection message  in weaponview");
             view.printMessage(message.getMessage());
             while(counter>0 && selection !=0){
@@ -60,10 +50,10 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
                 counter--;
             }
             if(selectedTargets.contains(0))
-                selectedTargets.remove(0);
+                selectedTargets.remove(Integer.valueOf(0));
             Event event = new TargetsSelectionEvent(view,selectedTargets);
             notify(event);
-        //}
+
     }
 
     @Override
@@ -107,7 +97,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
             counter--;
         }
         if(choices.contains(0))
-            choices.remove(0);
+            choices.remove(Integer.valueOf(0));
         Event event = new WeaponPaymentEvent(view, choices);
         notify(event);
     }
@@ -123,7 +113,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
             counter--;
         }
         if(choices.contains(0))
-            choices.remove(0);
+            choices.remove(Integer.valueOf(0));
         Event event = new ReloadPaymentEvent(view, choices);
         notify(event);
     }
@@ -140,7 +130,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
             counter--;
         }
         if (choices.contains(0)){
-            choices.remove(choices.size()-1);
+            choices.remove(Integer.valueOf(0));
         }
         Event event = new PickUpPaymentEvent(view, choices);
         notify(event);

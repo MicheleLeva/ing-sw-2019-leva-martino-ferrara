@@ -15,15 +15,37 @@ public class Grenadelauncher extends WeaponOptional1 {
         super(name,pickUpCost,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,
                 optionalTargetsNumber1,model);
     }
-
+//todo controllare la notifyshoot in askbasereuirements
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            System.out.println("Grenadelauncher base1");
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+            if(     availableTargets.isEmpty() &&
+                    !this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
+                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                this.getWeaponTree().resetAction();
+                getModel().notifyShoot(currentPlayer);
+                return;
+            }
+            if(     availableTargets.isEmpty() &&
+                    this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
+                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                this.getWeaponTree().resetAction();
+                getModel().resetCurrent();
+                getModel().getCurrent().setSelectedWeapon(this);
+                getModel().showFireModes(currentPlayer.getPlayerColor(),this);
+                return;
+            }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+            return;
         }
         if(getModel().getCurrent().getBaseCounter() == 1) {
-            ArrayList<Square> squares = getModel().runnableSquare(1, getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
+            System.out.println("Grenadelauncher base");
+            System.out.println(getModel().getCurrent().getSelectedBaseTargets());
+            System.out.println(getModel().getCurrent().getSelectedBaseTargets().get(0).getPlayerName());
+            ArrayList<Square> squares = Model.runnableSquare(1, getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
+            System.out.println("Grenadelauncher base");
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -33,7 +55,22 @@ public class Grenadelauncher extends WeaponOptional1 {
 
     public void askOptionalRequirements1(Player currentPlayer){
         if(getModel().getCurrent().getOptionalCounter1()== 0) {
-            ArrayList<Square> squares = getModel().runnableSquare(2, currentPlayer.getPosition());
+            ArrayList<Square> squares = new ArrayList<>();
+            ArrayList<Square> squaresBase = getModel().getVisibleSquares(currentPlayer);
+            for(Square square : squaresBase){
+                for(Player player : getModel().getAllPlayers())
+                    if(player.getPosition() == square)
+                        squares.add(square);
+            }
+            if(squares.contains(currentPlayer.getPosition()))
+                squares.remove(currentPlayer.getPosition());
+            if(squares.isEmpty()){
+                getModel().getGameNotifier().notifyGeneric("No available squares you missed the shot!!!");
+                getModel().payFireMode(currentPlayer,this);
+                getModel().getCurrent().incrementOptionalCounter1();
+                getModel().checkNextWeaponAction(this,currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
+                return;
+            }
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -41,11 +78,19 @@ public class Grenadelauncher extends WeaponOptional1 {
     }
 
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
+        System.out.println("grenadelauncher use");
         generalUseWithMove(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){
-        changePlayerPositionUse(currentPlayer,selectedTargets);
+        for(Player player : getModel().getAllPlayers()){
+            if(player != currentPlayer && getModel().getCurrent().getSelectedWeaponSquare() == player.getPosition()){
+                getModel().addDamage(currentPlayer.getPlayerColor(), player.getPlayerColor(), this.getOptionalDamage1());
+                getModel().addMark(currentPlayer.getPlayerColor(), player.getPlayerColor(), this.getOptionalMarks1());
+            }
+        }
+        getModel().payFireMode(currentPlayer,this);
+        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
     }
 
 }

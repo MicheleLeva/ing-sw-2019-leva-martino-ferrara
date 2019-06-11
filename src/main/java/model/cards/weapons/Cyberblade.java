@@ -22,12 +22,9 @@ public class Cyberblade extends WeaponOptional2 {
         if(getModel().getCurrent().getOptionalCounter2()== 0) {
             Player oldPlayer = getModel().getCurrent().getSelectedBaseTargets().get(0);
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
-            for(Player player : availableTargets){
-                if(player.getPlayerName()==oldPlayer.getPlayerName())
-                    availableTargets.remove(player);
-            }
+            if(availableTargets.contains(oldPlayer))
+                availableTargets.remove(oldPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
-
         }
         else
             useOptionalFireMode2(currentPlayer,getModel().getCurrent().getSelectedOptionalTargets2());
@@ -42,19 +39,10 @@ public class Cyberblade extends WeaponOptional2 {
     public void askOptionalRequirements1(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter1()== 0) {
             ArrayList<Square> squares = getModel().runnableSquare(1, currentPlayer.getPosition());
-            if(!getWeaponTree().getLastAction().getParent().getData().getType().equals("base")) {
                 endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
-            }
 
-            else{
-                ArrayList<Square> afterBaseSquares = new ArrayList<>();
-                for(Player player : getModel().getAllPlayers()){
-                    if(squares.contains(player.getPosition()) && player!=currentPlayer)
-                        afterBaseSquares.add(player.getPosition());
-                }
-                endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
-            }
         }
+
         else
             useOptionalFireMode1(currentPlayer,null);
     }
@@ -68,6 +56,12 @@ public class Cyberblade extends WeaponOptional2 {
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
+            if(availableTargets.isEmpty()&&getModel().getCurrent().getSelectedWeaponSquare()!=null){
+                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                getModel().payFireMode(currentPlayer,this);
+                getModel().notifyShoot(currentPlayer);
+                return;
+            }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else

@@ -16,11 +16,17 @@ public class Thor extends WeaponOptional2 {
                 baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model);
     }
 
+    private Player baseTarget;
+
     @Override
     public void askOptionalRequirements2(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter2()==0){
-            Player player = getModel().getCurrent().getSelectedOptionalTargets2().get(0);
+            Player player = getModel().getCurrent().getSelectedOptionalTargets1().get(0);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(player);
+            if(availableTargets.contains(currentPlayer))
+                availableTargets.remove(currentPlayer);
+            if(availableTargets.contains(baseTarget))
+                availableTargets.remove(baseTarget);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -35,8 +41,18 @@ public class Thor extends WeaponOptional2 {
     @Override
     public void askOptionalRequirements1(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter1()==0){
-            Player player = getModel().getCurrent().getSelectedOptionalTargets1().get(0);
+            Player player = getModel().getCurrent().getSelectedBaseTargets().get(0);
+            baseTarget = player;
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(player);
+            if(availableTargets.contains(currentPlayer))
+                availableTargets.remove(currentPlayer);
+            if(availableTargets.isEmpty()){
+                getModel().getGameNotifier().notifyGeneric("No available targets for this Fire Mode ");
+                getModel().payFireMode(currentPlayer,this);
+                this.getWeaponTree().resetAction();
+                getModel().notifyShoot(currentPlayer);
+                return;
+            }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -51,7 +67,7 @@ public class Thor extends WeaponOptional2 {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
-            ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
+            ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
