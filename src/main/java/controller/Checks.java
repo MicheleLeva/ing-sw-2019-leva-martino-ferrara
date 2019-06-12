@@ -101,6 +101,7 @@ public class Checks {
      * @param currentWeapon weapon selected by the current player
      * @param effectType string that indicates the type of fire mode selected
      * @return true if the fire mode is ussable, false otherwise
+     * @author Marco Maria Ferrara
      */
     public static boolean canUseFireMode(Player player, Weapon currentWeapon, String effectType){
         int RED ;
@@ -211,6 +212,7 @@ public class Checks {
      * @param choices integer that indicates the powerUps selected for a payment
      * @param effectType integer that indicates the type of fire mode selected
      * @return true if the selected payment is valid, flse otherwise
+     * @author Marco Maria Ferrara
      */
     public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
         Weapon weapon = model.getCurrent().getSelectedWeapon();
@@ -281,6 +283,7 @@ public class Checks {
 
     /**
      * calculates if the sum of red powerups and red ammos is enough to pay the red fire mode ammo
+     * @author Marco Maria Ferrara
      */
     private static boolean checkValidRed(int fireRED, int powerUpRED, int playerRED) {
 
@@ -296,6 +299,7 @@ public class Checks {
 
     /**
      * calculates if the sum of blue powerups and blue ammos is enough to pay the blue fire mode ammo
+     * @author Marco Maria Ferrara
      */
     private static boolean checkValidBlue (int fireBLUE, int powerUpBLUE, int playerBLUE){
 

@@ -41,6 +41,10 @@ public class Decks {
     }
 
     //todo
+
+    /**
+     * returns a random weapon from the weapon deck
+     */
     public Weapon drawWeapon() {
         if (weaponsDeck.size() > 0)
             return weaponsDeck.remove(rand.nextInt(weaponsDeck.size()));
@@ -49,6 +53,9 @@ public class Decks {
 
     }
 
+    /**
+     * returns a random powerup from the powerup deck
+     */
     public PowerUp drawPowerUp() {
 
         if (powerUpDeck.size() > 0) {
@@ -60,6 +67,10 @@ public class Decks {
     }
 
     //todo rivedere
+
+    /**
+     * returns a random Ammo Card from the Ammo Card deck
+     */
     public AmmoCard drawAmmoCard() {
 
         if (ammoCardDeck.size() > 0) {
@@ -70,31 +81,45 @@ public class Decks {
         return ammoCardDeck.remove(rand.nextInt(ammoCardDeck.size()));
     }
 
+    /**
+     * returns an arrayList containing the weapons in weaponDeck
+     */
     public ArrayList<Weapon> getWeaponsDeck() {
         return weaponsDeck;
 
     }
-
+    /**
+     * returns an arrayList containing the powerUps in powerUp deck
+     */
     public ArrayList<PowerUp> getPowerUpDeck() {
         return powerUpDeck;
 
     }
-
+    /**
+     * returns an arrayList containing the Ammo cards in AmmoCard deck
+     */
     public ArrayList<AmmoCard> getAmmoCardDeck() {
         return ammoCardDeck;
 
     }
-
+    /**
+     * returns an arrayList containing the discarded powerUps
+     */
     public ArrayList<PowerUp> getDiscardedPowerUpDeck() {
         return discardedPowerUpDeck;
 
     }
-
+    /**
+     * returns an arrayList containing the discarded Ammo cards
+     */
     public ArrayList<AmmoCard> getDiscardedAmmoCardDeck() {
         return discardedAmmoCardDeck;
 
     }
 
+    /**
+     * Fills the powerUp deck reading from a json file
+     */
     private void createPowerUpDeck() {
         JSONParser parser = new JSONParser();
         try {
@@ -144,7 +169,9 @@ public class Decks {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Fills the Ammo Card deck reading from a json file
+     */
     public void createAmmoCardDeck() {
         JSONParser parser = new JSONParser();
         try {
@@ -165,7 +192,9 @@ public class Decks {
         }
     }
 
-
+    /**
+     * Fills the weapons deck with weapons that have only the Base Fire Mode
+     */
     public void addBasicWeapons() {
         JSONParser parser = new JSONParser();
         try {
@@ -202,7 +231,9 @@ public class Decks {
 
 
     }
-
+    /**
+     * Fills the weapons deck with weapons that have an alternative Fire Mode
+     */
     public void addAlternativeWeapons() {
         JSONParser parser = new JSONParser();
         try {
@@ -278,7 +309,9 @@ public class Decks {
 
 
     }
-
+    /**
+     * Fills the weapons deck with weapons that have only one optional Fire Mode
+     */
     public void addOptionalWeapons1() {
         JSONParser parser = new JSONParser();
         try {
@@ -322,7 +355,9 @@ public class Decks {
 
 
     }
-
+    /**
+     * Fills the weapons deck with weapons that have two optional Fire Modes
+     */
     public void addOptionalWeapons2() {
         JSONParser parser = new JSONParser();
         try {

@@ -82,7 +82,7 @@ public class Model {
     }
 
     public Model(ArrayList<Player> playersList, int skulls) {
-
+//todo chiedi se serve iniializzare il gameboard
         players.put(PlayerColor.BLUE, playersList.get(0));
         players.put(PlayerColor.GREEN, playersList.get(1));
         players.put(PlayerColor.PURPLE, playersList.get(2));
@@ -148,8 +148,11 @@ public class Model {
 
     }
 
-    //Metodo che ritorna una lista dei giocatori
-    //visibili a partire da uno square dato
+
+    /**
+     * Method that returns a list of the players that are visible by the current player
+     * @param currentPlayer current player
+     */
     public ArrayList<Player> getVisiblePlayers(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> visiblePlayers = new ArrayList<>();
@@ -168,13 +171,14 @@ public class Model {
         return visiblePlayers;
     }
 
+    /**
+     * Method that returns a list of the squares that are visible by the current player
+     * @param currentPlayer current player
+     */
     public ArrayList<Square> getVisibleSquares(Player currentPlayer){
-        System.out.println("visible squares 1");
         Square currentSquare = currentPlayer.getPosition();
-        System.out.println("visible squares 2");
         ArrayList<Square> visibleSquares = new ArrayList<>();
         Square[][] allSquares = getGameBoard().getMap().getMap();
-        System.out.println("visible squares 3");
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 4; col++) {
@@ -192,6 +196,10 @@ public class Model {
         return visibleSquares;
     }
 
+    /**
+     * Method that returns a list of the players that are not in the current player's room
+     * @param currentPlayer current player
+     */
     public ArrayList<Player> getPlayersNotInYourRoom(Player currentPlayer){
         ArrayList<Player> visiblePlayers = getVisiblePlayers(currentPlayer);
         ArrayList<Player> copy = new ArrayList<>(visiblePlayers);
@@ -202,6 +210,10 @@ public class Model {
         return visiblePlayers;
     }
 
+    /**
+     * Method that returns a list of the squares at distance 2 in all cardinal directions
+     * @param currentPlayer current player
+     */
     public ArrayList<Square> getSquaresInCardinal2(Player currentPlayer) {
         ArrayList<Square> finalList = new ArrayList<>();
         finalList.add(currentPlayer.getPosition());
@@ -215,6 +227,10 @@ public class Model {
         return finalList;
     }
 
+    /**
+     * Method that returns a list of the squares at distance 1 in all cardinal directions
+     * @param currentPlayer current player
+     */
     public ArrayList<Square> getSquaresInCardinal1(Player currentPlayer) {
         ArrayList<Square> finalList = new ArrayList<>();
         finalList.add(currentPlayer.getPosition());
@@ -226,8 +242,12 @@ public class Model {
         return finalList;
     }
 
-    //Metodo che ritorna una lista di giocatori
-    //a distanza variabile dallo square scelto
+
+    /**
+     * Method that returns a list of the visible players at a given distance
+     * @param currentPlayer current player
+     * @param distance maximum distance for the targets
+     */
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistance = new ArrayList<>();
@@ -240,7 +260,7 @@ public class Model {
         return playersAtDistance;
 
     }
-
+/*
     public Square getSquareInSameDirection(Square currentSquare,Square targetSquare){
         Square finalSquare = null;
         for(Direction dir : Direction.values()) {
@@ -272,8 +292,15 @@ public class Model {
                 finalPlayers.add(player);
         }
         return finalPlayers;
-    }
+    }*/
 
+
+    /**
+     * Method that returns a list of the visible players at a given distance from a selected square
+     * @param currentPlayer current player
+     * @param distance maximum distance for the targets
+     * @param square selected square to calculate the distance from
+     */
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer, Square square){
         ArrayList<Player> playersAtDistance = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
@@ -287,6 +314,12 @@ public class Model {
     }
 
 
+
+    /**
+     * Method that returns a list of the visible players at a distance superior to the given one
+     * @param currentPlayer current player
+     * @param distance maximum distance for the targets
+     */
     public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer){
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistanceMore = new ArrayList<>();
@@ -305,9 +338,12 @@ public class Model {
         return playersAtDistanceMore;
     }
 
-    //Metodo che ritorna una lista dei giocatori
-    //lungo le direzioni cardinali dello square
-    //dato
+
+
+    /**
+     * Method that returns a list of the players in all cardinal directions
+     * @param currentPlayer current player
+     */
     public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInCardinalDirection = new ArrayList<>();
@@ -325,6 +361,12 @@ public class Model {
         return playersInCardinalDirection;
     }
 
+
+    /**
+     * Method that returns a list of the visible players in a selected cardinal direction
+     * @param currentPlayer current player
+     * @param cardinal selected cardinal direction
+     */
     public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal) {
         ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
         ArrayList<Player> finalPlayers = new ArrayList<>();
@@ -366,9 +408,11 @@ public class Model {
         return finalPlayers;
     }
 
-    //Metodo che ritorna una lista dei giocatori
-    //nello stesso square
 
+    /**
+     * Method that returns a list of the players in the same square of the current player
+     * @param currentPlayer current player
+     */
     public ArrayList<Player> getPlayersInSameSquare(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInSameSquare = new ArrayList<>();
@@ -383,8 +427,11 @@ public class Model {
         return playersInSameSquare;
     }
 
-    //Metodo che ritorna una lista dei giocatori
-    //NON visibili a partire da uno square dato
+
+    /**
+     * Method that returns a list of the players that are not visiible from the current player
+     * @param currentPlayer current player
+     */
     public ArrayList<Player> getNonVisiblePlayers(Player currentPlayer) {
         ArrayList<Player> nonVisiblePlayers = new ArrayList<>();
         ArrayList<Player> allPlayers = getAllPlayers();
@@ -399,6 +446,9 @@ public class Model {
         return nonVisiblePlayers;
     }
 
+    /**
+     * Method that returns the next square for the power glove weapon
+     */
     public Square getNextPowerGloveSquare(Square playerSquare, Square secondSquare){
         if(playerSquare.getSquareRow()==secondSquare.getSquareRow()) {
             if (playerSquare.getSquareColumn() > secondSquare.getSquareColumn())
