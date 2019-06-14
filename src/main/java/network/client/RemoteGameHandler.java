@@ -9,6 +9,10 @@ import network.ClientConnection;
 import utils.Observer;
 import utils.notify.GameNotify;
 
+/**
+ * Handler for the "Game" Message and Event objects.
+ * It works both as a Controller and as a Model for the View.
+ */
 public class RemoteGameHandler extends GameNotify implements Observer<Event> {
 
     private ClientConnection c;
@@ -19,6 +23,11 @@ public class RemoteGameHandler extends GameNotify implements Observer<Event> {
         this.playerColor = playerColor;
     }
 
+    /**
+     * It simulates the Model notify method.
+     * Once received the message object form the handler the method uses the correct update in the view through Overloading.
+     * @param inputs array of strings received from the NetworkHandler.
+     */
     public void stringToMessage(String[] inputs){
         switch(inputs[0]) {
             case "RunMessage":
@@ -38,6 +47,10 @@ public class RemoteGameHandler extends GameNotify implements Observer<Event> {
         }
     }
 
+    /**
+     * Received an Event object from the View it serializes it adding its class tag then sends the string through the socket.
+     * @param message to be sent.
+     */
     @Override
     public void update(Event message) {
         c.asyncSend("GAME,"+ message.toString());

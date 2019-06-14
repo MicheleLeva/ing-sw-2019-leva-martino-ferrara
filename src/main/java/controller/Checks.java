@@ -13,7 +13,7 @@ import model.player.Player;
 import java.util.ArrayList;
 
 /**
- * Support class that checks the vallidity of multiple actions
+ * Support class that checks the validity of multiple actions
  * @author Marco Maria Ferrara
  * @author Stefano Martino
  */
@@ -163,6 +163,7 @@ public class Checks {
             return (MAX_MARK_FOR_COLOR - playerMark);
         }
         else{
+
             return mark;
         }
     }

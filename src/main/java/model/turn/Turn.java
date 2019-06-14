@@ -11,6 +11,10 @@ import java.util.TimerTask;
 
 import java.util.ArrayList;
 
+/**
+ * Class that manages the turn flow.
+ * It is initialized by the Game class which also calls its methods.
+ */
 public class Turn {
 
     private Random random = new Random();
@@ -63,7 +67,10 @@ public class Turn {
         return model;
     }
 
-
+    /**
+     * Main method of the turn, it sends the correct messages to the View to collect the choices of the player.
+     * If the timer ends the method returns and sets the player afk.
+     */
     public synchronized void startTurn() {
         //gets the current turn number
         int currentTurnNumber = getModel().getTurnManager().getCurrentTurnNumber();
@@ -137,7 +144,9 @@ public class Turn {
         timer.cancel();
     }
 
-
+    /**
+     * Notify all the players the current state of the game. It is called at the start of each turn.
+     */
     public void notifyTurn(){
         //print the game status
         StringBuilder stringBuilder  = new StringBuilder();
@@ -176,6 +185,9 @@ public class Turn {
         }
     }
 
+    /**
+     * Method called after the turn has ended. Update the scores, respawns the dead players and prepares the next turn.
+     */
     public void endTurn(){
 
         //Scoring

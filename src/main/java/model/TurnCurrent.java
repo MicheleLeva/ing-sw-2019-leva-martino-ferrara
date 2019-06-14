@@ -4,6 +4,10 @@ import model.player.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Support class for the Turn class.
+ * Contains attributes and thread locks used by Turn methods.
+ */
 public class TurnCurrent {
 
     //Turn counters and arrays

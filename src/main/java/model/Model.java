@@ -130,7 +130,7 @@ public class Model {
      * Returns a list of all the squares reachable from the startingSquare with n moves
      * @param n number of moves
      * @param startingSquare square from which the method calculates the distances
-     * @return
+     * @return the list of reachable squares
      */
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare) {
 
@@ -1271,7 +1271,7 @@ public class Model {
                 opponent.setKillshot(true);
 
                 if(damageCounter.getDamage() == Checks.getKillshot()) {
-                    turnManager.addKillShot(shooterColor);
+                    turnManager.addKillShot();
                     }
                 }
 

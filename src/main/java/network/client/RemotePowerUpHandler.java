@@ -7,6 +7,10 @@ import network.ClientConnection;
 import utils.Observer;
 import utils.notify.PowerUpNotify;
 
+/**
+ * Handler for the "PowerUp" Message and Event objects.
+ * It works both as a Controller and as a Model for the View.
+ */
 public class RemotePowerUpHandler extends PowerUpNotify implements Observer<Event> {
 
     private ClientConnection c;
@@ -17,6 +21,11 @@ public class RemotePowerUpHandler extends PowerUpNotify implements Observer<Even
         this.playerColor = playerColor;
     }
 
+    /**
+     * It simulates the Model notify method.
+     * Once received the message object form the NetworkHandler the method uses the correct update in the view through Overloading.
+     * @param inputs array of strings received from the NetworkHandler.
+     */
     public void stringToMessage(String[] inputs){
         switch(inputs[0]) {
             case "ChoosePowerUpMessage":
@@ -54,6 +63,10 @@ public class RemotePowerUpHandler extends PowerUpNotify implements Observer<Even
         }
     }
 
+    /**
+     * Received an Event object from the View it serializes it adding its class tag then sends the string through the socket.
+     * @param message to be sent.
+     */
     @Override
     public void update(Event message) {
         c.asyncSend("POWERUP,"+ message.toString());

@@ -2,12 +2,13 @@ package utils;
 
 
 import model.player.PlayerColor;
-import utils.Observer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Custom Observable class used by the Model Notifiers to send messages to different Observer by their PlayerColor
+ */
 public class ViewObservable<T> {
 
     public final Map<PlayerColor, Observer> listeners = new HashMap<>();

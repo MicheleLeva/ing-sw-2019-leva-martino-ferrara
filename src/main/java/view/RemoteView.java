@@ -1,6 +1,5 @@
 package view;
 
-import model.exchanges.messages.GenericMessage;
 import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
@@ -8,6 +7,9 @@ import utils.Observer;
 
 import java.util.Arrays;
 
+/**
+ * Class that obtains the message from the socket and sends it to the correct remote view to be handled.
+ */
 public class RemoteView extends View implements Observer<String> {
 
     private ClientConnection clientConnection;
@@ -32,6 +34,10 @@ public class RemoteView extends View implements Observer<String> {
         return remoteWeaponView;
     }
 
+    /**
+     * Method that set a new SocketClientConnection. Called after a reconnection.
+     * @param c new SocketClientConnection.
+     */
     public void setClientConnection(ClientConnection c) {
         this.clientConnection = c;
         remoteActionView.setClientConnection(c);
@@ -51,6 +57,11 @@ public class RemoteView extends View implements Observer<String> {
         this.remoteWeaponView = new RemoteWeaponView(c, this);
     }
 
+    /**
+     * Once received a message from the SocketClientConnection,
+     * it deserialize it and sends it to the correct remote view to be processed.
+     * @param message to be read.
+     */
     public void update(String message) {
         try{
             message = message.replaceAll("°","\n");
@@ -78,6 +89,10 @@ public class RemoteView extends View implements Observer<String> {
         }
     }
 
+    /**
+     * Method called by the controller after an error has been found while reading the input of the client.
+     * @param error to be sent to the client.
+     */
     @Override
     public void reportError(String error) {
         clientConnection.asyncSend("GAME,GenericMessage," + error);

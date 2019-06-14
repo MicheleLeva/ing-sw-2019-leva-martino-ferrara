@@ -2,6 +2,9 @@ package utils.observer;
 
 import model.exchanges.events.*;
 
+/**
+ * Observer interface implemented by the PowerUpController
+ */
 public interface PowerUpObserver {
     void update(ChoosePowerUpEvent choosePowerUpEvent);
     void update(ChooseTeleporterSquareEvent chooseTeleporterSquareEvent);

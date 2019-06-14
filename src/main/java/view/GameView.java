@@ -8,6 +8,9 @@ import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.GameUpdate;
 
+/**
+ * View which manages the Game Exchanges
+ */
 public class GameView extends Observable<Event> implements GameUpdate {
     private final PlayerColor playerColor;
     private final View view;

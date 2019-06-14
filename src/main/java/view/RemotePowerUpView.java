@@ -6,6 +6,10 @@ import network.ClientConnection;
 import utils.Observer;
 import utils.observable.PowerUpObservable;
 
+/**
+ * Auxiliary class of the RemoteView that forwards "PowerUp" messages from the Model to the client
+ * and events in the opposite direction
+ */
 public class RemotePowerUpView extends PowerUpObservable implements Observer<PlayerMessage> {
 
     private ClientConnection clientConnection;
@@ -20,6 +24,12 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
         this.clientConnection = clientConnection;
     }
 
+    /**
+     * It simulates the View notify method.
+     * Once received the event object form the RemoteView the method uses the correct update
+     * in the Controller through Overloading.
+     * @param inputs array of strings received from the RemoteView.
+     */
     public void stringToMessage(String[] inputs){
 
         switch(inputs[0]) {
@@ -60,6 +70,11 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
         }
     }
 
+    /**
+     * Received a PlayerMessage object from the Model it serializes it adding its class tag
+     * then sends the string through the socket.
+     * @param message to be sent.
+     */
     @Override
     public void update(PlayerMessage message) {
         clientConnection.asyncSend("POWERUP," + message.toString());

@@ -5,6 +5,9 @@ import network.server.Server;
 
 import java.util.*;
 
+/**
+ * Main class which runs the game
+ */
 public class Game implements Runnable{
 
     private final int gameID;
@@ -32,9 +35,12 @@ public class Game implements Runnable{
         return this.model;
     }
 
+    /**
+     * Method which calculates the most voted map from an array of votes found in the Model class
+     * @return the index of the most voted map
+     */
     public int getMapVote(){
         if (model.getMapVotes().isEmpty()){
-            System.out.println("Scelgo mappa a caso");
             return random.nextInt(3) + 1;
         }
         ArrayList<Integer> countedMapVotes = new ArrayList<>();
@@ -46,7 +52,6 @@ public class Game implements Runnable{
             int temp = countedMapVotes.get(i-1);
             countedMapVotes.set(i-1, temp + 1);
         }
-        System.out.println("countedmapvotes: "+ countedMapVotes.toString());
         int maxFreq = Collections.max(countedMapVotes);
         int count = 0;
         for(int i : countedMapVotes){
@@ -54,10 +59,7 @@ public class Game implements Runnable{
                 count++;
             }
         }
-        System.out.println("Count: " + count);
-        System.out.println("Maxfreq: " + maxFreq);
         if (count == 1){
-            System.out.println("Scelgo mappa più votata");
             return countedMapVotes.indexOf(maxFreq) + 1;
         }
         if (count != countedMapVotes.size()){
@@ -67,13 +69,16 @@ public class Game implements Runnable{
                     tiebreakers.add(i + 1);
                 }
             }
-            System.out.println("Tiebrakers: " + tiebreakers.toString());
             return tiebreakers.get(random.nextInt(tiebreakers.size() -1 ));
         }
-        System.out.println("Scelgo mappa a caso");
         return random.nextInt(3) + 1;
     }
 
+    /**
+     * Main thread of the game.
+     * It starts with collecting the votes for the map from the players which are saved in the Model class.
+     * It loops a turn until the game has ended, then shows the rank and signals the server to close the game.
+     */
     public void run(){
         /*for (Player player : model.getAllPlayers()) {
             model.mapVote(player);
@@ -108,7 +113,7 @@ public class Game implements Runnable{
             currentTurn.startTurn();
             currentTurn.endTurn();
         }
-        System.out.println("Out of Game loop!");
+        System.out.println("Game " + gameID + " has ended!");
         getModel().getScoreManager().finalScore();
         model.getGameNotifier().notifyGeneric("The game has ended!");
         server.closeGame(gameID);

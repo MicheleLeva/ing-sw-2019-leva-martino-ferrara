@@ -18,6 +18,9 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Server class which manages the games, the connections and contains the main thread.
+ */
 public class Server {
     private ServerSocket serverSocket;
 
@@ -33,7 +36,7 @@ public class Server {
 
     private LinkedHashMap<String, ClientConnection> waitingConnection = new LinkedHashMap<>(); //Players waiting for a game
 
-    private LinkedHashMap<Integer, ArrayList<ClientConnection>> playingPool = new LinkedHashMap<>(); //Players currently playing
+    private LinkedHashMap<Integer, ArrayList<ClientConnection>> playingGroup = new LinkedHashMap<>(); //Players currently playing
 
     private LinkedHashMap<String, RemoteView> playerViews = new LinkedHashMap<>(); //List of views for game reconnection
 
@@ -50,6 +53,11 @@ public class Server {
         return waitingConnection;
     }
 
+    /**
+     * Reconnects a player to the correct game after their disconnection.
+     * @param c new ClientConnection of the player.
+     * @param name of the player.
+     */
     public synchronized void reconnectPlayer(ClientConnection c, String name){
         playerLobby.put(name, c);
         c.register(playerViews.get(name));
@@ -64,26 +72,32 @@ public class Server {
             }
         }
         try {
-            playingPool.get(pool).add(c);
+            playingGroup.get(pool).add(c);
         } catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }
     }
 
-    //Deregister a game
-    public synchronized void deregisterPool(int id){
+    /**
+     *  Deregister a group of players from the server, called after a game has ended
+     * @param id of the game.
+     */
+    public synchronized void deregisterGroup(int id){
         System.out.println("Deregistering a pool!");
-        ArrayList<ClientConnection> clientConnections = new ArrayList<>(playingPool.get(id));
+        ArrayList<ClientConnection> clientConnections = new ArrayList<>(playingGroup.get(id));
         for (ClientConnection clientConnection : clientConnections){
             deregisterConnection(clientConnection);
         }
-        playingPool.remove(id);
+        playingGroup.remove(id);
 
     }
 
-    //Deregistering a single connection
+    /**
+     * Deregister a player from the server removing all instances of their connection.
+     * @param c ClientConnection of the player.
+     */
     public synchronized void deregisterConnection(ClientConnection c) {
-        for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()){
+        for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingGroup.entrySet()){
             if (entry.getValue().contains(c)){
                 entry.getValue().remove(c);
                 c.closeConnection();
@@ -107,7 +121,10 @@ public class Server {
         playerLobby.remove(name);
     }
 
-    //Sets the player afk
+    /**
+     * Searches the current games to set the given player afk.
+     * @param name of the player.
+     */
     public void setPlayerAFK(String name){
         boolean found = false;
         for (Game game : games){
@@ -125,7 +142,11 @@ public class Server {
         }
     }
 
-    //Checks if a name is available
+    /**
+     * Checks if a name is already registered in the playerLobby
+     * @param name to be checked.
+     * @return true if the name is available, false if it's not.
+     */
     public boolean nameAvailable(String name){
         for (Map.Entry<String, ClientConnection> entry : playerLobby.entrySet()){
             if (entry.getKey().equals(name)){
@@ -135,7 +156,11 @@ public class Server {
         return true;
     }
 
-    //Check if a player is afk
+    /**
+     * Checks if a player with the given name is currently afk in one of the games.
+     * @param name to be checked.
+     * @return true if there is an afk player with the given name, false if there isn't.
+     */
     public boolean checkAfk(String name){
         for (Game game : games){
             for (Player player : game.getModel().getEachPlayer()){
@@ -152,12 +177,20 @@ public class Server {
         System.out.println(InetAddress.getLocalHost());
     }
 
+    /**
+     * Adds a player to the lobby and the waiting room for a new game.
+     * @param c ClientConnection of the player.
+     * @param name of the player.
+     */
     public void  addPlayer(ClientConnection c, String name){
         waitingConnection.put(name, c);
         playerLobby.put(name, c);
         checkConnected();
     }
 
+    /**
+     * Checks if enough players are in the waiting room to start a timer for the creation of a new game.
+     */
     private void checkConnected() {
         System.out.println("Checking connected");
         System.out.println("Waiting players: " + waitingConnection.size());
@@ -172,6 +205,12 @@ public class Server {
         }
     }
 
+    /**
+     * Timer method called before creating a new game.
+     * If it reaches its end  a new game will be started with the players currently in the waiting room.
+     * It will start a new game if at any moment during the countdown five players are detected in the waiting room.
+     * It will be interrupted at any moment if there are less than three players in the waiting room.
+     */
     private void startTimer(){
         isTimerOn = true;
         Timer timer = new Timer();
@@ -215,51 +254,57 @@ public class Server {
         //se finisce il timer faccio un createGame
     }
 
+    /**
+     * Method for the creation of the game.
+     * It creates the necessary classes for the management of the connections and the game.
+     * It saves the necessary instances for a possible reconnection the attributes of the server.
+     * At the end of the initializations it starts the Game and clears the waiting room.
+     */
     private void createGame(){
         System.out.println("Starting a game!");
-        if (!playingPool.isEmpty()) {
-            for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingPool.entrySet()) {
+        if (!playingGroup.isEmpty()) {
+            for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingGroup.entrySet()) {
                 lastID = entry.getKey();
             }
             lastID ++;
         } else {
             lastID = 1;
         }
-        playingPool.put(lastID, new ArrayList<>());
+        playingGroup.put(lastID, new ArrayList<>());
 
         List<String> keys = new ArrayList<>(waitingConnection.keySet());
         for (String key : keys){
-            playingPool.get(lastID).add(waitingConnection.get(key));
+            playingGroup.get(lastID).add(waitingConnection.get(key));
         }
         ArrayList<RemoteView> remoteViews= new ArrayList<>();
         ArrayList<Player> players= new ArrayList<>();
 
         players.add(new Player(keys.get(0), PlayerColor.BLUE));
-        RemoteView blueView = new RemoteView(PlayerColor.BLUE, playingPool.get(lastID).get(0));
+        RemoteView blueView = new RemoteView(PlayerColor.BLUE, playingGroup.get(lastID).get(0));
         remoteViews.add(blueView);
         playerViews.put(keys.get(0), blueView);
         players.get(0).setFirst();
 
         players.add(new Player(keys.get(1), PlayerColor.GREEN));
-        RemoteView greenView = new RemoteView(PlayerColor.GREEN, playingPool.get(lastID).get(1));
+        RemoteView greenView = new RemoteView(PlayerColor.GREEN, playingGroup.get(lastID).get(1));
         remoteViews.add(greenView);
         playerViews.put(keys.get(1), greenView);
 
         players.add(new Player(keys.get(2), PlayerColor.PURPLE));
-        RemoteView purpleView = new RemoteView(PlayerColor.PURPLE, playingPool.get(lastID).get(2));
+        RemoteView purpleView = new RemoteView(PlayerColor.PURPLE, playingGroup.get(lastID).get(2));
         remoteViews.add(purpleView);
         playerViews.put(keys.get(2), purpleView);
 
         if (waitingConnection.size()== 4){
             players.add(new Player(keys.get(3), PlayerColor.YELLOW));
-            RemoteView yellowView = new RemoteView(PlayerColor.YELLOW, playingPool.get(lastID).get(3));
+            RemoteView yellowView = new RemoteView(PlayerColor.YELLOW, playingGroup.get(lastID).get(3));
             remoteViews.add(yellowView);
             playerViews.put(keys.get(3), yellowView);
         }
 
         if (waitingConnection.size()== 5){
             players.add(new Player(keys.get(4), PlayerColor.GREY));
-            RemoteView greyView = new RemoteView(PlayerColor.YELLOW,playingPool.get(lastID).get(4));
+            RemoteView greyView = new RemoteView(PlayerColor.YELLOW, playingGroup.get(lastID).get(4));
             remoteViews.add(greyView);
             playerViews.put(keys.get(4), greyView);
         }
@@ -290,12 +335,17 @@ public class Server {
         System.out.println("Clearing the waiting room!");
     }
 
+    /**
+     * Method called from the Game class at the end of the game.
+     * It clears the server from all instances of the game and its players.
+     * @param id of the game to be closed.
+     */
     public void closeGame(int id){
         Game currentGame = null;
         for (Game game : games){
             if (game.getGameID() == id){
                 currentGame = game;
-                deregisterPool(id);
+                deregisterGroup(id);
                 ArrayList<String> playerNames = new ArrayList<>();
                 for (Player player : game.getModel().getAllPlayers()){
                     playerNames.add(player.getPlayerName());
@@ -310,7 +360,7 @@ public class Server {
         }
         /*System.out.println("Updated list of games: " + games.toString());
         System.out.println("PlayerLobby: " + playerLobby.toString());
-        System.out.println("PlayingPool: " + playingPool.toString());
+        System.out.println("PlayingPool: " + playingGroup.toString());
         System.out.println("RemoteViews: " + playerViews.toString());*/
     }
 

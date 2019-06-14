@@ -3,7 +3,6 @@ package model;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;

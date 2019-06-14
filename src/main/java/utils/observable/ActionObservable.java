@@ -5,6 +5,9 @@ import utils.observer.ActionObserver;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Observable class used by the RemoteActionView
+ */
 public class ActionObservable {
     public final List<ActionObserver> listeners = new ArrayList();
 

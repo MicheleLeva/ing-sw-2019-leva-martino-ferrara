@@ -12,6 +12,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Support class for the turn.
+ * Contains attributes used to save previous choices of a player for the creation of an action.
+ */
 public class Current {
                         ///For PowerUps///
     private ArrayList<Player> opponent = new ArrayList<>();

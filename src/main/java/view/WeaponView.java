@@ -7,11 +7,12 @@ import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.WeaponUpdate;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.InputMismatchException;
 
+
+/**
+ * View which manages the Weapon Exchanges
+ */
 public class WeaponView extends Observable<Event> implements WeaponUpdate {
     private final PlayerColor playerColor;
     private final View view;

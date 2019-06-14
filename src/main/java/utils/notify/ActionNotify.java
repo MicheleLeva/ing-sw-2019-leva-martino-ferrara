@@ -6,7 +6,9 @@ import utils.update.ActionUpdate;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Observable class used by the RemoteActionHandler
+ */
 public class ActionNotify {
     public final Map<PlayerColor, ActionUpdate> listeners = new HashMap();
 

@@ -6,6 +6,9 @@ import utils.update.GameUpdate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Observable class used by the RemoteGameHandler
+ */
 public class GameNotify {
     public final Map<PlayerColor, GameUpdate> listeners = new HashMap<>();
 

@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Class for the management of the socket connection with a client.
+ */
 public class SocketClientConnection extends Observable<String> implements ClientConnection,Runnable{
 
     private Socket socket;
@@ -34,13 +37,18 @@ public class SocketClientConnection extends Observable<String> implements Client
         return active;
     }
 
+    /**
+     * Main thread of the class.
+     * Once accepted the name of the player from the socket it adds the player to the waiting room or makes a reconnection.
+     * Then it reads the strings from the socket and notifies them to the RemoteView.
+     */
     @Override
     public void run(){
         Scanner in;
         try{
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            /*while (!nameAccepted){
+            while (!nameAccepted){
                 playerName = in.nextLine();
                 if (server.nameAvailable(playerName)){
                     if(server.checkAfk(playerName)){
@@ -59,9 +67,9 @@ public class SocketClientConnection extends Observable<String> implements Client
                     asyncSend("no");
                 }
             }
-            String read;*/
+            String read;
             //todo modificato per velocizzare test
-            int c = 0;
+            /*int c = 0;
             for (Map.Entry<String, ClientConnection> entry : server.getWaitingConnection().entrySet()){
                 if (entry.getKey().equals("Asdrubale")){
                     c ++;
@@ -85,6 +93,7 @@ public class SocketClientConnection extends Observable<String> implements Client
             }
             String read;
             asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");
+             */
 
             //todo modificato per velocizzare test
             while(isActive()){
@@ -98,6 +107,10 @@ public class SocketClientConnection extends Observable<String> implements Client
         }
     }
 
+    /**
+     * Changes the message to handle Regular Expressions then sends it through the socket.
+     * @param message to send
+     */
     private synchronized void send(String message) {
         message = message.replaceAll("\n","°");
         message = message.replaceAll("\r", "§");
@@ -105,10 +118,17 @@ public class SocketClientConnection extends Observable<String> implements Client
         out.flush();
     }
 
+    /**
+     * Calls the send method.
+     * @param message to be sent.
+     */
     public synchronized void asyncSend(final String message){
         send(message);
     }
 
+    /**
+     * Closes the connection with the client.
+     */
     public synchronized void closeConnection() { //mando messaggio al network.client e chiudo la connessione
         asyncSend("GAME,GenericMessage,The connection has been closed");
         try {
@@ -119,7 +139,9 @@ public class SocketClientConnection extends Observable<String> implements Client
         active = false;
     }
 
-    //Close Connection
+    /**
+     * Signals the server this connection will be closed and then closes the connection.
+     */
     private void close() {
         server.setPlayerAFK(playerName);
         closeConnection();

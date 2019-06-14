@@ -6,7 +6,9 @@ import model.player.PlayerColor;
 
 import java.util.ArrayList;
 
-
+/**
+ * Class that manages the turn counters.
+ */
 public class TurnManager {
 
     private  ArrayList<Player> allPlayers; //Lista di tutti i giocatori in ordine di turno
@@ -37,6 +39,10 @@ public class TurnManager {
 
     private int currentTurnKillshots;
 
+    /**
+     * @param playerColor of the player
+     * @return Player of the given color.
+     */
     public Player getPlayerFromColor(PlayerColor playerColor){ //Dato il colore, ritorna il giocatore corrispondente
         Player result = null;
 
@@ -58,6 +64,10 @@ public class TurnManager {
 
     }
 
+    /**
+     * Method called at the end of each turn to update the turn counter and select the next player.
+     * It also ends the game if there are less than three players which aren't afk.
+     */
     public synchronized void update(){
         allPlayers.get(currentPlayerIndex).getActionTree().resetAction();
 
@@ -77,7 +87,7 @@ public class TurnManager {
             }
         }
 
-        if (count > 2){ //todo modificare
+        if (getAllPlayers().size() - count < 3){
             System.out.println(count + " AFK players!");
             System.out.println("Game over!");
             setGameOver(true);
@@ -96,9 +106,12 @@ public class TurnManager {
         currentPlayerColor = allPlayers.get(currentPlayerIndex).getPlayerColor();
     }
 
+    /**
+     * Sets the current player index to the next player in the list.
+     */
     public void getNextPlayer(){
 
-        if (currentPlayerIndex == allPlayers.size() - 1) //Ultimo giocatore in elenco
+        if (currentPlayerIndex == allPlayers.size() - 1) //Last player in the list
         {
             updateCurrentTurnNumber();
             currentPlayerIndex = 0;
@@ -186,6 +199,9 @@ public class TurnManager {
         return this.frenzy;
     }
 
+    /**
+     * Prepares the game for the frenzy turns and gives the players their frenzy action boards.
+     */
     public void setFrenzy(){
         frenzy = true;
 

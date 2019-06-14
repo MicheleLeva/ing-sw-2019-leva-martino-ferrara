@@ -11,6 +11,9 @@ import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.ActionUpdate;
 
+/**
+ * View which manages the Action Exchanges
+ */
 public class ActionView extends Observable<Event> implements ActionUpdate {
     private final PlayerColor playerColor;
     private final View view;

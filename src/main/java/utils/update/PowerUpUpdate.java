@@ -2,6 +2,9 @@ package utils.update;
 
 import model.exchanges.messages.*;
 
+/**
+ * Observer interface implemented by the PowerUpView
+ */
 public interface PowerUpUpdate {
     void update(ChoosePowerUpMessage choosePowerUpMessage);
     void update(ChooseTeleporterSquareMessage chooseTeleporterSquareMessage);

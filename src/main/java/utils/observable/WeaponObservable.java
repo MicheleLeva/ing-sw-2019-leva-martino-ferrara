@@ -5,6 +5,9 @@ import utils.observer.WeaponObserver;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Observable class used by the RemoteWeaponView
+ */
 public class WeaponObservable {
     public final List<WeaponObserver> listeners = new ArrayList();
 

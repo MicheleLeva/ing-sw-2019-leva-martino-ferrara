@@ -1,10 +1,10 @@
 package utils.observer;
 
-import model.Current;
-import model.cards.weapons.Weapon;
 import model.exchanges.events.*;
-import model.player.Player;
 
+/**
+ * Observer interface implemented by the WeaponController
+ */
 public interface WeaponObserver {
     void update(WeaponSelectionEvent event);
     void update(TargetsSelectionEvent event);

@@ -2,6 +2,9 @@ package utils.update;
 
 import model.exchanges.messages.*;
 
+/**
+ * Observer interface implemented by the WeaponView
+ */
 public interface WeaponUpdate {
     void update(ShowWeaponCardsMessage weaponCardsMessage);
     void update(TargetsSelectionMessage optionalLockRifleTargetsMessage1);

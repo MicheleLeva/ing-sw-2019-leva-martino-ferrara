@@ -6,6 +6,9 @@ import utils.update.WeaponUpdate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Observable class used by the RemoteWeaponHandler
+ */
 public class WeaponNotify {
     public final Map<PlayerColor,WeaponUpdate> listeners = new HashMap<>();
 

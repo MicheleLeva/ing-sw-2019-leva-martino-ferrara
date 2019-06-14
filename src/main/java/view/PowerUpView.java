@@ -1,14 +1,14 @@
 package view;
 
-import model.cards.powerups.TargetingScope;
 import model.exchanges.events.*;
 import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import utils.Observable;
 import utils.update.PowerUpUpdate;
 
-import java.util.Scanner;
-
+/**
+ * View which manages the PowerUp Exchanges
+ */
 public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
     private final PlayerColor playerColor;
     private final View view;

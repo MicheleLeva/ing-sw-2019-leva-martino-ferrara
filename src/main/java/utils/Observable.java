@@ -2,6 +2,9 @@ package utils;
 
 import java.util.ArrayList;
 
+/**
+ * Standard Observable class
+ */
 public class Observable<T> {
 
     private final ArrayList<Observer> observers = new ArrayList<>();

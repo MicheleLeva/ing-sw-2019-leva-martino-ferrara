@@ -5,6 +5,9 @@ import model.player.PlayerColor;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Main View used as a CLI interface
+ */
 public class View {
     private final ActionView actionView;
     private final WeaponView weaponView;

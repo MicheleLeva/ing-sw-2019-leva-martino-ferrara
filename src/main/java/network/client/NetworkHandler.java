@@ -5,10 +5,10 @@ import network.ClientConnection;
 import utils.Observer;
 import java.util.Arrays;
 
-
+/**
+ * Class that obtains the message from the socket and sends it to the correct handler to be handled.
+ */
 public class NetworkHandler implements Observer<String> {
-
-    //instrada i messaggi dal socket ai notifier
 
     private final RemoteActionHandler remoteActionHandler;
     private final RemotePowerUpHandler remotePowerUpHandler;
@@ -16,7 +16,7 @@ public class NetworkHandler implements Observer<String> {
     private final RemoteWeaponHandler remoteWeaponHandler;
 
     public NetworkHandler(ClientConnection client){
-        //playerColor irrilevante
+        //The actual color is saved on the server, this is a placeholder
         remoteActionHandler = new RemoteActionHandler(client, PlayerColor.BLUE);
         remoteGameHandler = new RemoteGameHandler(client, PlayerColor.BLUE);
         remotePowerUpHandler = new RemotePowerUpHandler(client, PlayerColor.BLUE);
@@ -39,6 +39,11 @@ public class NetworkHandler implements Observer<String> {
         return remoteWeaponHandler;
     }
 
+    /**
+     * Once received a message from the Client class,
+     * it deserialize it and sends it to the correct handler to be processed.
+     * @param message to be read.
+     */
     public void update(String message) {
         try{
             message = message.replaceAll("°","\n");

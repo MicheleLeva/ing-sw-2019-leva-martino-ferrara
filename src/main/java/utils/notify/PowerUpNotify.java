@@ -5,6 +5,9 @@ import utils.update.PowerUpUpdate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Observable class used by the RemotePowerUpHandler
+ */
 public class PowerUpNotify {
     public final Map<PlayerColor , PowerUpUpdate> listeners = new HashMap();
 
