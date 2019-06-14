@@ -56,20 +56,15 @@ public class Points {
             }
 
         }
-        catch(FileNotFoundException e){
-            System.out.println(e);
-        }
-        catch(IOException e){
-            System.out.println(e);
-        }
-        catch(ParseException e){
-            System.out.println(e);
+        catch( IOException | ParseException e){
+            e.printStackTrace();
         }
     }
 
     /**
      * Removes the first point from the list of points after a player's death
      */
+
     public void removeHighestPoint(){
         points.remove(0);
     }

@@ -189,8 +189,15 @@ public class Turn {
         }
 
         //Respawn
-        if (!getModel().getTurnCurrent().getDeadPlayers().isEmpty() && !isFrenzy){
+        if (!getModel().getTurnCurrent().getDeadPlayers().isEmpty() /*&& !isFrenzy*/){
             for (Player deadPlayer : getModel().getTurnCurrent().getDeadPlayers()) {
+
+                if(isFrenzy) {
+
+                    if (!deadPlayer.getIsAlreadyDeadInFrenzyTurn()) {
+                        deadPlayer.getPlayerBoard().getPoints().setFrenzyPoints();
+                    }
+                }
                 getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
                 getModel().requestPowerUpDiscard(deadPlayer);
 

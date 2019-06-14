@@ -16,6 +16,7 @@ public class CLI {
     private static final String PURPLE = "\u001B[35m";
     private static final String GREY = "\u001B[37m";
 
+    private static final String SKULL = "@";
     private static final String CONT_RED = "\u001B[41m";
     private static final String CONT_YELLOW = "\u001B[42m";
     private static final String CONT_BLUE = "\u001B[44m";
@@ -55,7 +56,9 @@ public class CLI {
         else return YELLOW;
     }
 
-
+    public static String getSkull(){
+        return SKULL;
+    }
     public static String getResetString(){
         return RESET;
     }
@@ -97,3 +100,4 @@ public class CLI {
             return coloredMap;
     }
 }
+

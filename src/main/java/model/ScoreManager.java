@@ -8,25 +8,36 @@ import java.util.*;
 
 public class ScoreManager {
 
+    /**
+     * Score Manager Class
+     */
     private final Model model;
-    //ranking of the player
+    //rank of the player
     private ArrayList<PlayerColor> playerRank = new ArrayList<>();
 
     private static final int frenzyKillShotPoints[] = {8,6,4,2,1};
 
+    /**
+     * Constructor
+     * @param model used to get players' info
+     */
     public ScoreManager(Model model){
 
         this.model = model;
-
+        //the player rank is initialized with the elements of allPlayers array list
         for(Player player : model.getTurnManager().getAllPlayers()){
             playerRank.add(player.getPlayerColor());
         }
     }
 
+    /**
+     * This method is called at the end of every turn to update the current rank
+     */
     public void updateScore(){
         ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
 
         for (int i = 0; i < allPlayer.size(); i++){
+            //the damage scoring is computed only if there is at least one killshot or dead player
             if(allPlayer.get(i).isKillShot() || allPlayer.get(i).isDead()){
                 computePoints(allPlayer.get(i));
 
@@ -53,7 +64,10 @@ public class ScoreManager {
         updatePlayerRank();
     }
 
-    public void updateScoreFrenzy(){
+    /**
+     * This method is called at the end of the game to produce the final rank
+     */
+    public void finalScore(){
         ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
         //maps every player to his token on the killshot track
         LinkedHashMap<PlayerColor,Integer> unsortRank;
@@ -65,7 +79,7 @@ public class ScoreManager {
         }
 
         //compute killshottrack points
-         unsortRank = model.getGameBoard().getKillShotTrack().getRank();
+         unsortRank = model.getGameBoard().getKillShotTrack().getRank(); //todo aggiungere i frenzyTokens
 
         killShotTrackRank = sortRank(unsortRank);
 
@@ -73,7 +87,7 @@ public class ScoreManager {
         for (int i = 0; i < killShotTrackRank.size(); i++){
             PlayerColor playerColor = killShotTrackRank.get(i);
             Player player = model.getPlayer(playerColor);
-            player.addScore(frenzyKillShotPoints[i]);
+            player.addScore(frenzyKillShotPoints[i]); //todo controllare che non esca dai limiti dell'array
         }
 
         updatePlayerRank();
@@ -91,11 +105,19 @@ public class ScoreManager {
         model.getGameNotifier().notifyGeneric(model.getPlayer(getWinner()).getColoredName() + " has won the game!");
     }
 
+    /**
+     * This method is used to establish the game's winner
+     * @return winnerColor the color of the winner
+     */
     public PlayerColor getWinner(){
         return playerRank.get(0);
         //todo ties
     }
 
+    /**
+     * This method is an helper method called by updateScore(). It determines the score distribution of the turn.
+     * @param player the player whose damage counter is being evaluated
+     */
     private void computePoints(Player player){
 
         //all players that dealt damage
@@ -140,7 +162,11 @@ public class ScoreManager {
         }
     }
 
-
+    /**
+     * This method is an helper method, used to sort a LinkedHashMap based on the value
+     * @param unsortedRank the unsorted rank
+     * @return the sorted ArrayList
+     */
     private ArrayList<PlayerColor> sortRank(LinkedHashMap<PlayerColor,Integer> unsortedRank){ //sort a linkedhashmap
         LinkedHashMap<PlayerColor,Integer> sortedRank = new LinkedHashMap<>();
 
@@ -155,6 +181,9 @@ public class ScoreManager {
         return result;
     }
 
+    /**
+     * This is an helper method called by updateScore()
+     */
     private void updatePlayerRank(){
         ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
         LinkedHashMap<PlayerColor,Integer> temp = new LinkedHashMap<>();
@@ -169,6 +198,10 @@ public class ScoreManager {
 
     }
 
+    /**
+     * This method is called to print the current player rank on the screen
+     * @return the current player rank as a String
+     */
     public String showPlayerRank(){
         String result = "Player Rank:\n";
         for (int i = 0; i < playerRank.size(); i++){

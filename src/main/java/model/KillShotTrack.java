@@ -3,54 +3,66 @@ package model;
 import model.player.PlayerColor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class KillShotTrack {
 
     private KillShotCell[] killShotTrack;
     private int lastIndex;
-    private final String SKULL_CLI = "@";
     private Model model;
+    private HashMap<PlayerColor, Integer> frenzyTokens = new HashMap<>();
 
-    public KillShotTrack(int size, Model model){
-            killShotTrack = new KillShotCell[size];
+    public KillShotTrack(int size, Model model) {
+        killShotTrack = new KillShotCell[size];
 
-            lastIndex = 0;
+        lastIndex = 0;
 
-            for (int i = 0; i < size; i++) {
-                killShotTrack[i] = new KillShotCell();
-            }
+        for (int i = 0; i < size; i++) {
+            killShotTrack[i] = new KillShotCell();
+        }
 
-            this.model = model;
+        this.model = model;
     }
 
-    public KillShotCell[] getKillShotTrack(){
+    public KillShotCell[] getKillShotTrack() {
         return killShotTrack;
     }
 
-    public void removeSkull(PlayerColor playerColor){
+    public void removeSkull(PlayerColor playerColor) {
 
-        if(lastIndex < killShotTrack.length){
-            killShotTrack[lastIndex].addToken(playerColor);
-            lastIndex++;
+        if (model.getTurnManager().isFrenzy()) {
+            frenzyTokens.replace(playerColor, frenzyTokens.get(playerColor) + 1);
         }
+        else {
 
-        if(lastIndex >= killShotTrack.length){
-            model.getTurnManager().setFrenzy(true);
-            killShotTrack[killShotTrack.length - 1].addToken();
+            if (lastIndex < killShotTrack.length) {
+                killShotTrack[lastIndex].addToken(playerColor);
+                lastIndex++;
+            }
+
+            if (lastIndex >= killShotTrack.length) {
+                model.getTurnManager().setFrenzy();
+                killShotTrack[killShotTrack.length - 1].addToken();
+            }
         }
     }
 
-    public void addOverKill(){
-        int currentIndex;
-        if(lastIndex == 0){
-            currentIndex = lastIndex;
+    public void addOverKill() {
+        if (model.getTurnManager().isFrenzy()) {
+            PlayerColor currentPlayerColor = model.getTurnManager().getCurrentPlayerColor();
+            frenzyTokens.replace(currentPlayerColor, frenzyTokens.get(currentPlayerColor) + 1);
         }
-        else{
-            currentIndex = lastIndex - 1;
-        }
+        else {
+            int currentIndex;
+            if (lastIndex == 0) {
+                currentIndex = lastIndex;
+            } else {
+                currentIndex = lastIndex - 1;
+            }
 
-        killShotTrack[currentIndex].addToken();
+            killShotTrack[currentIndex].addToken();
+        }
     }
 
     public LinkedHashMap<PlayerColor,Integer> getRank(){
@@ -71,10 +83,12 @@ public class KillShotTrack {
             int tokenNumber = 0;
 
             for (int j = 0; j < killShotTrack.length - 1; j++){
-                if (killShotTrack[j].getTokenColor() == currentPlayerColor){
+                if (killShotTrack[j].getTokenColor().equals(currentPlayerColor)){
                     tokenNumber = tokenNumber + killShotTrack[j].getTokenNumber();
                 }
             }
+            //add frenzy tokens
+            tokenNumber = tokenNumber + frenzyTokens.get(currentPlayerColor);
             //build the linkedhashmap
             if(tokenNumber != 0){
                 result.put(currentPlayerColor , tokenNumber);
@@ -90,7 +104,7 @@ public class KillShotTrack {
 
         for (int i = 0; i < killShotTrack.length; i++){
             if(killShotTrack[i].isSkull()){
-               stringBuilder.append(SKULL_CLI);
+               stringBuilder.append(CLI.getSkull());
             }
             else{
 

@@ -35,7 +35,7 @@ public class TurnManager {
 
     private boolean isGameEnded = false;
 
-    private ArrayList<PlayerColor> currentTurnKillShots;
+    private int currentTurnKillshots;
 
     public Player getPlayerFromColor(PlayerColor playerColor){ //Dato il colore, ritorna il giocatore corrispondente
         Player result = null;
@@ -54,7 +54,7 @@ public class TurnManager {
         currentPlayerIndex = 0;
         currentPlayerColor = allPlayers.get(0).getPlayerColor();
         currentTurnNumber = 1;
-        currentTurnKillShots = new ArrayList<>();
+        currentTurnKillshots = 0;
 
     }
 
@@ -170,30 +170,43 @@ public class TurnManager {
         this.killshot = killshot;
     }
 
-    public void addKillShot(PlayerColor playerColor){
-        currentTurnKillShots.add(playerColor);
+    public void addKillShot(){
+        currentTurnKillshots++;
     }
 
     public void resetKillShot(){
-        currentTurnKillShots.clear();
+        currentTurnKillshots = 0;
     }
 
     public int numOfKillShot(){
-        return currentTurnKillShots.size();
+        return currentTurnKillshots;
     }
 
     public boolean isFrenzy(){
         return this.frenzy;
     }
 
-    public void setFrenzy(boolean frenzy){
-        this.frenzy = frenzy;
+    public void setFrenzy(){
+        frenzy = true;
+
         lastPlayerIndex = currentPlayerIndex;
-        for (int i =0; i<allPlayers.size(); i++){
+
+        for (int i = 0; i < allPlayers.size(); i++){
             if (i > lastPlayerIndex){
                 allPlayers.get(i).setActionTree(5);
             } else {
                 allPlayers.get(i).setActionTree(4);
+            }
+        }
+
+        for (int i = 0; i < allPlayers.size(); i++)
+        {
+            Player currentPlayer = allPlayers.get(i);
+
+            if(currentPlayer.getPlayerBoard().getDamageCounter().getDamage() == 0){
+                //change player's points in frenzy points
+                currentPlayer.getPlayerBoard().getPoints().setFrenzyPoints();
+
             }
         }
     }

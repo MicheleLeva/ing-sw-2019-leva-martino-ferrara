@@ -24,6 +24,8 @@ public class Player {
     private boolean isDead;
     private boolean isKillShot;
 
+    private boolean isAlreadyDeadInFrenzyTurn;
+
     public Player(String name, PlayerColor color){
         playerName = name;
         playerColor = color;
@@ -33,6 +35,7 @@ public class Player {
         this.actionTree = new ActionTree(1);
         this.position = null;
         isFirst = false;
+        isAlreadyDeadInFrenzyTurn = false;
     }
 
     public Score getScore() {
@@ -161,6 +164,14 @@ public class Player {
             }
         }
         return false;
+    }
+
+    public void setIsAlreadyDeadInFrenzyTurn(){
+        isAlreadyDeadInFrenzyTurn = true;
+    }
+
+    public boolean getIsAlreadyDeadInFrenzyTurn(){
+        return isAlreadyDeadInFrenzyTurn;
     }
 
 }
