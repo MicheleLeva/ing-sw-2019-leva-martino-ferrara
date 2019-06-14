@@ -8,12 +8,18 @@ public class KillShotCell {
     private PlayerColor tokenColor;
     private boolean isSkull;
 
+    /**
+     * Constructor for the killShotCell class
+     */
     public KillShotCell(){
         this.isSkull = true;
         this.tokenColor = null;
         this.tokenNumber = 0;
     }
 
+    /**
+     * Alternative constructor for the killShotCell class
+     */
     public KillShotCell(PlayerColor playerColor, int tokenNumber){
         this.isSkull = false;
         this.tokenColor = playerColor;
@@ -32,6 +38,9 @@ public class KillShotCell {
         return isSkull;
     }
 
+    /**
+     * Adds the selected token to the specific killShotCell
+     */
     public void addToken(PlayerColor tokenColor){
         isSkull = false;
         this.tokenColor = tokenColor;

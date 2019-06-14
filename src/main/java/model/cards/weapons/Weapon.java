@@ -8,6 +8,9 @@ import model.player.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Superclass from which all weapons with additional no fire modes extend
+ */
 public abstract class Weapon extends Card {
 
     protected boolean isReloaded;
@@ -22,14 +25,23 @@ public abstract class Weapon extends Card {
     private WeaponTree weaponTree;
 
 
+    /**
+     * Sets the weapon as reloaded
+     */
     public void reload(){
         isReloaded = true;
     }
 
+    /**
+     * Sets the weapon as not loaded
+     */
     public void unload(){
         isReloaded = false;
     }
 
+    /**
+     *Constructor for all weapons with no additional fire mode
+     */
     public Weapon(String name, Ammo pickUpCost, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,Model model){
         this.name = name;
         this.baseCost = baseCost;
@@ -64,8 +76,17 @@ public abstract class Weapon extends Card {
         return baseTargetsNumber;
     }
 
+    /**
+     * ask the requirements of the base fire mode according to the specific weapon
+     * @param currentPlayer current player
+     */
     public abstract void askBaseRequirements(Player currentPlayer);
 
+    /**
+     * Uses the base fire Mode according to the specific weapon
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the base fire Mode
+     */
     public abstract void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets);
 
     public Model getModel(){return this.model;}
@@ -82,6 +103,12 @@ public abstract class Weapon extends Card {
         this.weaponTree = weaponTree;
     }
 
+    /**
+     * Returns the amount of damage dealt by the selected weapon with the current fire mode
+     * @param effectType current fire mode selected
+     * @param weapon selected weapon
+     * @return the damage the weapon deals
+     */
     public int getDamageForUse(String effectType,Weapon weapon){
         switch(effectType){
             case "base":
@@ -101,6 +128,12 @@ public abstract class Weapon extends Card {
         }
     }
 
+    /**
+     * Returns the number of marks dealt by the selected weapon with the current fire mode
+     * @param effectType current fire mode selected
+     * @param weapon selected weapon
+     * @return the marks the weapon deals
+     */
     public int getMarksForUse(String effectType,Weapon weapon){
         switch(effectType){
             case "base":
@@ -120,6 +153,13 @@ public abstract class Weapon extends Card {
         }
     }
 
+    /**
+     * Adds the damage and marks to the selected targets and checks the next action to ask to the current player
+     * @param currentPlayer current player
+     * @param selectedTargets targets selected by the current player
+     * @param weapon selected weapon
+     * @param effectType current fire mode
+     */
     public void generalUse(Player currentPlayer, ArrayList<Player> selectedTargets,Weapon weapon,String effectType){
         int damage = getDamageForUse(effectType,weapon);
         int marks = getMarksForUse(effectType,weapon);
@@ -134,6 +174,14 @@ public abstract class Weapon extends Card {
         getModel().checkNextWeaponAction(weapon, currentPlayer, selectedTargets);
     }
 
+    /**
+     * Adds the damage and marks to the selected targets, moves the targets to the previously selected square
+     * and checks the next action to ask to the current player
+     * @param currentPlayer current player
+     * @param selectedTargets targets selected by the current player
+     * @param weapon selected weapon
+     * @param effectType current fire mode
+     */
     public void generalUseWithMove(Player currentPlayer, ArrayList<Player> selectedTargets,Weapon weapon,String effectType){
         int damage = getDamageForUse(effectType,weapon);
         int marks = getMarksForUse(effectType,weapon);
@@ -148,6 +196,11 @@ public abstract class Weapon extends Card {
         getModel().checkNextWeaponAction(weapon, currentPlayer, selectedTargets);
     }
 
+    /**
+     * Moves the current player to the previously selected weapon square
+     * @param currentPlayer current player
+     * @param selectedTargets targets selected by the current player
+     */
     public void changePlayerPositionUse(Player currentPlayer, ArrayList<Player> selectedTargets){
         currentPlayer.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
 
@@ -156,6 +209,13 @@ public abstract class Weapon extends Card {
         getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
     }
 
+    /**
+     * Depending on the current fire mode increments a counter in Current class and sends the available squares
+     * to the player's view
+     * @param currentPlayer current player
+     * @param squares available squares to choose from
+     * @param effectType current fire mode
+     */
     public void endAskSquares(Player currentPlayer, ArrayList<Square> squares, String effectType){
         getModel().getCurrent().setAvailableWeaponSquares(squares);
         switch(effectType){
@@ -179,6 +239,14 @@ public abstract class Weapon extends Card {
         getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
     }
 
+    /**
+     * Depending on the current fire mode increments a counter in Current class and sends the available targets
+     * to the player's view
+     * @param currentPlayer current player
+     * @param availableTargets targets the player can choose from
+     * @param weapon selected weapon
+     * @param effectType current fire mode
+     */
     public void endAskTargets(Player currentPlayer, ArrayList<Player> availableTargets,Weapon weapon,String effectType){
         switch(effectType){
             case "base":

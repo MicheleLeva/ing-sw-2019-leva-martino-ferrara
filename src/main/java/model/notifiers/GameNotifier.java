@@ -11,6 +11,10 @@ import java.util.HashMap;
 
 public class GameNotifier extends ViewObservable<PlayerMessage> {
 
+
+    /**
+     * Notifies all players that the current player has used the Run action and tells them where he moved
+     */
     public void notifyRun(PlayerColor playerColor , String playerName , int newSquare){
         String toPlayer = "You ";
         String toOthers = playerName +" ";
@@ -25,6 +29,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         notifyOthers(msgToOthers, playerColor);
     }
 
+
+    /**
+     * Notifies all players that the current payer has used the teleporter and tells them where he moved
+     */
     public void notifyTeleporter(PlayerColor playerColor , String playerName , String newSquare){
         String toPlayer = "You ";
         String toOthers = playerName +" ";
@@ -40,6 +48,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
     }
 
+
+    /**
+     * Notifies all players that the current player has used the Newton powerUp also telling them how it was used
+     */
     public void notifyNewton(String playerName , String opponentName , PlayerColor playerColor , PlayerColor opponentColor , int newSquare){
         String toPlayer ="You moved " +opponentName +" to: " +newSquare +".\n";
         String toOpponent = playerName +" moved you to: " +newSquare +".\n";
@@ -56,6 +68,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
 
     }
+
+    /**
+     * Notifies all players that the current player has drawn a particular powerUp
+     */
     public void notifyDrawPowerUp(PlayerColor playerColor ,String playerName , String powerUpList , int num){
         String toPlayer = "You drew: " +powerUpList +".\n";
         String toOthers = playerName +" drew " +num +" powerup";
@@ -72,6 +88,9 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
     }
 
+    /**
+     * Notifies the players that the current player drew ammo from a square and shows what ammo he picked up
+     */
     public void notifyDrawAmmo(PlayerColor playerColor , String playerName , String ammo){
         String toPlayer = "You drew: \n";
         String toOthers = playerName +" drew: \n";
@@ -86,12 +105,17 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
     }
 
+    /**
+     * Notifies all players that the Shoot Action is ended and sends them the list of damage the players have received
+     */
     public void notifyShoot(Player currentPlayer, ArrayList<Player> targets, ArrayList<Player> allPlayers){
         System.out.println("notifyshoot 1 in gamenotifier");
         ArrayList<PlayerColor> targetsColor = new ArrayList<>();
         String toPlayer ="You shot: ";
         String toOpponent = currentPlayer.getPlayerName() +" shot you";
         String toOthers = "";
+        if(targets.isEmpty())
+            toPlayer = toPlayer + "nobody";
         for(Player player : targets){
             toPlayer = toPlayer+player.getPlayerName();
             targetsColor.add(player.getPlayerColor());
@@ -156,7 +180,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
             }
         }*/
     }
-
+//todo javadoc
+    /**
+     *
+     */
     public void notifyGeneric(String message){
         PlayerMessage playerMessage = new GenericMessage(message);
         notify(playerMessage);
@@ -172,6 +199,9 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         notifyOthers(playerMessage, playerColor);
     }
 
+    /**
+     * notifies all players that a tagBack grenade was used and how it was used
+     */
     public void notifyGrenade(PlayerColor user, PlayerColor victim){
         String toOthers = user.toString() + "has used a grenade on " + victim.toString();
         String toPlayer = "You used a grenade on " + victim.toString();

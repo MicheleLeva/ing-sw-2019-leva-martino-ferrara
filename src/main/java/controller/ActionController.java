@@ -14,12 +14,23 @@ import model.player.action.KeyMap;
 import utils.observer.ActionObserver;
 import view.View;
 
+/**
+ *MVC Controller for the actions selection
+ */
 public class ActionController extends Controller implements ActionObserver {
-    //override di tutti gli update
+    /**
+     * Constructor for the Action Controller class
+     * @param model model class
+     */
     public ActionController(Model model){
         super(model);
     }
 
+    /**
+     * Controls if the received input corresponds to a valid action and if so proceeds
+     * to use the selected action
+     * @param actionEvent contains the input related to a specific action
+     */
     public void update(ActionEvent actionEvent){
         if (getModel().getPlayer(actionEvent.getPlayerColor()).isAfk()){
             return;
@@ -70,11 +81,19 @@ public class ActionController extends Controller implements ActionObserver {
         }
     }
 
+    /**
+     * Allows the player to re-enter the game after being afk
+     */
     @Override
     public void update(QuitAfkEvent quitAfkEvent) {
         getModel().wakeUpPlayer(getModel().getPlayer(quitAfkEvent.getPlayerColor()));
     }
 
+    /**
+     * Controls if the received input corresponds to one of the available maps and if so adds to vote
+     * of the current player to those of the other players
+     * @param voteMapEvent contains the input corresponding to one of the available maps
+     */
     @Override
     public void update(VoteMapEvent voteMapEvent) {
         if (getModel().getPlayer(voteMapEvent.getPlayerColor()).isAfk()){

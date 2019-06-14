@@ -15,12 +15,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class
-Map {
+/**
+ * Class for all the available maps for the game
+ */
+public class Map {
 
     private Square[][] map;
     private String mapCLI;
 
+    /**
+     * Constructor for the Map class
+     * @param chosenMap index that indicates the map to use for the current game
+     */
     public Map(int chosenMap) {
         String JSONpath;
         String CLIMapPath;
@@ -112,10 +118,21 @@ Map {
         return map;
     }
 
+    /**
+     * Return the square corresponding to the given coordinates
+     * @param x row of the square on the map
+     * @param y column of the square on the map
+     * @return the square corresponding to the coordinates
+     */
     public Square getSquareFromCoordinates(int x, int y){
         return map[x][y];
     }
 
+    /**
+     * Return the spawn square corresponding to the given color
+     * @param color color of the spawn square that method needs to return
+     * @return
+     */
     public Square getSpawnSquare(SquareColor color){
         Square square = null;
         for(int i = 0; i < 3; i++){
@@ -138,10 +155,16 @@ Map {
         return squares;
     }
 
+    /**
+     * Prints the map on the player's screen
+     */
     public String printMap(){
         return mapCLI;
     }
 
+    /**
+     * Returns the IDs of all the squares in the map
+     */
     public ArrayList<Integer> getAllIDs(){
         ArrayList<Integer> allIDs = new ArrayList<>();
         for(int i = 0; i < 3; i++)
@@ -151,6 +174,11 @@ Map {
     return allIDs;
     }
 
+    /**
+     * Returns the square corresponding to the given ID
+     * @param ID ID of the square the method needs to return
+     *
+     */
     public Square getSquareFromID(int ID){
         Square square = null;
         for(int i = 0; i < 3; i++)

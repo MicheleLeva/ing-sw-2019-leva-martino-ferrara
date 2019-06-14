@@ -6,23 +6,38 @@ import model.CLI;
 
 import java.util.ArrayList;
 
+/**
+ * Representation of the player's received damage
+ */
 public class DamageCounter {
 
     private final String DAMAGE_CLI = "*";
     private ArrayList<PlayerColor> damage;
 
 
+    /**
+     * Constructor for the Damage Counter class
+     */
     public DamageCounter(){
         this.damage = new ArrayList<>();
 
     }
 
+
+    /**
+     * Adds the given amount of damage to the DamageCounter with the color of 'playerColor'
+     * @param playerColor color of the player that gave the damage
+     * @param damage damage to add to the counter
+     */
     public void addDamage(PlayerColor playerColor , int damage){
         for (int i = 0; i < damage; i++){
             this.damage.add(playerColor);
         }
     }
 
+    /**
+     * Clears the damage received
+     */
     public void clearDamage(){
         damage.clear();
     }
@@ -35,6 +50,9 @@ public class DamageCounter {
         return damage.size();
     }
 
+    /**
+     * Returns the damage received from a player with a specific color
+     */
     public int getDamageFromColor(PlayerColor playerColor){
         int result = 0;
         for (int i = 0; i < damage.size(); i++){
@@ -45,6 +63,9 @@ public class DamageCounter {
         return result;
     }
 
+    /**
+     * Outputs the amount of damage received
+     */
     public String printDamageCounter(){
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder damageBuilder = new StringBuilder();

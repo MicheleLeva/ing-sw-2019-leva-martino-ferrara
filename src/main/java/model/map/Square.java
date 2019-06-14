@@ -18,6 +18,11 @@ public class Square {
     private int squareColumn;
     private int ID;
 
+    /**
+     * Constructor for the Square class
+     * @param row row of the square in the current map
+     * @param column column of the square in the current map
+     */
     public Square(int row, int column){
         sides = new HashMap<Direction,Square>();
         squareRow = row;
@@ -38,6 +43,10 @@ public class Square {
         return ammo;
     }
 
+    /**
+     * Puts the given weapon on the spawn square
+     * @param weapon weapon to put on spawn square
+     */
     //todo
     public void setWeapon(Weapon weapon){
 
@@ -50,6 +59,9 @@ public class Square {
 
     }
 
+    /**
+     * checks if the square has an less than 3 weapons on it
+     */
     public boolean hasEmptyWeaponSlot(){
         for (int i = 0; i<3; i++){
             if (weapons[i] == null){
@@ -59,10 +71,17 @@ public class Square {
         return false;
     }
 
+    /**
+     * checks if the square has an no ammo card on it
+     */
     public boolean hasEmptyAmmoSlot(){
         return (ammo == null);
     }
 
+    /**
+     * Puts the given ammo card on the square
+     * @param ammoCard ammo card drawn from the ammo card deck
+     */
     public void setAmmo(AmmoCard ammoCard){
         ammo = ammoCard;
 
@@ -100,6 +119,9 @@ public class Square {
         return "square";
     }
 
+    /**
+     * Checks if the square has neither ammo nor weapons on it
+     */
     public boolean isEmpty(){
         if(isSpawn){
             return (weapons[0] == null && weapons[1] == null && weapons[2] == null);
@@ -112,6 +134,9 @@ public class Square {
         return ID;
     }
 
+    /**
+     * Sets the ammo card on the square to null
+     */
     public void removeAmmoCard(){
         ammo = null;
     }

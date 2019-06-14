@@ -81,6 +81,11 @@ public class Model {
         return players.get(playerColor);
     }
 
+    /**
+     * Constructor of the model class
+     * @param playersList list of players of the game
+     * @param skulls number of skulls on the killShotTrack
+     */
     public Model(ArrayList<Player> playersList, int skulls) {
 //todo chiedi se serve iniializzare il gameboard
         players.put(PlayerColor.BLUE, playersList.get(0));
@@ -121,6 +126,12 @@ public class Model {
         return turnCurrent;
     }
 
+    /**
+     * Returns a list of all the squares reachable from the startingSquare with n moves
+     * @param n number of moves
+     * @param startingSquare square from which the method calculates the distances
+     * @return
+     */
     public static ArrayList<Square> runnableSquare(int n, Square startingSquare) {
 
         ArrayList<Square> squares = new ArrayList<>();
@@ -469,6 +480,11 @@ public class Model {
         return null;
 
     }
+
+    /**
+     * sends a message to the player asking what powerUp he wants to discard
+     * @param player current player
+     */
     public void requestPowerUpDiscard(Player player) {
         String powerUpList = player.getResources().showpowerUp();
         int num = player.getResources().getPowerUp().size();
@@ -480,6 +496,11 @@ public class Model {
         }
     }
 
+    /**
+     * Discards te chosen powerUp
+     * @param player current player
+     * @param index index corresponding to the powerUp the player wants to discard
+     */
     public void discardPowerUp(Player player, int index) {
         PowerUp discardedPowerUp = player.getResources().removePowerUp(index);
         gameBoard.getDecks().getDiscardedPowerUpDeck().add(discardedPowerUp);
@@ -494,10 +515,21 @@ public class Model {
     }
 
 
+    /**
+     * Sends a message to the current player and to all other player
+     * @param playerColor color of the current player
+     * @param toPlayer message to send to the current player
+     * @param toOthers message to send to the players that are not the current player
+     */
     public void printMessage(PlayerColor playerColor, String toPlayer, String toOthers) {
         gameNotifier.notifyMessages(playerColor, toPlayer, toOthers);
     }
 
+    /**
+     * Sets the player position to the spwan square with the selected color
+     * @param player current player
+     * @param ammoColor color of the spawn square
+     */
     public void spawnPlayer(Player player, AmmoColor ammoColor) {
         SquareColor squareColor;
         switch(ammoColor.toString()) {
@@ -545,28 +577,46 @@ public class Model {
         return result;
     }
 
+    /**
+     * Notifies all the player that the Run Move is completed
+     */
     public void updateRun() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
         gameNotifier.notifyRun(currentPlayerColor, currentPlayer.getPlayerName(), currentPlayer.getPosition().getID());
     }
 
+    /**
+     * Updates the action Tree of the current player to show the next available actions
+     */
     public void updateAction() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         currentPlayer.getActionTree().updateAction();
     }
 
+    /**
+     * Sends to the current player a list of the available powerUps to choose from
+     * @param playerColor current player
+     */
     public void choosePowerUp(PlayerColor playerColor) {
         String availablePowerUp;
         availablePowerUp = getPlayer(playerColor).getResources().showpowerUp();
         powerUpNotifier.choosePowerUp(playerColor, availablePowerUp);
     }
 
+    /**
+     * Sends the player a list of all the available squares to move to using the teleporter
+     * @param playerColor color of the current player
+     */
     public void useTeleporter(PlayerColor playerColor) {
 
         powerUpNotifier.chooseTeleporterSquare(playerColor);
     }
 
+    /**
+     * Sends a message to all players to notify that the teleporter powerUp was used
+     * @param playerColor current player color
+     */
     public void notifyTeleporter(PlayerColor playerColor) {
         String playerName = getPlayer(playerColor).getPlayerName();
         String newSquare = String.valueOf(getPlayer(playerColor).getPosition().getID());
@@ -574,6 +624,11 @@ public class Model {
         chooseAction(playerColor);
     }
 
+    /**
+     * Sends a message to the current player showing him all his available actions and
+     * tells the other players that the current player is choosing his next action
+     * @param playerColor current player color
+     */
     public void chooseAction(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         String availableAction = currentPlayer.getActionTree().availableAction();
@@ -588,6 +643,11 @@ public class Model {
         return current;
     }
 
+    /**
+     * Sends a message to the current player showing him all the targets he can move and if there
+     * are no targets to move shows him his available actions again
+     * @param playerColor color of he current player
+     */
     public void useNewton(PlayerColor playerColor) {
         ArrayList<Player> allPLayers = turnManager.getAllPlayers();
         ArrayList<Player> allPlayersCopy = new ArrayList<>(allPLayers);
@@ -610,6 +670,11 @@ public class Model {
         powerUpNotifier.chooseNewtonOpponent(playerColor, opponentList);
     }
 
+    /**
+     * Sends the current player a list of squares to move the selected target to
+     * @param playerColor color of the current square
+     * @param opponent player that has to be moved by the Newton
+     */
     public void chooseNewtonSquare(PlayerColor playerColor, Player opponent) {
         Square currentOpponentSquare = opponent.getPosition();
         ArrayList<Square> possibleSquare = getSquaresInCardinal2(opponent);
@@ -622,6 +687,11 @@ public class Model {
         powerUpNotifier.chooseNewtonSquare(playerColor, squareList);
     }
 
+    /**
+     * Sends all the players a message notifying tha the newton has been used
+     * @param playerColor current player color
+     * @param opponent player moved by the newton
+     */
     public void notifyNewton(PlayerColor playerColor, Player opponent) {
         String playerName = getPlayer(playerColor).getPlayerName();
         String opponentName = opponent.getPlayerName();
@@ -631,6 +701,10 @@ public class Model {
         getPlayer(playerColor).getActionTree().setMoveEnded(true);
     }
 
+    /**
+     * Sends the player a list of the reloaded weapons he holds
+     * @param playerColor current player color
+     */
     public void showWeaponCards(PlayerColor playerColor) {
         String availableWeapons = "";
         ArrayList<Weapon> weapons = getPlayer(playerColor).getResources().getReloadedWeapon();
@@ -641,6 +715,11 @@ public class Model {
         weaponNotifier.showWeaponCards(playerColor, availableWeapons);
     }
 
+    /**
+     * @param playerColor current player's color
+     * @param availableTargets list of the targets the current player can hit
+     * @param targetsNumber maximum number of targets the player can choose
+     */
     public void selectTargets(PlayerColor playerColor, ArrayList<Player> availableTargets, int targetsNumber) {
         String opponentList = "";
         Player currentPlayer = getPlayer(playerColor);
@@ -685,6 +764,11 @@ public class Model {
         weaponNotifier.selectTargets(playerColor, opponentList, targetsNumber);
     }
 
+    /**
+     * Shows the player the available fire modes for the seected weapon
+     * @param playerColor current player color
+     * @param weapon selected weapon
+     */
     public void showFireModes(PlayerColor playerColor, Weapon weapon) {
         List<WeaponTreeNode<FireMode>> FireModes = new ArrayList<>();
         List<WeaponTreeNode<FireMode>> availableFireModes = weapon.getWeaponTree().getLastActionPerformed().getChildren();
@@ -715,6 +799,11 @@ public class Model {
         weaponNotifier.showFireModes(playerColor, result);
     }
 
+    /**
+     * Sends the player a list of the powerups he can use to pay the reload cost of the selected weapon
+     * @param currentPlayer current player
+     * @param weapon selected weapon
+     */
     public void askReloadPayment(Player currentPlayer, Weapon weapon){
         Ammo fireModeCost;
         int fireRED;
@@ -747,6 +836,11 @@ public class Model {
         weaponNotifier.askReloadPayment(currentPlayer.getPlayerColor(),current.getAvailablePaymentPowerUps());
     }
 
+    /**
+     * Pays the reload cost using the previously selected powerUps
+     * @param currentPlayer current player
+     * @param weapon selected weapon
+     */
     public void payReload(Player currentPlayer, Weapon weapon){
         int powerUpRED = 0;
         int powerUpBLUE = 0;
@@ -780,7 +874,11 @@ public class Model {
         resetCurrent();
         updateAction();
     }
-
+    /**
+     * Sends the player a list of the powerUps he can use to pay the pickUp cost of the selected weapon
+     * @param currentPlayer current player
+     * @param weapon selected weapon
+     */
     public void askPickUpPayment(Player currentPlayer, Weapon weapon){
 
         Ammo fireModeCost;
@@ -814,7 +912,11 @@ public class Model {
         }
         weaponNotifier.askPickUpPayment(currentPlayer.getPlayerColor(),getCurrent().getAvailablePaymentPowerUps());
     }
-
+    /**
+     * Pays the pickUp cost using the previously selected powerUps
+     * @param currentPlayer current player
+     * @param weapon selected weapon
+     */
     public void payPickUp(Player currentPlayer, Weapon weapon){
         int powerUpRED = 0;
         int powerUpBLUE = 0;
@@ -864,7 +966,11 @@ public class Model {
     }
 
 
-
+    /**
+     * Pays the fire mode cost using the previously selected powerUps
+     * @param currentPlayer current player
+     * @param weapon selected weapon
+     */
     public void payFireMode(Player currentPlayer, Weapon weapon){
         int powerUpRED = 0;
         int powerUpBLUE = 0;
@@ -927,7 +1033,11 @@ public class Model {
         current.getAvailablePaymentPowerUps().clear();
 
     }
-
+    /**
+     * Sends the player a list of the powerups he can use to pay the fire mode cost of the selected weapon
+     * @param currentPlayer current player
+     * @param weapon selected weapon
+     */
     public void askFireModePayment(Player currentPlayer,Weapon weapon,String effectType){
         Ammo fireModeCost;
         int fireRED;
@@ -984,6 +1094,9 @@ public class Model {
         weaponNotifier.askWeaponPayment(currentPlayer.getPlayerColor(),getCurrent().getAvailablePaymentPowerUps());
     }
 
+    /**
+     * Support method that calculates the cost of the multiple payment methods from the selected weapon
+     */
     public Ammo setFireCost(String effectType,Weapon weapon){
         Ammo fireModeCost;
         switch(effectType){
@@ -1015,12 +1128,21 @@ public class Model {
     }
 
 
+    /**
+     * Sends the current player a list of the squares to choose from
+     * @param playerColor current player color
+     * @param squares list of available squares
+     */
     public void chooseWeaponSquare(PlayerColor playerColor, ArrayList<Square> squares) {
         current.setAvailableWeaponSquares(squares);
         System.out.println("chooseweaponsquare base");
         weaponNotifier.chooseWeaponSquare(playerColor, squares);
     }
 
+    /**
+     * Notifies all players the end of the Shoot Action
+     * @param currentPlayer current player
+     */
     public void notifyShoot(Player currentPlayer) {
         Set<Player> set = new LinkedHashSet<Player>(current.getSelectedBaseTargets());
         set.addAll(current.getSelectedAlternativeTargets());
@@ -1032,6 +1154,13 @@ public class Model {
         gameNotifier.notifyShoot(currentPlayer, targets, allPlayers);
     }
 
+    /**
+     * Controls if the player can shoot with another fire mode, if so the available fire modes
+     * are sent, otherwise the Shoot Action ends
+     * @param weapon selected weapon
+     * @param currentPlayer current player in game
+     * @param selectedTargets targets the player has hit
+     */
     public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
         weapon.unload();
         System.out.println("checknexweapon action inizio"+weapon.getWeaponTree().getLastAction().getData().getType());
@@ -1054,12 +1183,21 @@ public class Model {
             weapon.getModel().showFireModes(currentPlayer.getPlayerColor(), weapon);
     }
 
+    /**
+     * Removes the ammo card from the selected square and discards it
+     * @param square square from which the player is grabbing ammo
+     */
     public void discardAmmo(Square square) {
         AmmoCard discardedAmmo = square.getAmmoCard();
         square.removeAmmoCard();
         gameBoard.getDecks().getDiscardedAmmoCardDeck().add(discardedAmmo);
     }
 
+    /**
+     * Draws the selected number of powerUps from the PowerUp Deck
+     * @param playerColor current player color
+     * @param num number of powerUps to draw
+     */
     public void drawPowerUp(PlayerColor playerColor, int num) {
         Player currentPlayer = getPlayer(playerColor);
         ArrayList<PowerUp> drawnPowerUp = new ArrayList<>();
@@ -1077,6 +1215,12 @@ public class Model {
 
     }
 
+    /**
+     * Adds the picked up ammo to the player's resources and notifies the players that the Grab action
+     * is completed
+     * @param playerColor current player color
+     * @param ammo ammo added to the player's resources
+     */
     public void addAmmo(PlayerColor playerColor, Ammo ammo) {
         Player currentPlayer = getPlayer(playerColor);
         currentPlayer.getResources().addToAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
@@ -1094,6 +1238,10 @@ public class Model {
         }
     }
 
+    /**
+     * Sends the player a list of the weapons he can reload
+     * @param playerColor current player color
+     */
     public void requestWeaponReload(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
@@ -1105,6 +1253,12 @@ public class Model {
         weaponNotifier.requestWeaponReload(playerColor, reloadableWeaponList, availableAmmoList, availablePowerUpList);
     }
 
+    /**
+     * Adds the selected amount of damage to the target's playerBoard
+     * @param shooterColor current player color
+     * @param opponentColor color of the target
+     * @param damage number of damage to deal to the target
+     */
     public void addDamage(PlayerColor shooterColor, PlayerColor opponentColor, int damage) { //todo aggiungere anche i marchi
         Player opponent = getPlayer(opponentColor);
         int opponentDamage = opponent.getPlayerBoard().getDamageCounter().getDamage();
@@ -1130,7 +1284,12 @@ public class Model {
         }
         }
 
-
+    /**
+     * Adds the selected number of marks to the target's playerBoard
+     * @param shooterColor current player color
+     * @param opponentColor color of the target
+     * @param mark number of damage to deal to the target
+     */
     public void addMark(PlayerColor shooterColor, PlayerColor opponentColor, int mark) {
         Player opponent = getPlayer(opponentColor);
         MarkCounter markCounter = opponent.getPlayerBoard().getMarkCounter();
@@ -1153,6 +1312,9 @@ public class Model {
     }
 
 
+    /**
+     * Returns all in game players but not those that are not on the map
+     */
     public ArrayList<Player> getAllPlayers() {
         ArrayList<Player> def = new ArrayList<>(players.values());
         for(Player player : players.values())
@@ -1160,7 +1322,9 @@ public class Model {
                 def.remove(player);
         return def;
     }
-
+    /**
+     * Returns all in game players
+     */
     public List<Player> getEachPlayer(){
         ArrayList<Player> temp = new ArrayList<>();
         for(Player player : players.values()){
@@ -1169,6 +1333,11 @@ public class Model {
         return temp;
     }
 
+    /**
+     * Sends the current player a list of the players he has damaged
+     * @param playerColor current player color
+     * @param damagedPlayers players that have been damaged
+     */
     public void targetingScopeTargets(PlayerColor playerColor, ArrayList<Player> damagedPlayers){
         String message="Select Targeting Scope target: ";
         for(Player player : damagedPlayers)
@@ -1176,6 +1345,10 @@ public class Model {
         powerUpNotifier.targetingScopeTargets(playerColor,message);
     }
 
+    /**
+     * Sets the selected player afk
+     * @param player player to set AFK
+     */
     public void setPlayerAfk(Player player){
         if (player.isAfk()){
             return;
@@ -1187,11 +1360,20 @@ public class Model {
         getGameNotifier().notifyOtherPlayers(toOthers, player.getPlayerColor());
     }
 
+    /**
+     * Removes the player from the AFK players
+     * @param player player to remove from the afk players
+     */
     public void wakeUpPlayer(Player player){
         System.out.println("Waking up " + player.getPlayerName());
         player.setAfk(false);
     }
 
+    /**
+     * Asks the damaged player if he wants to use the Tagback Grenade
+     * @param player current player
+     * @param opponent player the has been damaged
+     */
     public void tagbackGranadeRequest(Player player, Player opponent){
         StringBuilder stringBuilder = new StringBuilder();
         int i = 1;
@@ -1207,14 +1389,25 @@ public class Model {
         getPowerUpNotifier().askTagbackGrenade(player, opponent, stringBuilder.toString());
     }
 
+    /**
+     * Sends to the players a list of the maps to choose from
+     */
     public void mapVote(Player player){
         actionNotifier.mapVote(player.getPlayerColor());
     }
 
+    /**
+     * Getter for the map votes
+     */
     public ArrayList<Integer> getMapVotes() {
         return mapVotes;
     }
 
+    /**
+     * Sends the layers a list of the weapons he can pick up
+     * @param payableWeapons weapon the player can pick up from the spawn square
+     * @param playerColor current player
+     */
     public void showPickUpWeapons(ArrayList<Weapon> payableWeapons,PlayerColor playerColor){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < payableWeapons.size(); i++){
@@ -1227,10 +1420,18 @@ public class Model {
         weaponNotifier.showPickUpWeapons(playerColor,stringBuilder.toString());
     }
 
+    /**
+     * Clears the whole current class
+     */
     public void resetCurrent(){
         current = new Current();
     }
 
+    /**
+     * Swaps the selected weapon the player holds with the one he wants to pick up from the spawn square
+     * @param currentPlayer current player
+     * @param input index of the weapon the player wants to put down
+     */
     public void swapPickUpWeapon(Player currentPlayer, int input){
         currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
         for(int i = 0; i < 3; i++){

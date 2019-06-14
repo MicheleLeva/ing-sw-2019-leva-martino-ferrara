@@ -9,6 +9,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class that manages the available points on the player's Board
+ */
 public class Points {
 
     private ArrayList<Integer> points;
@@ -16,6 +19,10 @@ public class Points {
     private int firstBlood;
     private int frenzyFirstBlood;
     private final String path = "src/resources/playerPoints.json"; //todo settare e modificare il costruttore
+
+    /**
+     * Constructor for the Points class
+     */
     public Points(){
         points = new ArrayList<>();
         readPoints();
@@ -25,6 +32,9 @@ public class Points {
         return this.points;
     }
 
+    /**
+     * Sets the available point by reading them from a json file
+     */
     private void readPoints(){
         JSONParser parser = new JSONParser();
         int value;
@@ -56,6 +66,10 @@ public class Points {
             System.out.println(e);
         }
     }
+
+    /**
+     * Removes the first point from the list of points after a player's death
+     */
     public void removeHighestPoint(){
         points.remove(0);
     }
@@ -78,6 +92,9 @@ public class Points {
         }
     }
 
+    /**
+     * Outputs the list of available points
+     */
     public String printPoints(){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < points.size(); i++){

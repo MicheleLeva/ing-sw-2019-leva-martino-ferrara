@@ -6,6 +6,10 @@ import model.player.Player;
 
 import java.util.ArrayList;
 
+
+/**
+ * Superclass from which all weapons with 2 optional fire modes extend
+ */
 public abstract class WeaponOptional2 extends WeaponOptional1 {
     protected int optionalDamage2;
     protected int optionalMarks2;
@@ -41,8 +45,17 @@ public abstract class WeaponOptional2 extends WeaponOptional1 {
         return optionalTargetsNumber2;
     }
 
+    /**
+     * Asks the requirements of the second optional fire mode according to the specific weapon
+     * @param currentPlayer current player
+     */
     public abstract void askOptionalRequirements2(Player currentPlayer);
 
+    /**
+     * Uses the second optional fire Mode according to the specific weapon
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     public abstract void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets);
 
 }

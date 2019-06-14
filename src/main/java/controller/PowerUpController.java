@@ -15,11 +15,18 @@ import utils.observer.PowerUpObserver;
 
 import java.util.ArrayList;
 
+/**
+ *MVC Controller for the powerUp-related actions
+ */
 public class PowerUpController extends Controller implements PowerUpObserver {
     public PowerUpController(Model model) {
         super(model);
     }
 
+    /**
+     * Controls if the received input is valid and in that case uses the chosen powerUp
+     * @param choosePowerUpEvent class containing the player's selection for the powerUp
+     */
     @Override
     public void update(ChoosePowerUpEvent choosePowerUpEvent) {
         if (getModel().getPlayer(choosePowerUpEvent.getPlayerColor()).isAfk()){
@@ -53,6 +60,12 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
     }
 
+    /**
+     * Controls if the received input is valid and in that case moves the player to the
+     * square selected by the teleporter powerUp
+     * @param chooseTeleporterSquareEvent class containing the selected square by the player
+     *                                    for the teleporter powerUP
+     */
     @Override
     public void update(ChooseTeleporterSquareEvent chooseTeleporterSquareEvent) {
         if (getModel().getPlayer(chooseTeleporterSquareEvent.getPlayerColor()).isAfk()){
@@ -72,6 +85,11 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
     }
 
+    /**
+     * Controls if the received input is valid and in that case proceeds to ask the current player
+     * where to move the selected opponent for the Newton powerUp
+     * @param chooseNewtonOpponentEvent class containing the selected opponent for the Newton powerUp
+     */
     @Override
     public void update(ChooseNewtonOpponentEvent chooseNewtonOpponentEvent) {
         if (getModel().getPlayer(chooseNewtonOpponentEvent.getPlayerColor()).isAfk()){
@@ -91,6 +109,11 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
     }
 
+    /**
+     * Controls if the received input is valid and in that moves the selected opponent to
+     * the chosen square for the Newton powerUp
+     * @param chooseNewtonSquareEvent contains the square selected for the Newton powerUp
+     */
     @Override
     public void update(ChooseNewtonSquareEvent chooseNewtonSquareEvent) {
         if (getModel().getPlayer(chooseNewtonSquareEvent.getPlayerColor()).isAfk()){
@@ -109,6 +132,11 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
     }
 
+    /**
+     * Controls if the input equals Y or N and if so, proceeds to either finish the shoot
+     * action or use the Targeting Scope powerUp
+     * @param event contains the choice of the current player(YES = Y | NO = N)
+     */
     @Override
     public void update(TargetingScopeEvent event) {
         if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
@@ -128,6 +156,12 @@ public class PowerUpController extends Controller implements PowerUpObserver {
             }
         }
     }
+
+    /**
+     * Controls if the input is valid and in that case proceeds to add damage to the
+     * selected opponent for the Targeting Scope powerUp
+     * @param event contains the target selected for the Targeting Scope powerUp
+     */
     @Override
     public void update(TargetingScopeSelectionEvent event) {
         if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
@@ -169,6 +203,11 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
     }
 
+    /**
+     * Controls if the input is valid ( 0 or 1 ) and in that case it either uses the tagaback grenade or not.
+     * If the tagback grenade timer the input is set to 0 by default
+     * @param tagbackGrenadeEvent contains the choice of the player: 1 to use the Tagback Grenade, 0 otherwise
+     */
     @Override
     public void update(TagbackGrenadeEvent tagbackGrenadeEvent) {
         if (getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()).isAfk()){
@@ -199,6 +238,11 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
     }
 
+    /**
+     * Controls if the powerUp selection is valid and in that case proceeds to remove the
+     * chosen powerUp
+     * @param discardPowerUpEvent contains the selected powerup to discard
+     */
     @Override
     public void update(DiscardPowerUpEvent discardPowerUpEvent){
         if (getModel().getPlayer(discardPowerUpEvent.getPlayerColor()).isAfk()){
