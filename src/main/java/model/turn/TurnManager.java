@@ -71,6 +71,8 @@ public class TurnManager {
     public synchronized void update(){
         allPlayers.get(currentPlayerIndex).getActionTree().resetAction();
 
+        resetKillShot();
+
         if (isFrenzy() && currentPlayerIndex == lastPlayerIndex){
             if (isGameEnded){
                 setGameOver(true);
@@ -187,7 +189,7 @@ public class TurnManager {
         currentTurnKillshots++;
     }
 
-    public void resetKillShot(){
+    private void resetKillShot(){
         currentTurnKillshots = 0;
     }
 
