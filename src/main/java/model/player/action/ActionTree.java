@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Model;
+
+/**
+ * Contains all the possible actions the player is allowed to perform
+ */
 public class ActionTree {
     //Tree ID:
     //1: standard tree
@@ -34,7 +38,11 @@ public class ActionTree {
     //true if the current player has ended his turn
     private boolean doneTurn = false;
     private boolean isMoveEnded = true;
-    //the builder takes the ID as its input and builds the corresponding action tree
+
+    /**
+     * Action Tree's constructor
+     * @param ID represents the specific set of actions
+     */
     public ActionTree(int ID){
         this.ID = ID;
         performedAction = 0;
@@ -42,7 +50,9 @@ public class ActionTree {
         parseActionTree();
     }
 
-    //set JSON path
+    /**
+     * sets the JSon path based upond the ID
+     */
     private void init(){
         switch (ID)
         {
@@ -72,7 +82,12 @@ public class ActionTree {
                 break;
         }
     }
-    //helper method used to build the tree
+
+    /**
+     * helper method used to build the tree
+     * @param parent the father node
+     * @param obj the current JSon object
+     */
     private void buildTree(Node<String> parent , JSONObject obj){
         JSONArray array = (JSONArray) obj.get("child");
 
@@ -88,7 +103,10 @@ public class ActionTree {
             }
         }
     }
-    //builds the action tree
+
+    /**
+     * builds the action tree
+     */
     private void parseActionTree(){
         JSONParser parser = new JSONParser();
 
@@ -116,11 +134,19 @@ public class ActionTree {
             System.out.println(e);
         }
     }
-    //returns the tree's root
+
+    /**
+     * @return the tree's root
+     */
     public Node<String> getRoot(){
         return root;
     }
-    //cheks whether or not the input move is valid
+
+    /**
+     * //cheks whether or not the input move is valid
+     * @param move player's input
+     * @return a boolean that tells whether the input is or not valid
+     */
     public boolean checkAction(char move){
         if(move == KeyMap.getEnd()){
             return true;
@@ -146,7 +172,10 @@ public class ActionTree {
 
         return false;
     }
-    //after executing the action, the tree updates
+
+    /**
+     * updates the tree, after having executed the action
+     */
     public void updateAction(){
 
         lastActionPerformed = lastAction;
@@ -167,7 +196,11 @@ public class ActionTree {
     public boolean isMoveEnded() {
         return isMoveEnded;
     }
-    //returns a string containing all the possible actions for the player
+
+    /**
+     * This method is used to print the current player's available actions
+     * @return a String contaning the availaboe actions
+     */
     public String availableAction(){
         StringBuilder result = new StringBuilder();
         result.append("Your available actions: \n");
@@ -202,25 +235,42 @@ public class ActionTree {
     public boolean isActionEnded(){
         return lastActionPerformed.getChildren().isEmpty();
     }
-    //resets action
+
+    /**
+     * resets the action Tree
+     */
     public void resetAction(){
         performedAction = 0;
         resetLastAction();
     }
-    //returns true if the player has done all the actions
+
+    /**
+     * @return true if the player has done all the actions
+     */
     public boolean isTurnEnded(){
         return (performedAction == actionCounter);
     }
+
+    /**
+     * @return true if the player has completed his or her turn
+     */
     public boolean hasDoneTurn(){
         return doneTurn;
     }
     public void setDoneTurn(boolean doneTurn){
         this.doneTurn = doneTurn;
     }
+
+    /**
+     * This method is called whenever an action is completed
+     */
     private void resetLastAction(){
         lastAction = lastActionPerformed = root;
     }
-    //called when the player has finished the whole action
+
+    /**
+     * called when the player has finished the whole action
+     */
     public void endAction(){
         performedAction++;
         setMoveEnded(true);

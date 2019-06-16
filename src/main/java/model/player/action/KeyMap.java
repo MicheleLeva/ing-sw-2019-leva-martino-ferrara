@@ -7,7 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-//Classe che mappa i tasti alle mosse
+/**
+ * KeyMap Class
+ * Contains the binding between keys and moves
+ */
 public class KeyMap {
 
     private  static char moveUp;
@@ -68,7 +71,13 @@ public class KeyMap {
     public KeyMap(){
         this(defaultPath);
     }
-    //Metodo che verifica se una mossa è valida
+
+    /**
+     * This method checks whether the selecterd input is or not valid
+     * @param type the type of the move
+     * @param move the current move's key
+     * @return true if the move is valid
+     */
     public static boolean isValid (String type , char move){
         switch (type){
             case "run":
@@ -90,6 +99,11 @@ public class KeyMap {
         }
     }
 
+    /**
+     * This method checks if it exists a valid move based upon the selected input
+     * @param move selected input
+     * @return true if a valid move exists
+     */
     public static boolean isValid(char move){
         return(move == moveUp || move == moveDown || move == moveRight || move == moveLeft ||
                 move == grab || move == shoot || move == reload ||
@@ -108,6 +122,10 @@ public class KeyMap {
         return usePowerUp;
     }
 
+    /**
+     * Builds the command list
+     * @return a String containing the command list
+     */
     public static String getCommandList(){
         String result;
         result = "Command List:\n";

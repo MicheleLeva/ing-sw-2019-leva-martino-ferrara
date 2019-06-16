@@ -15,6 +15,12 @@ public class Run extends Action {
         this.direction = direction;
     }
 
+    /**
+     * performs the run move
+     * @param model modified by the action
+     * @param playerColor the color of the player who performed the action
+     * @throws WallException
+     */
     public void perform(Model model , PlayerColor playerColor) throws WallException{
         Player currentPlayer = model.getPlayer(playerColor);
         Square currentSquare = currentPlayer.getPosition();

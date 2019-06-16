@@ -15,6 +15,14 @@ import model.player.PlayerColor;
 import java.util.ArrayList;
 
 public class Grab extends Action {
+    /**
+     * performed the grab move
+     * @param model modified by the action
+     * @param playerColor the color of the player who performed the action
+     * @throws EmptySquareException
+     * @throws MaxAmmoException
+     * @throws CannotPayException
+     */
     @Override
     public void perform(Model model , PlayerColor playerColor) throws EmptySquareException, MaxAmmoException,CannotPayException {
         Player currentPlayer = model.getPlayer(playerColor);

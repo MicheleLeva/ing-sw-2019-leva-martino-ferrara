@@ -54,6 +54,11 @@ public class MarkCounter {
         else return 0;
     }
 
+    public int getMarkFromColorAndRemove(PlayerColor playerColor){
+        if(markList.containsKey(playerColor))
+            return markList.remove(playerColor);
+        else return 0;
+    }
     /**
      * Outputs the number of marks received
      */

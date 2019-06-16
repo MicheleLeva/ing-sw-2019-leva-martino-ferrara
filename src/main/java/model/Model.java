@@ -1259,10 +1259,14 @@ public class Model {
      * @param opponentColor color of the target
      * @param damage number of damage to deal to the target
      */
-    public void addDamage(PlayerColor shooterColor, PlayerColor opponentColor, int damage) { //todo aggiungere anche i marchi
-        Player opponent = getPlayer(opponentColor);
+    public void addDamage(PlayerColor shooterColor, PlayerColor opponentColor, int damage) {
+        Player opponent = getPlayer(opponentColor); //todo chiedere per marchi in eccesso
         int opponentDamage = opponent.getPlayerBoard().getDamageCounter().getDamage();
+        //move the shooter color's marks on the opponent damage board
+        int pastMarks = opponent.getPlayerBoard().getMarkCounter().getMarkFromColorAndRemove(shooterColor);
+        opponentDamage = opponentDamage + pastMarks;
         int givenDamage = Checks.givenDamage(opponentDamage, damage);
+
         DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
 
         if (givenDamage != 0) {
@@ -1301,13 +1305,13 @@ public class Model {
     }
 
     //va chiamato sempre alla fine del turno su tutti i giocatori colpiti dopo aver valutato i marchi e i giocatori morti
+    //todo
     public void verifyNewAction(PlayerColor opponentColor) {
         Player player = getPlayer(opponentColor);
         int currentTreeID = player.getActionTree().getID();
         int newTreeID = Checks.verifyNewAction(player);
         if (currentTreeID != newTreeID) {
             player.setActionTree(newTreeID);
-            //notifica al giocatore(?)
         }
     }
 
