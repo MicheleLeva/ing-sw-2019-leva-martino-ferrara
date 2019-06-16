@@ -73,17 +73,17 @@ public class WeaponTree {
         //Verifica che la mossa sia possibile
         public void updateLastAction(int index){
 
-            List<WeaponTreeNode<FireMode>> children = lastActionPerformed.getChildren(); //Andrà messo lastActionPerformed al posto di LastAction
+            List<WeaponTreeNode<FireMode>> children = lastActionPerformed.getChildren();
             lastAction = children.get(index);
         }
         //Se l'azione è stata eseguita, l'albero si aggiorna
         public void updateLastActionPerformed(){
-            if (isActionEnded()){
+            /*if (isActionEnded()){
                 endAction();
             }
-            else{
+            else{*/
                 lastActionPerformed = lastAction;
-            }
+           // }
         }
 
         public String availableAction(){ //Modificare per mostrare tutte le combinazioni

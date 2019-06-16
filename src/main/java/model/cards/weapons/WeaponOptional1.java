@@ -42,6 +42,7 @@ public abstract class WeaponOptional1 extends Weapon {
         return optionalTargetsNumber1;
     }
 
+
     /**
      * Asks the requirements of the first optional fire mode according to the specific weapon
      * @param currentPlayer current player

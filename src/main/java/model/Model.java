@@ -554,8 +554,8 @@ public class Model {
         toOthers = player.getPlayerName() + " just spawned at " + spawnSquare.getID();
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
     }
-
-    private boolean canRecharge(Player player) { //todo rivedere
+    //todo rivedere
+    /*private boolean canRecharge(Player player) {
         ArrayList<Weapon> reloadableWeapon = player.getResources().getReloadableWeapon();
         Ammo allAmmoAvailable = new Ammo(player.getResources().getAvailableAmmo());
         ArrayList<PowerUp> powerUp = player.getResources().getPowerUp();
@@ -576,7 +576,7 @@ public class Model {
 
         return result;
     }
-
+*/
     /**
      * Notifies all the player that the Run Move is completed
      */
@@ -1162,9 +1162,11 @@ public class Model {
      * @param selectedTargets targets the player has hit
      */
     public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
+        //todo controllare updatelastactionperformed
         weapon.unload();
         System.out.println("checknexweapon action inizio"+weapon.getWeaponTree().getLastAction().getData().getType());
         weapon.getWeaponTree().updateLastActionPerformed();
+        System.out.println("PROVA2"+weapon.getWeaponTree().getLastActionPerformed().getData().getType());
 
         if (weapon.getWeaponTree().isActionEnded()) {
             System.out.println("shootended");
@@ -1440,9 +1442,9 @@ public class Model {
         currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
         for(int i = 0; i < 3; i++){
             if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
-                currentPlayer.getPosition().getWeapon()[i] = currentPlayer.getResources().getAllWeapon().get(input);
+                currentPlayer.getPosition().getWeapon()[i] = currentPlayer.getResources().getAllWeapon().get(input-1);
         }
-        currentPlayer.getResources().getAllWeapon().remove(input);
+        currentPlayer.getResources().getAllWeapon().remove(input-1);
         resetCurrent();
         updateAction();
     }

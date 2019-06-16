@@ -28,6 +28,7 @@ public class LockRifle extends WeaponOptional1 {
     }
 
 
+    @Override
     public void askOptionalRequirements1(Player currentPlayer){
         if(getModel().getCurrent().getOptionalCounter1() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
@@ -43,6 +44,7 @@ public class LockRifle extends WeaponOptional1 {
         }
     }
 
+    @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
         for (Player target : selectedTargets) {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
@@ -53,6 +55,7 @@ public class LockRifle extends WeaponOptional1 {
 
     }
 
+    @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){
         generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }

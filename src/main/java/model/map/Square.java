@@ -28,6 +28,11 @@ public class Square {
         squareRow = row;
         squareColumn = column;
         weapons = new Weapon[3];
+        //todo controllare il costruttore
+        //weapons[0]=null;
+        //weapons[1]=null;
+        //weapons[2]=null;
+
     }
 
     public void setID(int ID){
@@ -51,7 +56,7 @@ public class Square {
     public void setWeapon(Weapon weapon){
 
          int i = 0;
-         while(weapons[i] != null && i < 3)
+         while(i < 3 && weapons[i] != null)
              i++;
          if( i == 3)
              return;
