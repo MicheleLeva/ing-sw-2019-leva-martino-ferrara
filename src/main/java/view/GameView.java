@@ -10,6 +10,8 @@ import utils.update.GameUpdate;
 
 /**
  * View which manages the Game Exchanges
+ * each update prints the contents of the given message
+ * and collects the inputs of the player to create a new event to be sent to the server
  */
 public class GameView extends Observable<Event> implements GameUpdate {
     private final PlayerColor playerColor;

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 /**
  * View which manages the Weapon Exchanges
+ * each update prints the contents of the given message
+ * and collects the inputs of the player to create a new event to be sent to the server
  */
 public class WeaponView extends Observable<Event> implements WeaponUpdate {
     private final PlayerColor playerColor;
