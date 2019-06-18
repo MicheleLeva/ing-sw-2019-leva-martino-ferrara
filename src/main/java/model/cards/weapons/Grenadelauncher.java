@@ -24,6 +24,7 @@ public class Grenadelauncher extends WeaponOptional1 {
             if(     availableTargets.isEmpty() &&
                     !this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
                 getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                System.out.println("GRENADELAUNCHERAAAAA");
                 this.getWeaponTree().resetAction();
                 getModel().notifyShoot(currentPlayer);
                 return;
@@ -31,12 +32,14 @@ public class Grenadelauncher extends WeaponOptional1 {
             if(     availableTargets.isEmpty() &&
                     this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
                 getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                System.out.println("GRENADELAUNCHERBBBB");
                 this.getWeaponTree().resetAction();
                 getModel().resetCurrent();
                 getModel().getCurrent().setSelectedWeapon(this);
                 getModel().showFireModes(currentPlayer.getPlayerColor(),this);
                 return;
             }
+            System.out.println("GRENADELAUNCHERCCCC");
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }

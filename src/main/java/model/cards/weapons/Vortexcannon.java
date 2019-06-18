@@ -64,7 +64,7 @@ public class Vortexcannon extends WeaponOptional1 {
             getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
             getModel().getCurrent().incrementOptionalCounter1();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getOptionalTargetsNumber1());
-            return;
+
         } else
             useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
     }

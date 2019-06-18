@@ -14,6 +14,11 @@ public class LockRifle extends WeaponOptional1 {
         super(name,pickUpCost,baseCost,optionalCost1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,
                 optionalTargetsNumber1,model);
     }
+
+    /**
+     * Asks the requirements of the first optional fire mode of Lock Rifle
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -27,7 +32,10 @@ public class LockRifle extends WeaponOptional1 {
         }
     }
 
-
+    /**
+     *
+     * @param currentPlayer current player
+     */
     @Override
     public void askOptionalRequirements1(Player currentPlayer){
         if(getModel().getCurrent().getOptionalCounter1() == 0) {
@@ -44,6 +52,11 @@ public class LockRifle extends WeaponOptional1 {
         }
     }
 
+    /**
+     *
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the base fire Mode for Lock Rifle
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
         for (Player target : selectedTargets) {
@@ -55,6 +68,11 @@ public class LockRifle extends WeaponOptional1 {
 
     }
 
+    /**
+     *
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the first optional fire Mode for Lock Rifle
+     */
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){
         generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());

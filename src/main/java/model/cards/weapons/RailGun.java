@@ -67,7 +67,8 @@ public class RailGun extends WeaponAlternative {
 
         }
         else {
-            getModel().getCurrent().getSelectedAlternativeTargets().add(firstPlayer);
+            if(firstPlayer != null)
+                getModel().getCurrent().getSelectedAlternativeTargets().add(firstPlayer);
             useAlternativeFireMode(currentPlayer, getModel().getCurrent().getSelectedAlternativeTargets());
         }
     }

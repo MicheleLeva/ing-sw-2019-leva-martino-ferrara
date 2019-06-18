@@ -12,7 +12,7 @@ public class Shockwave extends WeaponAlternative {
 
     }
 
-    ArrayList<Player > finalTargets = new ArrayList<>();
+    private ArrayList<Player > finalTargets = new ArrayList<>();
 
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
@@ -47,6 +47,7 @@ public class Shockwave extends WeaponAlternative {
             return;
         }
         if(getModel().getCurrent().getBaseCounter() == 1) {
+            System.out.println("SHOCKWAVEBBB");
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {
@@ -67,6 +68,7 @@ public class Shockwave extends WeaponAlternative {
             return;
         }
         if(getModel().getCurrent().getBaseCounter() == 2) {
+            System.out.println("SHOCKWAVEAAA");
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {

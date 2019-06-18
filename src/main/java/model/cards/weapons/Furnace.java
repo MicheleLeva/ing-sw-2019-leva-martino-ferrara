@@ -32,7 +32,7 @@ public class Furnace extends WeaponAlternative {
                     }
 
                 }
-            if(flag == true)continue;
+            if(flag)continue;
             else squares.remove(square);
             }
             if(squares.isEmpty()){
