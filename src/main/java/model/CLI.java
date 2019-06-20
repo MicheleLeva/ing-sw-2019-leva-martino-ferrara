@@ -17,11 +17,13 @@ public class CLI {
     private static final String GREY = "\u001B[37m";
 
     private static final String SKULL = "@";
+    private static final String DAMAGE = "*";
     private static final String CONT_RED = "\u001B[41m";
     private static final String CONT_YELLOW = "\u001B[42m";
     private static final String CONT_BLUE = "\u001B[44m";
     private static final String CONT_GREY = "\u001B[47m";
     private static final String CONT_PURPLE = "\u001B[45m";
+    private static final String CONT_GREEN = "\u001B[40m";
     private static final String CONT_TRANSPARENT = "\u001B[48m";
 
     public static String getColor(PlayerColor playerColor){
@@ -63,6 +65,10 @@ public class CLI {
         return RESET;
     }
 
+    public static String getDamage(){
+        return DAMAGE;
+    }
+
     public static String getBlue(){
         return BLUE;
     }
@@ -82,7 +88,7 @@ public class CLI {
         coloredMap = coloredMap.replaceAll("B",CONT_BLUE + "  "+RESET);
         coloredMap = coloredMap.replaceAll("w",CONT_GREY + "  " +RESET);
         coloredMap = coloredMap.replaceAll("S","  ");
-        coloredMap = coloredMap.replaceAll("G",CONT_RED +"  " +RESET); //todo trovare green
+        coloredMap = coloredMap.replaceAll("G",CONT_GREEN +"  " +RESET); //todo trovare green
         coloredMap = coloredMap.replaceAll("P", CONT_PURPLE + "  " +RESET);
         return coloredMap;
     }
@@ -98,6 +104,10 @@ public class CLI {
         }
         coloredMap = colorMap(uncoloredMap);
             return coloredMap;
+    }
+
+    public static void main(String[] args){
+        System.out.print(CONT_GREEN +"verde" +RESET);
     }
 }
 

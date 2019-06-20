@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public class DamageCounter {
 
-    private final String DAMAGE_CLI = "*";
     private ArrayList<PlayerColor> damage;
 
 
@@ -56,7 +55,7 @@ public class DamageCounter {
     public int getDamageFromColor(PlayerColor playerColor){
         int result = 0;
         for (int i = 0; i < damage.size(); i++){
-            if (damage.get(i) == playerColor){
+            if (damage.get(i).equals(playerColor)){
                 result++;
             }
         }
@@ -71,7 +70,7 @@ public class DamageCounter {
         StringBuilder damageBuilder = new StringBuilder();
         for (int i = 0; i < damage.size(); i++){
             damageBuilder.append(CLI.getColor(damage.get(i)));
-            damageBuilder.append(DAMAGE_CLI);
+            damageBuilder.append(CLI.getDamage());
             damageBuilder.append(CLI.getResetString());
         }
 

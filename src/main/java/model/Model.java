@@ -88,7 +88,10 @@ public class Model {
      */
     public Model(ArrayList<Player> playersList, int skulls) {
 //todo chiedi se serve iniializzare il gameboard
-        players.put(PlayerColor.BLUE, playersList.get(0));
+        for (int i = 0; i < playersList.size();i++){
+            players.put(playersList.get(i).getPlayerColor(),playersList.get(i));
+        }
+        /*players.put(PlayerColor.BLUE, playersList.get(0));
         players.put(PlayerColor.GREEN, playersList.get(1));
         players.put(PlayerColor.PURPLE, playersList.get(2));
         if (playersList.size() == 4) {
@@ -96,7 +99,7 @@ public class Model {
         }
         if (playersList.size() == 5) {
             players.put(PlayerColor.GREY, playersList.get(4));
-        }
+        }*/
 
         this.skulls = skulls;
         current = new Current();
@@ -1262,7 +1265,7 @@ public class Model {
      * @param damage number of damage to deal to the target
      */
     public void addDamage(PlayerColor shooterColor, PlayerColor opponentColor, int damage) {
-        Player opponent = getPlayer(opponentColor); //todo chiedere per marchi in eccesso
+        Player opponent = getPlayer(opponentColor);
         int opponentDamage = opponent.getPlayerBoard().getDamageCounter().getDamage();
         //move the shooter color's marks on the opponent damage board
         int pastMarks = opponent.getPlayerBoard().getMarkCounter().getMarkFromColorAndRemove(shooterColor);

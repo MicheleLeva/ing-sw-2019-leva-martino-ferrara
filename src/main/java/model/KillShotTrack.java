@@ -82,13 +82,16 @@ public class KillShotTrack {
             PlayerColor currentPlayerColor = orderKillShotColor.get(i);
             int tokenNumber = 0;
 
-            for (int j = 0; j < killShotTrack.length - 1; j++){
-                if (killShotTrack[j].getTokenColor().equals(currentPlayerColor)){
+            for (int j = 0; j < killShotTrack.length; j++){
+                if (killShotTrack[j].getTokenColor() != null && //todo chiedere se è necessario (serve solo per test)
+                        killShotTrack[j].getTokenColor().equals(currentPlayerColor)){
                     tokenNumber = tokenNumber + killShotTrack[j].getTokenNumber();
                 }
             }
             //add frenzy tokens
-            tokenNumber = tokenNumber + frenzyTokens.get(currentPlayerColor);
+            if(frenzyTokens.containsKey(currentPlayerColor)) {
+                tokenNumber = tokenNumber + frenzyTokens.get(currentPlayerColor);
+            }
             //build the linkedhashmap
             if(tokenNumber != 0){
                 result.put(currentPlayerColor , tokenNumber);
