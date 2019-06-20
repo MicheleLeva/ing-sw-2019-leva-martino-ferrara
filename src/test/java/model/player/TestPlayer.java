@@ -36,11 +36,22 @@ public class TestPlayer {
         playerTest.setPosition(square);
         assertEquals(square,playerTest.getPosition());
 
+        playerTest.setDead();
+        assertTrue(playerTest.isDead());
+        assertNull(playerTest.getPosition());
+
+        playerTest.setAlive();
+        assertFalse(playerTest.isDead());
+        assertFalse(playerTest.isKillShot());
+        assertEquals(0, playerTest.getPlayerBoard().getDamageCounter().getDamage());
 
     }
 
     @Test
     public void getPlayerBoard() {
         assertNotNull(playerTest.getPlayerBoard());
+        System.out.println(playerTest.printPlayerInfo());
     }
+
+
 }

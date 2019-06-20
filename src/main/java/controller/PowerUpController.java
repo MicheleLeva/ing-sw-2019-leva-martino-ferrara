@@ -216,7 +216,6 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
         Player player = getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor());
         if (!getModel().getTurnCurrent().getGrenadePeopleArray().contains(player)){
-            tagbackGrenadeEvent.getView().reportError("Too late!");
             return;
         }
         ArrayList<PowerUp> powerUps = player.getResources().getPowerUp();

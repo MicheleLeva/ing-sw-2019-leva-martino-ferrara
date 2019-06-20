@@ -75,7 +75,7 @@ public class TestEvents {
         TargetsSelectionEvent targetsSelectionEvent = new TargetsSelectionEvent(testView,integers);
         assertEquals("TargetsSelectionEvent,1,2",targetsSelectionEvent.toString());
 
-        VoteMapEvent voteMapEvent = new VoteMapEvent(testView, '1');
+        VoteMapEvent voteMapEvent = new VoteMapEvent(testView, 1);
         assertEquals("VoteMapEvent,1", voteMapEvent.toString());
 
         WeaponPaymentEvent weaponPaymentEvent = new WeaponPaymentEvent(testView, integers);

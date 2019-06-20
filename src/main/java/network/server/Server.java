@@ -8,8 +8,13 @@ import model.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 import network.ClientConnection;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import view.*;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -43,6 +48,9 @@ public class Server {
     private int lastID;
 
     private boolean isTimerOn;
+
+    private long serverTimer;
+    private int skulls;
 
     public void setServerActive(boolean serverActive) {
         isServerActive = serverActive;
@@ -173,6 +181,18 @@ public class Server {
     }
 
     public Server() throws IOException {
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("src/resources/constants.json"));
+            JSONObject myJo = (JSONObject) obj;
+            JSONArray myArray = (JSONArray) myJo.get("constants");
+            JSONObject temp = (JSONObject)myArray.get(0);
+            serverTimer = (long) temp.get("ServerTimer");
+            skulls = ((Long) temp.get("Skulls")).intValue();
+
+        } catch (IOException  | ParseException e) {
+            e.printStackTrace();
+        }
         this.serverSocket = new ServerSocket(PORT);
         System.out.println(InetAddress.getLocalHost());
     }
@@ -220,7 +240,7 @@ public class Server {
                 isTimerOn = false;
             }
         };
-        timer.schedule(turnTimerOff, 1000L);
+        timer.schedule(turnTimerOff, serverTimer);
         System.out.println("Timer is starting");
         while (isTimerOn) {
             System.out.print("");
@@ -283,7 +303,6 @@ public class Server {
         RemoteView blueView = new RemoteView(PlayerColor.BLUE, playingGroup.get(lastID).get(0));
         remoteViews.add(blueView);
         playerViews.put(keys.get(0), blueView);
-        players.get(0).setFirst();
 
         players.add(new Player(keys.get(1), PlayerColor.GREEN));
         RemoteView greenView = new RemoteView(PlayerColor.GREEN, playingGroup.get(lastID).get(1));
@@ -309,7 +328,7 @@ public class Server {
             playerViews.put(keys.get(4), greyView);
         }
 
-        Model model = new Model(players, 8); //todo importare il numero di skulls da json
+        Model model = new Model(players, skulls);
 
         for (RemoteView v : remoteViews){
             model.getGameNotifier().register(v.getPlayerColor(), v.getRemoteGameView());

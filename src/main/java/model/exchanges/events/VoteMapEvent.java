@@ -3,14 +3,14 @@ package model.exchanges.events;
 import view.View;
 
 public class VoteMapEvent extends Event {
-    private char input;
+    private int input;
 
-    public VoteMapEvent(View view, char input){
+    public VoteMapEvent(View view, int input){
         super(view);
         this.input = input;
     }
 
-    public char getInput(){
+    public int getInput(){
         return input;
     }
 

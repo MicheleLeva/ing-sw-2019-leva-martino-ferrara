@@ -24,6 +24,7 @@ public class TestMarkCounter {
         markCounterTest.addMarks(PlayerColor.GREEN, 1);
         assertEquals(0,(int) markCounterTest.getMarkCounter().get(PlayerColor.YELLOW));
         assertEquals(2,(int) markCounterTest.getMarkCounter().get(PlayerColor.GREEN));
+        System.out.println(markCounterTest.printMarkCounter());
 
     }
 }

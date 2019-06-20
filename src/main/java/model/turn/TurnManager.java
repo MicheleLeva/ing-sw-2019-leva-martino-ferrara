@@ -153,7 +153,8 @@ public class TurnManager {
         this.gameOver = gameOver;
     }
 
-    public boolean isFirstTurnEnded(){
+    //todo servono?
+    /*public boolean isFirstTurnEnded(){
         return isFirstTurnEnded;
     }
 
@@ -183,7 +184,7 @@ public class TurnManager {
 
     public void setKillshot(boolean killshot){
         this.killshot = killshot;
-    }
+    }*/
 
     public void addKillShot(){
         currentTurnKillshots++;
