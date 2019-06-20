@@ -114,7 +114,8 @@ public class Resources {
         availableAmmo.setYellow(availableAmmo.getYellow()-yellow);
     }
 
-    public void removeFromAvailableAmmo(Ammo ammo){
+    //todo servono ancora?
+    /*public void removeFromAvailableAmmo(Ammo ammo){
         availableAmmo.setRed(availableAmmo.getRed()-ammo.getRed());
         availableAmmo.setBlue(availableAmmo.getBlue()-ammo.getBlue());
         availableAmmo.setYellow(availableAmmo.getYellow()-ammo.getYellow());
@@ -136,7 +137,7 @@ public class Resources {
             return true;
         else
             return false;
-    }
+    }*/
 
     public ArrayList<Weapon> getReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapon = new ArrayList<>();

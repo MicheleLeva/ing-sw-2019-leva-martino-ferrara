@@ -4,7 +4,13 @@ import model.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 import model.player.action.KeyMap;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,7 +37,7 @@ public class Turn {
             isTimerOn = false;
         }
     };
-    private long time = 1000L*300; // 5 minuti
+    private long time;
 
     private Timer grenadeTimer = new Timer();
     private boolean isGrenadeTimerOn = true;
@@ -41,24 +47,30 @@ public class Turn {
             isGrenadeTimerOn = false;
         }
     };
-    private long grenadeTime = 1000L*10; // 10 sec da ottenere da json
+    private long grenadeTime;
 
     private boolean isRespawnTimerOn = true;
-    private long respawnTime = 1000L*10; // 10 sec da ottenere da json
+    private long respawnTime;
 
     public void setFrenzy(boolean frenzy) {
         isFrenzy = frenzy;
     }
 
-    public void setFirstTurn(boolean firstTurn) {
-        isFirstTurn = firstTurn;
-    }
-
-    public Turn(Model model){
-        this.model = model;
-    }
-
     public Turn(Model model, Boolean frenzy){
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("src/resources/constants.json"));
+            JSONObject myJo = (JSONObject) obj;
+            JSONArray myArray = (JSONArray) myJo.get("constants");
+            JSONObject temp = (JSONObject)myArray.get(0);
+            time = (long)temp.get("TurnTimer");
+            grenadeTime = (long)temp.get("GrenadeTimer");
+            respawnTime = (long)temp.get("RespawnTimer");
+
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
         this.model = model;
         setFrenzy(frenzy);
     }
@@ -133,6 +145,9 @@ public class Turn {
                 while (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
                     System.out.print("");
                     if (!isGrenadeTimerOn){
+                        for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
+                            getModel().getGameNotifier().notifyPlayer("Too late!", grenadePlayer.getPlayerColor());
+                        }
                         getModel().getTurnCurrent().getGrenadePeopleArray().clear();
                     }
                 }
@@ -203,13 +218,6 @@ public class Turn {
         //Respawn
         if (!getModel().getTurnCurrent().getDeadPlayers().isEmpty() /*&& !isFrenzy*/){
             for (Player deadPlayer : getModel().getTurnCurrent().getDeadPlayers()) {
-
-                if(isFrenzy) {
-
-                    if (!deadPlayer.getIsAlreadyDeadInFrenzyTurn()) {
-                        deadPlayer.getPlayerBoard().getPoints().setFrenzyPoints();
-                    }
-                }
                 getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
                 getModel().requestPowerUpDiscard(deadPlayer);
 

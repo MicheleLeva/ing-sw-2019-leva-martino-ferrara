@@ -6,8 +6,6 @@ import model.cards.powerups.TagbackGrenade;
 import model.map.Square;
 import model.player.action.ActionTree;
 
-import java.util.ArrayList;
-
 public class Player {
 
     private final String playerName;
@@ -17,14 +15,11 @@ public class Player {
 
     private Score score;
     private Square position;
-    private boolean isFirst;
     private ActionTree actionTree;
     private boolean afk = false;
 
     private boolean isDead;
     private boolean isKillShot;
-
-    private boolean isAlreadyDeadInFrenzyTurn;
 
     public Player(String name, PlayerColor color){
         playerName = name;
@@ -34,17 +29,10 @@ public class Player {
         score = new Score();
         this.actionTree = new ActionTree(1);
         this.position = null;
-        isFirst = false;
-        isAlreadyDeadInFrenzyTurn = false;
     }
 
     public Score getScore() {
         return score;
-    }
-
-    //todo completare
-    public void drawPowerUp(ArrayList<PowerUp> powerUps){
-
     }
 
     public void addScore(int score){
@@ -75,10 +63,6 @@ public class Player {
         return playerName;
     }
 
-    public boolean isFirst(){
-        return this.isFirst;
-    }
-
     public ActionTree getActionTree(){
         return this.actionTree;
     }
@@ -102,9 +86,6 @@ public class Player {
         playerBoard.getDamageCounter().clearDamage();
     }
 
-    public void setFirst(){
-        isFirst = true;
-    }
     public void setAfk(boolean afk) {
         this.afk = afk;
     }
@@ -164,14 +145,6 @@ public class Player {
             }
         }
         return false;
-    }
-
-    public void setIsAlreadyDeadInFrenzyTurn(){
-        isAlreadyDeadInFrenzyTurn = true;
-    }
-
-    public boolean getIsAlreadyDeadInFrenzyTurn(){
-        return isAlreadyDeadInFrenzyTurn;
     }
 
 }

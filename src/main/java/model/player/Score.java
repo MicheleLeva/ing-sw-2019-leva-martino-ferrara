@@ -20,12 +20,13 @@ public class Score {
 
     }
 
-    public void addNumKillShot(){
+    //todo servono ancora?
+    /*public void addNumKillShot(){
         numKillShot++;
     }
 
     public int getNumKillShot(){
         return numKillShot;
-    }
+    }*/
 
 }

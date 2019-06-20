@@ -30,6 +30,7 @@ public class TurnCurrent {
         return grenadePeopleArray;
     }
 
+    //todo potrebbe non servire più
     //lock to wait a player to reload
     private boolean finishedReloading;
 

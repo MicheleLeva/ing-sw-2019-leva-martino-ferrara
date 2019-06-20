@@ -80,4 +80,10 @@ public class TestGame {
         assertNotEquals(4, vote);
         assertTrue((vote > 0) && (vote < 4));
     }
+
+    @Test
+    public void testGetters(){
+        assertNotNull(gameTest.getModel());
+        assertNotNull(gameTest.getGameID());
+    }
 }

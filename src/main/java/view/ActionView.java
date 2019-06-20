@@ -51,7 +51,7 @@ public class ActionView extends Observable<Event> implements ActionUpdate {
     public void update(VoteMapMessage voteMapMessage){
         view.printMessage(voteMapMessage.getMessage());
 
-        Event event = new VoteMapEvent(view, view.inputChar());
+        Event event = new VoteMapEvent(view, view.inputInt());
         this.notify(event);
     }
 }

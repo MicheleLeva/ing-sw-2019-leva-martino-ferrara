@@ -1,9 +1,12 @@
 package model.player;
 
+import model.Ammo;
 import model.Model;
 import model.cards.AmmoColor;
 import model.cards.powerups.Newton;
 import model.cards.powerups.PowerUp;
+import model.cards.weapons.LockRifle;
+import model.cards.weapons.Weapon;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -86,5 +89,25 @@ public class TestResources {
         assertEquals(0,resourcesTest.getAvailableAmmo().getRed());
         assertEquals(0,resourcesTest.getAvailableAmmo().getYellow());
 
+    }
+
+    @Test
+    public void testWeapons(){
+        Ammo ammo = new Ammo(1,0,0);
+        LockRifle lockRifle = new LockRifle("lockrifle",ammo,ammo, ammo, 1,1,
+                1,1,1,1, modelTest);
+
+        lockRifle.reload();
+        System.out.println(player1.getResources().printUnloadedWeapons());
+        lockRifle.unload();
+        System.out.println(player1.getResources().printUnloadedWeapons());
+
+        player1.getResources().addWeapon(lockRifle);
+        System.out.println(player1.getResources().showWeapon());
+        player1.getResources().getAllWeapon().clear();
+        System.out.println(player1.getResources().showWeapon());
+
+        lockRifle.reload();
+        assertNotNull(player1.getResources().getReloadedWeapon());
     }
 }
