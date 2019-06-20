@@ -12,9 +12,8 @@ public class Newton extends PowerUp {
     }
     @Override
     public void usePowerUp(PlayerColor playerColor){
+        getModel().getCurrent().setSelectedNewton(this);
         getModel().useNewton(playerColor);
-        Player player = getModel().getPlayer(playerColor);
-        player.getResources().removePowerUp(this);
-        getModel().getGameBoard().getDecks().getDiscardedPowerUpDeck().add(this);
+
     }
 }

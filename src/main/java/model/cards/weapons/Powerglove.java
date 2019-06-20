@@ -41,26 +41,22 @@ public class Powerglove extends WeaponAlternative {
             return;
         }
         if(getModel().getCurrent().getAlternativeCounter() == 2) {
-            System.out.println("powerglove2 ");
             ArrayList<Square> lastSquare = new ArrayList<>();
-            System.out.println("powerglove2a ");
             if(getModel().getNextPowerGloveSquare(currentPlayer.getPosition(),getModel().getCurrent().getSelectedWeaponSquare())!=null)
                 lastSquare.add(getModel().getNextPowerGloveSquare(currentPlayer.getPosition(),getModel().getCurrent().getSelectedWeaponSquare()));
-            lastSquare.add(getModel().getCurrent().getSelectedWeaponSquare());
-            System.out.println("powerglove2b ");
             if(lastSquare.isEmpty()) {
                 getModel().getCurrent().incrementAlternativeCounter();
                 getModel().getCurrent().incrementAlternativeCounter();
                 askAlternativeRequirements(currentPlayer);
                 return;
             }
+            lastSquare.add(getModel().getCurrent().getSelectedWeaponSquare());
             endAskSquares(currentPlayer,lastSquare,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
         if(getModel().getCurrent().getAlternativeCounter() == 3) {
             if(!getModel().getCurrent().getSelectedAlternativeTargets().isEmpty())
                 firstTarget = getModel().getCurrent().getSelectedAlternativeTargets().get(0);
-            System.out.println("powerglove3 ");
             ArrayList<Player> firstAvailablePlayers = new ArrayList<>();
             for(Player player : getModel().getAllPlayers())
                 if(getModel().getCurrent().getSelectedWeaponSquare() == player.getPosition())
@@ -107,6 +103,8 @@ public class Powerglove extends WeaponAlternative {
                 if(squares.contains(player.getPosition()))
                     availableTargets.add(player);
             }
+            if(availableTargets.contains(currentPlayer))
+                availableTargets.remove(currentPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
 

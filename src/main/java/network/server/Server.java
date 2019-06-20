@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 public class Server {
     private ServerSocket serverSocket;
 
-    private int PORT = 6868;
+    private int PORT = 8080;
 
     private boolean isServerActive = false;
 

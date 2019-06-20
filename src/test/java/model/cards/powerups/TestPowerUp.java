@@ -44,7 +44,7 @@ public class TestPowerUp {
         powerups.add(newton);
         players.get(0).getResources().addPowerUp(powerups);
         newton.usePowerUp(players.get(0).getPlayerColor());
-        assertFalse(players.get(0).getResources().getPowerUp().contains(newton));
+        assertTrue(players.get(0).getResources().getPowerUp().contains(newton));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package model;
 
+import model.cards.powerups.Newton;
 import model.cards.powerups.PowerUp;
 import model.cards.weapons.FireMode;
 import model.cards.weapons.Weapon;
@@ -17,23 +18,13 @@ import java.util.Set;
  * Contains attributes used to save previous choices of a player for the creation of an action.
  */
 public class Current {
-                        ///For PowerUps///
+    ///For PowerUps///
     private ArrayList<Player> opponent = new ArrayList<>();
     private ArrayList<Square> square = new ArrayList<>();
+    private Newton selectedNewton;
 
 
     ///For Weapons///
-    private boolean dealtDamage = false;
-
-    public String getEffectType() {
-        return effectType;
-    }
-
-    public void setEffectType(String effectType) {
-        this.effectType = effectType;
-    }
-
-    private String effectType;
     private int baseCounter = 0;
     private int optionalCounter1 = 0;
     private int optionalCounter2 = 0;
@@ -51,7 +42,6 @@ public class Current {
     private ArrayList<Player> availableOptionalTargets2 = new ArrayList<>();
     private ArrayList<PowerUp> availablePaymentPowerUps = new ArrayList<>();
     private ArrayList<PowerUp> selectedPaymentPowerUps = new ArrayList<>();
-    private Square rocketlauncherSquare = null;
     private Player flamethrowerSupportPlayer = null;
 
     public Player getFlamethrowerSupportPlayer(){
@@ -64,12 +54,6 @@ public class Current {
 
     public void decreaseBaseCounter(){this.baseCounter--;}
 
-    public void setRocketlauncherSquare(Square square){this.rocketlauncherSquare = square;}
-
-    public Square getRocketlauncherSquare() {
-        return this.rocketlauncherSquare;
-    }
-
     public ArrayList<Player> getAllDamagedPlayer() {
         Set<Player> set = new LinkedHashSet<Player>(getSelectedBaseTargets());
         set.addAll(getSelectedAlternativeTargets());
@@ -79,39 +63,7 @@ public class Current {
         return targets;
     }
 
-    public void setAllDamagedPlayer(ArrayList<Player> allDamagedPlayer) {
-        this.allDamagedPlayer = allDamagedPlayer;
-    }
-
-    private ArrayList<Player> allDamagedPlayer = new ArrayList<>();
     private Weapon selectedWeapon = null;
-    private Object powerUpLock = new Object();
-    private boolean powerUpDiscard = false;
-    private boolean powerUpControl = false;
-
-    //public Current(){
-    //    resetCurrent();
-    //}
-
-    public boolean isPowerUpControl(){
-        return this.powerUpControl;
-    }
-
-    public void setPowerUpControl(boolean powerUpControl) {
-        this.powerUpControl = powerUpControl;
-    }
-
-    public Object getPowerUpLock(){
-        return this.powerUpLock;
-    }
-
-    public void setPowerUpDiscard(boolean discard){
-        this.powerUpDiscard = discard;
-    }
-
-    public boolean isPowerUpDiscard() {
-        return powerUpDiscard;
-    }
 
     public List<WeaponTreeNode<FireMode>> getAvailableFireModes() {
         return availableFireModes;
@@ -309,10 +261,6 @@ public class Current {
         this.alternativeCounter--;
     }
 
-    public boolean isDealtDamage(){ return this.isDealtDamage();}
-
-    public void setDealtDamage(boolean choice){ this.dealtDamage = choice;}
-
     public ArrayList<PowerUp> getAvailablePaymentPowerUps() { return availablePaymentPowerUps; }
 
     public void addAvailablePaymentPowerUps(PowerUp availablePaymentPowerUp) {
@@ -321,8 +269,16 @@ public class Current {
     public ArrayList<PowerUp> getSelectedPaymentPowerUps() { return selectedPaymentPowerUps; }
 
     public void addSelectedPaymentPowerUps(PowerUp selectedPaymentPowerUp) {
-        this.selectedPaymentPowerUps.add(selectedPaymentPowerUp); }
+        this.selectedPaymentPowerUps.add(selectedPaymentPowerUp);
+    }
 
+    public void setSelectedNewton(Newton newton){
+        this.selectedNewton = newton;
+    }
+
+    public Newton getSelectedNewton(){
+        return this.selectedNewton;
+    }
 
 }
 

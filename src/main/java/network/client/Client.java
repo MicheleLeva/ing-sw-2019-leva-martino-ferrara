@@ -28,7 +28,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
     private View view;
 
     //da recuperare effettivi dati per connessione
-    private String ip = "192.168.1.7";
+    private String ip = "localhost";
 
     private int port = 8080;
 

@@ -134,5 +134,11 @@ public class WeaponTree {
         return this.lastAction;
     }
 
+        public void setLastAction(WeaponTreeNode<FireMode> fireMode){
+            this.lastAction = fireMode;
+        }
+
+
+
 
     }

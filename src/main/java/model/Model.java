@@ -2,6 +2,7 @@ package model;
 
 import controller.Checks;
 import model.cards.*;
+import model.cards.powerups.Newton;
 import model.cards.powerups.PowerUp;
 import model.cards.powerups.TagbackGrenade;
 import model.cards.powerups.TargetingScope;
@@ -659,9 +660,15 @@ public class Model {
                 allPlayersCopy.remove(player);
         if(allPlayersCopy.isEmpty()){
             getGameNotifier().notifyGeneric("Non hai bersagli da muovere");
+            getCurrent().setSelectedNewton(null);
             chooseAction(playerColor);
             return;
         }
+
+        Player player = getPlayer(playerColor);
+        player.getResources().removePowerUp(getCurrent().getSelectedNewton());
+        getGameBoard().getDecks().getDiscardedPowerUpDeck().add(getCurrent().getSelectedNewton());
+        getCurrent().setSelectedNewton(null);
 
         String opponentList = "";
         for (int i = 0; i < allPlayersCopy.size(); i++) {
@@ -784,7 +791,7 @@ public class Model {
         if(FireModes.size()==1 && FireModes.get(0).getData().getType().equals("end")){
             for(PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()){
                 System.out.println(powerUp.toString());
-                if(powerUp instanceof TargetingScope){
+                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()){
                     powerUpNotifier.askTargetingScope(getPlayer(playerColor).getPlayerColor());
                     return;
                 }
@@ -1169,14 +1176,13 @@ public class Model {
         weapon.unload();
         System.out.println("checknexweapon action inizio"+weapon.getWeaponTree().getLastAction().getData().getType());
         weapon.getWeaponTree().updateLastActionPerformed();
-        System.out.println("PROVA2"+weapon.getWeaponTree().getLastActionPerformed().getData().getType());
 
         if (weapon.getWeaponTree().isActionEnded()) {
             System.out.println("shootended");
             weapon.getWeaponTree().resetAction();
             for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
                 System.out.println(powerUp.toString());
-                if(powerUp instanceof TargetingScope){
+                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty() ){
                     powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor());
                     return;
                 }
@@ -1232,7 +1238,7 @@ public class Model {
         gameNotifier.notifyDrawAmmo(playerColor, currentPlayer.getPlayerName(), ammo.toString());
     }
 
-    public void askReloadEndTurn(PlayerColor playerColor) {
+/*    public void askReloadEndTurn(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
         if (!currentPlayer.getResources().getReloadableWeapon().isEmpty()){
             String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
@@ -1241,7 +1247,7 @@ public class Model {
             getTurnCurrent().setFinishedReloading(true);
             getTurnCurrent().setReceivedInput(true);
         }
-    }
+    }*/
 
     /**
      * Sends the player a list of the weapons he can reload

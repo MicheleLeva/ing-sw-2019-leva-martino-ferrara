@@ -612,8 +612,6 @@ public class TestModel {
         System.out.println(heatseeker.getWeaponTree().getLastAction().getData().getType());
         System.out.println(heatseeker.getWeaponTree().getLastActionPerformed().getData().getType());
         model.checkNextWeaponAction(heatseeker,player1,new ArrayList<>());
-        System.out.println(heatseeker.getWeaponTree().isActionEnded());
-        System.out.println("PROVA");
 
     }
 
@@ -737,5 +735,6 @@ public class TestModel {
         player1.getResources().addPowerUp(powerUps);
         model.requestPowerUpDiscard(player1);
     }
+
 
 }

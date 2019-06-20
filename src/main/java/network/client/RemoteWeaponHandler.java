@@ -36,10 +36,10 @@ public class RemoteWeaponHandler extends WeaponNotify implements Observer<Event>
                 TargetsSelectionMessage targetsSelectionMessage = new TargetsSelectionMessage(inputs[1], Integer.parseInt(inputs[2]));
                 listeners.get(playerColor).update(targetsSelectionMessage);
                 break;
-            case "AskReloadMessage":
+            /*case "AskReloadMessage":
                 AskReloadMessage askReloadMessage = new AskReloadMessage(inputs[1]);
                 listeners.get(playerColor).update(askReloadMessage);
-                break;
+                break;*/
             case "WeaponReloadMessage":
                 WeaponReloadMessage weaponReloadMessage = new WeaponReloadMessage(inputs[1]);
                 listeners.get(playerColor).update(weaponReloadMessage);

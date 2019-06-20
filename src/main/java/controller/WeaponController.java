@@ -64,7 +64,7 @@ public class WeaponController extends Controller implements WeaponObserver {
      * or not
      * @param reloadEndTurnEvent contains the choice of the player: Y to reload N not to reload
      */
-    @Override
+/*    @Override
     public void update(ReloadEndTurnEvent reloadEndTurnEvent){
         if (getModel().getPlayer(reloadEndTurnEvent.getPlayerColor()).isAfk()){
             return;
@@ -84,7 +84,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         else{
             getModel().requestWeaponReload(currentPlayerColor);
         }
-    }
+    }*/
 
     /**
      * Controls if the received input corresponds to a reloadable weapon and in that case
@@ -135,11 +135,6 @@ public class WeaponController extends Controller implements WeaponObserver {
 
         String effectType = getModel().getCurrent().getAvailableFireModes().get(input-1).getData().getType();
 
-        System.out.println("sjbvldfvd" + effectType);
-        System.out.println("akjfbvlkdjfv" +  weapon.getWeaponTree().getLastActionPerformed().getData().getType());
-        System.out.println("weapon" + weapon.getWeaponName());
-        System.out.println(weapon.getWeaponTree().getLastActionPerformed().getChildren().size());
-
         for(int i = 0; i<weapon.getWeaponTree().getLastActionPerformed().getChildren().size(); i++){
             System.out.println(i);
             System.out.println("asdf"+weapon.getWeaponTree().getLastActionPerformed().getChildren().get(i).getData().getType());
@@ -148,8 +143,6 @@ public class WeaponController extends Controller implements WeaponObserver {
                 break;
             }
         }
-
-        System.out.println("updated last action in weapon controller" + weapon.getWeaponTree().getLastAction().getData().getType());
 
         if(effectType.equals("return")){
             weapon.getWeaponTree().resetAction();
@@ -160,13 +153,11 @@ public class WeaponController extends Controller implements WeaponObserver {
 
         if(effectType.equals("end")){
             for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-                System.out.println(powerUp.toString());
                 if(powerUp instanceof TargetingScope){
                     getModel().getPowerUpNotifier().askTargetingScope(currentPlayer.getPlayerColor());
                     return;
                 }
             }
-            System.out.println("checknextweaponactionnotifyshoot");
             getModel().notifyShoot(currentPlayer);
             return;
         }
@@ -176,7 +167,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
         if(effectType.equals(ALTERNATIVE)||effectType.equals(OPTIONAL1)||effectType.equals(OPTIONAL2)) {
             getModel().askFireModePayment(currentPlayer,weapon,effectType);
-            return;
+
         }
 
     }
@@ -191,12 +182,10 @@ public class WeaponController extends Controller implements WeaponObserver {
         if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
             return;
         }
-        System.out.println("selectedtargets IN WEAPONCONTROLLER" + event.getSelectedTargets());
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String type = weapon.getWeaponTree().getLastAction().getData().getType();
         Current current = getModel().getCurrent();
-        System.out.println("targetsselectionevent" + type);
 
         if(event.getSelectedTargets().isEmpty() && !(weapon instanceof Powerglove)){
             event.getView().reportError("You didn't select any targets, try again!");
@@ -219,7 +208,7 @@ public class WeaponController extends Controller implements WeaponObserver {
                     return;
             }
         }
-        if(event.getSelectedTargets().isEmpty() && !(weapon instanceof Powerglove)){
+        if(event.getSelectedTargets().isEmpty() && (weapon instanceof Powerglove)){
             switch (type){
                 case BASE:
                     weapon.askBaseRequirements(currentPlayer);
@@ -581,7 +570,7 @@ public class WeaponController extends Controller implements WeaponObserver {
             if(temp!=0) {
                 temp--;
                 if (temp < 0 || temp >= current.getAvailableOptionalTargets2().size()) {
-                    current.setAvailableOptionalTargets2(null);
+                    current.getAvailableOptionalTargets2().clear();
                     String error;
                     error = "Invalid input.\n";
                     event.getView().reportError(error);

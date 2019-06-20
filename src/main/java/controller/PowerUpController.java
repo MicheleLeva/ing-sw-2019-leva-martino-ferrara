@@ -187,11 +187,12 @@ public class PowerUpController extends Controller implements PowerUpObserver {
                 if(powerUp instanceof TargetingScope){
                     getModel().getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
                     currentPlayer.getResources().getPowerUp().remove(powerUp);
+                    break;
                 }
 
             }
 
-            for(PowerUp powerUp : player.getResources().getPowerUp()){
+            for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
                 if(powerUp instanceof TargetingScope){
                     getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor());
                     return;

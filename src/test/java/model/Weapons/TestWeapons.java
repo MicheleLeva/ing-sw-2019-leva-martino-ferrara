@@ -2,7 +2,6 @@ package model.Weapons;
 
 import model.Ammo;
 import model.Model;
-import model.cards.powerups.PowerUp;
 import model.cards.weapons.*;
 import model.map.Map;
 import model.player.Player;
@@ -231,7 +230,7 @@ public class TestWeapons {
      * tests that all methods in the grenadeLauncher weapon execute without interruption
      */
     @Test
-    public void testGrenadeLaunche(){
+    public void testGrenadeLauncher(){
         Grenadelauncher grenadelauncher = new Grenadelauncher("GRENADELAUNCHER",pickUpCost,baseCost,alternativeCost,
                 1,2,1,2,2,1,model);
         grenadelauncher.setWeaponTree(new WeaponTree("src/resources/Grenadelauncher.json"));
@@ -253,6 +252,8 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         grenadelauncher.askOptionalRequirements1(player1);
         model.getCurrent().incrementOptionalCounter1();
+        grenadelauncher.useBaseFireMode(player1,selectedTargets);
+        grenadelauncher.useOptionalFireMode1(player1,selectedTargets);
     }
 
     /**
@@ -346,6 +347,7 @@ public class TestWeapons {
         rocketlauncher.askOptionalRequirements2(player1);
         rocketlauncher.askOptionalRequirements2(player1);
         selectedTargets.clear();
+        model.getCurrent().getSelectedBaseTargets().add(player2);
         rocketlauncher.useBaseFireMode(player1,selectedTargets);
         rocketlauncher.useOptionalFireMode1(player1,selectedTargets);
         rocketlauncher.useOptionalFireMode2(player1,selectedTargets);
@@ -475,7 +477,10 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         shockwave.askBaseRequirements(player1);
         model.getCurrent().incrementBaseCounter();
-        model.getCurrent().incrementBaseCounter();
+        selectedTargets.add(player3);
+        model.getCurrent().setSelectedBaseTargets(selectedTargets);
+        shockwave.askBaseRequirements(player1);
+        model.getCurrent().decrementBaseCounter();
         selectedTargets.add(player3);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         shockwave.askBaseRequirements(player1);

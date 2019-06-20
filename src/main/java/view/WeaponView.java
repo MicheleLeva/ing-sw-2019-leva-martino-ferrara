@@ -59,13 +59,13 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
     }
 
-    @Override
+/*    @Override
     public void update(AskReloadMessage askReloadMessage){
         view.printMessage(askReloadMessage.getMessage());
 
         Event event = new ReloadEndTurnEvent(view , view.inputChar());
         notify(event);
-    }
+    }*/
 
     @Override
     public void update(WeaponReloadMessage weaponReloadMessage){
