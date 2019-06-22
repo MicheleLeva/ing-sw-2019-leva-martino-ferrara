@@ -15,6 +15,10 @@ public class Tractorbeam extends WeaponAlternative {
     }
 
 
+    /**
+     * Asks the requirements of the Alternative fire mode for the TractorBeam
+     * @param currentPlayer current player
+     */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
@@ -27,6 +31,11 @@ public class Tractorbeam extends WeaponAlternative {
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
     }
 
+    /**
+     * Uses the Alternative fire Mode for the TractorBeam
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         for(Player target : selectedTargets){
@@ -39,14 +48,14 @@ public class Tractorbeam extends WeaponAlternative {
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the Electroscythe
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
-        System.out.println("tractorbeam 1");
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Square> visibleSquares = getModel().getVisibleSquares(currentPlayer);
-            for(Square square : visibleSquares)
-                System.out.println("visiible square" + square.getID());
-            System.out.println("tractorbeam 1abc");
             ArrayList<Player> allTargets = getModel().getAllPlayers();
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : allTargets){
@@ -58,17 +67,13 @@ public class Tractorbeam extends WeaponAlternative {
                     }
                 }
             }
-            System.out.println("tractorbeam 1a");
 
             getModel().getCurrent().setAvailableBaseTargets(availableTargets);
-            System.out.println("tractorbeam 1b");
             getModel().getCurrent().incrementBaseCounter();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
-            System.out.println("tractorbeam 1c");
             return;
         }
         if(getModel().getCurrent().getBaseCounter()==1){
-            System.out.println("tractorbeam 2");
 
             ArrayList<Square> selectedSquares = new ArrayList<>();
             ArrayList<Square> visibleSquares = getModel().getVisibleSquares(currentPlayer);
@@ -87,6 +92,11 @@ public class Tractorbeam extends WeaponAlternative {
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the TractorBeam
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         System.out.println("tractorbeam 3");

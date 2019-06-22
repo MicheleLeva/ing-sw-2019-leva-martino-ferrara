@@ -14,8 +14,12 @@ public class Powerglove extends WeaponAlternative {
 
     }
 
-    Player firstTarget;
+    private Player firstTarget;
 
+    /**
+     * Asks the requirements of the Alternative fire mode for the Powerglove
+     * @param currentPlayer current player
+     */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
@@ -25,7 +29,6 @@ public class Powerglove extends WeaponAlternative {
             return;
         }
         if(getModel().getCurrent().getAlternativeCounter() == 1) {
-            System.out.println("powerglove1 ");
             ArrayList<Player> firstAvailablePlayers = new ArrayList<>();
             for(Player player : getModel().getAllPlayers())
                 if(getModel().getCurrent().getSelectedWeaponSquare() == player.getPosition())
@@ -80,11 +83,16 @@ public class Powerglove extends WeaponAlternative {
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
     }
 
+    /**
+     * Uses the Alternative fire Mode for the Powerglove
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        if(firstTarget!=null && !selectedTargets.contains(firstTarget))
-        selectedTargets.add(firstTarget);
-
+        if(firstTarget!=null && !selectedTargets.contains(firstTarget)) {
+            selectedTargets.add(firstTarget);
+        }
         for(Player target : selectedTargets){
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
@@ -94,6 +102,10 @@ public class Powerglove extends WeaponAlternative {
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the Powerglove
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -112,6 +124,11 @@ public class Powerglove extends WeaponAlternative {
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the Powerglove
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         for(Player target : selectedTargets){

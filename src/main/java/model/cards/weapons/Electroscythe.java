@@ -14,6 +14,11 @@ public class Electroscythe extends WeaponAlternative {
 
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the Electroscythe
+     * @param currentPlayer current player
+     */
+    @Override
     public void askBaseRequirements(Player currentPlayer){
         ArrayList<Player> selectedTargets = getModel().getPlayersInSameSquare(currentPlayer);
         if(selectedTargets.isEmpty()){
@@ -27,6 +32,10 @@ public class Electroscythe extends WeaponAlternative {
         useBaseFireMode(currentPlayer, selectedTargets);
     }
 
+    /**
+     * Asks the requirements of the Alternative fire mode for the Electroscythe
+     * @param currentPlayer current player
+     */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
             ArrayList<Player> selectedTargets = getModel().getPlayersInSameSquare(currentPlayer);
@@ -41,11 +50,21 @@ public class Electroscythe extends WeaponAlternative {
             useAlternativeFireMode(currentPlayer, selectedTargets);
     }
 
-
+    /**
+     * Uses the Base fire Mode for the Electroscythe
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
         generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
+    /**
+     * Uses the Alternative fire Mode for the Electroscythe
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
         generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }

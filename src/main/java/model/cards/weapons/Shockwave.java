@@ -14,6 +14,10 @@ public class Shockwave extends WeaponAlternative {
 
     private ArrayList<Player > finalTargets = new ArrayList<>();
 
+    /**
+     * Asks the requirements of the Alternative fire mode for the Shockwave
+     * @param currentPlayer current player
+     */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
@@ -23,17 +27,28 @@ public class Shockwave extends WeaponAlternative {
                 if(availableTargets.contains(player))
                     availableTargets.remove(player);
             }
-            endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
+            getModel().getCurrent().incrementAlternativeCounter();
+            askAlternativeRequirements(currentPlayer);
         }
         else
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
     }
 
+    /**
+     * Uses the Alternative fire Mode for the Shockwave
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the Shockwave
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -90,6 +105,11 @@ public class Shockwave extends WeaponAlternative {
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the Shockwave
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer, finalTargets, this, this.getWeaponTree().getLastAction().getData().getType());

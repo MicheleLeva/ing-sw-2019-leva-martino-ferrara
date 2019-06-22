@@ -371,7 +371,7 @@ public class Decks {
                 String name = (String) result2.get("name");
                 Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long) result2.get("YELLOW")).intValue());
                 Ammo optionalAmmo1 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
-                Ammo optionalAmmo2 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
+                Ammo optionalAmmo2 = new Ammo(((Long) result2.get("RED2")).intValue(), ((Long) result2.get("BLUE2")).intValue(), ((Long) result2.get("YELLOW2")).intValue());
                 Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
                 int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
                 int optionalDamage1 = ((Long) result2.get("DAMAGE1")).intValue();

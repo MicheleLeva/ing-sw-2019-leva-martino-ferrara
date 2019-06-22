@@ -16,10 +16,13 @@ public class RailGun extends WeaponAlternative {
 
     private Player firstPlayer ;
 
+    /**
+     * Asks the requirements of the Alternative fire mode for the RailGun
+     * @param currentPlayer current player
+     */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
-            System.out.println("sono in railgun0");
             ArrayList<Player> availableTargets = getModel().getPlayersInCardinalDirection(currentPlayer);
             getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
             getModel().getCurrent().incrementAlternativeCounter();
@@ -27,7 +30,6 @@ public class RailGun extends WeaponAlternative {
             return;
         }
         if(getModel().getCurrent().getAlternativeCounter() == 1) {
-            System.out.println("sono in railgun1");
             char cardinal = 'x';
             ArrayList<Player> secondAvailableTargets ;
             Player previousPlayer = getModel().getCurrent().getSelectedAlternativeTargets().get(0);
@@ -46,7 +48,6 @@ public class RailGun extends WeaponAlternative {
                 if (currentPlayer.getPosition().getSquareColumn() < previousPlayer.getPosition().getSquareColumn())
                     cardinal = 's';
             }
-            System.out.println("sono in railgun2");
             secondAvailableTargets = getModel().getPlayersInSelectedCardinal(currentPlayer, cardinal);
             secondAvailableTargets.addAll(getModel().getCurrent().getSelectedAlternativeTargets());
             ArrayList<Player> support = new ArrayList<>(secondAvailableTargets);
@@ -54,7 +55,6 @@ public class RailGun extends WeaponAlternative {
                 if(player == currentPlayer || player == previousPlayer)
                     secondAvailableTargets.remove(player);
             }
-            System.out.println("sono in railgun4");
 
             getModel().getCurrent().setAvailableAlternativeTargets(secondAvailableTargets);
             getModel().getCurrent().incrementAlternativeCounter();
@@ -73,11 +73,20 @@ public class RailGun extends WeaponAlternative {
         }
     }
 
+    /**
+     * Uses the Alternative fire Mode for the RailGun
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the RailGun
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -90,6 +99,11 @@ public class RailGun extends WeaponAlternative {
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the RailGun
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         for(Player target : selectedTargets){

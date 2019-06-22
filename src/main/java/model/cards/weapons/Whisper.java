@@ -13,6 +13,10 @@ public class Whisper extends Weapon {
 
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the Whisper
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -30,6 +34,11 @@ public class Whisper extends Weapon {
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the Whisper
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());

@@ -718,9 +718,10 @@ public class Model {
     public void showWeaponCards(PlayerColor playerColor) {
         String availableWeapons = "";
         ArrayList<Weapon> weapons = getPlayer(playerColor).getResources().getReloadedWeapon();
+        int i = 1;
         for(Weapon weapon : weapons){
-            int i = 1;
-            availableWeapons = i + availableWeapons + weapon.getWeaponName();
+            availableWeapons =  availableWeapons + i +". " + weapon.getWeaponName() + "\n";
+            i++;
         }
         weaponNotifier.showWeaponCards(playerColor, availableWeapons);
     }
@@ -767,10 +768,9 @@ public class Model {
         for (int i = 0; i < availableTargets.size(); i++) {
             if (availableTargets.get(i).getPlayerColor() != playerColor) {
                 current.addOpponent(availableTargets.get(i));
-                opponentList = opponentList + availableTargets.get(i).getPlayerName() + " ";
+                opponentList = opponentList + availableTargets.get(i).getPlayerName() + " | ";
             }
         }
-        System.out.println("selecttargets in model ");
         weaponNotifier.selectTargets(playerColor, opponentList, targetsNumber);
     }
 
@@ -1160,6 +1160,8 @@ public class Model {
         set.addAll(current.getSelectedOptionalTargets2());
         ArrayList<Player> targets = new ArrayList<>(set);
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
+        if(getCurrent().getSelectedWeapon()!=null)
+            getCurrent().getSelectedWeapon().getWeaponTree().resetAction();
         resetCurrent();
         gameNotifier.notifyShoot(currentPlayer, targets, allPlayers);
     }
@@ -1356,7 +1358,7 @@ public class Model {
     public void targetingScopeTargets(PlayerColor playerColor, ArrayList<Player> damagedPlayers){
         String message="Select Targeting Scope target: ";
         for(Player player : damagedPlayers)
-            message = message + player.getPlayerName();
+            message = message + player.getPlayerName() + " | ";
         powerUpNotifier.targetingScopeTargets(playerColor,message);
     }
 

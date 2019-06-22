@@ -66,7 +66,7 @@ public class Resources {
 
         for (int i = 0; i < weapon.size(); i++){
             int j = i+1;
-            result = result + j + " " + weapon.get(i).getWeaponName() +" | ";
+            result = result + j+". " + " " + weapon.get(i).getWeaponName() +" | ";
         }
 
         return result;

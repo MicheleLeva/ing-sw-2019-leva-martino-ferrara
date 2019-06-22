@@ -187,8 +187,13 @@ public class WeaponController extends Controller implements WeaponObserver {
         String type = weapon.getWeaponTree().getLastAction().getData().getType();
         Current current = getModel().getCurrent();
 
-        if(event.getSelectedTargets().isEmpty() && !(weapon instanceof Powerglove)){
-            event.getView().reportError("You didn't select any targets, try again!");
+
+
+        if((event.getSelectedTargets().isEmpty() && !(weapon instanceof Powerglove))|| hasDuplicates(event)){
+            if(event.getSelectedTargets().isEmpty())
+                event.getView().reportError("You didn't select any targets, try again!");
+            else
+                event.getView().reportError("Wrong selection, try again!");
             switch (type){
                 case BASE:
                     getModel().getCurrent().decrementBaseCounter();
@@ -225,7 +230,6 @@ public class WeaponController extends Controller implements WeaponObserver {
             }
         }
         if(type.equals(BASE)) {
-            System.out.println("base in targetsselectionevent");
             checkBaseTargets(event,weapon,current,currentPlayer);
             return;
         }
@@ -584,6 +588,20 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
         getModel().getCurrent().setSelectedOptionalTargets2(selectedPlayers);
         ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
+    }
+
+    public boolean hasDuplicates(TargetsSelectionEvent event){
+        if(event.getSelectedTargets().size()==1)
+            return false;
+        else{
+            for(int i = 0; i < event.getSelectedTargets().size();i++){
+                for(int j = i+1; j < event.getSelectedTargets().size();j++){
+                    if(event.getSelectedTargets().get(i) == event.getSelectedTargets().get(j))
+                        return true;
+                }
+            }
+            return false;
+        }
     }
 
 

@@ -14,16 +14,23 @@ public class Shotgun extends  WeaponAlternative{
 
     }
 
-
+    /**
+     * Asks the requirements of the Alternative fire mode for the Shotgun
+     * @param currentPlayer current player
+     */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
             ArrayList<Player> availableTargets = new ArrayList<>();
             ArrayList<Square> squares = getModel().getSquaresInCardinal1(currentPlayer);
+            if(squares.contains(currentPlayer.getPosition()))
+                squares.remove(currentPlayer.getPosition());
             for(Player player : getModel().getAllPlayers()){
                 if(squares.contains(player.getPosition()))
                     availableTargets.add(player);
             }
+            if(availableTargets.contains(currentPlayer))
+                availableTargets.remove(currentPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
 
         }
@@ -31,11 +38,20 @@ public class Shotgun extends  WeaponAlternative{
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
     }
 
+    /**
+     * Uses the Alternative fire Mode for the Shotgun
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the Shotgun
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -51,6 +67,11 @@ public class Shotgun extends  WeaponAlternative{
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the Shotgun
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         for (Player target : selectedTargets) {

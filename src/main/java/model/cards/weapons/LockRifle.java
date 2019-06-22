@@ -16,7 +16,7 @@ public class LockRifle extends WeaponOptional1 {
     }
 
     /**
-     * Asks the requirements of the first optional fire mode of Lock Rifle
+     * Asks the requirements of the Base fire mode of Lock Rifle
      * @param currentPlayer current player
      */
     @Override
@@ -33,7 +33,7 @@ public class LockRifle extends WeaponOptional1 {
     }
 
     /**
-     *
+     * Asks the requirements of the first optional fire mode of Lock Rifle
      * @param currentPlayer current player
      */
     @Override
@@ -53,9 +53,9 @@ public class LockRifle extends WeaponOptional1 {
     }
 
     /**
-     *
+     * Uses the Base fire Mode for the CyberBlade
      * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the base fire Mode for Lock Rifle
+     * @param selectedTargets targets chosen for the second optional fire Mode
      */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
@@ -69,9 +69,9 @@ public class LockRifle extends WeaponOptional1 {
     }
 
     /**
-     *
+     * Uses the first optional fire Mode for the CyberBlade
      * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the first optional fire Mode for Lock Rifle
+     * @param selectedTargets targets chosen for the second optional fire Mode
      */
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){

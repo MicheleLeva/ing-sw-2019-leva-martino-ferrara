@@ -52,7 +52,7 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
      * Asks the current player if he wants to use the targeting scope
      */
     public void askTargetingScope(PlayerColor playerColor){
-        String message = "Want to use the targeting Scope?";
+        String message = "Want to use the targeting Scope? Y/N";
         PlayerMessage playerMessage = new TargetingScopeMessage(message);
         notify(playerMessage,playerColor);
     }

@@ -15,6 +15,10 @@ public class Machinegun extends WeaponOptional2 {
                 baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model);
     }
 
+    /**
+     * Asks the requirements of the second optional fire mode for the MachineGun
+     * @param currentPlayer current player
+     */
     @Override
     public void askOptionalRequirements2(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter2()==0){
@@ -23,7 +27,8 @@ public class Machinegun extends WeaponOptional2 {
             if(!getModel().getCurrent().getSelectedOptionalTargets1().isEmpty()){
                 availableTargets.remove(getModel().getCurrent().getSelectedOptionalTargets1().get(0));
                 for(Player player : getModel().getCurrent().getSelectedBaseTargets()){
-                    if (player != getModel().getCurrent().getSelectedOptionalTargets1().get(0))
+                    if (player != getModel().getCurrent().getSelectedOptionalTargets1().get(0) &&
+                            !availableTargets.contains(player))
                         availableTargets.add(player);
                 }
             }
@@ -32,14 +37,23 @@ public class Machinegun extends WeaponOptional2 {
             getModel().selectTargets(currentPlayer.getPlayerColor(),availableTargets,this.getOptionalTargetsNumber2());
         }
         else
-            useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
+            useOptionalFireMode2(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets2());
     }
 
+    /**
+     * Uses the second optional fire Mode for the MachineGun
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
+    /**
+     * Asks the requirements of the first optional fire mode for the MachineGun
+     * @param currentPlayer current player
+     */
     @Override
     public void askOptionalRequirements1(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter1()==0){
@@ -52,11 +66,20 @@ public class Machinegun extends WeaponOptional2 {
             useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
     }
 
+    /**
+     * Uses the first optional fire Mode for the MachineGun
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 
+    /**
+     * Asks the requirements of the Base fire mode for the MachineGun
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -69,6 +92,11 @@ public class Machinegun extends WeaponOptional2 {
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the MachineGun
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());

@@ -15,6 +15,10 @@ public class Flamethrower extends WeaponAlternative {
     }
 
 
+    /**
+     * Asks the requirements of the Alternative fire mode for the FlameThrower
+     * @param currentPlayer current player
+     */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
@@ -42,6 +46,11 @@ public class Flamethrower extends WeaponAlternative {
             useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
     }
 
+    /**
+     * Uses the Alternative fire Mode for the Hellion
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         for(Player target : getModel().getAllPlayers()){
@@ -63,6 +72,11 @@ public class Flamethrower extends WeaponAlternative {
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 
+
+    /**
+     * Asks the requirements of the Base fire mode for the FlameThrower
+     * @param currentPlayer current player
+     */
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
@@ -105,6 +119,11 @@ public class Flamethrower extends WeaponAlternative {
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
 
+    /**
+     * Uses the Base fire Mode for the Hellion
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         for(Player target : selectedTargets){

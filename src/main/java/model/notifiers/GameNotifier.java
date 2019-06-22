@@ -109,7 +109,6 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
      * Notifies all players that the Shoot Action is ended and sends them the list of damage the players have received
      */
     public void notifyShoot(Player currentPlayer, ArrayList<Player> targets, ArrayList<Player> allPlayers){
-        System.out.println("notifyshoot 1 in gamenotifier");
         ArrayList<PlayerColor> targetsColor = new ArrayList<>();
         String toPlayer ="You shot: ";
         String toOpponent = currentPlayer.getPlayerName() +" shot you";
@@ -117,33 +116,37 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         if(targets.isEmpty())
             toPlayer = toPlayer + "nobody";
         for(Player player : targets){
-            toPlayer = toPlayer+player.getPlayerName();
+            toPlayer = toPlayer+player.getPlayerName() + " | ";
             targetsColor.add(player.getPlayerColor());
             }
         for(Player player : allPlayers){
             toOthers = toOthers+player.getPlayerName();
-            int damage = player.getPlayerBoard().getDamageCounter().getDamageCounter().size();
-            while(damage>0){
+            //int damage = player.getPlayerBoard().getDamageCounter().getDamageCounter().size();
+            if(player.getPosition()!=null)
+                toOthers = toOthers + " Position: " + player.getPosition().getID() + " |";
+            else
+                toOthers = toOthers + " Position: Not yet respawned |";
+            toOthers = toOthers + " Damage: " + player.getPlayerBoard().getDamageCounter().printDamageCounter() + " |";
+            toOthers = toOthers + " Marks: " + player.getPlayerBoard().getMarkCounter().printMarkCounter() + " |";
+            toOthers = toOthers + " " + player.getResources().showAmmo() + " |";
+
+            /*while(damage>0){
                 toOthers = toOthers+"*";
                 damage--;
-            }
-            System.out.println("notifyshoot 2 in gamenotifier");
-            HashMap<PlayerColor,Integer> marks = new HashMap<>(player.getPlayerBoard().getMarkCounter().getMarkCounter());
+            }*/
+           /* HashMap<PlayerColor,Integer> marks = new HashMap<>(player.getPlayerBoard().getMarkCounter().getMarkCounter());
             for(PlayerColor color : marks.keySet()){
-                System.out.println("notifyshoot 3 in gamenotifier");
                 int num = marks.get(color);
-                System.out.println("notifyshoot 4 in gamenotifier");
                 while(num>0){
                     toOthers = toOthers+color.toString().charAt(0);
                     num--;
-                    System.out.println("notifyshoot 5 in gamenotifier");
 
                 }
-            }
+            }*/
             toOthers = toOthers+"\n";
         }
 
-        System.out.println("notifyshoot  in gamenotifier");
+
 
         PlayerMessage msgToPlayer = new GenericMessage(toPlayer+"\n"+toOthers);
         notify(msgToPlayer, currentPlayer.getPlayerColor());
