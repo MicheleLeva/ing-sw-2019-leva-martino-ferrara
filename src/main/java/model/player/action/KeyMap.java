@@ -33,7 +33,7 @@ public class KeyMap {
 
     private final static String defaultPath = "src/resources/keyMapping.json";
     //Metodo che legge la classe da File JSON
-    private KeyMap(String path){
+    public KeyMap(String path){
         JSONParser parser = new JSONParser();
         try{
             Object obj = parser.parse(new FileReader(path));
@@ -53,17 +53,11 @@ public class KeyMap {
             //showCards = myJo.get("showCards").toString().charAt(0);
         }
 
-        catch(FileNotFoundException e ){
+        catch(IOException | ParseException e ){
             e.printStackTrace();
         }
 
-        catch(IOException e ){
-            e.printStackTrace();
-        }
 
-        catch(ParseException e){
-            e.printStackTrace();
-        }
     }
 
     public KeyMap(){

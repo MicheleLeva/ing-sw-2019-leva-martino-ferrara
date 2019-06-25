@@ -124,6 +124,10 @@ public class TestKeyMap {
 
 
     }
+    @Test
+    public void testConstructor(){
+        keyMap = new KeyMap("non existent path");
 
+    }
 
 }
