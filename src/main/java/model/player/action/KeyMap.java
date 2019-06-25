@@ -31,11 +31,9 @@ public class KeyMap {
 
     private static char usePowerUp;
 
-    private static char showCards;
-
     private final static String defaultPath = "src/resources/keyMapping.json";
     //Metodo che legge la classe da File JSON
-    public KeyMap(String path){
+    private KeyMap(String path){
         JSONParser parser = new JSONParser();
         try{
             Object obj = parser.parse(new FileReader(path));
@@ -114,9 +112,6 @@ public class KeyMap {
         return end;
     }
 
-    public static char getShowCards(){
-        return showCards;
-    }
 
     public static char getUsePowerUp(){
         return usePowerUp;
@@ -140,7 +135,6 @@ public class KeyMap {
         actionString = "Grab: " +grab +" | ";
         actionString = actionString +"Shoot: " +shoot +"\n";
         actionString = actionString +"Use PowerUp: " +usePowerUp +" | ";
-        actionString = actionString +"Show Cards: " +showCards +"\n";
         actionString = actionString +"End Action: " +end +"\n";
 
         result = result + moveString + actionString;
