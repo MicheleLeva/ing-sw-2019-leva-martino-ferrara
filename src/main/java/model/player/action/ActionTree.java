@@ -14,14 +14,15 @@ import model.Model;
 
 /**
  * Contains all the possible actions the player is allowed to perform
+ * Each tree has a specific ID based upon the possible moves:
+ *
+ *  1: standard tree
+ *  2: tree with one powered action
+ *  3: tree with two powered actions
+ *  4: frenzy tree for players whose turn comes after the first player's one
+ *  5: frenzy tree for players whose turn comes before the first player's one
  */
 public class ActionTree {
-    //Tree ID:
-    //1: standard tree
-    //2: tree with one powered action
-    //3: tree with two powered actions
-    //4: frenzy tree for players whose turn comes after the first player's one
-    //5: frenzy tree for players whose turn comes before the first player's one
     private final int ID;
     //JSON Path used to read the tree
     private String path = null;
@@ -285,6 +286,10 @@ public class ActionTree {
     public Node<String> getLastAction() {
         return lastAction;
     }
+
+    public Node<String> getLastActionPerformed(){return lastActionPerformed;}
+
+    public int getPerformedAction(){return performedAction;}
 }
 
 

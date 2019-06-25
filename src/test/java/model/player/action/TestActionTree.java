@@ -1,5 +1,7 @@
 package model.player.action;
 
+import model.player.Player;
+import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,6 +11,7 @@ import static org.junit.Assert.*;
 public class TestActionTree {
 
     private ActionTree actionTree;
+
     @Before
     public void initActionTree(){
         actionTree = new ActionTree(1);
@@ -67,13 +70,24 @@ public class TestActionTree {
         assertTrue(actionTree.checkAction(KeyMap.getUsePowerUp()));
         assertTrue(actionTree.checkAction(KeyMap.getMoveDown()));
         assertFalse(actionTree.checkAction('L'));
-
-
-
         actionTree.endAction();
         assertTrue(actionTree.checkAction(KeyMap.getReload()));
     }
 
+    @Test
+    public void testUpdateAction(){
+        assertTrue(actionTree.getLastAction().equals(actionTree.getRoot()));
+        assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getRoot()));
+        assertFalse(actionTree.checkAction('L'));
+        assertTrue(actionTree.getLastAction().equals(actionTree.getRoot()));
+        assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getRoot()));
+        assertTrue(actionTree.checkAction(KeyMap.getMoveUp()));
+        actionTree.updateAction();
+        assertTrue(actionTree.isMoveEnded());
+        assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getLastAction()));
+
+
+    }
     @Test
     public void testResetAction(){
         actionTree.resetAction();
@@ -82,6 +96,35 @@ public class TestActionTree {
         assertFalse(actionTree.isActionEnded());
         assertNotNull(actionTree.availableAction());
 
+    }
+    @Test
+    public void testSetMoveEnded(){
+        actionTree.setMoveEnded(true);
+        assertTrue(actionTree.isMoveEnded());
+        actionTree.setMoveEnded(false);
+        assertFalse(actionTree.isMoveEnded());
+    }
+    @Test
+    public void testEndAction(){
+        actionTree.endAction();
+        actionTree.endAction();
+        assertTrue(actionTree.isTurnEnded());
+    }
+    @Test
+    public void testGetID(){
+        assertEquals(1,actionTree.getID());
+    }
+    @Test
+    public void testGetLastAction(){
+        assertNotNull(actionTree.getLastAction());
+    }
+    @Test
+    public void testGetLastActionPerformed(){
+        assertNotNull(actionTree.getLastActionPerformed());
+    }
+    @Test
+    public void testAvailableAction(){
+        assertNotNull(actionTree.availableAction());
     }
 
 
