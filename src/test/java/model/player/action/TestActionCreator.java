@@ -44,5 +44,8 @@ public class TestActionCreator {
 
         //testing reload
         assertTrue((ActionCreator.createAction((KeyMap.getReload())) instanceof Reload));
+
+        //testing else
+        assertTrue(ActionCreator.createAction('L') instanceof EndAction);
     }
 }

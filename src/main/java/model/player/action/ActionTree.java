@@ -37,7 +37,7 @@ public class ActionTree {
     private int performedAction;
     //true if the current player has ended his turn
     private boolean doneTurn = false;
-    private boolean isMoveEnded = true;
+    private boolean isMoveEnded = false;
 
     /**
      * Action Tree's constructor
@@ -48,6 +48,7 @@ public class ActionTree {
         performedAction = 0;
         init();
         parseActionTree();
+        resetAction();
     }
 
     /**
