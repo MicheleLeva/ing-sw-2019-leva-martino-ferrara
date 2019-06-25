@@ -11,91 +11,50 @@ import static org.junit.Assert.*;
 public class TestActionTree {
 
     private ActionTree actionTree;
+    private KeyMap keyMap;
 
     @Before
-    public void initActionTree(){
+    public void init(){
         actionTree = new ActionTree(1);
+        keyMap = new KeyMap();
+
     }
     @Test
-    public void testParseActionTree(){
-        actionTree = new ActionTree(1);
-        //test the number of children
-
-
-        List<Node<String>> first = actionTree.getRoot().getChildren();
-        assertEquals(3,first.size());
-        assertEquals("shoot",first.get(0).getData());
-        assertEquals("grab",first.get(1).getData());
-        assertEquals("run",first.get(2).getData());
-
-        assertTrue(first.get(0).getChildren().isEmpty());
-        assertTrue(first.get(1).getChildren().isEmpty());
-
-        List<Node<String>> second = first.get(2).getChildren();
-        assertEquals(2,second.size());
-        assertEquals("grab",second.get(0).getData());
-        assertEquals("run",second.get(1).getData());
-
-        assertTrue(second.get(0).getChildren().isEmpty());
-
-        List<Node<String>> third = second.get(1).getChildren();
-        assertEquals(1,third.size());
-        assertEquals("run",third.get(0).getData());
-
-
-
-
+    public void testInit(){
+        assertEquals(1,actionTree.getID());
+        assertEquals(0,actionTree.getPerformedAction());
+        assertEquals(actionTree.getLastActionPerformed(),actionTree.getLastAction());
     }
-
-    @Test
-    public void testActionTree(){
-        actionTree = new ActionTree(5);
-        assertEquals(5,actionTree.getID());
-        assertFalse(actionTree.isMoveEnded());
-        assertFalse(actionTree.isTurnEnded());
-        assertFalse(actionTree.isActionEnded());
-        assertNotNull(actionTree.availableAction());
-    }
-
     @Test
     public void testGetRoot(){
-        Node<String> root = actionTree.getRoot();
-        assertNotNull(root);
-        assertNull(root.getParent());
+        assertNotNull(actionTree.getRoot());
+        assertNull(actionTree.getRoot().getParent());
     }
-
     @Test
     public void testCheckAction(){
         assertTrue(actionTree.checkAction(KeyMap.getEnd()));
         assertTrue(actionTree.checkAction(KeyMap.getUsePowerUp()));
-        assertTrue(actionTree.checkAction(KeyMap.getMoveDown()));
-        assertFalse(actionTree.checkAction('L'));
+
+        assertTrue(actionTree.checkAction(KeyMap.getUsePowerUp()));
+        assertTrue(actionTree.checkAction(KeyMap.getMoveUp()));
+        assertFalse(actionTree.checkAction(KeyMap.getReload()));
+
         actionTree.endAction();
+        actionTree.endAction();
+        assertTrue(actionTree.checkAction(KeyMap.getReload()));
 
     }
 
     @Test
     public void testUpdateAction(){
-        assertTrue(actionTree.getLastAction().equals(actionTree.getRoot()));
-        assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getRoot()));
-        assertFalse(actionTree.checkAction('L'));
-        assertTrue(actionTree.getLastAction().equals(actionTree.getRoot()));
-        assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getRoot()));
-        assertTrue(actionTree.checkAction(KeyMap.getMoveUp()));
         actionTree.updateAction();
+        assertEquals(actionTree.getLastActionPerformed(),actionTree.getLastAction());
         assertTrue(actionTree.isMoveEnded());
-        assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getLastAction()));
 
-
-    }
-    @Test
-    public void testResetAction(){
-        actionTree.resetAction();
-        assertFalse(actionTree.isMoveEnded());
-        assertFalse(actionTree.isTurnEnded());
-        assertFalse(actionTree.isActionEnded());
-        assertNotNull(actionTree.availableAction());
-
+        int performedAction = actionTree.getPerformedAction();
+        actionTree.getLastAction().getChildren().clear();
+        actionTree.updateAction();
+        assertTrue(actionTree.getPerformedAction() == performedAction + 1);
     }
     @Test
     public void testSetMoveEnded(){
@@ -105,10 +64,48 @@ public class TestActionTree {
         assertFalse(actionTree.isMoveEnded());
     }
     @Test
-    public void testEndAction(){
+    public void testIsMoveEnded(){
+        assertFalse(actionTree.isMoveEnded());
+    }
+    @Test
+    public void testAvailableAction(){
+        assertNotNull(actionTree.availableAction());
+    }
+    @Test
+    public void testIsActionEnded(){
+        assertFalse(actionTree.isActionEnded());
+        actionTree.getLastActionPerformed().getChildren().clear();
+        assertTrue(actionTree.isActionEnded());
+    }
+    @Test
+    public void testResetAction(){
+        actionTree.resetAction();
+        assertEquals(0,actionTree.getPerformedAction());
+        assertEquals(actionTree.getLastAction(),actionTree.getLastActionPerformed());
+    }
+    @Test
+    public void testIsTurnEnded(){
+        assertFalse(actionTree.isTurnEnded());
         actionTree.endAction();
         actionTree.endAction();
         assertTrue(actionTree.isTurnEnded());
+
+
+    }
+    @Test
+    public void testHasDoneTurn(){
+        assertFalse(actionTree.hasDoneTurn());
+        actionTree.setDoneTurn(true);
+        assertTrue(actionTree.hasDoneTurn());
+    }
+    @Test
+    public void testEndAction(){
+        int performedAction = actionTree.getPerformedAction();
+        actionTree.endAction();
+        assertEquals(actionTree.getPerformedAction(),performedAction + 1);
+        assertTrue(actionTree.isMoveEnded());
+        assertEquals(actionTree.getLastAction(),actionTree.getLastActionPerformed());
+        assertEquals(actionTree.getLastAction(),actionTree.getRoot());
     }
     @Test
     public void testGetID(){
@@ -123,10 +120,36 @@ public class TestActionTree {
         assertNotNull(actionTree.getLastActionPerformed());
     }
     @Test
-    public void testAvailableAction(){
-        assertNotNull(actionTree.availableAction());
+    public void testGetPerformedAction(){
+        assertEquals(0,actionTree.getPerformedAction());
     }
-
+    @Test
+    public void testID(){
+        actionTree = new ActionTree(1);
+        assertEquals(1,actionTree.getID());
+        actionTree.endAction();
+        actionTree.endAction();
+        assertTrue(actionTree.isTurnEnded());
+        actionTree = new ActionTree(2);
+        assertEquals(2,actionTree.getID());
+        actionTree.endAction();
+        actionTree.endAction();
+        assertTrue(actionTree.isTurnEnded());
+        actionTree = new ActionTree(3);
+        assertEquals(3,actionTree.getID());
+        actionTree.endAction();
+        actionTree.endAction();
+        assertTrue(actionTree.isTurnEnded());
+        actionTree = new ActionTree(4);
+        assertEquals(4,actionTree.getID());
+        actionTree.endAction();
+        actionTree.endAction();
+        assertTrue(actionTree.isTurnEnded());
+        actionTree = new ActionTree(5);
+        assertEquals(5,actionTree.getID());
+        actionTree.endAction();
+        assertTrue(actionTree.isTurnEnded());
+    }
 
 
 }
