@@ -17,7 +17,7 @@ public class Shoot extends Action {
     @Override
     public void perform (Model model, PlayerColor playerColor) throws NoReloadableWeaponsException {
         Player currentPlayer = model.getPlayer(playerColor);
-        //check if he can t shoot
+        //check if he can shoot
         if(currentPlayer.getResources().getReloadedWeapon().isEmpty())
             throw new NoReloadableWeaponsException();
         model.showWeaponCards(playerColor);
