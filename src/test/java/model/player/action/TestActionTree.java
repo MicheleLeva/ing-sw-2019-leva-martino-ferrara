@@ -71,7 +71,7 @@ public class TestActionTree {
         assertTrue(actionTree.checkAction(KeyMap.getMoveDown()));
         assertFalse(actionTree.checkAction('L'));
         actionTree.endAction();
-        assertTrue(actionTree.checkAction(KeyMap.getReload()));
+
     }
 
     @Test
