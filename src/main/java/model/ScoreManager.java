@@ -262,14 +262,16 @@ public class ScoreManager {
      * @return the current player rank as a String
      */
     public String showPlayerRank(){
-        String result = "Player Rank:\n";
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < playerRank.size(); i++){
             Player currentPlayer = model.getPlayer(playerRank.get(i));
             String currentPlayerName = currentPlayer.getColoredName();
             int currentScore = currentPlayer.getScore().getScore();
-
-            result = result + currentPlayerName +" : " +currentScore +"\n";
+            stringBuilder.append(currentPlayerName);
+            stringBuilder.append(": ");
+            stringBuilder.append(currentScore);
+            stringBuilder.append("\n");
         }
-        return result;
+        return stringBuilder.toString();
     }
 }

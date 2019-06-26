@@ -176,8 +176,8 @@ public class Turn {
         stringBuilder.append(currentPlayer.getColoredName());
         stringBuilder.append("\n");
         //print the updated rank
-        stringBuilder.append("Current Rank: \n");
-        stringBuilder.append(getModel().getScoreManager().showPlayerRank()); //todo settare i colori nel rank
+        stringBuilder.append("Player Rank: \n");
+        stringBuilder.append(getModel().getScoreManager().showPlayerRank());
         stringBuilder.append("\n");
         //print the killshot track
         stringBuilder.append("Killshot Track:\n");
