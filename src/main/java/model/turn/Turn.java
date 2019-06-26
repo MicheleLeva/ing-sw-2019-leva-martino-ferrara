@@ -1,5 +1,6 @@
 package model.turn;
 
+import model.CLI;
 import model.Model;
 import model.player.Player;
 import model.player.PlayerColor;
@@ -165,6 +166,12 @@ public class Turn {
     public void notifyTurn(){
         //print the game status
         StringBuilder stringBuilder  = new StringBuilder();
+        if(isFrenzy){
+            stringBuilder.append(CLI.getBlue());
+            stringBuilder.append("FRENZY");
+            stringBuilder.append(CLI.getResetString());
+            stringBuilder.append("\n");
+        }
         //print current turn number
         int currentTurnNumber = getModel().getTurnManager().getCurrentTurnNumber();
         stringBuilder.append("Current turn number: ");
