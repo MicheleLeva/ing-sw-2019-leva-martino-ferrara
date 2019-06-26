@@ -54,4 +54,9 @@ public class TestKillShotTrack {
 
     }
 
+    @Test
+    public void testPrintKillShotTrack(){
+        System.out.print(killShotTrackTest.printKillshotTrack());
+    }
+
 }

@@ -1,5 +1,6 @@
 package model.turn;
 
+import model.CLI;
 import model.Model;
 import model.player.Player;
 import model.player.PlayerColor;
@@ -165,6 +166,12 @@ public class Turn {
     public void notifyTurn(){
         //print the game status
         StringBuilder stringBuilder  = new StringBuilder();
+        if(isFrenzy){
+            stringBuilder.append(CLI.getBlue());
+            stringBuilder.append("FRENZY");
+            stringBuilder.append(CLI.getResetString());
+            stringBuilder.append("\n");
+        }
         //print current turn number
         int currentTurnNumber = getModel().getTurnManager().getCurrentTurnNumber();
         stringBuilder.append("Current turn number: ");
@@ -176,12 +183,13 @@ public class Turn {
         stringBuilder.append(currentPlayer.getColoredName());
         stringBuilder.append("\n");
         //print the updated rank
-        stringBuilder.append("Current Rank: \n");
-        stringBuilder.append(getModel().getScoreManager().showPlayerRank()); //todo settare i colori nel rank
+        stringBuilder.append("Player Rank: \n");
+        stringBuilder.append(getModel().getScoreManager().showPlayerRank());
         stringBuilder.append("\n");
         //print the killshot track
+        stringBuilder.append("Killshot Track:\n");
         stringBuilder.append(getModel().getGameBoard().getKillShotTrack().printKillshotTrack());
-        stringBuilder.append("\n");
+        stringBuilder.append("\n\n");
         //print the map
         stringBuilder.append(getModel().getGameBoard().getMap().printMap());
         stringBuilder.append("\n");
