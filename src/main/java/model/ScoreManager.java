@@ -265,7 +265,7 @@ public class ScoreManager {
         String result = "Player Rank:\n";
         for (int i = 0; i < playerRank.size(); i++){
             Player currentPlayer = model.getPlayer(playerRank.get(i));
-            String currentPlayerName = currentPlayer.getPlayerName();
+            String currentPlayerName = currentPlayer.getColoredName();
             int currentScore = currentPlayer.getScore().getScore();
 
             result = result + currentPlayerName +" : " +currentScore +"\n";

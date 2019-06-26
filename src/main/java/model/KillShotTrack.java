@@ -5,6 +5,7 @@ import model.player.PlayerColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class KillShotTrack {
 
@@ -104,7 +105,7 @@ public class KillShotTrack {
     public String printKillshotTrack(){
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder tokenBuilder = new StringBuilder();
-
+        StringBuilder frenzyBuilder;
         for (int i = 0; i < killShotTrack.length; i++){
             if(killShotTrack[i].isSkull()){
                stringBuilder.append(CLI.getSkull());
@@ -117,11 +118,28 @@ public class KillShotTrack {
                 tokenBuilder.append(currentColor);
                 tokenBuilder.append(tokenNumber);
                 tokenBuilder.append(CLI.getResetString());
+                tokenBuilder.append(" ");
 
-                stringBuilder.append(tokenBuilder);
             }
+
         }
 
+        stringBuilder.append(tokenBuilder);
+        if(model.getTurnManager().isFrenzy()){
+            frenzyBuilder = new StringBuilder();
+            frenzyBuilder.append("\n");
+            frenzyBuilder.append("Frenzy tokens: \n");
+            for(Map.Entry<PlayerColor,Integer> entry: frenzyTokens.entrySet()){
+                PlayerColor currentPlayerColor = entry.getKey();
+                Integer currentInt = entry.getValue();
+                frenzyBuilder.append(CLI.getColor(currentPlayerColor));
+                frenzyBuilder.append(currentInt);
+                frenzyBuilder.append(CLI.getResetString());
+                frenzyBuilder.append(" ");
+            }
+
+            stringBuilder.append(frenzyBuilder);
+        }
         return stringBuilder.toString();
 
     }
