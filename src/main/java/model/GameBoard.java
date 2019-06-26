@@ -45,9 +45,15 @@ public class GameBoard {
                 Square square = getMap().getMap()[i][j];
                 if (square != null) {
                     if (square.isSpawn) {
-                        while (square.hasEmptyWeaponSlot()) {
+                        /*while (square.hasEmptyWeaponSlot()) {
                             square.setWeapon(getDecks().drawWeapon());
+                            }*/
+                        for (int k = 0; k < 3; k++) {
+                            if(square.getWeapon()[k] == null){
+                                square.getWeapon()[k] = getDecks().drawWeapon();
+                            }
                         }
+
                     } else if (square.hasEmptyAmmoSlot()) {
                         square.setAmmo(getDecks().drawAmmoCard());
                     }

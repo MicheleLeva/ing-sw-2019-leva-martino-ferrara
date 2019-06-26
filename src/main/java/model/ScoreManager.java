@@ -43,14 +43,13 @@ public class ScoreManager {
                 hasChanged = true;
                 computePoints(allPlayer.get(i));
 
-                //remove skull and add token
+                //remove the highest point
+                allPlayer.get(i).getPlayerBoard().getPoints().removeHighestPoint();
 
+                //remove skull and add token
                 //gets the color of the player who dealt the killshot damage
                 PlayerColor killshotColor = allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamageCounter().get(Checks.getKillshot()-1);
                 model.getGameBoard().getKillShotTrack().removeSkull(killshotColor);
-
-                //remove the highest point
-                allPlayer.get(i).getPlayerBoard().getPoints().removeHighestPoint();
 
                 //check for overkill
                 if (allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()) {
@@ -108,6 +107,7 @@ public class ScoreManager {
             playerRank.remove(playerColor);
         }
         //todo rivedere
+        model.getGameNotifier().notifyGeneric(showPlayerRank());
         model.getGameNotifier().notifyGeneric(model.getPlayer(getWinner()).getColoredName() + " has won the game!");
     }
 

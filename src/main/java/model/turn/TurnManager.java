@@ -222,7 +222,9 @@ public class TurnManager {
         {
             Player currentPlayer = allPlayers.get(i);
 
-            if(currentPlayer.getPlayerBoard().getDamageCounter().getDamage() == 0){
+            if(     currentPlayer.getPlayerBoard().getDamageCounter().getDamage() == 0 ||
+                    currentPlayer.isKillShot() ||
+                    currentPlayer.isDead()){
                 //change player's points in frenzy points
                 currentPlayer.getPlayerBoard().getPoints().setFrenzyPoints();
 

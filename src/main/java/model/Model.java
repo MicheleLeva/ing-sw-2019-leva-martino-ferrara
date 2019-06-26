@@ -966,8 +966,9 @@ public class Model {
         }
         currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
         for(int i = 0; i < 3; i++){
-            if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
+            if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon()) {
                 currentPlayer.getPosition().getWeapon()[i] = null;
+            }
         }
 
 
@@ -1319,8 +1320,8 @@ public class Model {
 
     //va chiamato sempre alla fine del turno su tutti i giocatori colpiti dopo aver valutato i marchi e i giocatori morti
     //todo
-    public void verifyNewAction(PlayerColor opponentColor) {
-        Player player = getPlayer(opponentColor);
+    public void verifyNewAction(PlayerColor playerColor) {
+        Player player = getPlayer(playerColor);
         int currentTreeID = player.getActionTree().getID();
         int newTreeID = Checks.verifyNewAction(player);
         if (currentTreeID != newTreeID) {

@@ -251,10 +251,13 @@ public class PowerUpController extends Controller implements PowerUpObserver {
      */
     @Override
     public void update(DiscardPowerUpEvent discardPowerUpEvent){
-        if (getModel().getPlayer(discardPowerUpEvent.getPlayerColor()).isAfk()){
+        Player currentPlayer = getModel().getPlayer(discardPowerUpEvent.getPlayerColor());
+
+        if (    getModel().getPlayer(discardPowerUpEvent.getPlayerColor()).isAfk() ||
+                currentPlayer.getPosition() != null){
             return;
         }
-        Player currentPlayer = getModel().getPlayer(discardPowerUpEvent.getPlayerColor());
+
         int input = discardPowerUpEvent.getInput();
 
         if (input < 1 || input > currentPlayer.getResources().getPowerUp().size()) {

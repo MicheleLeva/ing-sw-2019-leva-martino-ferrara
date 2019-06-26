@@ -184,6 +184,7 @@ public class TestPowerUpController {
         powerUpController.update(event);
         event = new DiscardPowerUpEvent(view,1);
         player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        player1.setPosition(null);
         powerUpController.update(event);
         assertEquals(0, player1.getResources().getPowerUp().size());
 

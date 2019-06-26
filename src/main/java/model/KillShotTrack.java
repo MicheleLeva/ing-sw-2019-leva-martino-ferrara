@@ -32,7 +32,12 @@ public class KillShotTrack {
     public void removeSkull(PlayerColor playerColor) {
 
         if (model.getTurnManager().isFrenzy()) {
-            frenzyTokens.replace(playerColor, frenzyTokens.get(playerColor) + 1);
+            if(frenzyTokens.containsKey(playerColor)) {
+                frenzyTokens.replace(playerColor, frenzyTokens.get(playerColor) + 1);
+            }
+            else {
+                frenzyTokens.put(playerColor, 1);
+            }
         }
         else {
 
@@ -51,7 +56,10 @@ public class KillShotTrack {
     public void addOverKill() {
         if (model.getTurnManager().isFrenzy()) {
             PlayerColor currentPlayerColor = model.getTurnManager().getCurrentPlayerColor();
-            frenzyTokens.replace(currentPlayerColor, frenzyTokens.get(currentPlayerColor) + 1);
+            if(frenzyTokens.containsKey(currentPlayerColor))
+                frenzyTokens.replace(currentPlayerColor, frenzyTokens.get(currentPlayerColor) + 1);
+            else
+                frenzyTokens.put(currentPlayerColor,1);
         }
         else {
             int currentIndex;

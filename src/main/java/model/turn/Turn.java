@@ -193,6 +193,9 @@ public class Turn {
                 stringBuilder.append("\n");
             }
         }
+        if(!isFrenzy) {
+            model.verifyNewAction(currentPlayer.getPlayerColor());
+        }
         for (Player player : model.getEachPlayer()){
             if (!player.isAfk()){
                 getModel().getGameNotifier().notifyPlayer(stringBuilder.toString(), player.getPlayerColor());
@@ -212,6 +215,14 @@ public class Turn {
         for (Player player : getModel().getEachPlayer()){
             if (player.isDead() || player.isKillShot()){
                 getModel().getTurnCurrent().getDeadPlayers().add(player);
+            }
+        }
+
+        if(isFrenzy){
+            for(Player player : getModel().getTurnCurrent().getDeadPlayers()){
+                if(!player.getPlayerBoard().getPoints().isFrenzy()){
+                    player.getPlayerBoard().getPoints().setFrenzyPoints();
+                }
             }
         }
 
@@ -236,7 +247,7 @@ public class Turn {
                     System.out.print("");
                     if (!isRespawnTimerOn){
                         getModel().discardPowerUp(deadPlayer, random.nextInt(deadPlayer.getResources().getPowerUp().size()));
-                        getModel().setPlayerAfk(deadPlayer);
+                        getModel().getGameNotifier().notifyPlayer("Too late!", deadPlayer.getPlayerColor());
                         getModel().getTurnCurrent().setReceivedInput(true);
                     }
                 }
