@@ -35,11 +35,17 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         Player currentPlayer = getModel().getPlayer(choosePowerUpEvent.getPlayerColor());
         int input = choosePowerUpEvent.getInput();
 
+        if(input == 0){
+            getModel().chooseAction(choosePowerUpEvent.getPlayerColor());
+            return;
+        }
+
         if(currentPlayer.getResources().getPowerUp().isEmpty()){
             String error;
             error = "You have no powerUps.\n";
             choosePowerUpEvent.getView().reportError(error);
             getModel().chooseAction(choosePowerUpEvent.getPlayerColor());
+            return;
         }
 
         if (input < 1 || input > currentPlayer.getResources().getPowerUp().size()) {

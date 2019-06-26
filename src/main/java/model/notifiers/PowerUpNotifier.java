@@ -11,7 +11,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
      * Sends the list of powerUps to choose from to the players' views
      */
     public void choosePowerUp(PlayerColor playerColor , String availablePowerUp){
-        String message = "Choose a PowerUp:\n";
+        String message = "Choose a PowerUp: \n";
+        message = message + "0. Return ";
         message = message +availablePowerUp +"\n";
 
         PlayerMessage playerMessage = new ChoosePowerUpMessage(message);

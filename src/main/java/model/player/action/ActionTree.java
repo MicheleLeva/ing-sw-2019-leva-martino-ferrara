@@ -51,7 +51,7 @@ public class ActionTree {
     }
 
     /**
-     * sets the JSon path based upond the ID
+     * sets the JSon path based upon the ID
      */
     private void init(){
         switch (ID)

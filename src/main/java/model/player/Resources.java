@@ -7,12 +7,18 @@ import model.cards.weapons.Weapon;
 
 import java.util.ArrayList;
 
+/**
+ * Representation of the player's Resources, which are: Weapons, Ammunition and PowerUps
+ */
 public class Resources {
     private Ammo availableAmmo;
     private final ArrayList<Weapon> weapon;
     private final ArrayList<PowerUp> powerUp;
     private final ArrayList<Weapon> reloadableWeapon;
 
+    /**
+     * Constructor for the Resources class
+     */
     public Resources(){
         this.availableAmmo = new Ammo(1,1,1);
         weapon = new ArrayList<>();
@@ -21,6 +27,9 @@ public class Resources {
     }
 
 
+    /**
+     * Returns a string with the name and color of the powerUps a player has
+     */
     public String showpowerUp(){
         if (powerUp.isEmpty()){
             return "No PowerUp";
@@ -37,15 +46,26 @@ public class Resources {
         return stringBuilder.toString();
     }
 
+    /**
+     * Removes the powerUp in the player's inventory related to the given index
+     * @param index index of the powerUp in the player's inventory to remove
+     */
     public PowerUp removePowerUp(int index){
         return powerUp.remove(index);
     }
 
+    /**
+     * Removes the chosen powerUp in the player's inventory
+     * @param powerUp powerUp in the player's inventory to remove
+     */
     public void removePowerUp(PowerUp powerUp){
         this.powerUp.remove(powerUp);
     }
 
 
+    /**
+     * Returns a list containing the reloaded weapons a player has
+     */
     public ArrayList<Weapon> getReloadedWeapon(){
         ArrayList<Weapon> reloadedWeapon = new ArrayList<>();
         for (int i = 0; i< weapon.size(); i++){
@@ -57,6 +77,9 @@ public class Resources {
         return reloadedWeapon;
     }
 
+    /**
+     * Returns a string containing the names of all the weapons a player has
+     */
     public String showWeapon(){
         if (weapon.isEmpty()){
             return "No Weapon";
@@ -72,6 +95,9 @@ public class Resources {
         return result;
     }
 
+    /**
+     *Returns a string containing the number of cubes of ammo a player has
+     */
     public String showAmmo(){
         return ("Available Ammo: " +availableAmmo.toString());
     }
@@ -88,6 +114,10 @@ public class Resources {
         this.powerUp.addAll(powerUp);
     }
 
+    /**
+     * Returns all the cubes a player has added with all the powerUps a player has
+     * @return
+     */
     public Ammo getAllAmmo(){
 
         Ammo allAmmo = new Ammo(availableAmmo.getRed(),availableAmmo.getBlue(),availableAmmo.getYellow());
@@ -101,6 +131,12 @@ public class Resources {
         return availableAmmo;
     }
 
+    /**
+     * Adds the chosen amount of ammo from the player's available ammo
+     * @param red number of red cubes to add
+     * @param blue number of blue cubes to add
+     * @param yellow number of yellow cubes to add
+     */
     public void addToAvailableAmmo(int red, int blue, int yellow){
 
         availableAmmo.addRed(red);
@@ -108,6 +144,13 @@ public class Resources {
         availableAmmo.addYellow(yellow);
     }
 
+
+    /**
+     * Removes the chosen amount of ammo from the player's available ammo
+     * @param red number of red cubes to remove
+     * @param blue number of blue cubes to remove
+     * @param yellow number of yellow cubes to remove
+     */
     public void removeFromAvailableAmmo(int red, int blue, int yellow){
         availableAmmo.setRed(availableAmmo.getRed()-red);
         availableAmmo.setBlue(availableAmmo.getBlue()-blue);
@@ -139,6 +182,9 @@ public class Resources {
             return false;
     }*/
 
+    /**
+     * Returns a List containing the names of all the weapons a player can reload
+     */
     public ArrayList<Weapon> getReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
         for (int i = 0; i< weapon.size(); i++){
@@ -150,8 +196,14 @@ public class Resources {
         return reloadableWeapon;
     }
 
+    /**
+     * Returns a List containing  all the weapons a player has
+     */
     public ArrayList<Weapon> getAllWeapon(){return this.weapon;}
 
+    /**
+     * Returns a string containing the names of all the weapons a player can reload
+     */
     public String showReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapons = getReloadableWeapon();
         String result = "";
@@ -171,10 +223,13 @@ public class Resources {
         return result;
     }*/
 
+    /**
+     * Returns a string containing the names of all the unloaded weapons a player has
+     */
     public String printUnloadedWeapons(){
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < getReloadableWeapon().size(); i++){
-            stringBuilder.append(getReloadableWeapon().get(i).toString());
+            stringBuilder.append(getReloadableWeapon().get(i).getWeaponName());
             stringBuilder.append(" ");
         }
 

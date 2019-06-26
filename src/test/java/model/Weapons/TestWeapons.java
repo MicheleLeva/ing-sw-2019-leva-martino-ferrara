@@ -361,6 +361,7 @@ public class TestWeapons {
         rocketlauncher.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
         player3.setPosition(map.getMap()[1][0]);
+        model.getCurrent().incrementBaseCounter();
         rocketlauncher.askBaseRequirements(player1);
         rocketlauncher.askOptionalRequirements1(player1);
         rocketlauncher.askOptionalRequirements1(player1);
@@ -609,6 +610,9 @@ public class TestWeapons {
         selectedTargets.add(player3);
         model.getCurrent().setSelectedAlternativeTargets(selectedTargets);
         sledgehammer.useAlternativeFireMode(player1,selectedTargets);
+        sledgehammer.getWeaponTree().endAction();
+        sledgehammer.getWeaponTree().getEffectName();
+        sledgehammer.getWeaponTree().getType();
     }
 
     /**

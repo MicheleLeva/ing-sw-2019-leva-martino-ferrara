@@ -659,7 +659,7 @@ public class Model {
             if(player.getPosition() == null || player.getPlayerColor().equals(playerColor))
                 allPlayersCopy.remove(player);
         if(allPlayersCopy.isEmpty()){
-            getGameNotifier().notifyGeneric("Non hai bersagli da muovere");
+            getGameNotifier().notifyGeneric("You have no targets to move!");
             getCurrent().setSelectedNewton(null);
             chooseAction(playerColor);
             return;
