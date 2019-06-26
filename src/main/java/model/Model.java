@@ -108,7 +108,7 @@ public class Model {
 
         keyMap = new KeyMap();
 
-        turnManager = new TurnManager(playersList);
+        turnManager = new TurnManager(this,playersList);
 
         scoreManager = new ScoreManager(this);
 
