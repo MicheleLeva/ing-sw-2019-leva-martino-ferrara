@@ -36,22 +36,7 @@ public class Node<T> {
         return parent;
     }
 
-    /*public void printChildren() {
-        if (!children.isEmpty()) {
-            for (int i = 0; i < children.size(); i++)
-                children.get(i).printChildren();
-        }
 
-        System.out.println(data);
-    }*/
-
-    public String showChildren(){
-        String result = "";
-        for (int i = 0; i< children.size(); i++){
-            result = result +children.get(i).data +" ";
-        }
-        return result;
-    }
 }
 
 

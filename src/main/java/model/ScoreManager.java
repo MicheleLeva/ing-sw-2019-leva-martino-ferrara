@@ -15,12 +15,11 @@ public class ScoreManager {
     //rank of the player
     private ArrayList<PlayerColor> playerRank = new ArrayList<>();
 
-    private static final int frenzyKillShotPoints[] = {8, 6, 4, 2, 1};
+    private static final int [] frenzyKillShotPoints = {8, 6, 4, 2, 1};
 
     /**
      * Constructor
-     *
-     * @param model used to get players' info
+     *@param model used to get players' info
      */
     public ScoreManager(Model model) {
 
@@ -36,6 +35,7 @@ public class ScoreManager {
      */
     public void updateScore() {
         ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
+        //boolean variable used to determine whether there has been a change in the score
         boolean hasChanged = false;
         for (int i = 0; i < allPlayer.size(); i++) {
             //the damage scoring is computed only if there is at least one killshot or dead player
@@ -44,13 +44,15 @@ public class ScoreManager {
                 computePoints(allPlayer.get(i));
 
                 //remove skull and add token
+
+                //gets the color of the player who dealt the killshot damage
                 PlayerColor killshotColor = allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamageCounter().get(Checks.getKillshot()-1);
                 model.getGameBoard().getKillShotTrack().removeSkull(killshotColor);
 
                 //remove the highest point
                 allPlayer.get(i).getPlayerBoard().getPoints().removeHighestPoint();
 
-                //overkill
+                //check for overkill
                 if (allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()) {
                     model.getGameBoard().getKillShotTrack().addOverKill();
                 }
@@ -61,7 +63,7 @@ public class ScoreManager {
         if (model.getTurnManager().numOfKillShot() >= Checks.getDoubleKillShot()) {
             model.getTurnManager().getCurrentPlayer().addScore(1);
         }
-
+        //if there has been a change in the score, update the rank
         if(hasChanged) {
             updatePlayerRank();
         }
