@@ -180,8 +180,9 @@ public class Turn {
         stringBuilder.append(getModel().getScoreManager().showPlayerRank()); //todo settare i colori nel rank
         stringBuilder.append("\n");
         //print the killshot track
+        stringBuilder.append("Killshot Track:\n");
         stringBuilder.append(getModel().getGameBoard().getKillShotTrack().printKillshotTrack());
-        stringBuilder.append("\n");
+        stringBuilder.append("\n\n");
         //print the map
         stringBuilder.append(getModel().getGameBoard().getMap().printMap());
         stringBuilder.append("\n");

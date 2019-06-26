@@ -108,6 +108,7 @@ public class KillShotTrack {
         for (int i = 0; i < killShotTrack.length; i++){
             if(killShotTrack[i].isSkull()){
                stringBuilder.append(CLI.getSkull());
+               stringBuilder.append(" ");
             }
             else{
 
