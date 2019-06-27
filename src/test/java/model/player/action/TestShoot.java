@@ -26,6 +26,10 @@ public class TestShoot {
         modelTest = new Model(playerList,8);
         shoot = new Shoot();
     }
+    /**
+     * Tests that the perform method in Shoot class executes without interruption and modifies the
+     * classes it interacts with correctly
+     */
     @Test
     public void perform(){
         playerTest.getResources().getAllWeapon().clear();

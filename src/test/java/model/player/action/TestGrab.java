@@ -35,6 +35,10 @@ public class TestGrab {
         grabAction = new Grab();
     }
 
+    /**
+     * Tests that the perform method in Grab class executes without interruption and modifies the
+     * classes it interacts with correctly
+     */
     @Test
     public void testPerform(){
         Square square = map.getSquareFromCoordinates(0,0);

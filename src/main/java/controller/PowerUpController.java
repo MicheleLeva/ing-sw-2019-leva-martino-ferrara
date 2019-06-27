@@ -151,13 +151,22 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         char choice = event.getChoice();
         if (choice != 'Y' && choice != 'N') {
             event.getView().reportError("Invalid input");
-            getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor());
+            getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor(),getModel().getCurrent().getLastTargetingScope());
         }
         else {
 
             if (choice == 'Y') {
                 getModel().targetingScopeTargets(event.getPlayerColor(),getModel().getCurrent().getAllDamagedPlayer());
             } else {
+                if(!getModel().getCurrent().getAllTargetingScopes().isEmpty())
+                    getModel().getCurrent().getAllTargetingScopes().remove(0);
+                for(PowerUp powerUp : getModel().getCurrent().getAllTargetingScopes()) {
+                    if (powerUp instanceof TargetingScope) {
+                        getModel().getCurrent().setLastTargetingScope((TargetingScope) powerUp);
+                        getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor(), powerUp);
+                        return;
+                    }
+                }
                 getModel().notifyShoot(getModel().getPlayer(event.getPlayerColor()));
             }
         }
@@ -187,7 +196,8 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         else{
             Player player = getModel().getCurrent().getAllDamagedPlayer().get(input-1);
             getModel().addDamage(event.getPlayerColor(),player.getPlayerColor(),1);
-
+            if(!getModel().getCurrent().getAllTargetingScopes().isEmpty())
+            getModel().getCurrent().getAllTargetingScopes().remove(0);
 
             for(PowerUp powerUp : powerUpsClone){
                 if(powerUp instanceof TargetingScope){
@@ -198,9 +208,10 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
             }
 
-            for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
+            for(PowerUp powerUp : getModel().getCurrent().getAllTargetingScopes()){
                 if(powerUp instanceof TargetingScope){
-                    getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor());
+                    getModel().getCurrent().setLastTargetingScope((TargetingScope)powerUp);
+                    getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor(),powerUp);
                     return;
                 }
 

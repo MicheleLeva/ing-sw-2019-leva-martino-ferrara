@@ -30,6 +30,11 @@ public class TestPowerUp {
 
     }
 
+    /**
+     * Tests the correct use of the Targeting Scope PowerUp
+     * @throws TagbackGrenadeException exception that prevents a client from using the TagBackGrenade PowerUp
+     * in the wrong moment
+     */
     @Test(expected = TagbackGrenadeException.class)
 
     public void testTagBackGrenade() throws TagbackGrenadeException {
@@ -37,6 +42,9 @@ public class TestPowerUp {
         tagbackGrenade.usePowerUp(players.get(0).getPlayerColor());
     }
 
+    /**
+     * Tests the correct use of the Newton PowerUp
+     */
     @Test
     public void testNewton() {
         ArrayList<PowerUp> powerups = new ArrayList<>();
@@ -47,6 +55,9 @@ public class TestPowerUp {
         assertTrue(players.get(0).getResources().getPowerUp().contains(newton));
     }
 
+    /**
+     * Tests the correct use of the Teleporter PowerUp
+     */
     @Test
     public void testTeleporter() {
         ArrayList<PowerUp> powerups = new ArrayList<>();
@@ -57,12 +68,19 @@ public class TestPowerUp {
         assertFalse(players.get(0).getResources().getPowerUp().contains(teleporter));
     }
 
+    /**
+     * Tests the correct use of the Targeting Scope PowerUp
+     * @throws TargetingScopeException exception that prevents a client from using the Targeting Scope in
+     * the wrong moment
+     */
     @Test(expected = TargetingScopeException.class)
 
     public void testTargetingScope() throws TargetingScopeException {
         ArrayList<PowerUp> powerups = new ArrayList<>();
+
         TargetingScope targetingScope = new TargetingScope(model, AmmoColor.BLUE);
         assertSame(model, targetingScope.getModel());
+
         powerups.add(targetingScope);
         players.get(0).getResources().addPowerUp(powerups);
         targetingScope.usePowerUp(players.get(0).getPlayerColor());

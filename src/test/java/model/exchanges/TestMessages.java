@@ -6,6 +6,9 @@ import static org.junit.Assert.*;
 
 public class TestMessages {
 
+    /**
+     * Tests te correct construction of all the messages
+     */
     @Test
     public void testMessages(){
         AskFireModesMessage askFireModesMessage = new AskFireModesMessage("a");

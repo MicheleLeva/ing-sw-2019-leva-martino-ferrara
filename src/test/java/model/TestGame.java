@@ -37,6 +37,10 @@ public class TestGame {
         gameTest = new Game(1, modelTest, serverTest);
     }
 
+    /**
+     * Tests that the Game class is able to decide the map to select, from the votes received
+     * by the clients
+     */
     @Test
     public void testMapVote(){
         int vote = gameTest.getMapVote();
@@ -81,6 +85,9 @@ public class TestGame {
         assertTrue((vote > 0) && (vote < 4));
     }
 
+    /**
+     * Tests Game class getters
+     */
     @Test
     public void testGetters(){
         assertNotNull(gameTest.getModel());

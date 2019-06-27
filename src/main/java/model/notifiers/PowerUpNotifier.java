@@ -1,5 +1,6 @@
 package model.notifiers;
 
+import model.cards.powerups.PowerUp;
 import model.exchanges.messages.*;
 import model.player.Player;
 import model.player.PlayerColor;
@@ -52,8 +53,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
     /**
      * Asks the current player if he wants to use the targeting scope
      */
-    public void askTargetingScope(PlayerColor playerColor){
-        String message = "Want to use the targeting Scope? Y/N";
+    public void askTargetingScope(PlayerColor playerColor,PowerUp powerUp){
+        String message = "Want to use this "+powerUp.toString()+" ? Y/N";
         PlayerMessage playerMessage = new TargetingScopeMessage(message);
         notify(playerMessage,playerColor);
     }

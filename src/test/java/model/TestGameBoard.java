@@ -31,6 +31,9 @@ public class TestGameBoard {
         gameBoardTest = new GameBoard(3,8, modelTest);
     }
 
+    /**
+     * Tests GameBoard class getters
+     */
     @Test
     public void testGameBoardGetters(){
         assertNotNull(gameBoardTest.getMap());
@@ -39,6 +42,9 @@ public class TestGameBoard {
 
     }
 
+    /**
+     * Tests that the GameBoard class is able to access the killShotTrack correctly
+     */
     @Test
     public void testGameBoardActions(){
         gameBoardTest.addToken(PlayerColor.YELLOW);

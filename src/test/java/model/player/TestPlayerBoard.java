@@ -13,6 +13,9 @@ public class TestPlayerBoard {
         playerBoardTest = new PlayerBoard();
     }
 
+    /**
+     * Tests getters for GameBoard class
+     */
     @Test
     public void testGetters(){
         assertNotNull(playerBoardTest.getDamageCounter());

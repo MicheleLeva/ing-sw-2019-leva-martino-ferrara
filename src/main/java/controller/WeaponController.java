@@ -152,12 +152,23 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
 
         if(effectType.equals("end")){
+            System.out.println("weapon controller 1");
             for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-                if(powerUp instanceof TargetingScope){
-                    getModel().getPowerUpNotifier().askTargetingScope(currentPlayer.getPlayerColor());
+                if(powerUp instanceof TargetingScope && !getModel().getCurrent().getAllDamagedPlayer().isEmpty()){
+                    System.out.println("weapon controller 2");
+                    getModel().getCurrent().addAllTargetingScopes((TargetingScope) powerUp);
+                    System.out.println("weapon controller 3");
+                }
+            }
+            for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
+                if(powerUp instanceof TargetingScope && !getModel().getCurrent().getAllDamagedPlayer().isEmpty()){
+                    System.out.println("weapon controller 4");
+                    getModel().getCurrent().setLastTargetingScope((TargetingScope)powerUp);
+                    getModel().getPowerUpNotifier().askTargetingScope(currentPlayer.getPlayerColor(),powerUp);
                     return;
                 }
             }
+            System.out.println("weapon controller 5");
             getModel().notifyShoot(currentPlayer);
             return;
         }
@@ -293,7 +304,7 @@ public class WeaponController extends Controller implements WeaponObserver {
 
 
     /**
-     * Controls if the seleced powerup actually result in a valid payment, if so the cost of the weapon fire mode
+     * Controls if the selected powerUps actually result in a valid payment, if so the cost of the weapon fire mode
      * gets paid, otherwise the player gets asked for new inputs
      * @param event contains the list of inputs corresponding to the chosen powerUps that
      *              are used to pay for the use of the selected weapon
@@ -308,6 +319,13 @@ public class WeaponController extends Controller implements WeaponObserver {
         String error;
         String effectType = weapon.getWeaponTree().getLastAction().getData().getType();
 
+        if(hasDuplicatePayment(event.getSelectedPowerUps())){
+            error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().getWeaponNotifier().askWeaponPayment(currentPlayer.getPlayerColor(),
+                    getModel().getCurrent().getAvailablePaymentPowerUps());
+            return;
+        }
 
         for(int i : event.getSelectedPowerUps()){
             if(!event.getSelectedPowerUps().isEmpty()) {
@@ -373,6 +391,12 @@ public class WeaponController extends Controller implements WeaponObserver {
         Weapon weapon = getModel().getCurrent().getSelectedWeapon();
         String error;
 
+        if(hasDuplicatePayment(event.getSelectedPowerUps())){
+            error = "Invalid input.\n";
+            event.getView().reportError(error);
+            getModel().askReloadPayment(currentPlayer,weapon);
+            return;
+        }
 
         for(int i : event.getSelectedPowerUps()){
             if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
@@ -407,6 +431,14 @@ public class WeaponController extends Controller implements WeaponObserver {
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
         Weapon weapon = getModel().getCurrent().getSelectedPickUpWeapon();
         String error;
+
+        if(hasDuplicatePayment(event.getSelectedPowerUps())){
+            error = "Invalid input: You selected the same powerUp more than once.\n";
+            event.getView().reportError(error);
+            getModel().getCurrent().getAvailablePaymentPowerUps().clear();
+            getModel().askPickUpPayment(currentPlayer,weapon);
+            return;
+        }
 
         for(int i : event.getSelectedPowerUps()){
             if(i<1 || i>getModel().getCurrent().getAvailablePaymentPowerUps().size()){
@@ -597,6 +629,20 @@ public class WeaponController extends Controller implements WeaponObserver {
             for(int i = 0; i < event.getSelectedTargets().size();i++){
                 for(int j = i+1; j < event.getSelectedTargets().size();j++){
                     if(event.getSelectedTargets().get(i) == event.getSelectedTargets().get(j))
+                        return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public boolean hasDuplicatePayment(ArrayList<Integer> selection){
+        if(selection.size()==1)
+            return false;
+        else{
+            for(int i = 0; i < selection.size();i++){
+                for(int j = i+1; j < selection.size();j++){
+                    if(selection.get(i) == selection.get(j))
                         return true;
                 }
             }

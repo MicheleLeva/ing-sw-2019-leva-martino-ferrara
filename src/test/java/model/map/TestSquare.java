@@ -26,7 +26,10 @@ public class TestSquare {
 
         }
 
-        @Test
+    /**
+     * Tests the correct creation of a square by checking its color, type, position and weapons/AmmoCards
+     */
+    @Test
         public void testSquare(){
         assertEquals(squareTest.getColor(),SquareColor.BLUE);
         assertEquals(squareTest.getSquareColumn(),3);

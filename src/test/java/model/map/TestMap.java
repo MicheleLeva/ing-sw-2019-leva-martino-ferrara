@@ -28,6 +28,10 @@ public class TestMap {
     }
 
 
+    /**
+     * Tests that all the squares on the ma are in the correct position, of the correct color and of the correct
+     * type( spawn or not spawn )
+     */
    @Test
     public void testMapLayout() throws IOException, ParseException {
 

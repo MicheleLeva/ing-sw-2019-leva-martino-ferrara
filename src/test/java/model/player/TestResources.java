@@ -44,6 +44,9 @@ public class TestResources {
     }
 
 
+    /**
+     * Tests Resources class getters for Ammunition
+     */
     @Test
     public void testAmmoGetters(){
 
@@ -60,6 +63,9 @@ public class TestResources {
 
     }
 
+    /**
+     * Tests all methods that modify the Ammo in the class Resources
+     */
     @Test
     public void testAmmoModifiers(){
 
@@ -91,6 +97,9 @@ public class TestResources {
 
     }
 
+    /**
+     * Tests getters and setters of current weapons in Resources class
+     */
     @Test
     public void testWeapons(){
         Ammo ammo = new Ammo(1,0,0);

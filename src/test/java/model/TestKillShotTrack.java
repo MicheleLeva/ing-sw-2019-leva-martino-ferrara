@@ -31,6 +31,9 @@ public class TestKillShotTrack {
 
     }
 
+    /**
+     * Tests getters for killShotTrack class
+     */
     @Test
     public void testKillShotTrackGetter(){
 
@@ -44,6 +47,9 @@ public class TestKillShotTrack {
         }
     }
 
+    /**
+     * Tests that the killShotTrack is able to remove a skull from a killShotCell
+     */
     @Test
     public void testRemove(){
         KillShotCell[] KSTrack = killShotTrackTest.getKillShotTrack();

@@ -20,6 +20,9 @@ public class TestKillShotCell {
 
     }
 
+    /**
+     * Tests getters and booleans for the killShotCell class
+     */
     @Test
     public void testKillShotCell(){
     assertTrue(emptyKillShotCell.isSkull());

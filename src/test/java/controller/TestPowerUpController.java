@@ -118,6 +118,7 @@ public class TestPowerUpController {
         player1.setAfk(true);
         powerUpController.update(event);
         player1.setAfk(false);
+        model.getCurrent().setLastTargetingScope(new TargetingScope(model,AmmoColor.BLUE));
         powerUpController.update(event);
         event = new TargetingScopeEvent(view,'N');
         powerUpController.update(event);

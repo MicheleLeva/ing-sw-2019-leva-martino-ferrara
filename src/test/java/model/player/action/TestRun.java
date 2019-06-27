@@ -25,6 +25,11 @@ public class TestRun {
         map = new Map(1);
 
     }
+
+    /**
+     * Tests that the perform method in Run class executes without interruption and modifies the
+     * classes it interacts with correctly
+     */
     @Test
     public void testPerform(){
         Square square = map.getSquareFromCoordinates(0,0);

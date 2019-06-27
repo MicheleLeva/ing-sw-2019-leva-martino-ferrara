@@ -30,6 +30,11 @@ public class TestUsePowerUp {
         modelTest = new Model(playerList,8);
         usePowerUp = new UsePowerUp();
     }
+
+    /**
+     * Tests that the perform method in UsePowerUp class executes without interruption and modifies the
+     * classes it interacts with correctly
+     */
     @Test
     public void testPerform(){
         playerTest.getResources().getPowerUp().clear();
