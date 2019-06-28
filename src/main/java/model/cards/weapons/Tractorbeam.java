@@ -59,7 +59,7 @@ public class Tractorbeam extends WeaponAlternative {
             ArrayList<Player> allTargets = getModel().getAllPlayers();
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : allTargets){
-                ArrayList<Square> playerSquares = getModel().runnableSquare(2,player.getPosition());
+                ArrayList<Square> playerSquares = Model.runnableSquare(2,player.getPosition());
                 for(Square square : playerSquares){
                     if(visibleSquares.contains(square) && player != currentPlayer) {
                         availableTargets.add(player);
@@ -78,7 +78,7 @@ public class Tractorbeam extends WeaponAlternative {
             ArrayList<Square> selectedSquares = new ArrayList<>();
             ArrayList<Square> visibleSquares = getModel().getVisibleSquares(currentPlayer);
             Player selectedTarget = getModel().getCurrent().getSelectedBaseTargets().get(0);
-            ArrayList<Square> playerSquares = getModel().runnableSquare(2,selectedTarget.getPosition());
+            ArrayList<Square> playerSquares = Model.runnableSquare(2,selectedTarget.getPosition());
             for(Square square : playerSquares)
             {
                 if(visibleSquares.contains(square)) {
@@ -99,7 +99,6 @@ public class Tractorbeam extends WeaponAlternative {
      */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        System.out.println("tractorbeam 3");
 
         selectedTargets.get(0).setPosition(getModel().getCurrent().getSelectedWeaponSquare());
 

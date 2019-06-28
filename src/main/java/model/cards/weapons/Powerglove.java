@@ -75,7 +75,6 @@ public class Powerglove extends WeaponAlternative {
             }
 
             endAskTargets(currentPlayer,firstAvailablePlayers,this,this.getWeaponTree().getLastAction().getData().getType());
-            return;
 
         }
 

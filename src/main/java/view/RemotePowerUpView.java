@@ -67,6 +67,10 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
                 DiscardPowerUpEvent discardPowerUpEvent = new DiscardPowerUpEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(discardPowerUpEvent));
                 break;
+            case "ScopePaymentEvent":
+                ScopePaymentEvent scopePaymentEvent = new ScopePaymentEvent(view, inputs[1].charAt(0));
+                listeners.forEach(l -> l.update(scopePaymentEvent));
+                break;
         }
     }
 

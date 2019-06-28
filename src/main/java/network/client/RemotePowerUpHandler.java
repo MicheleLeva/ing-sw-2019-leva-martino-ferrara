@@ -60,6 +60,10 @@ public class RemotePowerUpHandler extends PowerUpNotify implements Observer<Even
                 TagbackGrenadeMessage tagbackGrenadeMessage = new TagbackGrenadeMessage(inputs[1]);
                 listeners.get(playerColor).update(tagbackGrenadeMessage);
                 break;
+            case "ScopePaymentMessage":
+                ScopePaymentMessage scopePaymentMessage = new ScopePaymentMessage(inputs[1]);
+                listeners.get(playerColor).update(scopePaymentMessage);
+                break;
         }
     }
 

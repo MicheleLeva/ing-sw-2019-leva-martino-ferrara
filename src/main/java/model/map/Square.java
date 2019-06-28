@@ -1,5 +1,6 @@
 package model.map;
 
+import model.CLI;
 import model.cards.AmmoCard;
 import model.cards.weapons.Weapon;
 
@@ -28,18 +29,13 @@ public class Square {
         squareRow = row;
         squareColumn = column;
         weapons = new Weapon[3];
-        //todo controllare il costruttore
-        //weapons[0]=null;
-        //weapons[1]=null;
-        //weapons[2]=null;
-
     }
 
     public void setID(int ID){
         this.ID = ID;
     }
 
-    //todo
+
     public Weapon[] getWeapon(){
         return weapons;
     }
@@ -52,7 +48,7 @@ public class Square {
      * Puts the given weapon on the spawn square
      * @param weapon weapon to put on spawn square
      */
-    //todo
+
     public void setWeapon(Weapon weapon){
 
          int i = 0;
@@ -144,6 +140,22 @@ public class Square {
      */
     public void removeAmmoCard(){
         ammo = null;
+    }
+
+    /**
+     * Shows weapons on the spawn point
+     */
+    public String showSpawnWeapons(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(CLI.getColor(this.color));
+        for(int i = 0; i < 3; i++){
+            if(getWeapon()[i]!=null){
+                stringBuilder.append(getWeapon()[i].getWeaponName());
+                stringBuilder.append(" | ");
+            }
+        }
+        stringBuilder.append(CLI.getResetString());
+        return stringBuilder.toString();
     }
 
 }

@@ -142,8 +142,10 @@ public class Player {
             stringBuilder.append(getPosition().getID());
         }
         stringBuilder.append(" | ");
+        stringBuilder.append("Damage: ");
         stringBuilder.append(getPlayerBoard().getDamageCounter().printDamageCounter());
         stringBuilder.append(" | ");
+        stringBuilder.append("Marks: ");
         stringBuilder.append(getPlayerBoard().getMarkCounter().printMarkCounter());
         stringBuilder.append(" | ");
         stringBuilder.append("Points: ");

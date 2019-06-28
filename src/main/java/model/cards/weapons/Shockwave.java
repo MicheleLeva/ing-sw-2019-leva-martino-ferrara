@@ -62,7 +62,6 @@ public class Shockwave extends WeaponAlternative {
             return;
         }
         if(getModel().getCurrent().getBaseCounter() == 1) {
-            System.out.println("SHOCKWAVEBBB");
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {
@@ -71,7 +70,7 @@ public class Shockwave extends WeaponAlternative {
                     if (player2.getPosition() == player.getPosition()) {
                         flag = true;
                     }
-                if(flag == false)
+                if(!flag)
                     availableTargets.add(player);
             }
             if(availableTargets.isEmpty()){
@@ -83,7 +82,6 @@ public class Shockwave extends WeaponAlternative {
             return;
         }
         if(getModel().getCurrent().getBaseCounter() == 2) {
-            System.out.println("SHOCKWAVEAAA");
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {
@@ -92,7 +90,7 @@ public class Shockwave extends WeaponAlternative {
                     if (player2.getPosition() == player.getPosition()) {
                         flag = true;
                     }
-                if(flag == false)
+                if(!flag)
                     availableTargets.add(player);
             }
             if(availableTargets.isEmpty()){

@@ -1,5 +1,6 @@
 package controller;
 
+import model.Ammo;
 import model.Model;
 import model.adrenaline_exceptions.TagbackGrenadeException;
 import model.adrenaline_exceptions.TargetingScopeException;
@@ -155,7 +156,8 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         else {
 
             if (choice == 'Y') {
-                getModel().targetingScopeTargets(event.getPlayerColor(),getModel().getCurrent().getAllDamagedPlayer());
+                getModel().askScopePayment(getModel().getPlayer(event.getPlayerColor()));
+                //getModel().targetingScopeTargets(event.getPlayerColor(),getModel().getCurrent().getAllDamagedPlayer());
             } else {
                 if(!getModel().getCurrent().getAllTargetingScopes().isEmpty())
                     getModel().getCurrent().getAllTargetingScopes().remove(0);
@@ -195,20 +197,22 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         else{
             Player player = getModel().getCurrent().getAllDamagedPlayer().get(input-1);
             getModel().addDamage(event.getPlayerColor(),player.getPlayerColor(),1);
-            if(!getModel().getCurrent().getAllTargetingScopes().isEmpty())
-            getModel().getCurrent().getAllTargetingScopes().remove(0);
 
             for(PowerUp powerUp : powerUpsClone){
-                if(powerUp instanceof TargetingScope){
+                if(    !getModel().getCurrent().getAllTargetingScopes().isEmpty() &&
+                        powerUp == getModel().getCurrent().getAllTargetingScopes().get(0)){
                     getModel().getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
                     currentPlayer.getResources().getPowerUp().remove(powerUp);
                     break;
                 }
-
             }
 
+            if(!getModel().getCurrent().getAllTargetingScopes().isEmpty())
+                getModel().getCurrent().getAllTargetingScopes().remove(0);
+
+
             for(PowerUp powerUp : getModel().getCurrent().getAllTargetingScopes()){
-                if(powerUp instanceof TargetingScope){
+                if(powerUp instanceof TargetingScope && currentPlayer.getResources().hasOneCube()){
                     getModel().getCurrent().setLastTargetingScope((TargetingScope)powerUp);
                     getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor(),powerUp);
                     return;
@@ -279,5 +283,30 @@ public class PowerUpController extends Controller implements PowerUpObserver {
                 getModel().discardPowerUp(currentPlayer,input-1);
                 //discards the chosen powerUp
         }
+    }
+
+    @Override
+    public void update(ScopePaymentEvent event){
+        if (getModel().getPlayer(event.getPlayerColor()).isAfk()){
+            return;
+        }
+
+        Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+        if((Character.toLowerCase(event.getChoice()) == 'r')&&currentPlayer.getResources().getAvailableAmmo().getRed()>0){
+            currentPlayer.getResources().getAvailableAmmo().remove(new Ammo(1,0,0));
+        }
+        else if((Character.toLowerCase(event.getChoice()) == 'b')&&currentPlayer.getResources().getAvailableAmmo().getBlue()>0){
+            currentPlayer.getResources().getAvailableAmmo().remove(new Ammo(0,1,0));
+        }
+        else if((Character.toLowerCase(event.getChoice()) == 'y')&&currentPlayer.getResources().getAvailableAmmo().getYellow()>0){
+            currentPlayer.getResources().getAvailableAmmo().remove(new Ammo(0,0,1));
+        }
+        else{
+            event.getView().reportError("Invalid input: Try again!");
+            getModel().askScopePayment(currentPlayer);
+            return;
+        }
+        getModel().targetingScopeTargets(currentPlayer.getPlayerColor(),getModel().getCurrent().getAllDamagedPlayer());
+
     }
 }

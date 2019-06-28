@@ -88,19 +88,9 @@ public class Model {
      * @param skulls number of skulls on the killShotTrack
      */
     public Model(ArrayList<Player> playersList, int skulls) {
-//todo chiedi se serve iniializzare il gameboard
         for (int i = 0; i < playersList.size();i++){
             players.put(playersList.get(i).getPlayerColor(),playersList.get(i));
         }
-        /*players.put(PlayerColor.BLUE, playersList.get(0));
-        players.put(PlayerColor.GREEN, playersList.get(1));
-        players.put(PlayerColor.PURPLE, playersList.get(2));
-        if (playersList.size() == 4) {
-            players.put(PlayerColor.YELLOW, playersList.get(3));
-        }
-        if (playersList.size() == 5) {
-            players.put(PlayerColor.GREY, playersList.get(4));
-        }*/
 
         this.skulls = skulls;
         current = new Current();
@@ -339,8 +329,6 @@ public class Model {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistanceMore = new ArrayList<>();
         ArrayList<Player> playersAtDistance = getPlayersAtDistance(distance, currentPlayer);
-        for(Player player : playersAtDistance)
-            System.out.println("name 1:" + player.getPlayerName());
         ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
         for (Player player : allPlayers) {
             if (!playersAtDistance.contains(player))
@@ -348,8 +336,7 @@ public class Model {
         }
         if (playersAtDistanceMore.contains(currentPlayer))
             playersAtDistanceMore.remove(currentPlayer);
-        for(Player player : playersAtDistanceMore)
-            System.out.println("name 2:" + player.getPlayerName());
+
         return playersAtDistanceMore;
     }
 
@@ -385,7 +372,6 @@ public class Model {
     public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal) {
         ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
         ArrayList<Player> finalPlayers = new ArrayList<>();
-        System.out.println("cardinal : " + cardinal);
         if (cardinal == 'n') {
             for (Player player : allPlayers)
                 if (player.getPosition().getSquareColumn() == currentPlayer.getPosition().getSquareColumn() &&
@@ -557,29 +543,7 @@ public class Model {
         toOthers = player.getColoredName() + " just spawned at " + spawnSquare.getID();
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
     }
-    //todo rivedere
-    /*private boolean canRecharge(Player player) {
-        ArrayList<Weapon> reloadableWeapon = player.getResources().getReloadableWeapon();
-        Ammo allAmmoAvailable = new Ammo(player.getResources().getAvailableAmmo());
-        ArrayList<PowerUp> powerUp = player.getResources().getPowerUp();
 
-        for (int i = 0; i < powerUp.size(); i++) {
-            allAmmoAvailable.addAmmo(powerUp.get(i).getAmmo());
-        }
-
-        boolean result = false;
-        //controlla nel ciclo while se getBaseCost è corretto
-        for (int i = 0; i < reloadableWeapon.size(); i++) {
-            while (!result) {
-                if (allAmmoAvailable.isEnough(reloadableWeapon.get(i).getBaseCost())) {
-                    result = true;
-                }
-            }
-        }
-
-        return result;
-    }
-*/
     /**
      * Notifies all the player that the Run Move is completed
      */
@@ -658,7 +622,7 @@ public class Model {
             if(player.getPosition() == null || player.getPlayerColor().equals(playerColor))
                 allPlayersCopy.remove(player);
         if(allPlayersCopy.isEmpty()){
-            getGameNotifier().notifyGeneric("You have no targets to move!");
+            getGameNotifier().notifyPlayer("You have no targets to move!",playerColor);
             getCurrent().setSelectedNewton(null);
             chooseAction(playerColor);
             return;
@@ -737,7 +701,7 @@ public class Model {
         String effectType = weapon.getWeaponTree().getLastAction().getData().getType();
         if(availableTargets.isEmpty()){
             if(weapon.getWeaponTree().getRoot().getChildren().contains(weapon.getWeaponTree().getLastAction())){
-                getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+                getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",playerColor);
                 weapon.getWeaponTree().resetAction();
                 resetCurrent();
                 getCurrent().setSelectedWeapon(weapon);
@@ -745,7 +709,7 @@ public class Model {
                 return;
             }
             else{
-                getGameNotifier().notifyGeneric("No available targets with this Fire Mode you didn't hit anybody");
+                getGameNotifier().notifyPlayer("No available targets with this Fire Mode you didn't hit anybody",playerColor);
                 switch (effectType){
                     case "base":
                         weapon.askBaseRequirements(currentPlayer);
@@ -764,10 +728,12 @@ public class Model {
 
             }
         }
+        int j = 1;
         for (int i = 0; i < availableTargets.size(); i++) {
             if (availableTargets.get(i).getPlayerColor() != playerColor) {
                 current.addOpponent(availableTargets.get(i));
-                opponentList = opponentList + availableTargets.get(i).getPlayerName() + " | ";
+                opponentList = opponentList+(j) + ". "+availableTargets.get(i).getPlayerName() + " | \n";
+                j++;
             }
         }
         weaponNotifier.selectTargets(playerColor, opponentList, targetsNumber);
@@ -786,16 +752,18 @@ public class Model {
                 FireModes.add(fireMode);
         }
         if(FireModes.size()==1 && FireModes.get(0).getData().getType().equals("end")){
-            for(PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()){
-                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()){
-                    current.addAllTargetingScopes((TargetingScope) powerUp);
+            if(getPlayer(playerColor).getResources().hasOneCube()) {
+                for (PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()) {
+                    if (powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()) {
+                        current.addAllTargetingScopes((TargetingScope) powerUp);
+                    }
                 }
-            }
-            for(PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()){
-                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()){
-                    current.setLastTargetingScope((TargetingScope) powerUp);
-                    powerUpNotifier.askTargetingScope(getPlayer(playerColor).getPlayerColor(),powerUp);
-                    return;
+                for (PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()) {
+                    if (powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()) {
+                        current.setLastTargetingScope((TargetingScope) powerUp);
+                        powerUpNotifier.askTargetingScope(getPlayer(playerColor).getPlayerColor(), powerUp);
+                        return;
+                    }
                 }
             }
             notifyShoot(getPlayer(playerColor));
@@ -1008,7 +976,6 @@ public class Model {
             }
             default: fireModeCost = new Ammo(0,0,0);
         }
-            System.out.println(fireModeCost);
             fireRED = fireModeCost.getRed();
             fireBLUE = fireModeCost.getBlue();
             fireYELLOW = fireModeCost.getYellow();
@@ -1028,17 +995,9 @@ public class Model {
             currentPlayer.getResources().removePowerUp(powerUp);
             getGameBoard().getDecks().getDiscardedPowerUpDeck().add(powerUp);
         }
-        System.out.println(currentPlayer.getResources().getAllAmmo());
-        System.out.println(currentPlayer.getResources().getAvailableAmmo());
-        System.out.println(powerUpRED);
-        System.out.println(powerUpBLUE);
-        System.out.println(powerUpYELLOW);
         fireRED = fireRED-powerUpRED;
         fireBLUE = fireBLUE-powerUpBLUE;
         fireYELLOW = fireYELLOW-powerUpYELLOW;
-        System.out.println(fireRED);
-        System.out.println(fireBLUE);
-        System.out.println(fireYELLOW);
         Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         current.getSelectedPaymentPowerUps().clear();
@@ -1062,10 +1021,8 @@ public class Model {
         fireYELLOW = fireModeCost.getYellow();
 
         if(currentPlayer.getResources().getPowerUp().isEmpty()){
-            System.out.println("sono in askfiremodepayment1");
             switch (effectType){
                 case("alternative"):
-                    System.out.println("sono in askfiremodepayment2");
                     ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
                     break;
                 case("optional1"):
@@ -1088,13 +1045,11 @@ public class Model {
         }
 
         if(getCurrent().getAvailablePaymentPowerUps().isEmpty()){
-            System.out.println("sono in askfiremodepayment3");
             switch (effectType){
                 case("alternative"):
                     ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
                     break;
                 case("optional1"):
-                    System.out.println("asfiremodepayment in model" + currentPlayer.getResources().getAvailableAmmo());
                     ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
                     break;
                 case("optional2"):
@@ -1147,7 +1102,6 @@ public class Model {
      */
     public void chooseWeaponSquare(PlayerColor playerColor, ArrayList<Square> squares) {
         current.setAvailableWeaponSquares(squares);
-        System.out.println("chooseweaponsquare base");
         weaponNotifier.chooseWeaponSquare(playerColor, squares);
     }
 
@@ -1176,22 +1130,24 @@ public class Model {
      * @param selectedTargets targets the player has hit
      */
     public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
-        //todo controllare updatelastactionperformed
+
         weapon.unload();
         weapon.getWeaponTree().updateLastActionPerformed();
 
         if (weapon.getWeaponTree().isActionEnded()) {
             weapon.getWeaponTree().resetAction();
-            for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()){
-                    current.addAllTargetingScopes((TargetingScope) powerUp);
+            if(currentPlayer.getResources().hasOneCube()) {
+                for (PowerUp powerUp : currentPlayer.getResources().getPowerUp()) {
+                    if (powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()) {
+                        current.addAllTargetingScopes((TargetingScope) powerUp);
+                    }
                 }
-            }
-            for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty() ){
-                    current.setLastTargetingScope((TargetingScope) powerUp);
-                    powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor(),powerUp);
-                    return;
+                for (PowerUp powerUp : currentPlayer.getResources().getPowerUp()) {
+                    if (powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()) {
+                        current.setLastTargetingScope((TargetingScope) powerUp);
+                        powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor(), powerUp);
+                        return;
+                    }
                 }
             }
             notifyShoot(currentPlayer);
@@ -1244,24 +1200,21 @@ public class Model {
         gameNotifier.notifyDrawAmmo(playerColor, currentPlayer.getPlayerName(), ammo.toString());
     }
 
-/*    public void askReloadEndTurn(PlayerColor playerColor) {
-        Player currentPlayer = getPlayer(playerColor);
-        if (!currentPlayer.getResources().getReloadableWeapon().isEmpty()){
-            String reloadableWeapon = currentPlayer.getResources().showReloadableWeapon();
-            weaponNotifier.askReload(playerColor, reloadableWeapon);
-        } else {
-            getTurnCurrent().setFinishedReloading(true);
-            getTurnCurrent().setReceivedInput(true);
-        }
-    }*/
-
     /**
      * Sends the player a list of the weapons he can reload
      * @param playerColor current player color
      */
     public void requestWeaponReload(PlayerColor playerColor) {
         Player currentPlayer = getPlayer(playerColor);
+        Ammo allAmmo = currentPlayer.getResources().getAllAmmo();
         ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
+        ArrayList<Weapon> reloadableWeaponCopy = new ArrayList<>(reloadableWeapon);
+        for(Weapon weapon : reloadableWeaponCopy){
+            Ammo cost = weapon.getBaseCost();
+            if(cost.getRed()>allAmmo.getRed() || cost.getBlue()>allAmmo.getBlue() || cost.getYellow()>allAmmo.getYellow()){
+                reloadableWeapon.remove(weapon);
+            }
+        }
         current.setReloadableWeapon(reloadableWeapon);
         String reloadableWeaponList = currentPlayer.getResources().showReloadableWeapon();
         String availableAmmoList = currentPlayer.getResources().getAvailableAmmo().toString();
@@ -1321,8 +1274,11 @@ public class Model {
         }
     }
 
-    //va chiamato sempre alla fine del turno su tutti i giocatori colpiti dopo aver valutato i marchi e i giocatori morti
-    //todo
+    /**
+     *  Called at the end of Turn on all damaged players after having managed marks and dead players to
+     *  set the Frenzy action tree
+     */
+
     public void verifyNewAction(PlayerColor playerColor) {
         Player player = getPlayer(playerColor);
         int currentTreeID = player.getActionTree().getID();
@@ -1360,9 +1316,12 @@ public class Model {
      * @param damagedPlayers players that have been damaged
      */
     public void targetingScopeTargets(PlayerColor playerColor, ArrayList<Player> damagedPlayers){
-        String message="Select Targeting Scope target: ";
-        for(Player player : damagedPlayers)
-            message = message + player.getPlayerName() + " | ";
+        String message="Select Targeting Scope target: \n";
+        int i=1;
+        for(Player player : damagedPlayers) {
+            message =  message+ i + ". " + player.getPlayerName() + " | \n";
+            i++;
+        }
         powerUpNotifier.targetingScopeTargets(playerColor,message);
     }
 
@@ -1461,6 +1420,18 @@ public class Model {
         currentPlayer.getResources().getAllWeapon().remove(input-1);
         resetCurrent();
         updateAction();
+    }
+
+    public void askScopePayment(Player player){
+        String message = "Choose the color of the cube to pay: \n";
+        message = message + player.getResources().getAvailableAmmo().toString()+"\n";
+        if(player.getResources().getAvailableAmmo().getRed()>0)
+            message = message + CLI.getRed()+"R "+CLI.getResetString();
+        if(player.getResources().getAvailableAmmo().getBlue()>0)
+            message = message + CLI.getBlue()+"B "+CLI.getResetString();
+        if(player.getResources().getAvailableAmmo().getYellow()>0)
+            message = message + CLI.getYellow()+"Y "+CLI.getResetString();
+        powerUpNotifier.askScopePayment(player.getPlayerColor(),message);
     }
 }
 

@@ -60,7 +60,7 @@ public class Shotgun extends  WeaponAlternative{
             return;
         }
         if(getModel().getCurrent().getBaseCounter() == 1){
-            ArrayList<Square> squares = getModel().runnableSquare(1,getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
+            ArrayList<Square> squares = Model.runnableSquare(1,getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else

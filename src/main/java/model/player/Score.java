@@ -25,14 +25,4 @@ public class Score {
         return score;
 
     }
-
-    //todo servono ancora?
-    /*public void addNumKillShot(){
-        numKillShot++;
-    }
-
-    public int getNumKillShot(){
-        return numKillShot;
-    }*/
-
 }

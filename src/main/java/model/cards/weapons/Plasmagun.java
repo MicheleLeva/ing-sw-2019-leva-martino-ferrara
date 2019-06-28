@@ -46,7 +46,7 @@ public class Plasmagun extends WeaponOptional2 {
     @Override
     public void askOptionalRequirements1(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter1()== 0) {
-            ArrayList<Square> squares = getModel().runnableSquare(2, currentPlayer.getPosition());
+            ArrayList<Square> squares = Model.runnableSquare(2, currentPlayer.getPosition());
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
 

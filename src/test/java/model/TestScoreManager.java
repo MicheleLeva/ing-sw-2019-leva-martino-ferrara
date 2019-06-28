@@ -1,6 +1,5 @@
 package model;
 
-import model.player.DamageCounter;
 import model.player.Player;
 import model.player.PlayerColor;
 

@@ -1,11 +1,7 @@
 package model.player.action;
 
-import model.player.Player;
-import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 public class TestActionTree {
@@ -54,7 +50,7 @@ public class TestActionTree {
         int performedAction = actionTree.getPerformedAction();
         actionTree.getLastAction().getChildren().clear();
         actionTree.updateAction();
-        assertTrue(actionTree.getPerformedAction() == performedAction + 1);
+        assertEquals(actionTree.getPerformedAction(), performedAction + 1);
     }
     @Test
     public void testSetMoveEnded(){

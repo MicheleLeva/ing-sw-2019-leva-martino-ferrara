@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 public class TestEndAction {
@@ -26,9 +25,9 @@ public class TestEndAction {
         try{
             int performedAction = playerTest.getActionTree().getPerformedAction();
             endAction.perform(modelTest,playerTest.getPlayerColor());
-            assertTrue(playerTest.getActionTree().getPerformedAction() == performedAction + 1);
+            assertEquals(playerTest.getActionTree().getPerformedAction(), performedAction + 1);
             assertTrue(playerTest.getActionTree().isMoveEnded());
-            assertTrue(playerTest.getActionTree().getLastActionPerformed().equals(playerTest.getActionTree().getLastAction()));
+            assertEquals(playerTest.getActionTree().getLastActionPerformed(), playerTest.getActionTree().getLastAction());
 
             ActionTree actionTree = playerTest.getActionTree();
             assertTrue(actionTree.checkAction(KeyMap.getMoveUp()));

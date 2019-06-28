@@ -3,7 +3,6 @@ package controller;
 import model.Ammo;
 import model.Model;
 import model.cards.AmmoColor;
-import model.cards.powerups.TagbackGrenade;
 import model.cards.powerups.TargetingScope;
 import model.cards.powerups.Teleporter;
 import model.cards.weapons.*;
@@ -219,9 +218,9 @@ public class TestWeaponController {
         model.getCurrent().setSelectedWeapon(electroscythe);
         electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
         weaponController.update(event);
-        assertEquals(player1.getResources().getAvailableAmmo().getRed(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getBlue(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getYellow(),1);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
         model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
         choices.clear();
         choices.add(1);
@@ -255,9 +254,9 @@ public class TestWeaponController {
         event = new ReloadPaymentEvent(view,choices);
         model.getCurrent().setSelectedWeapon(electroscythe);
         weaponController.update(event);
-        assertEquals(player1.getResources().getAvailableAmmo().getRed(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getBlue(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getYellow(),1);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
         model.getCurrent().setSelectedWeapon(electroscythe);
         model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
         choices.clear();
@@ -265,9 +264,9 @@ public class TestWeaponController {
         event = new ReloadPaymentEvent(view,choices);
         player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
         weaponController.update(event);
-        assertEquals(player1.getResources().getAvailableAmmo().getRed(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getBlue(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getYellow(),1);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
 
     }
 
@@ -292,9 +291,9 @@ public class TestWeaponController {
         event = new PickUpPaymentEvent(view,choices);
         model.getCurrent().setSelectedPickUpWeapon(electroscythe);
         weaponController.update(event);
-        assertEquals(player1.getResources().getAvailableAmmo().getRed(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getBlue(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getYellow(),1);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
         model.getCurrent().setSelectedPickUpWeapon(electroscythe);
         model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
         choices.clear();
@@ -302,9 +301,9 @@ public class TestWeaponController {
         event = new PickUpPaymentEvent(view,choices);
         player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
         weaponController.update(event);
-        assertEquals(player1.getResources().getAvailableAmmo().getRed(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getBlue(),1);
-        assertEquals(player1.getResources().getAvailableAmmo().getYellow(),1);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
 
     }
 

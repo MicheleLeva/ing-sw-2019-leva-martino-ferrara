@@ -1,21 +1,15 @@
 package model.player.action;
-import model.Ammo;
 import model.Model;
-import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.adrenaline_exceptions.NoPowerUpException;
-import model.adrenaline_exceptions.NoReloadableWeaponsException;
 import model.cards.AmmoColor;
 import model.cards.powerups.PowerUp;
 import model.cards.powerups.Teleporter;
-import model.cards.weapons.Cyberblade;
-import model.cards.weapons.Weapon;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 public class TestUsePowerUp {

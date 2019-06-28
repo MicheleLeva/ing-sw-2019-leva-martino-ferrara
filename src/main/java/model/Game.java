@@ -1,5 +1,6 @@
 package model;
 
+import model.player.Player;
 import model.turn.Turn;
 import network.server.Server;
 
@@ -80,7 +81,8 @@ public class Game implements Runnable{
      * It loops a turn until the game has ended, then shows the rank and signals the server to close the game.
      */
     public void run(){
-        /*for (Player player : model.getAllPlayers()) {
+        //todo
+        for (Player player : model.getEachPlayer()) {
             model.mapVote(player);
 
             Timer mapTimer = new Timer();
@@ -92,21 +94,20 @@ public class Game implements Runnable{
                 }
             };
             mapTimer.schedule(turnMapTimerOff, mapTime);
-            model.getCurrent().setReceivedInput(false);
-            while (!model.getCurrent().isReceivedInput()){
+            model.getTurnCurrent().setReceivedInput(false);
+            while (!model.getTurnCurrent().isReceivedInput()){
                 System.out.print("");
                 if (!isMapTimerOn){
-                    model.setPlayerAfk(player);
                     mapTimer.cancel();
-                    model.getCurrent().setReceivedInput(true);
+                    model.getTurnCurrent().setReceivedInput(true);
                 }
             }
             mapTimer.cancel();
         }
         int vote = getMapVote();
         System.out.println("Chosen map: " + vote);
-        model.setGameBoard(vote);*/
-        model.setGameBoard(1);
+        model.setGameBoard(vote);
+        //model.setGameBoard(1);
         while(!model.getTurnManager().isGameOver()){
             Turn currentTurn = new Turn(model,model.getTurnManager().isFrenzy());
             currentTurn.notifyTurn();

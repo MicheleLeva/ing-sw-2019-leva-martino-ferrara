@@ -21,7 +21,6 @@ public abstract class Weapon extends Card {
     protected int baseMarks;
     protected int baseTargetsNumber;
     private final Model model;
-     //todo inserire costo di ricarica  e modificare metodo canReload in Checks
     private WeaponTree weaponTree;
 
 
@@ -51,7 +50,6 @@ public abstract class Weapon extends Card {
         this.model = model;
         this.pickUpCost = pickUpCost;
         this.isReloaded = true;
-        //todo assegnare weapontree
     }
 
     public String getWeaponName(){
@@ -170,7 +168,6 @@ public abstract class Weapon extends Card {
         }
 
         getModel().payFireMode(currentPlayer,weapon);
-
         getModel().checkNextWeaponAction(weapon, currentPlayer, selectedTargets);
     }
 

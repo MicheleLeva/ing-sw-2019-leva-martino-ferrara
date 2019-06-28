@@ -1,6 +1,5 @@
 package controller;
 
-import model.GameBoard;
 import model.Model;
 import model.cards.AmmoColor;
 import model.cards.powerups.TagbackGrenade;
@@ -132,7 +131,8 @@ public class TestPowerUpController {
     @Test
     public void testTargetingScopeSelectionEvent() {
         ArrayList<Player> selected = new ArrayList<>();
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        Teleporter teleporter = new Teleporter(model,AmmoColor.BLUE);
+        player1.getResources().getPowerUp().add(teleporter);
         model.getCurrent().getAllDamagedPlayer().add(player2);
         TargetingScopeSelectionEvent event = new TargetingScopeSelectionEvent(view,0);
         player1.setAfk(true);

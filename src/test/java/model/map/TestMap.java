@@ -1,12 +1,10 @@
 package model.map;
 
-import model.cards.AmmoColor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -19,11 +17,10 @@ public class TestMap {
     private Map map;
 
     @Before
-    public void initMap() throws IOException, ParseException {
-       /* map = new Map(4);
-       map = new Map(5);
-        map = new Map(6);
-        map = new Map(7);*/
+    public void initMap()  {
+        map = new Map(2);
+       map = new Map(3);
+        map = new Map(4);
         map = new Map(1);
     }
 
@@ -36,7 +33,7 @@ public class TestMap {
     public void testMapLayout() throws IOException, ParseException {
 
        String nome;
-       nome = new String("src/resources/map1.json");
+       nome = "src/resources/map1.json";
        int k=0;
        JSONParser parser = new JSONParser();
 
@@ -101,7 +98,7 @@ public class TestMap {
        assertTrue(mapTest[0][2].isSpawn);
        assertNull(mapTest[0][3]);
        assertTrue(mapTest[1][0].isSpawn);
-       assertTrue(mapTest[0][2].getColor().equals(SquareColor.BLUE));
+       assertEquals(SquareColor.BLUE,mapTest[0][2].getColor());
        assertTrue(mapTest[2][3].isSpawn);
        //System.out.println(map.getSpawnSquare(SquareColor.BLUE).getSquareRow());
        assertEquals(map.getSpawnSquare(SquareColor.RED),mapTest[1][0]);
@@ -125,9 +122,7 @@ public class TestMap {
            Object obj = parser.parse(new FileReader(nome));
        }
        catch (FileNotFoundException e) {throw new FileNotFoundException();}
-       catch (IOException e) {
-           e.printStackTrace();
-       } catch (ParseException e) {
+       catch (IOException | ParseException e) {
            e.printStackTrace();
        }
    }

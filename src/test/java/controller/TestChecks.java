@@ -1,7 +1,6 @@
 package controller;
 
 import model.Ammo;
-import model.Current;
 import model.Model;
 import model.cards.AmmoColor;
 import model.cards.powerups.PowerUp;
@@ -9,7 +8,6 @@ import model.cards.powerups.Teleporter;
 import model.cards.weapons.*;
 import model.player.Player;
 import model.player.PlayerColor;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -36,9 +34,9 @@ public class TestChecks {
         Ammo grabbedAmmo = new Ammo(0,2,3);
         Ammo playerAmmo = new Ammo(1,1,1);
         Ammo drawnAmmo = Checks.drawnAmmo(grabbedAmmo,playerAmmo);
-        assertEquals(drawnAmmo.getRed(),0);
-        assertEquals(drawnAmmo.getBlue(),2);
-        assertEquals(drawnAmmo.getYellow(),2);
+        assertEquals(0,drawnAmmo.getRed());
+        assertEquals(2,drawnAmmo.getBlue());
+        assertEquals(2,drawnAmmo.getYellow());
 
 
     }
@@ -87,10 +85,10 @@ public class TestChecks {
         int playerDamage = 8;
         int damage = 6;
         int result = Checks.givenDamage(playerDamage,damage);
-        assertEquals(result,4);
+        assertEquals(4,result);
         damage = 2;
         result = Checks.givenDamage(playerDamage,damage);
-        assertEquals(result,2);
+        assertEquals(2,result);
     }
 
     /**
@@ -101,10 +99,10 @@ public class TestChecks {
         int playerMarks = 2;
         int marks = 3;
         int result = Checks.givenMark(playerMarks,marks);
-        assertEquals(result,1);
+        assertEquals(1,result);
         marks = 0;
         result = Checks.givenMark(playerMarks,marks);
-        assertEquals(result,0);
+        assertEquals(0,result);
     }
 
     /**
@@ -114,13 +112,13 @@ public class TestChecks {
     public void testVerifyNewAction() {
         Player player = new Player("player1",PlayerColor.BLUE);
         int result = Checks.verifyNewAction(player);
-        assertEquals(result,1);
+        assertEquals(1,result);
         player.getPlayerBoard().getDamageCounter().addDamage(PlayerColor.YELLOW,3);
         result = Checks.verifyNewAction(player);
-        assertEquals(result,2);
+        assertEquals(2,result);
         player.getPlayerBoard().getDamageCounter().addDamage(PlayerColor.YELLOW,5);
         result = Checks.verifyNewAction(player);
-        assertEquals(result,3);
+        assertEquals(3,result);
 
     }
 
@@ -129,7 +127,7 @@ public class TestChecks {
      */
     @Test
     public void testGetMaxDamage() {
-        assertEquals(Checks.getMaxDamage(),12);
+        assertEquals(12,Checks.getMaxDamage());
     }
 
     /**
@@ -137,7 +135,7 @@ public class TestChecks {
      */
     @Test
     public void testGetKillshot() {
-        assertEquals(Checks.getKillshot(),11);
+        assertEquals(11,Checks.getKillshot());
     }
 
     /**
@@ -145,7 +143,7 @@ public class TestChecks {
      */
     @Test
     public void testGetDoubleKillShot() {
-        assertEquals(Checks.getDoubleKillShot(),2);
+        assertEquals(2,Checks.getDoubleKillShot());
 
     }
 

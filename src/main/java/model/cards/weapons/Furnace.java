@@ -23,7 +23,7 @@ public class Furnace extends WeaponAlternative {
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
-            ArrayList<Square> squares = getModel().runnableSquare(1,currentPlayer.getPosition());
+            ArrayList<Square> squares = Model.runnableSquare(1,currentPlayer.getPosition());
             ArrayList<Square> squaresCopy = new ArrayList<>(squares);
             squares.remove(currentPlayer.getPosition());
             boolean flag;

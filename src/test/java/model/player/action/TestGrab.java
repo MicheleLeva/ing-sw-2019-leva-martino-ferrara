@@ -5,10 +5,8 @@ import model.Model;
 import model.adrenaline_exceptions.CannotPayException;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.MaxAmmoException;
-import model.adrenaline_exceptions.WallException;
 import model.cards.AmmoCard;
 import model.cards.weapons.Cyberblade;
-import model.cards.weapons.Weapon;
 import model.map.Map;
 import model.map.Square;
 import model.map.SquareColor;
@@ -53,7 +51,7 @@ public class TestGrab {
         }
         catch(Exception e){
             assertTrue(e instanceof MaxAmmoException);
-            assertTrue(playerTest.getResources().getPowerUp().size() == currentPowerUpNumber + 1);
+            assertEquals(playerTest.getResources().getPowerUp().size(), currentPowerUpNumber + 1);
         }
 
         try{

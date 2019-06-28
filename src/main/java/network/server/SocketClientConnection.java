@@ -48,7 +48,7 @@ public class SocketClientConnection extends Observable<String> implements Client
         try{
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            /*while (!nameAccepted){
+            while (!nameAccepted){
                 playerName = in.nextLine();
                 if (server.nameAvailable(playerName)){
                     if(server.checkAfk(playerName)){
@@ -67,9 +67,9 @@ public class SocketClientConnection extends Observable<String> implements Client
                     asyncSend("no");
                 }
             }
-            String read;*/
+            String read;
             //todo modificato per velocizzare test
-            int c = 0;
+            /*int c = 0;
             for (Map.Entry<String, ClientConnection> entry : server.getWaitingConnection().entrySet()){
                 if (entry.getKey().equals("Asdrubale")){
                     c ++;
@@ -92,7 +92,7 @@ public class SocketClientConnection extends Observable<String> implements Client
                 server.addPlayer(this, "Carlo");
             }
             String read;
-            asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");
+            asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");*/
             //todo modificato per velocizzare test
             while(isActive()){
                 read = in.nextLine();

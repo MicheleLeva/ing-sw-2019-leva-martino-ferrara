@@ -1,6 +1,7 @@
 package model;
 
 import model.cards.AmmoColor;
+import model.map.SquareColor;
 import model.player.PlayerColor;
 
 import java.io.FileNotFoundException;
@@ -58,6 +59,30 @@ public class CLI {
         else return YELLOW;
     }
 
+    public static String getColor(SquareColor squareColor){
+        if(squareColor == SquareColor.BLUE){
+            return BLUE;
+        }
+
+        if(squareColor == SquareColor.RED){
+            return RED;
+        }
+
+        if(squareColor == SquareColor.GREEN){
+            return GREEN;
+        }
+
+        if(squareColor == SquareColor.YELLOW){
+            return YELLOW;
+        }
+
+        if(squareColor == SquareColor.PURPLE){
+            return PURPLE;
+        }
+
+        else return "";
+    }
+
     public static String getSkull(){
         return SKULL;
     }
@@ -88,7 +113,7 @@ public class CLI {
         coloredMap = coloredMap.replaceAll("B",CONT_BLUE + "  "+RESET);
         coloredMap = coloredMap.replaceAll("w",CONT_GREY + "  " +RESET);
         coloredMap = coloredMap.replaceAll("S","  ");
-        coloredMap = coloredMap.replaceAll("G",CONT_GREEN +"  " +RESET); //todo trovare green
+        coloredMap = coloredMap.replaceAll("G",CONT_GREEN +"  " +RESET);
         coloredMap = coloredMap.replaceAll("P", CONT_PURPLE + "  " +RESET);
         return coloredMap;
     }

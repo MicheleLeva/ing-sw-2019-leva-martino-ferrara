@@ -43,8 +43,6 @@ public class Grenadelauncher extends WeaponOptional1 {
             return;
         }
         if(getModel().getCurrent().getBaseCounter() == 1) {
-            System.out.println(getModel().getCurrent().getSelectedBaseTargets());
-            System.out.println(getModel().getCurrent().getSelectedBaseTargets().get(0).getPlayerName());
             ArrayList<Square> squares = Model.runnableSquare(1, getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }

@@ -45,10 +45,10 @@ public class TestDecks {
         assertNull(decksTest.drawWeapon());
     }
 
-    @Test
     /**
      * Tests that the method returns a powerUp from deck
      */
+    @Test
     public void testDrawPowerUp(){
         PowerUp powerUp = decksTest.drawPowerUp();
         assertNotNull(powerUp);
@@ -56,10 +56,10 @@ public class TestDecks {
         assertNotNull(decksTest.drawWeapon());
     }
 
-    @Test
     /**
      * Tests that the method returns an AmmoCard from deck
      */
+    @Test
     public void testDrawAmmoCard(){
         AmmoCard ammoCard = decksTest.drawAmmoCard();
         assertNotNull(ammoCard);
@@ -68,43 +68,43 @@ public class TestDecks {
         assertNotNull(decksTest.drawAmmoCard());
     }
 
-    @Test
     /**
      * Tests the weapons deck getter
      */
+    @Test
     public void testGetWeaponsDeck() {
         assertNotNull(decksTest.getWeaponsDeck());
     }
 
+    /**
+     * Tests the powerUp deck getter
+     */
     @Test
     public void testGetPowerUpDeck() {
-        /**
-         * Tests the powerUp deck getter
-         */
         assertNotNull(decksTest.getPowerUpDeck());
     }
 
-    @Test
     /**
      * Tests the AmmoCard deck getter
      */
+    @Test
     public void testGetAmmoCardDeck() {
         assertNotNull(decksTest.getAmmoCardDeck());
     }
 
-    @Test
     /**
      * Tests the Discarded powerUp deck getter
      */
+    @Test
     public void testGetDiscardedPowerUpDeck() {
         assertNotNull(decksTest.getDiscardedPowerUpDeck());
     }
 
+    /**
+     * Tests the Discarded ammo deck getter
+     */
     @Test
     public void testGetDiscardedAmmoCardDeck() {
-        /**
-         * Tests the Discarded ammo deck getter
-         */
         assertNotNull(decksTest.getDiscardedAmmoCardDeck());
     }
 }

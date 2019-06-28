@@ -51,7 +51,7 @@ public class Cyberblade extends WeaponOptional2 {
     @Override
     public void askOptionalRequirements1(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter1()== 0) {
-            ArrayList<Square> squares = getModel().runnableSquare(1, currentPlayer.getPosition());
+            ArrayList<Square> squares = Model.runnableSquare(1, currentPlayer.getPosition());
                 endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
 
         }

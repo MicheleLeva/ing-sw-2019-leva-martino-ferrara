@@ -102,7 +102,7 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         int size = powerUps.size();
         int i = 1;
         String message = "Select the powerUps to pay with:  \n";
-        for(PowerUp powerUp : powerUps){//todo getname powerup
+        for(PowerUp powerUp : powerUps){
             message = message + i + ". " + powerUp.toString() + "\n";
             i++;
         }
@@ -117,7 +117,7 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         int size = powerUps.size();
         int i = 1;
         String message = "Select the power-ups to pay with :   \n";
-        for(PowerUp powerUp : powerUps){//todo getname powerup
+        for(PowerUp powerUp : powerUps){
             message = message + i + ". " + powerUp.toString() + "\n";
             i++;
         }

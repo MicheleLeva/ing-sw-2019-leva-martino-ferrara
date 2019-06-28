@@ -30,18 +30,6 @@ public class TurnCurrent {
         return grenadePeopleArray;
     }
 
-    //todo potrebbe non servire più
-    //lock to wait a player to reload
-    private boolean finishedReloading;
-
-    public boolean isFinishedReloading() {
-        return finishedReloading;
-    }
-
-    public void setFinishedReloading(boolean finishedReloading) {
-        this.finishedReloading = finishedReloading;
-    }
-
     //people awaiting respawn
     private ArrayList<Player> deadPlayers = new ArrayList<>();
 

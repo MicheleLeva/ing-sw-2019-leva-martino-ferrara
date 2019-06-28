@@ -40,8 +40,6 @@ public class Decks {
         addOptionalWeapons2();
     }
 
-    //todo
-
     /**
      * returns a random weapon from the weapon deck
      */
@@ -65,8 +63,6 @@ public class Decks {
         discardedPowerUpDeck.clear();
         return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
     }
-
-    //todo rivedere
 
     /**
      * returns a random Ammo Card from the Ammo Card deck

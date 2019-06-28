@@ -215,9 +215,13 @@ public class Turn {
         //print the map
         stringBuilder.append(getModel().getGameBoard().getMap().printMap());
         stringBuilder.append("\n");
+        //print weapons on spawn points
+        stringBuilder.append("SPAWN WEAPONS: \n");
+        stringBuilder.append(getModel().getGameBoard().getMap().showSpawnWeapons());
         //print all players info
-        if(currentTurnNumber != 1) {
-            ArrayList<Player> allPlayers = getModel().getAllPlayers();
+        if(currentTurnNumber != 0) {
+
+            ArrayList<Player> allPlayers = new ArrayList<>(getModel().getEachPlayer());
             for (int i = 0; i < allPlayers.size(); i++) {
                 stringBuilder.append(allPlayers.get(i).printPlayerInfo());
                 stringBuilder.append("\n");

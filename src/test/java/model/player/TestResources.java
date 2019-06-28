@@ -6,9 +6,7 @@ import model.cards.AmmoColor;
 import model.cards.powerups.Newton;
 import model.cards.powerups.PowerUp;
 import model.cards.weapons.LockRifle;
-import model.cards.weapons.Weapon;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;

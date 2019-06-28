@@ -132,20 +132,6 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
             toOthers = toOthers + " Damage: " + player.getPlayerBoard().getDamageCounter().printDamageCounter() + " |";
             toOthers = toOthers + " Marks: " + player.getPlayerBoard().getMarkCounter().printMarkCounter() + " |";
             toOthers = toOthers + " " + player.getResources().showAmmo() + " |";
-
-            /*while(damage>0){
-                toOthers = toOthers+"*";
-                damage--;
-            }*/
-           /* HashMap<PlayerColor,Integer> marks = new HashMap<>(player.getPlayerBoard().getMarkCounter().getMarkCounter());
-            for(PlayerColor color : marks.keySet()){
-                int num = marks.get(color);
-                while(num>0){
-                    toOthers = toOthers+color.toString().charAt(0);
-                    num--;
-
-                }
-            }*/
             toOthers = toOthers+"\n";
         }
 
@@ -170,21 +156,6 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
         currentPlayer.getActionTree().updateAction();
 
-        //todo
-        /*for(Map.Entry<PlayerColor , GameUpdate> entry : listeners.entrySet()){
-            PlayerColor currentPlayerColor = entry.getKey();
-            if(currentPlayerColor == currentPlayer.getPlayerColor()){
-                entry.getValue().update(new GenericMessage(toPlayer+"\n"+toOthers));
-            }
-            else{
-                if(targetsColor.contains(currentPlayerColor)){
-                    entry.getValue().update(new GenericMessage(toOpponent));
-                }
-                else{
-                    entry.getValue().update(new GenericMessage(toOthers));
-                }
-            }
-        }*/
     }
 
     public void notifyGeneric(String message){

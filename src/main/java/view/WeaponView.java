@@ -45,7 +45,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
         ArrayList<Integer> selectedTargets = new ArrayList<>();
         int counter = message.getTargetsNumber();
         int selection = 1;
-            System.out.println("targetsselection message  in weaponview");
             view.printMessage(message.getMessage());
             while(counter>0 && selection !=0){
                 selection = view.inputInt();

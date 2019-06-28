@@ -66,9 +66,7 @@ public class Map {
             mapCLI = CLI.buildCLIMap(CLIMapPath);
             Object obj = parser.parse(new FileReader(JSONpath));
             JSONObject myJo = (JSONObject) obj;
-            //System.out.println(myJo.get("map"));
             JSONArray myArray = (JSONArray) myJo.get("map");
-            //System.out.println(myArray.get(4));
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 4; j++) {
 
@@ -82,7 +80,6 @@ public class Map {
 
                     map[i][j].setID(ID);
                     ID++;
-                    //System.out.println(result1+"/n");
                     if (result1.get("NORTH").equals("wall")) map[i][j].setSide(Direction.NORTH, null);
                     if (result1.get("NORTH").equals("door")) map[i][j].setSide(Direction.NORTH, map[i-1][j]);
                     if (result1.get("NORTH").equals("square")) map[i][j].setSide(Direction.NORTH, map[i - 1][j]);
@@ -189,5 +186,20 @@ public class Map {
         return square;
     }
 
+    /**
+     * Shows spawn weapons
+     */
+    public String showSpawnWeapons(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = 0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                if(map[i][j]!=null && map[i][j].isSpawn){
+                    stringBuilder.append(map[i][j].showSpawnWeapons());
+                    stringBuilder.append("\n");
+                }
+            }
+        }
+        return stringBuilder.toString();
+    }
 }
 

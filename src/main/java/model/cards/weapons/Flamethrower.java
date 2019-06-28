@@ -130,7 +130,7 @@ public class Flamethrower extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
         }
         if(getModel().getCurrent().getFlamethrowerSupportPlayer()!=null)
-        getModel().addDamage(currentPlayer.getPlayerColor(),getModel().getCurrent().getFlamethrowerSupportPlayer().getPlayerColor(),this.getBaseDamage());
+            getModel().addDamage(currentPlayer.getPlayerColor(),getModel().getCurrent().getFlamethrowerSupportPlayer().getPlayerColor(),this.getBaseDamage());
         getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }

@@ -22,7 +22,8 @@ public class Whisper extends Weapon {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = new ArrayList<>();
             ArrayList<Player> visiblePlayers = getModel().getVisiblePlayers(currentPlayer);
-            ArrayList<Player> availableTargetsBase = getModel().getPlayersAtDistanceMore(2,currentPlayer);
+            ArrayList<Player> availableTargetsBase = getModel().getPlayersAtDistanceMore(1
+                    ,currentPlayer);
             for(Player player : availableTargetsBase)
                 if(visiblePlayers.contains(player))
                     availableTargets.add(player);

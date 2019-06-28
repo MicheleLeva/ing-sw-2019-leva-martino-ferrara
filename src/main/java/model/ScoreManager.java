@@ -83,7 +83,7 @@ public class ScoreManager {
         }
 
         //compute killshottrack points
-        unsortRank = model.getGameBoard().getKillShotTrack().getRank(); //todo aggiungere i frenzyTokens
+        unsortRank = model.getGameBoard().getKillShotTrack().getRank();
 
         killShotTrackRank = sortRank(unsortRank);
 
@@ -106,7 +106,6 @@ public class ScoreManager {
         for (PlayerColor playerColor : afkPlayers) {
             playerRank.remove(playerColor);
         }
-        //todo rivedere
         model.getGameNotifier().notifyGeneric(showPlayerRank());
         model.getGameNotifier().notifyGeneric(model.getPlayer(getWinner()).getColoredName() + " has won the game!");
     }
@@ -121,6 +120,7 @@ public class ScoreManager {
         Player first;
         Player second;
         Player winner;
+
 
         first = model.getPlayer(playerRank.get(0));
         second = model.getPlayer(playerRank.get(1));

@@ -60,6 +60,14 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
     }
 
     /**
+     *
+     */
+    public void askScopePayment(PlayerColor playerColor,String message){
+        PlayerMessage playerMessage = new ScopePaymentMessage(message);
+        notify(playerMessage,playerColor);
+    }
+
+    /**
      * Sends the list of targets to choose from for the targeting scope to the current player view
      */
     public void targetingScopeTargets(PlayerColor playerColor, String message){

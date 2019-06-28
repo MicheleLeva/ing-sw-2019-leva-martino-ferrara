@@ -19,7 +19,7 @@ public class Points {
     private ArrayList<Integer> frenzyPoints = new ArrayList<>();
     private int firstBlood;
     private int frenzyFirstBlood;
-    private final String path = "src/resources/playerPoints.json"; //todo settare e modificare il costruttore
+    private final String path = "src/resources/playerPoints.json";
 
     /**
      * Constructor for the Points class

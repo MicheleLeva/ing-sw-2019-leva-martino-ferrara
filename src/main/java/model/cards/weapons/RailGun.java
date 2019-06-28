@@ -34,7 +34,6 @@ public class RailGun extends WeaponAlternative {
             ArrayList<Player> secondAvailableTargets ;
             Player previousPlayer = getModel().getCurrent().getSelectedAlternativeTargets().get(0);
             this.firstPlayer = getModel().getCurrent().getSelectedAlternativeTargets().get(0);
-            System.out.println(getModel().getCurrent().getSelectedAlternativeTargets().get(0).getPlayerName());
             if(currentPlayer.getPosition().getSquareRow()==previousPlayer.getPosition().getSquareRow()) {
                 if (currentPlayer.getPosition().getSquareColumn() > previousPlayer.getPosition().getSquareColumn())
                     cardinal = 'w';

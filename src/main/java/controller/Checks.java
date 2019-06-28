@@ -17,9 +17,6 @@ import java.util.ArrayList;
  */
 public class Checks {
 
-    //public static boolean enoughAmmo(Card card, Ammo ammo){
-    //    return true;
-    //}
     private static final int MAX_AMMO = 3;
     private static final int MAX_POWERUP = 3;
     private static final int FIRST_DAMAGE_TRESHOLD = 2;
@@ -81,7 +78,7 @@ public class Checks {
      */
     public static boolean canReload(ArrayList<Weapon> weapon , Ammo allAmmo){
         for (int i = 0; i < weapon.size(); i++){
-            Ammo reloadCost = weapon.get(i).getBaseCost(); //todo ritornare il costo di ricarica
+            Ammo reloadCost = weapon.get(i).getBaseCost();
             if (allAmmo.isEnough(reloadCost)){
                 return true;
             }

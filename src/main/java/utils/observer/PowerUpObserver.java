@@ -13,6 +13,7 @@ public interface PowerUpObserver {
     void update(TargetingScopeEvent targetingScopeEvent);
     void update(TargetingScopeSelectionEvent event);
     void update(TagbackGrenadeEvent tagbackGrenadeEvent);
-
     void update(DiscardPowerUpEvent discardPowerUpEvent);
+
+    void update(ScopePaymentEvent event);
 }

@@ -14,4 +14,6 @@ public interface PowerUpUpdate {
     void update(TargetingScopeSelectionMessage targetingScopeSelectionMessage);
     void update(TagbackGrenadeMessage tagbackGrenadeMessage);
     void update(DiscardPowerUpMessage discardPowerUpMessage);
+
+    void update(ScopePaymentMessage scopePaymentMessage);
 }

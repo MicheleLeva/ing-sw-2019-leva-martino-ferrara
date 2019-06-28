@@ -28,7 +28,7 @@ public class Vortexcannon extends WeaponOptional1 {
                 availableSquares.remove(currentPlayer.getPosition());
             for (Square square : availableSquares) {
                 for (Player player : getModel().getAllPlayers())
-                    if (player != currentPlayer && getModel().runnableSquare(1, square).contains(player.getPosition()) &&
+                    if (player != currentPlayer && Model.runnableSquare(1, square).contains(player.getPosition()) &&
                     !chosenSquares.contains(square))
                         chosenSquares.add(square);
 

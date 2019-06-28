@@ -157,30 +157,6 @@ public class Resources {
         availableAmmo.setYellow(availableAmmo.getYellow()-yellow);
     }
 
-    //todo servono ancora?
-    /*public void removeFromAvailableAmmo(Ammo ammo){
-        availableAmmo.setRed(availableAmmo.getRed()-ammo.getRed());
-        availableAmmo.setBlue(availableAmmo.getBlue()-ammo.getBlue());
-        availableAmmo.setYellow(availableAmmo.getYellow()-ammo.getYellow());
-    }
-
-    public void addAmmo(Ammo ammoColor){
-
-
-    }
-
-    public boolean enoughAmmo(Ammo ammo){
-        int tempRed = availableAmmo.getRed();
-        int tempBlue = availableAmmo.getBlue();
-        int tempYellow = availableAmmo.getYellow();
-        Ammo tempAmmo = new Ammo(tempRed,tempBlue,tempYellow);
-        if(ammo.getRed()-tempRed>=0 &&
-            ammo.getBlue()-tempBlue>=0 &&
-            ammo.getYellow()-tempYellow>=0)
-            return true;
-        else
-            return false;
-    }*/
 
     /**
      * Returns a List containing the names of all the weapons a player can reload
@@ -206,22 +182,24 @@ public class Resources {
      */
     public String showReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapons = getReloadableWeapon();
+        Ammo allAmmo = getAllAmmo();
+        ArrayList<Weapon> reloadableWeaponsCopy = new ArrayList<>(reloadableWeapons);
         String result = "";
-        for (int i = 0; i < reloadableWeapons.size(); i++){
-            Weapon currentWeapon = reloadableWeapons.get(i);
+
+        for(Weapon weapon : reloadableWeapons){
+            Ammo cost = weapon.getBaseCost();
+            if(cost.getRed()>allAmmo.getRed() || cost.getBlue()>allAmmo.getBlue() || cost.getYellow()>allAmmo.getYellow()){
+                reloadableWeaponsCopy.remove(weapon);
+            }
+        }
+
+        for (int i = 0; i < reloadableWeaponsCopy.size(); i++){
+            Weapon currentWeapon = reloadableWeaponsCopy.get(i);
             result = result +(i + 1) +". " +currentWeapon.getWeaponName() +" Reload Cost: " +currentWeapon.getBaseCost() +".\n";
         }
         return result;
-    }
 
-    /*public String showPowerUp(){
-        String result = "";
-        for (int i = 0; i < powerUp.size(); i++){
-            PowerUp currentPowerUp = powerUp.get(i);
-            result = result +currentPowerUp.toString() +" Ammo: " +currentPowerUp.getAmmo().toString() +".\n";
-        }
-        return result;
-    }*/
+    }
 
     /**
      * Returns a string containing the names of all the unloaded weapons a player has
@@ -234,5 +212,12 @@ public class Resources {
         }
 
         return stringBuilder.toString();
+    }
+
+    public boolean hasOneCube(){
+        if(availableAmmo.getRed()>0 || availableAmmo.getBlue()>0 || availableAmmo.getYellow()>0)
+            return true;
+        else
+            return false;
     }
 }

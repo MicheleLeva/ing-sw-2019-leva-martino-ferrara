@@ -1,6 +1,5 @@
 package model.player.action;
 import model.Model;
-import model.adrenaline_exceptions.WallException;
 import model.map.Map;
 import model.map.Square;
 import model.player.Player;
@@ -47,7 +46,7 @@ public class TestRun {
             runAction.perform(modelTest,playerTest.getPlayerColor());
             assertNotEquals(square,playerTest.getPosition());
             ActionTree actionTree = playerTest.getActionTree();
-            assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getLastAction()));
+            assertEquals(actionTree.getLastActionPerformed(), actionTree.getLastAction());
         }
         catch(Exception e){
 
@@ -67,7 +66,7 @@ public class TestRun {
             runAction.perform(modelTest,playerTest.getPlayerColor());
             assertNotEquals(square,playerTest.getPosition());
             ActionTree actionTree = playerTest.getActionTree();
-            assertTrue(actionTree.getLastActionPerformed().equals(actionTree.getLastAction()));
+            assertEquals(actionTree.getLastActionPerformed(), actionTree.getLastAction());
         }
         catch(Exception e){
 

@@ -92,7 +92,7 @@ public class KillShotTrack {
             int tokenNumber = 0;
 
             for (int j = 0; j < killShotTrack.length; j++){
-                if (killShotTrack[j].getTokenColor() != null && //todo chiedere se è necessario (serve solo per test)
+                if (killShotTrack[j].getTokenColor() != null &&
                         killShotTrack[j].getTokenColor().equals(currentPlayerColor)){
                     tokenNumber = tokenNumber + killShotTrack[j].getTokenNumber();
                 }

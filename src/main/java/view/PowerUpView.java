@@ -87,4 +87,11 @@ public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
         Event event = new DiscardPowerUpEvent(view,view.inputInt());
         notify(event);
     }
+
+    @Override
+    public void update(ScopePaymentMessage scopePaymentMessage){
+        view.printMessage(scopePaymentMessage.getMessage());
+        Event event = new ScopePaymentEvent(view,view.inputChar());
+        notify(event);
+    }
 }

@@ -23,7 +23,5 @@ public class UsePowerUp extends Action {
         else{
             model.choosePowerUp(playerColor);
         }
-
-        //todo chiamare update action in model
     }
 }
