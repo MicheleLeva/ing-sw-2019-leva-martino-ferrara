@@ -314,16 +314,16 @@ public class Server {
         remoteViews.add(purpleView);
         playerViews.put(keys.get(2), purpleView);
 
-        if (waitingConnection.size()== 4){
+        if (waitingConnection.size()> 3){
             players.add(new Player(keys.get(3), PlayerColor.YELLOW));
             RemoteView yellowView = new RemoteView(PlayerColor.YELLOW, playingGroup.get(lastID).get(3));
             remoteViews.add(yellowView);
             playerViews.put(keys.get(3), yellowView);
         }
 
-        if (waitingConnection.size()== 5){
+        if (waitingConnection.size()> 4){
             players.add(new Player(keys.get(4), PlayerColor.GREY));
-            RemoteView greyView = new RemoteView(PlayerColor.YELLOW, playingGroup.get(lastID).get(4));
+            RemoteView greyView = new RemoteView(PlayerColor.GREY, playingGroup.get(lastID).get(4));
             remoteViews.add(greyView);
             playerViews.put(keys.get(4), greyView);
         }

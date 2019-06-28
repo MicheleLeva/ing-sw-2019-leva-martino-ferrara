@@ -20,6 +20,7 @@ public class Player {
     private Square position;
     private ActionTree actionTree;
     private boolean afk = false;
+    private boolean vote = false;
 
     private boolean isDead;
     private boolean isKillShot;
@@ -77,6 +78,14 @@ public class Player {
 
     public void setActionTree(int ID){
         actionTree = new ActionTree(ID);
+    }
+
+    public void setVote(boolean vote) {
+        this.vote = vote;
+    }
+
+    public boolean hasVoted(){
+        return vote;
     }
 
     /**

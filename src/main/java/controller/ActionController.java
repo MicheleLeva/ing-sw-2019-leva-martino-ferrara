@@ -1,5 +1,6 @@
 package controller;
 
+import model.CLI;
 import model.Model;
 import model.adrenaline_exceptions.*;
 import model.exchanges.events.QuitAfkEvent;
@@ -39,7 +40,7 @@ public class ActionController extends Controller implements ActionObserver {
         View view = actionEvent.getView();
         char move = actionEvent.getInput();
 
-        if(!TurnManager.isPlayerTurn(playerColor)){
+        if(!getModel().getTurnManager().isPlayerTurn(playerColor)){
             String error = "It's not your turn.\n";
             view.reportError(error);
             return;
@@ -96,7 +97,10 @@ public class ActionController extends Controller implements ActionObserver {
      */
     @Override
     public void update(VoteMapEvent voteMapEvent) {
-        if (getModel().getPlayer(voteMapEvent.getPlayerColor()).isAfk()){
+        Player player = getModel().getPlayer(voteMapEvent.getPlayerColor());
+        if (player.hasVoted() || player.isAfk()){
+            String error = CLI.getRed() + "Too late! Your vote has been ignored" + CLI.getResetString();
+            voteMapEvent.getView().reportError(error);
             return;
         }
         int input = Character.getNumericValue(voteMapEvent.getInput());
@@ -105,6 +109,9 @@ public class ActionController extends Controller implements ActionObserver {
             getModel().mapVote(getModel().getPlayer(voteMapEvent.getPlayerColor()));
         } else {
             getModel().getMapVotes().add(input);
+            String message = "You voted. Wait for the other players.";
+            getModel().getGameNotifier().notifyPlayer(message, voteMapEvent.getPlayerColor());
+            player.setVote(true);
             getModel().getTurnCurrent().setReceivedInput(true);
         }
     }

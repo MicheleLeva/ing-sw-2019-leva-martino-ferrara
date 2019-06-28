@@ -132,6 +132,9 @@ public class Turn {
                 if (!isTimerOn || currentPlayer.isAfk()) {
                     getModel().discardPowerUp(currentPlayer, random.nextInt(2));
                     getModel().setPlayerAfk(currentPlayer);
+                    turnTimerOff.cancel();
+                    timer.cancel();
+                    timer.purge();
                     return;
                 }
             }
@@ -149,6 +152,9 @@ public class Turn {
                     if (currentPlayer.getActionTree().getLastAction().getData().equals("shoot")){
                         getModel().notifyShoot(currentPlayer);
                     }
+                    turnTimerOff.cancel();
+                    timer.cancel();
+                    timer.purge();
                     return;
                 }
             }
@@ -179,7 +185,9 @@ public class Turn {
 
         }
 
+        turnTimerOff.cancel();
         timer.cancel();
+        timer.purge();
     }
 
     /**

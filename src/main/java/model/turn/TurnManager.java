@@ -15,7 +15,7 @@ public class TurnManager {
     private final Model model;
     private  ArrayList<Player> allPlayers; //Lista di tutti i giocatori in ordine di turno
 
-    private static PlayerColor currentPlayerColor;
+    private PlayerColor currentPlayerColor;
 
     private  int currentPlayerIndex;
 
@@ -25,7 +25,7 @@ public class TurnManager {
 
     private boolean gameOverByAfk = false;
 
-    public static boolean isPlayerTurn(PlayerColor playerColor){
+    public boolean isPlayerTurn(PlayerColor playerColor){
         return (currentPlayerColor == playerColor);
     }
 

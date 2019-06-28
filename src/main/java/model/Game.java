@@ -3,7 +3,13 @@ package model;
 import model.player.Player;
 import model.turn.Turn;
 import network.server.Server;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -24,12 +30,23 @@ public class Game implements Runnable{
     }
 
     private boolean isMapTimerOn = true;
-    private long mapTime = 1000L*100; // 10 sec da ottenere da json
+    private long mapTime;
 
     public Game(int gameID, Model model, Server server){
         this.gameID = gameID;
         this.model = model;
         this.server = server;
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("src/resources/constants.json"));
+            JSONObject myJo = (JSONObject) obj;
+            JSONArray myArray = (JSONArray) myJo.get("constants");
+            JSONObject temp = (JSONObject)myArray.get(0);
+            mapTime = (long)temp.get("MapTimer");
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public Model getModel(){
@@ -81,25 +98,27 @@ public class Game implements Runnable{
      * It loops a turn until the game has ended, then shows the rank and signals the server to close the game.
      */
     public void run(){
-        //todo
+        model.getGameNotifier().notifyGeneric("Map voting is starting: wait for your turn.");
         for (Player player : model.getEachPlayer()) {
             model.mapVote(player);
 
             Timer mapTimer = new Timer();
-            isMapTimerOn = true;
             TimerTask turnMapTimerOff = new TimerTask() {
                 @Override
                 public void run() {
                     isMapTimerOn = false;
                 }
             };
+            isMapTimerOn = true;
             mapTimer.schedule(turnMapTimerOff, mapTime);
+
             model.getTurnCurrent().setReceivedInput(false);
             while (!model.getTurnCurrent().isReceivedInput()){
                 System.out.print("");
                 if (!isMapTimerOn){
-                    mapTimer.cancel();
                     model.getTurnCurrent().setReceivedInput(true);
+                    player.setVote(true);
+                    mapTimer.cancel();
                 }
             }
             mapTimer.cancel();
@@ -110,6 +129,7 @@ public class Game implements Runnable{
         //model.setGameBoard(1);
         while(!model.getTurnManager().isGameOver()){
             Turn currentTurn = new Turn(model,model.getTurnManager().isFrenzy());
+            System.out.println("Game " + getGameID() + " turn: " + getModel().getTurnManager().getCurrentPlayerColor());
             currentTurn.notifyTurn();
             currentTurn.startTurn();
             currentTurn.endTurn();
