@@ -1,5 +1,5 @@
 {"constants" :
 [
-  {"ServerTimer": 1000, "TurnTimer": 300000, "GrenadeTimer": 10000,"RespawnTimer": 10000, "Skulls": 2}
+  {"ServerTimer": 1000, "TurnTimer": 300000, "GrenadeTimer": 10000,"RespawnTimer": 10000, "Skulls": 1}
 ]
 }
