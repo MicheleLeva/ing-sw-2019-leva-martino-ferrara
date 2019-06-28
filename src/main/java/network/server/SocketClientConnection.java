@@ -99,7 +99,7 @@ public class SocketClientConnection extends Observable<String> implements Client
                 notify(read);
             }
         } catch (IOException | NoSuchElementException e) {
-            System.err.println("Error!");
+            System.out.println("The connection with " + playerName + " has been closed!");
         }finally{
             close();
         }
@@ -128,11 +128,11 @@ public class SocketClientConnection extends Observable<String> implements Client
      * Closes the connection with the client.
      */
     public synchronized void closeConnection() { //mando messaggio al network.client e chiudo la connessione
-        asyncSend("GAME,GenericMessage,The connection has been closed");
+        asyncSend("GAME,GenericMessage,The server is closing the connection!");
         try {
             socket.close();
         } catch (IOException e) {
-            System.err.println("Error!");
+            System.out.println(playerName + " has disconnected! ");
         }
         active = false;
     }

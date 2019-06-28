@@ -107,6 +107,7 @@ public class Player {
     }
 
     public void setKillshot(boolean killshot){
+        position = null;
         isKillShot = killshot;
     }
 

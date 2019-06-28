@@ -42,7 +42,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
             socket = new Socket(ip, port);
             System.out.println("Server found!");
         } catch (IOException e) {
-            System.out.println("Connection error!");
+            System.out.println("The connection to the server has been closed!");
         }
     }
 
@@ -120,12 +120,14 @@ public class Client extends Observable<String> implements ClientConnection,Runna
             }*/
             //todo commentato per velocizzare test
             String read;
+            new Thread(() -> view.startScanner()).start();
             while(isActive()){
                 read = in.nextLine();
                 notify(read);
             }
         } catch (IOException | NoSuchElementException e) {
-            System.out.println("Connection error!");
+            System.out.println("The connection has been closed!");
+            System.out.println("If you want to play a new game or reconnect restart the client.");
         }
     }
 

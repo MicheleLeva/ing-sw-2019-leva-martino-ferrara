@@ -515,7 +515,6 @@ public class Model {
 
         spawnPlayer(player, discardedPowerUp.getAmmo());
         getTurnCurrent().setReceivedInput(true);
-
     }
 
 
@@ -555,7 +554,7 @@ public class Model {
         String toOthers;
 
         toPlayer = "You just spawned at " + spawnSquare.getID();
-        toOthers = player.getPlayerName() + " just spawned at " + spawnSquare.getID();
+        toOthers = player.getColoredName() + " just spawned at " + spawnSquare.getID();
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
     }
     //todo rivedere
@@ -1375,10 +1374,9 @@ public class Model {
         if (player.isAfk()){
             return;
         }
-        System.out.println(player.getPlayerName() + " is afk!");
         player.setAfk(true);
         getActionNotifier().setPlayerAfk(player.getPlayerColor());
-        String toOthers = player.getPlayerColor().toString() + " is afk. Their turn will be skipped";
+        String toOthers = player.getColoredName() + " is afk. Their turn will be skipped";
         getGameNotifier().notifyOtherPlayers(toOthers, player.getPlayerColor());
     }
 

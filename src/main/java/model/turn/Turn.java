@@ -53,6 +53,7 @@ public class Turn {
     private boolean isRespawnTimerOn = true;
     private long respawnTime;
 
+
     public void setFrenzy(boolean frenzy) {
         isFrenzy = frenzy;
     }
@@ -78,6 +79,25 @@ public class Turn {
 
     public Model getModel(){
         return model;
+    }
+
+    public String grenadeTimeOut(){
+        StringBuilder stringBuilder = new StringBuilder();
+        String color = CLI.getRed();
+        stringBuilder.append(color);
+        stringBuilder.append("Too late! You didn't choose a grenade in time so none has been thrown.");
+        stringBuilder.append(CLI.getResetString());
+        return stringBuilder.toString();
+    }
+
+    public String respawnTimeOut(){
+        StringBuilder stringBuilder = new StringBuilder();
+        String color = CLI.getRed();
+        stringBuilder.append(color);
+        stringBuilder.append("Too late! You didn't choose a card to discard in time");
+        stringBuilder.append(" so you discarded a random card.");
+        stringBuilder.append(CLI.getResetString());
+        return stringBuilder.toString();
     }
 
     /**
@@ -109,7 +129,7 @@ public class Turn {
             getModel().getTurnCurrent().setReceivedInput(false);
             while (!getModel().getTurnCurrent().isReceivedInput()) {
                 System.out.print("");
-                if (!isTimerOn) {
+                if (!isTimerOn || currentPlayer.isAfk()) {
                     getModel().discardPowerUp(currentPlayer, random.nextInt(2));
                     getModel().setPlayerAfk(currentPlayer);
                     return;
@@ -124,7 +144,7 @@ public class Turn {
             getModel().chooseAction(currentPlayerColor);
             while (!currentPlayer.getActionTree().isMoveEnded()){
                 System.out.print("");
-                if (!isTimerOn){
+                if (!isTimerOn || currentPlayer.isAfk()){
                     getModel().setPlayerAfk(currentPlayer);
                     if (currentPlayer.getActionTree().getLastAction().getData().equals("shoot")){
                         getModel().notifyShoot(currentPlayer);
@@ -133,7 +153,7 @@ public class Turn {
                 }
             }
             getModel().resetCurrent();
-            //grenadePeopleArray viene popolato da addDamage se il giocatore colpito possiede la granata
+            //grenadePeopleArray is populated by model.addDamage if the hit player has a TagbackGranade
             if (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
                 for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
                     getModel().tagbackGranadeRequest(grenadePlayer, currentPlayer);
@@ -141,13 +161,15 @@ public class Turn {
                 isGrenadeTimerOn = true;
                 grenadeTimer.schedule(turnGrenadeTimerOff, grenadeTime); //start of timer thread
 
-                //finchè l'array è popolato continuo con il timer
-                //l'input di un grenade player lo fa rimuovere dall'array
+                //As players insert their input they will be removed from the array
+                //If the array becomes empty before the timer ends, the timer will be stopped
+                //If the timer ends the choice of the players still in the array will be ignored
+                //and the array is cleared to get out of the loop.
                 while (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
                     System.out.print("");
                     if (!isGrenadeTimerOn){
                         for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
-                            getModel().getGameNotifier().notifyPlayer("Too late!", grenadePlayer.getPlayerColor());
+                            getModel().getGameNotifier().notifyPlayer(grenadeTimeOut(), grenadePlayer.getPlayerColor());
                         }
                         getModel().getTurnCurrent().getGrenadePeopleArray().clear();
                     }
@@ -212,20 +234,62 @@ public class Turn {
     }
 
     /**
-     * Method called after the turn has ended. Update the scores, respawns the dead players and prepares the next turn.
+     * Start the respawn procedure for the dead players
+     */
+    private void respawnProcedure(){
+        if (!getModel().getTurnCurrent().getDeadPlayers().isEmpty() /*&& !isFrenzy*/){
+            for (Player deadPlayer : getModel().getTurnCurrent().getDeadPlayers()) {
+                getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
+                getModel().requestPowerUpDiscard(deadPlayer);
+
+                if (!deadPlayer.getResources().getPowerUp().isEmpty()){
+                    Timer respawnTimer = new Timer();
+                    TimerTask turnRespawnTimerOff = new TimerTask() {
+                        @Override
+                        public void run() {
+                            isRespawnTimerOn = false;
+                        }
+                    };
+                    isRespawnTimerOn = true;
+                    respawnTimer.schedule(turnRespawnTimerOff, respawnTime);
+
+                    getModel().getTurnCurrent().setReceivedInput(false);
+                    while (!getModel().getTurnCurrent().isReceivedInput()){
+                        System.out.print("");
+                        int cards = deadPlayer.getResources().getPowerUp().size();
+                        if (!isRespawnTimerOn){
+                            getModel().discardPowerUp(deadPlayer, random.nextInt(cards));
+                            getModel().getGameNotifier().notifyPlayer(respawnTimeOut(), deadPlayer.getPlayerColor());
+                            getModel().getTurnCurrent().setReceivedInput(true);
+                        }
+                    }
+                    respawnTimer.cancel();
+                }
+
+                deadPlayer.setAlive();
+            }
+            getModel().getTurnCurrent().getDeadPlayers().clear();
+        }
+    }
+
+
+    /**
+     * Method called after the turn has ended. Update the scores, revives the dead players
+     * and prepares the board for the next turn.
      */
     public void endTurn(){
 
         //Scoring
         getModel().getScoreManager().updateScore();
 
-
+        //Populates the deadPlayers array for the respawn procedure
         for (Player player : getModel().getEachPlayer()){
             if (player.isDead() || player.isKillShot()){
                 getModel().getTurnCurrent().getDeadPlayers().add(player);
             }
         }
 
+        //Flips the points boards of dead players in a frenzy turn
         if(isFrenzy){
             for(Player player : getModel().getTurnCurrent().getDeadPlayers()){
                 if(!player.getPlayerBoard().getPoints().isFrenzy()){
@@ -235,37 +299,7 @@ public class Turn {
         }
 
         //Respawn
-        if (!getModel().getTurnCurrent().getDeadPlayers().isEmpty() /*&& !isFrenzy*/){
-            for (Player deadPlayer : getModel().getTurnCurrent().getDeadPlayers()) {
-                getModel().drawPowerUp(deadPlayer.getPlayerColor(), 1);
-                getModel().requestPowerUpDiscard(deadPlayer);
-
-                Timer respawnTimer = new Timer();
-                TimerTask turnRespawnTimerOff = new TimerTask() {
-                    @Override
-                    public void run() {
-                        isRespawnTimerOn = false;
-                    }
-                };
-                isRespawnTimerOn = true;
-                respawnTimer.schedule(turnRespawnTimerOff, respawnTime);
-
-                getModel().getTurnCurrent().setReceivedInput(false);
-                while (!getModel().getTurnCurrent().isReceivedInput()){
-                    System.out.print("");
-                    if (!isRespawnTimerOn){
-                        getModel().discardPowerUp(deadPlayer, random.nextInt(deadPlayer.getResources().getPowerUp().size()));
-                        getModel().getGameNotifier().notifyPlayer("Too late!", deadPlayer.getPlayerColor());
-                        getModel().getTurnCurrent().setReceivedInput(true);
-                    }
-                }
-                respawnTimer.cancel();
-                deadPlayer.setAlive();
-            }
-            getModel().getTurnCurrent().getDeadPlayers().clear();
-        }
-
-
+        respawnProcedure();
 
         //Resetting the current
         getModel().resetCurrent();

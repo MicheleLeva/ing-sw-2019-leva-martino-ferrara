@@ -23,17 +23,13 @@ public class TurnManager {
 
     private boolean gameOver = false;
 
+    private boolean gameOverByAfk = false;
+
     public static boolean isPlayerTurn(PlayerColor playerColor){
         return (currentPlayerColor == playerColor);
     }
 
     private int currentTurnNumber;
-
-    private boolean isFirstTurnEnded;
-
-    private boolean isTurnEnded;
-
-    private boolean killshot;
 
     private boolean frenzy;
 
@@ -79,6 +75,7 @@ public class TurnManager {
         if (isFrenzy() && currentPlayerIndex == lastPlayerIndex){
             if (isGameEnded){
                 setGameOver(true);
+
                 return;
             } else {
                 isGameEnded = true;
@@ -93,14 +90,9 @@ public class TurnManager {
         }
 
         if (getAllPlayers().size() - count < 3){
-            System.out.println(count + " AFK players!");
-            System.out.println("Game over!");
             setGameOver(true);
+            gameOverByAfk = true;
             return;
-        }
-
-        if (count > 0) {
-            System.out.println(count + " AFK players!");
         }
 
         getNextPlayer();
@@ -136,6 +128,8 @@ public class TurnManager {
         return (gameOver);
     }
 
+    public boolean isGameOverByAfk() {return gameOverByAfk;}
+
     public PlayerColor getCurrentPlayerColor(){
         return currentPlayerColor;
     }
@@ -155,39 +149,6 @@ public class TurnManager {
     public void setGameOver(boolean gameOver){
         this.gameOver = gameOver;
     }
-
-    //todo servono?
-    /*public boolean isFirstTurnEnded(){
-        return isFirstTurnEnded;
-    }
-
-    public boolean isTurnEnded(){
-        return isTurnEnded;
-    }
-
-    public void endFirstTurn(){
-        isFirstTurnEnded = true;
-    }
-
-    public  void startFirstTurn(){
-        isFirstTurnEnded = false;
-    }
-
-    public void endTurn(){
-        isTurnEnded = true;
-    }
-
-    public void startTurn(){
-        isTurnEnded = false;
-    }
-
-    public boolean isKillshot(){
-        return killshot;
-    }
-
-    public void setKillshot(boolean killshot){
-        this.killshot = killshot;
-    }*/
 
     public void addKillShot(){
         currentTurnKillshots++;

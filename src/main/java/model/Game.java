@@ -113,6 +113,9 @@ public class Game implements Runnable{
             currentTurn.startTurn();
             currentTurn.endTurn();
         }
+        if (model.getTurnManager().isGameOverByAfk()){
+            model.getGameNotifier().notifyGeneric("Not enough players to continue the game!");
+        }
         System.out.println("Game " + gameID + " has ended!");
         getModel().getScoreManager().finalScore();
         model.getGameNotifier().notifyGeneric("The game has ended!");

@@ -1,6 +1,5 @@
 package controller;
 
-import model.Decks;
 import model.Model;
 import model.adrenaline_exceptions.TagbackGrenadeException;
 import model.adrenaline_exceptions.TargetingScopeException;
@@ -42,7 +41,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
         if(currentPlayer.getResources().getPowerUp().isEmpty()){
             String error;
-            error = "You have no powerUps.\n";
+            error = "You have no powerUps.";
             choosePowerUpEvent.getView().reportError(error);
             getModel().chooseAction(choosePowerUpEvent.getPlayerColor());
             return;
@@ -50,7 +49,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
         if (input < 1 || input > currentPlayer.getResources().getPowerUp().size()) {
             String error;
-            error = "Invalid input.\n";
+            error = "Invalid input.";
             choosePowerUpEvent.getView().reportError(error);
             getModel().choosePowerUp(choosePowerUpEvent.getPlayerColor()); //chiede di reinserire il powerup
         } else {
@@ -81,7 +80,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         ArrayList<Integer> allIDs = getModel().getGameBoard().getMap().getAllIDs();
 
         if (!allIDs.contains(input)) { //riempire con: se lo square non esiste, serve una legenda per gli square
-            chooseTeleporterSquareEvent.getView().reportError("Invalid square.\nInsert another one.\n");
+            chooseTeleporterSquareEvent.getView().reportError("Invalid square.\nInsert another one.");
             getModel().useTeleporter(chooseTeleporterSquareEvent.getPlayerColor());
         } else {
             Square chosenSquare = getModel().getGameBoard().getMap().getSquareFromID(input);
@@ -105,7 +104,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         int input = chooseNewtonOpponentEvent.getInput();
 
         if (input < 1 || input > getModel().getCurrent().getOpponent().size()) {
-            chooseNewtonOpponentEvent.getView().reportError("Invalid player.\nInsert another one.\n");
+            chooseNewtonOpponentEvent.getView().reportError("Invalid player.\nInsert another one.");
             getModel().useNewton(chooseNewtonOpponentEvent.getPlayerColor()); //richiede di riusare il newton
         } else {
             ArrayList<Player> chosenPlayer = new ArrayList<>();
@@ -188,7 +187,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         ArrayList<PowerUp> powerUpsClone = new ArrayList<>(currentPlayer.getResources().getPowerUp());
 
         if (input < 1 || input > getModel().getCurrent().getAllDamagedPlayer().size()) {
-            event.getView().reportError("Invalid input.\nInsert another one.\n");
+            event.getView().reportError("Invalid input.\nInsert another one.");
             getModel().targetingScopeTargets(event.getPlayerColor(),getModel().getCurrent().getAllDamagedPlayer());
 
         }
@@ -273,12 +272,12 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
         if (input < 1 || input > currentPlayer.getResources().getPowerUp().size()) {
             String error;
-            error = "Invalid input.\n";
+            error = "Invalid input.";
             discardPowerUpEvent.getView().reportError(error);
-            getModel().requestPowerUpDiscard(currentPlayer); //chiede di reinserire il powerup
+            getModel().requestPowerUpDiscard(currentPlayer); //asks to reinsert the input
         } else {
                 getModel().discardPowerUp(currentPlayer,input-1);
-                //scarta powerup(è stato usato)
+                //discards the chosen powerUp
         }
     }
 }
