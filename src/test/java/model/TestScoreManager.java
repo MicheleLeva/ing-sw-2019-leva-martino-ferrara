@@ -53,11 +53,18 @@ public class TestScoreManager {
         assertNotNull(result);
     }
 
+    /**
+     * Tests that the ScoreManager class is able to determine the winner by updating the score
+     */
     @Test
     public void testUpdateScore(){
         scoreManagerTest.updateScore();
         assertEquals(player2.getPlayerColor(),scoreManagerTest.getWinner()); }
 
+    /**
+     * Tests that the ScoreManager class is able to determine the winner by updating the score
+     * during the frenzy Turn
+     */
     @Test
     public void testFinalScore(){
         modelTest.getTurnManager().setFrenzy();

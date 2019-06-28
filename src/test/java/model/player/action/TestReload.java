@@ -26,6 +26,11 @@ public class TestReload {
         modelTest = new Model(playerList,8);
         reload = new Reload();
     }
+
+    /**
+     * Tests that the perform method in Reload class executes without interruption and modifies the
+     * classes it interacts with correctly
+     */
     @Test
     public void testPerform(){
         try{

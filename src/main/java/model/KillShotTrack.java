@@ -5,6 +5,7 @@ import model.player.PlayerColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class KillShotTrack {
 
@@ -32,7 +33,12 @@ public class KillShotTrack {
     public void removeSkull(PlayerColor playerColor) {
 
         if (model.getTurnManager().isFrenzy()) {
-            frenzyTokens.replace(playerColor, frenzyTokens.get(playerColor) + 1);
+            if(frenzyTokens.containsKey(playerColor)) {
+                frenzyTokens.replace(playerColor, frenzyTokens.get(playerColor) + 1);
+            }
+            else {
+                frenzyTokens.put(playerColor, 1);
+            }
         }
         else {
 
@@ -51,7 +57,10 @@ public class KillShotTrack {
     public void addOverKill() {
         if (model.getTurnManager().isFrenzy()) {
             PlayerColor currentPlayerColor = model.getTurnManager().getCurrentPlayerColor();
-            frenzyTokens.replace(currentPlayerColor, frenzyTokens.get(currentPlayerColor) + 1);
+            if(frenzyTokens.containsKey(currentPlayerColor))
+                frenzyTokens.replace(currentPlayerColor, frenzyTokens.get(currentPlayerColor) + 1);
+            else
+                frenzyTokens.put(currentPlayerColor,1);
         }
         else {
             int currentIndex;
@@ -104,10 +113,11 @@ public class KillShotTrack {
     public String printKillshotTrack(){
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder tokenBuilder = new StringBuilder();
-
+        StringBuilder frenzyBuilder;
         for (int i = 0; i < killShotTrack.length; i++){
             if(killShotTrack[i].isSkull()){
                stringBuilder.append(CLI.getSkull());
+               stringBuilder.append(" ");
             }
             else{
 
@@ -116,11 +126,28 @@ public class KillShotTrack {
                 tokenBuilder.append(currentColor);
                 tokenBuilder.append(tokenNumber);
                 tokenBuilder.append(CLI.getResetString());
+                tokenBuilder.append(" ");
 
-                stringBuilder.append(tokenBuilder);
             }
+
         }
 
+        stringBuilder.append(tokenBuilder);
+        if(model.getTurnManager().isFrenzy()){
+            frenzyBuilder = new StringBuilder();
+            frenzyBuilder.append("\n");
+            frenzyBuilder.append("Frenzy tokens: \n");
+            for(Map.Entry<PlayerColor,Integer> entry: frenzyTokens.entrySet()){
+                PlayerColor currentPlayerColor = entry.getKey();
+                Integer currentInt = entry.getValue();
+                frenzyBuilder.append(CLI.getColor(currentPlayerColor));
+                frenzyBuilder.append(currentInt);
+                frenzyBuilder.append(CLI.getResetString());
+                frenzyBuilder.append(" ");
+            }
+
+            stringBuilder.append(frenzyBuilder);
+        }
         return stringBuilder.toString();
 
     }

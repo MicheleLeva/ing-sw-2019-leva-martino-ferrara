@@ -14,6 +14,9 @@ public class TestMarkCounter {
         markCounterTest = new MarkCounter();
     }
 
+    /**
+     * Tests if the MarkCounter class is able to add and remove marks correctly
+     */
     @Test
     public void testMarkCounter(){
         markCounterTest.addMarks(PlayerColor.YELLOW, 2);

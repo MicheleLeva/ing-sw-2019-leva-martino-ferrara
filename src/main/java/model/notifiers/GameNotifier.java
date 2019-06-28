@@ -111,16 +111,19 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
     public void notifyShoot(Player currentPlayer, ArrayList<Player> targets, ArrayList<Player> allPlayers){
         ArrayList<PlayerColor> targetsColor = new ArrayList<>();
         String toPlayer ="You shot: ";
-        String toOpponent = currentPlayer.getPlayerName() +" shot you";
+        String toOpponent = currentPlayer.getColoredName() +" shot: ";
         String toOthers = "";
-        if(targets.isEmpty())
+        if(targets.isEmpty()) {
             toPlayer = toPlayer + "nobody";
+            toOpponent = toOpponent + "nobody";
+        }
         for(Player player : targets){
-            toPlayer = toPlayer+player.getPlayerName() + " | ";
+            toPlayer = toPlayer+player.getColoredName() + " | ";
+            toOpponent = toOpponent+player.getColoredName() + " | ";
             targetsColor.add(player.getPlayerColor());
             }
         for(Player player : allPlayers){
-            toOthers = toOthers+player.getPlayerName();
+            toOthers = toOthers+player.getColoredName();
             //int damage = player.getPlayerBoard().getDamageCounter().getDamageCounter().size();
             if(player.getPosition()!=null)
                 toOthers = toOthers + " Position: " + player.getPosition().getID() + " |";
@@ -151,8 +154,8 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage msgToPlayer = new GenericMessage(toPlayer+"\n"+toOthers);
         notify(msgToPlayer, currentPlayer.getPlayerColor());
 
-        PlayerMessage msgToOpponent = new GenericMessage(toOpponent);
-        PlayerMessage msgToOthers = new GenericMessage(toOthers);
+        PlayerMessage msgToOpponent = new GenericMessage("You have been shot!!!\n"+toOpponent+"\n"+toOthers);
+        PlayerMessage msgToOthers = new GenericMessage(toOpponent+"\n"+toOthers);
 
         for(Player player : allPlayers){
             if(!player.getPlayerColor().equals(currentPlayer.getPlayerColor())) {
@@ -183,10 +186,7 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
             }
         }*/
     }
-//todo javadoc
-    /**
-     *
-     */
+
     public void notifyGeneric(String message){
         PlayerMessage playerMessage = new GenericMessage(message);
         notify(playerMessage);

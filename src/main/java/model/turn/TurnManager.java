@@ -1,6 +1,7 @@
 package model.turn;
 
 
+import model.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  */
 public class TurnManager {
 
+    private final Model model;
     private  ArrayList<Player> allPlayers; //Lista di tutti i giocatori in ordine di turno
 
     private static PlayerColor currentPlayerColor;
@@ -54,8 +56,9 @@ public class TurnManager {
         return result;
     }
 
-    public TurnManager(ArrayList<Player> allPlayers){
+    public TurnManager(Model model,ArrayList<Player> allPlayers){
         this.frenzy = false;
+        this.model = model;
         this.allPlayers = allPlayers;
         currentPlayerIndex = 0;
         currentPlayerColor = allPlayers.get(0).getPlayerColor();
@@ -207,7 +210,9 @@ public class TurnManager {
      */
     public void setFrenzy(){
         frenzy = true;
-
+        //notify players
+        String message = "Frenzy turn has started.\n";
+        model.getGameNotifier().notifyGeneric(message);
         lastPlayerIndex = currentPlayerIndex;
 
         for (int i = 0; i < allPlayers.size(); i++){
@@ -222,7 +227,9 @@ public class TurnManager {
         {
             Player currentPlayer = allPlayers.get(i);
 
-            if(currentPlayer.getPlayerBoard().getDamageCounter().getDamage() == 0){
+            if(     currentPlayer.getPlayerBoard().getDamageCounter().getDamage() == 0 ||
+                    currentPlayer.isKillShot() ||
+                    currentPlayer.isDead()){
                 //change player's points in frenzy points
                 currentPlayer.getPlayerBoard().getPoints().setFrenzyPoints();
 

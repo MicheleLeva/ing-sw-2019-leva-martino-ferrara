@@ -16,7 +16,9 @@ public class TestAmmo {
         ammoTest = new Ammo(2,3,1);
     }
 
-
+    /**
+     * Tests Ammo class getters
+     */
     @Test
     public void testGetters(){
         assertEquals(2,ammoTest.getRed());
@@ -26,6 +28,9 @@ public class TestAmmo {
     }
 
 
+    /**
+     * Tests Ammo class getters
+     */
     @Test
     public void testSetters(){
 

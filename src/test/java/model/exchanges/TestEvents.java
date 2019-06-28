@@ -22,6 +22,9 @@ public class TestEvents {
         integers.add(2);
     }
 
+    /**
+     * Tests the correct construction of all the events
+     */
     @Test
     public void testEvents(){
         ActionEvent actionEvent = new ActionEvent(testView, 'S');

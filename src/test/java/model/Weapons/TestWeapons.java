@@ -38,7 +38,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests the support methods for the Weapon class
+     * Tests the support methods for the Weapon class
      */
     @Test
     public void testWeapon(){
@@ -85,7 +85,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Heatseeker weapon execute without interruption
+     * Tests that all methods in the Heatseeker weapon execute without interruption
      */
     @Test
     public void testHeatseeker(){
@@ -101,7 +101,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Cyberblade weapon execute without interruption
+     * Tests that all methods in the Cyberblade weapon execute without interruption
      */
     @Test
     public void testCyberblade(){
@@ -133,7 +133,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Whisper weapon execute without interruption
+     * Tests that all methods in the Whisper weapon execute without interruption
      */
     @Test
     public void testWhisper(){
@@ -149,7 +149,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Electroscythe weapon execute without interruption
+     * Tests that all methods in the Electroscythe weapon execute without interruption
      */
     @Test
     public void testElectroscythe(){
@@ -169,7 +169,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the ZX2 weapon execute without interruption
+     * Tests that all methods in the ZX2 weapon execute without interruption
      */
     @Test
     public void testZX2(){
@@ -192,7 +192,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the LockRifle weapon execute without interruption
+     * Tests that all methods in the LockRifle weapon execute without interruption
      */
     @Test
     public void testLockRifle(){
@@ -215,7 +215,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the vortexcannon weapon execute without interruption
+     * Tests that all methods in the vortexcannon weapon execute without interruption
      */
     @Test
     public void testVortexCannon(){
@@ -242,7 +242,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the grenadeLauncher weapon execute without interruption
+     * Tests that all methods in the grenadeLauncher weapon execute without interruption
      */
     @Test
     public void testGrenadeLauncher(){
@@ -272,7 +272,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Thor weapon execute without interruption
+     * Tests that all methods in the Thor weapon execute without interruption
      */
     @Test
     public void testThor(){
@@ -311,7 +311,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the PlasmaGun weapon execute without interruption
+     * Tests that all methods in the PlasmaGun weapon execute without interruption
      */
     @Test
     public void testPlasmaGun(){
@@ -345,7 +345,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the RocketLauncher weapon execute without interruption
+     * Tests that all methods in the RocketLauncher weapon execute without interruption
      */
     @Test
     public void testRocketLauncher(){
@@ -381,7 +381,7 @@ public class TestWeapons {
 
 
     /**
-     * tests that all methods in the MachineGun weapon execute without interruption
+     * Tests that all methods in the MachineGun weapon execute without interruption
      */
     @Test
     public void testMachineGun(){
@@ -411,7 +411,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Hellion weapon execute without interruption
+     * Tests that all methods in the Hellion weapon execute without interruption
      */
     @Test
     public void testHellion(){
@@ -438,7 +438,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Shotgun weapon execute without interruption
+     * Tests that all methods in the Shotgun weapon execute without interruption
      */
     @Test
     public void testShotgun(){
@@ -469,7 +469,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Furnace weapon execute without interruption
+     * Tests that all methods in the Furnace weapon execute without interruption
      */
     @Test
     public void testFurnace(){
@@ -495,7 +495,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Shockwave weapon execute without interruption
+     * Tests that all methods in the Shockwave weapon execute without interruption
      */
     @Test
     public void testShockwave(){
@@ -538,7 +538,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the Railgun weapon execute without interruption
+     * Tests that all methods in the Railgun weapon execute without interruption
      */
     @Test
     public void testRailgun(){
@@ -572,7 +572,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the SledgeHammer weapon execute without interruption
+     * Tests that all methods in the SledgeHammer weapon execute without interruption
      */
     @Test
     public void testSledgeHammer(){
@@ -616,7 +616,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the TractorBeam weapon execute without interruption
+     * Tests that all methods in the TractorBeam weapon execute without interruption
      */
     @Test
     public void testTractorBeam() {
@@ -640,7 +640,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the PowerGlove weapon execute without interruption
+     * Tests that all methods in the PowerGlove weapon execute without interruption
      */
     @Test
     public void testPowerGlove(){
@@ -681,7 +681,7 @@ public class TestWeapons {
     }
 
     /**
-     * tests that all methods in the FlameThrower weapon execute without interruption
+     * Tests that all methods in the FlameThrower weapon execute without interruption
      */
     @Test
     public void testFlamethrower(){

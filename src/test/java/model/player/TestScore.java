@@ -14,6 +14,9 @@ public class TestScore {
         scoreTest = new Score();
     }
 
+    /**
+     * Tests the correct addition of points to a score
+     */
     @Test
     public void testAddScore() {
         scoreTest.addScore(3);
@@ -21,6 +24,9 @@ public class TestScore {
 
     }
 
+    /**
+     * Tests Score class getters
+     */
     @Test
     public void getScore() {
         assertEquals(0, scoreTest.getScore());

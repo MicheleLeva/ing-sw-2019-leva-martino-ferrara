@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class Points {
 
+    private boolean isFrenzy = false;
     private ArrayList<Integer> points;
     private ArrayList<Integer> frenzyPoints = new ArrayList<>();
     private int firstBlood;
@@ -70,6 +71,7 @@ public class Points {
     }
 
     public void setFrenzyPoints(){
+        isFrenzy = true;
         points = frenzyPoints;
         firstBlood = frenzyFirstBlood;
     }
@@ -98,5 +100,9 @@ public class Points {
         }
 
         return stringBuilder.toString();
+    }
+
+    public boolean isFrenzy(){
+        return this.isFrenzy;
     }
 }

@@ -118,6 +118,7 @@ public class TestPowerUpController {
         player1.setAfk(true);
         powerUpController.update(event);
         player1.setAfk(false);
+        model.getCurrent().setLastTargetingScope(new TargetingScope(model,AmmoColor.BLUE));
         powerUpController.update(event);
         event = new TargetingScopeEvent(view,'N');
         powerUpController.update(event);
@@ -184,6 +185,7 @@ public class TestPowerUpController {
         powerUpController.update(event);
         event = new DiscardPowerUpEvent(view,1);
         player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        player1.setPosition(null);
         powerUpController.update(event);
         assertEquals(0, player1.getResources().getPowerUp().size());
 

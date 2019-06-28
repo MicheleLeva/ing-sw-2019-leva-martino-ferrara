@@ -17,6 +17,9 @@ public class TestPlayer {
 
     }
 
+    /**
+     * Tests getters for Player class
+     */
     @Test
     public void testGetters() {
         assertNotNull(playerTest.getScore());
@@ -26,6 +29,9 @@ public class TestPlayer {
         assertEquals("giocatore", playerTest.getPlayerName());
     }
 
+    /**
+     * Tests all methods that modify the player's position or state( dead or alive )
+     */
     @Test
     public void testModifiers() {
         playerTest.addScore(3);

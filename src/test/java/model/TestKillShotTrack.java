@@ -31,6 +31,9 @@ public class TestKillShotTrack {
 
     }
 
+    /**
+     * Tests getters for killShotTrack class
+     */
     @Test
     public void testKillShotTrackGetter(){
 
@@ -44,6 +47,9 @@ public class TestKillShotTrack {
         }
     }
 
+    /**
+     * Tests that the killShotTrack is able to remove a skull from a killShotCell
+     */
     @Test
     public void testRemove(){
         KillShotCell[] KSTrack = killShotTrackTest.getKillShotTrack();
@@ -52,6 +58,11 @@ public class TestKillShotTrack {
         assertEquals(PlayerColor.YELLOW, KSTrack[0].getTokenColor());
         assertEquals(1, KSTrack[0].getTokenNumber());
 
+    }
+
+    @Test
+    public void testPrintKillShotTrack(){
+        System.out.print(killShotTrackTest.printKillshotTrack());
     }
 
 }

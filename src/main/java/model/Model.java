@@ -108,7 +108,7 @@ public class Model {
 
         keyMap = new KeyMap();
 
-        turnManager = new TurnManager(playersList);
+        turnManager = new TurnManager(this,playersList);
 
         scoreManager = new ScoreManager(this);
 
@@ -783,28 +783,32 @@ public class Model {
         List<WeaponTreeNode<FireMode>> FireModes = new ArrayList<>();
         List<WeaponTreeNode<FireMode>> availableFireModes = weapon.getWeaponTree().getLastActionPerformed().getChildren();
         for(WeaponTreeNode<FireMode> fireMode : availableFireModes){
-            System.out.println("available showfiremodes " + fireMode.getData().getType());
-            if(Checks.canUseFireMode(getPlayer(playerColor),weapon, fireMode.getData().getType()) == true)
+            if(Checks.canUseFireMode(getPlayer(playerColor), weapon, fireMode.getData().getType()))
                 FireModes.add(fireMode);
         }
-        System.out.println("POST available showfiremodes " + FireModes.get(0).getData().getType() + FireModes.size());
         if(FireModes.size()==1 && FireModes.get(0).getData().getType().equals("end")){
             for(PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()){
-                System.out.println(powerUp.toString());
                 if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()){
-                    powerUpNotifier.askTargetingScope(getPlayer(playerColor).getPlayerColor());
+                    current.addAllTargetingScopes((TargetingScope) powerUp);
+                }
+            }
+            for(PowerUp powerUp : getPlayer(playerColor).getResources().getPowerUp()){
+                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()){
+                    current.setLastTargetingScope((TargetingScope) powerUp);
+                    powerUpNotifier.askTargetingScope(getPlayer(playerColor).getPlayerColor(),powerUp);
                     return;
                 }
             }
-            System.out.println("checknextweaponactionnotifyshoot");
             notifyShoot(getPlayer(playerColor));
             return;
         }
 
         getCurrent().setAvailableFireModes(FireModes);
         String result = "Your available fire modes: \n";
+        int i = 1;
         for (WeaponTreeNode<FireMode> child : FireModes) {
-            result = result + child.getData().getEffectName();
+            result = result +i+". "+child.getData().getEffectName()+"\n";
+            i++;
         }
         weaponNotifier.showFireModes(playerColor, result);
     }
@@ -958,16 +962,15 @@ public class Model {
         Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
 
-        //todo scarta arma
-
         if(currentPlayer.getResources().getAllWeapon().size() == 3){
             weaponNotifier.askWeaponSwap(currentPlayer);
             return;
         }
         currentPlayer.getResources().addWeapon(getCurrent().getSelectedPickUpWeapon());
         for(int i = 0; i < 3; i++){
-            if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
+            if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon()) {
                 currentPlayer.getPosition().getWeapon()[i] = null;
+            }
         }
 
 
@@ -1176,20 +1179,22 @@ public class Model {
     public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
         //todo controllare updatelastactionperformed
         weapon.unload();
-        System.out.println("checknexweapon action inizio"+weapon.getWeaponTree().getLastAction().getData().getType());
         weapon.getWeaponTree().updateLastActionPerformed();
 
         if (weapon.getWeaponTree().isActionEnded()) {
-            System.out.println("shootended");
             weapon.getWeaponTree().resetAction();
             for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
-                System.out.println(powerUp.toString());
+                if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty()){
+                    current.addAllTargetingScopes((TargetingScope) powerUp);
+                }
+            }
+            for(PowerUp powerUp : currentPlayer.getResources().getPowerUp()){
                 if(powerUp instanceof TargetingScope && !getCurrent().getAllDamagedPlayer().isEmpty() ){
-                    powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor());
+                    current.setLastTargetingScope((TargetingScope) powerUp);
+                    powerUpNotifier.askTargetingScope(currentPlayer.getPlayerColor(),powerUp);
                     return;
                 }
             }
-            System.out.println("checknextweaponactionnotifyshoot");
             notifyShoot(currentPlayer);
         }
         else
@@ -1319,8 +1324,8 @@ public class Model {
 
     //va chiamato sempre alla fine del turno su tutti i giocatori colpiti dopo aver valutato i marchi e i giocatori morti
     //todo
-    public void verifyNewAction(PlayerColor opponentColor) {
-        Player player = getPlayer(opponentColor);
+    public void verifyNewAction(PlayerColor playerColor) {
+        Player player = getPlayer(playerColor);
         int currentTreeID = player.getActionTree().getID();
         int newTreeID = Checks.verifyNewAction(player);
         if (currentTreeID != newTreeID) {

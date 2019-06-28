@@ -2,6 +2,7 @@ package model;
 
 import model.cards.powerups.Newton;
 import model.cards.powerups.PowerUp;
+import model.cards.powerups.TargetingScope;
 import model.cards.weapons.FireMode;
 import model.cards.weapons.Weapon;
 import model.cards.weapons.WeaponTreeNode;
@@ -22,7 +23,8 @@ public class Current {
     private ArrayList<Player> opponent = new ArrayList<>();
     private ArrayList<Square> square = new ArrayList<>();
     private Newton selectedNewton;
-
+    private TargetingScope lastTargetingScope;
+    private ArrayList<TargetingScope> allTargetingScopes = new ArrayList<>();
 
     ///For Weapons///
     private int baseCounter = 0;
@@ -280,5 +282,20 @@ public class Current {
         return this.selectedNewton;
     }
 
+    public void setLastTargetingScope(TargetingScope targetingScope){
+        this.lastTargetingScope = targetingScope;
+    }
+
+    public TargetingScope getLastTargetingScope(){
+        return this.lastTargetingScope;
+    }
+
+    public ArrayList<TargetingScope> getAllTargetingScopes() {
+        return this.allTargetingScopes;
+    }
+
+    public void addAllTargetingScopes(TargetingScope targetingScope) {
+        this.allTargetingScopes.add(targetingScope);
+    }
 }
 

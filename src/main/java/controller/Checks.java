@@ -14,8 +14,6 @@ import java.util.ArrayList;
 
 /**
  * Support class that checks the validity of multiple actions
- * @author Marco Maria Ferrara
- * @author Stefano Martino
  */
 public class Checks {
 
@@ -35,7 +33,6 @@ public class Checks {
      * Checks if the player has the max number of powerUps
      * @param player selected player
      * @return the result is true if the player has 3 powerUps, false otherwise
-     * @author Stefano Martino
      */
     public static boolean hasMaxPowerUp(Player player){
         return (player.getResources().getPowerUp().size() == MAX_POWERUP);
@@ -45,7 +42,6 @@ public class Checks {
      * Returns the number of ammos actually drawn from the picked up Ammo Card
      * @param grabbedAmmo number of ammos drawn from an Ammo card
      * @param playerAmmo number of ammos the player holds
-     * @author Stefano Martino
      */
     public static Ammo drawnAmmo(Ammo grabbedAmmo , Ammo playerAmmo){
         Checks checks = new Checks();
@@ -82,7 +78,6 @@ public class Checks {
      * @param weapon list of the reloadable weapons that the player holds
      * @param allAmmo Sum of players ammos and powerUps
      * @return true if the player can reload, false otherwise
-     * @author Stefano Martino
      */
     public static boolean canReload(ArrayList<Weapon> weapon , Ammo allAmmo){
         for (int i = 0; i < weapon.size(); i++){
@@ -101,7 +96,6 @@ public class Checks {
      * @param currentWeapon weapon selected by the current player
      * @param effectType string that indicates the type of fire mode selected
      * @return true if the fire mode is ussable, false otherwise
-     * @author Marco Maria Ferrara
      */
     public static boolean canUseFireMode(Player player, Weapon currentWeapon, String effectType){
         int RED ;
@@ -178,7 +172,7 @@ public class Checks {
         if(currentPlayerDamage < FIRST_DAMAGE_TRESHOLD){
             return 1;
         }
-        if(currentPlayerDamage >= FIRST_DAMAGE_TRESHOLD && currentPlayerDamage < SECOND_DAMADE_TRESHOLD){
+        if(currentPlayerDamage < SECOND_DAMADE_TRESHOLD){
             return 2;
         }
         else{
@@ -213,7 +207,6 @@ public class Checks {
      * @param choices integer that indicates the powerUps selected for a payment
      * @param effectType integer that indicates the type of fire mode selected
      * @return true if the selected payment is valid, flse otherwise
-     * @author Marco Maria Ferrara
      */
     public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
         Weapon weapon = model.getCurrent().getSelectedWeapon();
@@ -284,7 +277,6 @@ public class Checks {
 
     /**
      * calculates if the sum of red powerups and red ammos is enough to pay the red fire mode ammo
-     * @author Marco Maria Ferrara
      */
     private static boolean checkValidRed(int fireRED, int powerUpRED, int playerRED) {
 
@@ -300,7 +292,6 @@ public class Checks {
 
     /**
      * calculates if the sum of blue powerups and blue ammos is enough to pay the blue fire mode ammo
-     * @author Marco Maria Ferrara
      */
     private static boolean checkValidBlue (int fireBLUE, int powerUpBLUE, int playerBLUE){
 

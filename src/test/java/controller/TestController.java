@@ -11,6 +11,9 @@ import static org.junit.Assert.*;
 
 public class TestController {
 
+    /**
+     * Tests the model getter in Controller class
+     */
     @Test
     public void getModel() {
         ArrayList<Player> players = new ArrayList<>();

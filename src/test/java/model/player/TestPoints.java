@@ -16,6 +16,9 @@ public class TestPoints {
     }
 
 
+    /**
+     * Tests getters for Points class
+     */
     @Test
     public void testGetPointsList(){
         for(int i = 0 ; i< pointsTest.getPointsList().size();i++)
@@ -28,6 +31,9 @@ public class TestPoints {
     }
 
 
+    /**
+     * Tests the removal of the first point in Points class
+     */
     @Test
     public void testPointsRemover(){
         pointsTest.removeHighestPoint();

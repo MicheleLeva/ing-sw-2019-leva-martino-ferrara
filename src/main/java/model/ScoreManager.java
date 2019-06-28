@@ -43,14 +43,13 @@ public class ScoreManager {
                 hasChanged = true;
                 computePoints(allPlayer.get(i));
 
-                //remove skull and add token
+                //remove the highest point
+                allPlayer.get(i).getPlayerBoard().getPoints().removeHighestPoint();
 
+                //remove skull and add token
                 //gets the color of the player who dealt the killshot damage
                 PlayerColor killshotColor = allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamageCounter().get(Checks.getKillshot()-1);
                 model.getGameBoard().getKillShotTrack().removeSkull(killshotColor);
-
-                //remove the highest point
-                allPlayer.get(i).getPlayerBoard().getPoints().removeHighestPoint();
 
                 //check for overkill
                 if (allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()) {
@@ -108,6 +107,7 @@ public class ScoreManager {
             playerRank.remove(playerColor);
         }
         //todo rivedere
+        model.getGameNotifier().notifyGeneric(showPlayerRank());
         model.getGameNotifier().notifyGeneric(model.getPlayer(getWinner()).getColoredName() + " has won the game!");
     }
 
@@ -262,14 +262,16 @@ public class ScoreManager {
      * @return the current player rank as a String
      */
     public String showPlayerRank(){
-        String result = "Player Rank:\n";
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < playerRank.size(); i++){
             Player currentPlayer = model.getPlayer(playerRank.get(i));
-            String currentPlayerName = currentPlayer.getPlayerName();
+            String currentPlayerName = currentPlayer.getColoredName();
             int currentScore = currentPlayer.getScore().getScore();
-
-            result = result + currentPlayerName +" : " +currentScore +"\n";
+            stringBuilder.append(currentPlayerName);
+            stringBuilder.append(": ");
+            stringBuilder.append(currentScore);
+            stringBuilder.append("\n");
         }
-        return result;
+        return stringBuilder.toString();
     }
 }

@@ -109,7 +109,7 @@ public class TestWeaponController {
         model.getCurrent().getAvailableFireModes().clear();
         model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("end","c")));
         weaponController.update(event);
-        assertSame(electroscythe,model.getCurrent().getSelectedWeapon());
+        assertNull(model.getCurrent().getSelectedWeapon());
         model.getCurrent().setSelectedWeapon(electroscythe);
         model.getCurrent().getAvailableFireModes().clear();
         model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("alternative","d")));
@@ -339,7 +339,7 @@ public class TestWeaponController {
      * tests the correct execution for the checkBaseTargets method
      */
     @Test
-    public void checkBaseTargets() {
+    public void testCheckBaseTargets() {
         model.getCurrent().setSelectedWeapon(cyberblade);
         model.getCurrent().getAvailableBaseTargets().add(player2);
         ArrayList<Integer> selected = new ArrayList<>();
@@ -357,7 +357,7 @@ public class TestWeaponController {
      * tests the correct execution for the checkAlternativeTargets method
      */
     @Test
-    public void checkAlternativeTargets() {
+    public void testCheckAlternativeTargets() {
         model.getCurrent().setSelectedWeapon(cyberblade);
         model.getCurrent().getAvailableAlternativeTargets().add(player2);
         ArrayList<Integer> selected = new ArrayList<>();
@@ -376,7 +376,7 @@ public class TestWeaponController {
      * tests the correct execution for the checkOptionalTargets1 method
      */
     @Test
-    public void checkOptionalTargets1() {
+    public void testCheckOptionalTargets1() {
         player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
         model.getCurrent().setSelectedWeapon(cyberblade);
         model.getCurrent().getAvailableOptionalTargets1().add(player2);
@@ -397,7 +397,7 @@ public class TestWeaponController {
      * tests the correct execution for the checkOptionalTargets2 method
      */
     @Test
-    public void checkOptionalTargets2() {
+    public void testCheckOptionalTargets2() {
         player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
         model.getCurrent().setSelectedWeapon(cyberblade);
         model.getCurrent().getAvailableOptionalTargets2().add(player2);
@@ -414,5 +414,44 @@ public class TestWeaponController {
         weaponController.checkOptionalTargets2(event,cyberblade,model.getCurrent(),player1);
         assertFalse(model.getCurrent().getSelectedBaseTargets().isEmpty());
 
+    }
+
+    /**
+     * Tests if the method can correctly detect duplicates in the targets selection
+     */
+
+    @Test
+    public void testHasDuplicates(){
+        ArrayList<Integer> targets = new ArrayList<>();
+
+        targets.add(1);
+        TargetsSelectionEvent event = new TargetsSelectionEvent(view,targets);
+        assertFalse(weaponController.hasDuplicates(event));
+
+        targets.add(2);
+        event = new TargetsSelectionEvent(view,targets);
+        assertFalse(weaponController.hasDuplicates(event));
+
+        targets.add(1);
+        event = new TargetsSelectionEvent(view,targets);
+        assertTrue(weaponController.hasDuplicates(event));
+    }
+
+    /**
+     * Tests if the method can correctly detect duplicates in the payment selection
+     */
+
+    @Test
+    public void testHasDuplicatePayment(){
+        ArrayList<Integer> payment = new ArrayList<>();
+
+        payment.add(1);
+        assertFalse(weaponController.hasDuplicatePayment(payment));
+
+        payment.add(2);
+        assertFalse(weaponController.hasDuplicatePayment(payment));
+
+        payment.add(1);
+        assertTrue(weaponController.hasDuplicatePayment(payment));
     }
 }

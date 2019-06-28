@@ -14,6 +14,9 @@ public class TestDamageCounter {
         damageCounterTest = new DamageCounter();
     }
 
+    /**
+     * Tests if the DamageCounter class is able to add and remove damage correctly
+     */
     @Test
     public void testDamageCounter(){
         int damage1 = 4;
