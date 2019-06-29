@@ -7,6 +7,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 
+import javax.swing.*;
+import javax.swing.text.ParagraphView;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
