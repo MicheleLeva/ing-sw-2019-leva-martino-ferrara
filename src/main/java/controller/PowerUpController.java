@@ -1,6 +1,7 @@
 package controller;
 
 import model.Ammo;
+import model.CLI;
 import model.Model;
 import model.adrenaline_exceptions.TagbackGrenadeException;
 import model.adrenaline_exceptions.TargetingScopeException;
@@ -225,9 +226,9 @@ public class PowerUpController extends Controller implements PowerUpObserver {
     }
 
     /**
-     * Controls if the input is valid ( 0 or 1 ) and in that case it either uses the tagaback grenade or not.
-     * If the tagback grenade timer the input is set to 0 by default
-     * @param tagbackGrenadeEvent contains the choice of the player: 1 to use the Tagback Grenade, 0 otherwise
+     * Controls if the input is valid ( 0 or the index of the grenade ) and in that case it either uses the tagback grenade or not.
+     * If the tagback grenade timer ends the input is set to 0 by default
+     * @param tagbackGrenadeEvent contains the choice of the player:  the index of the Tagback Grenade to use it, 0 otherwise
      */
     @Override
     public void update(TagbackGrenadeEvent tagbackGrenadeEvent) {
@@ -235,7 +236,17 @@ public class PowerUpController extends Controller implements PowerUpObserver {
             return;
         }
         Player player = getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor());
+
+
+        StringBuilder stringBuilder = new StringBuilder();
+        String color = CLI.getRed();
+        stringBuilder.append(color);
+        stringBuilder.append("Too late! You didn't choose a grenade in time so none has been thrown.");
+        stringBuilder.append(CLI.getResetString());
+        String grenadeTimeOut = stringBuilder.toString();
+
         if (!getModel().getTurnCurrent().getGrenadePeopleArray().contains(player)){
+            getModel().getGameNotifier().notifyPlayer(grenadeTimeOut, player.getPlayerColor());
             return;
         }
         ArrayList<PowerUp> powerUps = player.getResources().getPowerUp();
