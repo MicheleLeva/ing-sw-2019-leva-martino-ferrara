@@ -3,8 +3,6 @@ package model;
 import model.cards.AmmoColor;
 import model.map.SquareColor;
 import model.player.PlayerColor;
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -25,7 +23,6 @@ public class CLI {
     private static final String CONT_GREY = "\u001B[47m";
     private static final String CONT_PURPLE = "\u001B[45m";
     private static final String CONT_GREEN = "\u001B[40m";
-    private static final String CONT_TRANSPARENT = "\u001B[48m";
 
     public static String getColor(PlayerColor playerColor){
         if(playerColor == PlayerColor.BLUE){

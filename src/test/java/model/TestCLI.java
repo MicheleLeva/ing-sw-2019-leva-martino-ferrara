@@ -72,7 +72,7 @@ public class TestCLI {
     @Test (expected =  java.io.IOException.class)
     public void testBuildCLIMap() throws IOException{
         try{
-            CLI.buildCLIMap("wronpath");
+            CLI.buildCLIMap("wrongpath");
         }
         catch(IOException e){
             throw new IOException();
