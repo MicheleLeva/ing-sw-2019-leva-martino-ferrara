@@ -60,7 +60,7 @@ public class ScoreManager {
 
                 //check for overkill
                 if (deadPlayers.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()) {
-                    model.getGameBoard().getKillShotTrack().addOverKill();
+                    model.getGameBoard().getKillShotTrack().addOverKill(i == deadPlayers.size() - 1);
                 }
 
         }

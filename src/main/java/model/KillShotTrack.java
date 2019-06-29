@@ -56,7 +56,11 @@ public class KillShotTrack {
         }
     }
 
-    public void addOverKill() {
+    public void addOverKill(boolean endOfArray) {
+        if(endOfArray){
+            killShotTrack[lastIndex - 1].addToken();
+            return;
+        }
         if (model.getTurnManager().isFrenzy()) {
             PlayerColor currentPlayerColor = model.getTurnManager().getCurrentPlayerColor();
             if(frenzyTokens.containsKey(currentPlayerColor))
