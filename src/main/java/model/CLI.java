@@ -102,6 +102,7 @@ public class CLI {
         return RED;
     }
 
+
     public static String getYellow(){
         return YELLOW;
     }
@@ -117,7 +118,7 @@ public class CLI {
         coloredMap = coloredMap.replaceAll("P", CONT_PURPLE + "  " +RESET);
         return coloredMap;
     }
-    public static String buildCLIMap(String CLIMapPath)throws FileNotFoundException,IOException {
+    public static String buildCLIMap(String CLIMapPath)throws IOException {
         String uncoloredMap;
         String coloredMap;
         try (FileReader fr = new FileReader(CLIMapPath)) {
@@ -131,8 +132,5 @@ public class CLI {
             return coloredMap;
     }
 
-    public static void main(String[] args){
-        System.out.print(CONT_GREEN +"verde" +RESET);
-    }
 }
 
