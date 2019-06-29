@@ -44,11 +44,14 @@ public class ScoreManager {
                 deadPlayers.add(allPlayer.get(i));
             }
         }
+        if(!deadPlayers.isEmpty()){
+            hasChanged = true;
+        }
+
         for (int i = 0; i < deadPlayers.size(); i++) {
             //the damage scoring is computed only if there is at least one killshot or dead player
 
-                hasChanged = true;
-                computePoints(allPlayer.get(i));
+                computePoints(deadPlayers.get(i));
 
                 //remove the highest point
                 deadPlayers.get(i).getPlayerBoard().getPoints().removeHighestPoint();
