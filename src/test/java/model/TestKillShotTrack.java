@@ -55,7 +55,7 @@ public class TestKillShotTrack {
     @Test
     public void testRemove(){
         KillShotCell[] KSTrack = killShotTrackTest.getKillShotTrack();
-        killShotTrackTest.removeSkull(PlayerColor.YELLOW);
+        killShotTrackTest.removeSkull(PlayerColor.YELLOW,false);
         assertFalse(KSTrack[0].isSkull());
         assertEquals(PlayerColor.YELLOW, KSTrack[0].getTokenColor());
         assertEquals(1, KSTrack[0].getTokenNumber());

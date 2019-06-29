@@ -23,7 +23,7 @@ public class GameBoard {
     }
 
     public void addToken(PlayerColor playerColor){
-    this.killShotTrack.removeSkull(playerColor);
+    this.killShotTrack.removeSkull(playerColor,false);
     }
 
     public KillShotTrack getKillShotTrack(){

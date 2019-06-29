@@ -30,7 +30,7 @@ public class KillShotTrack {
         return killShotTrack;
     }
 
-    public void removeSkull(PlayerColor playerColor) {
+    public void removeSkull(PlayerColor playerColor,boolean endOfArray) {
 
         if (model.getTurnManager().isFrenzy()) {
             if(frenzyTokens.containsKey(playerColor)) {
@@ -48,7 +48,9 @@ public class KillShotTrack {
             }
 
             if (lastIndex >= killShotTrack.length) {
-                model.getTurnManager().setFrenzy();
+                if(endOfArray) {
+                    model.getTurnManager().setFrenzy();
+                }
                 killShotTrack[killShotTrack.length - 1].addToken();
             }
         }

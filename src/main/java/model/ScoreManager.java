@@ -37,25 +37,32 @@ public class ScoreManager {
         ArrayList<Player> allPlayer = model.getTurnManager().getAllPlayers();
         //boolean variable used to determine whether there has been a change in the score
         boolean hasChanged = false;
-        for (int i = 0; i < allPlayer.size(); i++) {
+
+        ArrayList<Player> deadPlayers = new ArrayList<Player>();
+        for (int i = 0; i < allPlayer.size(); i++){
+            if(allPlayer.get(i).isKillShot() || allPlayer.get(i).isDead()){
+                deadPlayers.add(allPlayer.get(i));
+            }
+        }
+        for (int i = 0; i < deadPlayers.size(); i++) {
             //the damage scoring is computed only if there is at least one killshot or dead player
-            if (allPlayer.get(i).isKillShot() || allPlayer.get(i).isDead()) {
+
                 hasChanged = true;
                 computePoints(allPlayer.get(i));
 
                 //remove the highest point
-                allPlayer.get(i).getPlayerBoard().getPoints().removeHighestPoint();
+                deadPlayers.get(i).getPlayerBoard().getPoints().removeHighestPoint();
 
                 //remove skull and add token
                 //gets the color of the player who dealt the killshot damage
-                PlayerColor killshotColor = allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamageCounter().get(Checks.getKillshot()-1);
-                model.getGameBoard().getKillShotTrack().removeSkull(killshotColor);
+                PlayerColor killshotColor = deadPlayers.get(i).getPlayerBoard().getDamageCounter().getDamageCounter().get(Checks.getKillshot()-1);
+                model.getGameBoard().getKillShotTrack().removeSkull(killshotColor,i == deadPlayers.size() - 1);
 
                 //check for overkill
-                if (allPlayer.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()) {
+                if (deadPlayers.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()) {
                     model.getGameBoard().getKillShotTrack().addOverKill();
                 }
-            }
+
         }
 
         //compute double killshots
