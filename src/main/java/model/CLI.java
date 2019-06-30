@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CLI {
+    /**
+     * Command Line Input Class
+     */
     private static final String RESET = "\u001B[0m";
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";
@@ -24,6 +27,11 @@ public class CLI {
     private static final String CONT_PURPLE = "\u001B[45m";
     private static final String CONT_GREEN = "\u001B[40m";
 
+    /**
+     * given the player's color, it returns the string code for the color
+     * @param playerColor player's color
+     * @return string code
+     */
     public static String getColor(PlayerColor playerColor){
         if(playerColor == PlayerColor.BLUE){
             return BLUE;
@@ -44,6 +52,11 @@ public class CLI {
         else return GREY;
     }
 
+    /**
+     * given the ammo's color, it return the string code for the color
+     * @param ammoColor ammo's color
+     * @return string code
+     */
     public static String getColor(AmmoColor ammoColor){
         if(ammoColor == AmmoColor.BLUE){
             return BLUE;
@@ -56,6 +69,11 @@ public class CLI {
         else return YELLOW;
     }
 
+    /**
+     * given the square's color, it return the string code for the color
+     * @param squareColor square's color
+     * @return string code
+     */
     public static String getColor(SquareColor squareColor){
         if(squareColor == SquareColor.BLUE){
             return BLUE;
@@ -80,30 +98,52 @@ public class CLI {
         else return "";
     }
 
+    /**
+     * @return the string code to represent the skull in the command line
+     */
     public static String getSkull(){
         return SKULL;
     }
+
+    /**
+     * @return the reset string to reset the color
+     */
     public static String getResetString(){
         return RESET;
     }
 
+    /**
+     * @return the string code to represent the damage in the command line
+     */
     public static String getDamage(){
         return DAMAGE;
     }
 
+    /**
+     * @return string code for blue
+     */
     public static String getBlue(){
         return BLUE;
     }
-
+    /**
+     * @return string code for red
+     */
     public static String getRed(){
         return RED;
     }
 
-
+    /**
+     * @return string code for yellow
+     */
     public static String getYellow(){
         return YELLOW;
     }
 
+    /**
+     * helper method called by buildCLIMap
+     * @param uncoloredMap the map without color
+     * @return the colored map
+     */
     private static String colorMap(String uncoloredMap){
         String coloredMap;
         coloredMap = uncoloredMap.replaceAll("Y",CONT_YELLOW + "  " +RESET);
@@ -115,6 +155,13 @@ public class CLI {
         coloredMap = coloredMap.replaceAll("P", CONT_PURPLE + "  " +RESET);
         return coloredMap;
     }
+
+    /**
+     * reads the map from the given path and color it to display on the command line
+     * @param CLIMapPath the path containing the map
+     * @return the colored map
+     * @throws IOException
+     */
     public static String buildCLIMap(String CLIMapPath)throws IOException {
         String uncoloredMap;
         String coloredMap;
