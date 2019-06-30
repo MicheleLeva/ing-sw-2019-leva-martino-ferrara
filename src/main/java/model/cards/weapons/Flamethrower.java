@@ -33,7 +33,8 @@ public class Flamethrower extends WeaponAlternative {
                }
             }
             if(availableSquares.isEmpty()){
-                getModel().getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+                getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
+                        currentPlayer.getPlayerColor());
                 this.getWeaponTree().resetAction();
                 getModel().resetCurrent();
                 getModel().getCurrent().setSelectedWeapon(this);
@@ -55,6 +56,7 @@ public class Flamethrower extends WeaponAlternative {
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
         for(Player target : getModel().getAllPlayers()){
             if(target.getPosition()==getModel().getCurrent().getSelectedWeaponSquare()) {
+                getModel().getCurrent().getSelectedBaseTargets().add(target);
                 getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
                 getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
             }
@@ -63,6 +65,7 @@ public class Flamethrower extends WeaponAlternative {
         if(parallelSquare!= null){
             for(Player player : getModel().getAllPlayers()){
                 if(player.getPosition()==parallelSquare){
+                    getModel().getCurrent().getSelectedBaseTargets().add(player);
                     getModel().addDamage(currentPlayer.getPlayerColor(), player.getPlayerColor(), 1);
                     getModel().addMark(currentPlayer.getPlayerColor(), player.getPlayerColor(), 0);
                 }
@@ -129,9 +132,11 @@ public class Flamethrower extends WeaponAlternative {
         for(Player target : selectedTargets){
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
         }
-        if(getModel().getCurrent().getFlamethrowerSupportPlayer()!=null)
-            getModel().addDamage(currentPlayer.getPlayerColor(),getModel().getCurrent().getFlamethrowerSupportPlayer().getPlayerColor(),this.getBaseDamage());
-        getModel().payFireMode(currentPlayer,this);
+        if(getModel().getCurrent().getFlamethrowerSupportPlayer()!=null) {
+            getModel().getCurrent().getSelectedBaseTargets().add(getModel().getCurrent().getFlamethrowerSupportPlayer());
+            getModel().addDamage(currentPlayer.getPlayerColor(), getModel().getCurrent().getFlamethrowerSupportPlayer().getPlayerColor(), this.getBaseDamage());
+        }
+            getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
     }
 }

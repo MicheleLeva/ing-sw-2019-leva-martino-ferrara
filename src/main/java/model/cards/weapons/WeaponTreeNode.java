@@ -29,7 +29,7 @@ public class WeaponTreeNode<T> {
         this.parent = parent;
     }
 
-    public WeaponTreeNode<T> getParent() {
+/*    public WeaponTreeNode<T> getParent() {
         return parent;
     }
 
@@ -39,6 +39,6 @@ public class WeaponTreeNode<T> {
             result = result +children.get(i).data +" ";
         }
         return result;
-    }
+    }*/
 
 }

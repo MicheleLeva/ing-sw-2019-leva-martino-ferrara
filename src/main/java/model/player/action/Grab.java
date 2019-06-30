@@ -60,9 +60,9 @@ public class Grab extends Action {
             }
             else{
                 //get spawn weapons
-                Weapon spawnWeapon[] = currentSquare.getWeapon();
+                Weapon[] spawnWeapon = currentSquare.getWeapon();
                 //weapons the current player could pay, among the spawn ammo
-                ArrayList<Weapon> payableWeapon = new ArrayList<Weapon>(3);
+                ArrayList<Weapon> payableWeapon = new ArrayList<>(3);
                 for (int i = 0; i < 3; i++)
                 {
                     if(spawnWeapon[i] != null)

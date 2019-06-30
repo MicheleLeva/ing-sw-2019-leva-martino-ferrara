@@ -22,6 +22,11 @@ public abstract class Weapon extends Card {
     protected int baseTargetsNumber;
     private final Model model;
     private WeaponTree weaponTree;
+    private static final String BASE = "base";
+    private static final String ALTERNATIVE = "alternative";
+    private static final String OPTIONAL1 = "optional1";
+    private static final String OPTIONAL2 = "optional2";
+
 
 
     /**
@@ -109,16 +114,16 @@ public abstract class Weapon extends Card {
      */
     public int getDamageForUse(String effectType,Weapon weapon){
         switch(effectType){
-            case "base":
+            case BASE:
                 return weapon.getBaseDamage();
 
-            case "alternative":
+            case ALTERNATIVE:
                 return ((WeaponAlternative)weapon).getAlternativeDamage();
 
-            case "optional1":
+            case OPTIONAL1:
                 return ((WeaponOptional1)weapon).getOptionalDamage1();
 
-            case "optional2":
+            case OPTIONAL2:
                 return ((WeaponOptional2)weapon).getOptionalDamage2();
 
             default:
@@ -134,16 +139,16 @@ public abstract class Weapon extends Card {
      */
     public int getMarksForUse(String effectType,Weapon weapon){
         switch(effectType){
-            case "base":
+            case BASE:
                 return weapon.getBaseMarks();
 
-            case "alternative":
+            case ALTERNATIVE:
                 return ((WeaponAlternative)weapon).getAlternativeMarks();
 
-            case "optional1":
+            case OPTIONAL1:
                 return ((WeaponOptional1)weapon).getOptionalMarks1();
 
-            case "optional2":
+            case OPTIONAL2:
                 return ((WeaponOptional2)weapon).getOptionalMarks2();
 
             default:
@@ -216,23 +221,22 @@ public abstract class Weapon extends Card {
     public void endAskSquares(Player currentPlayer, ArrayList<Square> squares, String effectType){
         getModel().getCurrent().setAvailableWeaponSquares(squares);
         switch(effectType){
-            case "base":
+            case BASE:
                 getModel().getCurrent().incrementBaseCounter();
                 break;
 
-            case "alternative":
+            case ALTERNATIVE:
                 getModel().getCurrent().incrementAlternativeCounter();
                 break;
 
-            case "optional1":
+            case OPTIONAL1:
                 getModel().getCurrent().incrementOptionalCounter1();
                 break;
 
-            case "optional2":
+            case OPTIONAL2:
                 getModel().getCurrent().incrementOptionalCounter2();
                 break;
         }
-        System.out.println("endasksquares");
         getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
     }
 
@@ -246,25 +250,25 @@ public abstract class Weapon extends Card {
      */
     public void endAskTargets(Player currentPlayer, ArrayList<Player> availableTargets,Weapon weapon,String effectType){
         switch(effectType){
-            case "base":
+            case BASE:
                 getModel().getCurrent().setAvailableBaseTargets(availableTargets);
                 getModel().getCurrent().incrementBaseCounter();
                 getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, weapon.getBaseTargetsNumber());
                 break;
 
-            case "alternative":
+            case ALTERNATIVE:
                 getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
                 getModel().getCurrent().incrementAlternativeCounter();
                 getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, ((WeaponAlternative)weapon).getAlternativeTargetsNumber());
                 break;
 
-            case "optional1":
+            case OPTIONAL1:
                 getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
                 getModel().getCurrent().incrementOptionalCounter1();
                 getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, ((WeaponOptional1)weapon).getOptionalTargetsNumber1());
                 break;
 
-            case "optional2":
+            case OPTIONAL2:
                 getModel().getCurrent().setAvailableOptionalTargets2(availableTargets);
                 getModel().getCurrent().incrementOptionalCounter2();
                 getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, ((WeaponOptional2)weapon).getOptionalTargetsNumber2());

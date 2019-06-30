@@ -73,7 +73,8 @@ public class Plasmagun extends WeaponOptional2 {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             if(availableTargets.isEmpty()&&getModel().getCurrent().getSelectedWeaponSquare()!=null){
-                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode",
+                        currentPlayer.getPlayerColor());
                 getModel().payFireMode(currentPlayer,this);
                 getModel().notifyShoot(currentPlayer);
                 return;

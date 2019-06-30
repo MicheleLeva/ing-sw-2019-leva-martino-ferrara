@@ -45,6 +45,10 @@ public class Current {
     private ArrayList<PowerUp> availablePaymentPowerUps = new ArrayList<>();
     private ArrayList<PowerUp> selectedPaymentPowerUps = new ArrayList<>();
     private Player flamethrowerSupportPlayer = null;
+    private ArrayList<Player> allDamagedPlayers = new ArrayList<>();
+    private ArrayList<Player> allShotPlayers = new ArrayList<>();
+
+
 
     public Player getFlamethrowerSupportPlayer(){
         return this.flamethrowerSupportPlayer;
@@ -57,12 +61,29 @@ public class Current {
     public void decreaseBaseCounter(){this.baseCounter--;}
 
     public ArrayList<Player> getAllDamagedPlayer() {
-        Set<Player> set = new LinkedHashSet<Player>(getSelectedBaseTargets());
+        /*Set<Player> set = new LinkedHashSet<Player>(getSelectedBaseTargets());
         set.addAll(getSelectedAlternativeTargets());
         set.addAll(getSelectedOptionalTargets1());
         set.addAll(getSelectedOptionalTargets2());
-        ArrayList<Player> targets = new ArrayList<>(set);
-        return targets;
+        ArrayList<Player> targets = new ArrayList<>(set);*/
+        return allDamagedPlayers;
+    }
+
+    public void addDamagedPlayer(Player player){
+        this.allDamagedPlayers.add(player);
+    }
+
+    public ArrayList<Player> getAllShotPlayer() {
+        /*Set<Player> set = new LinkedHashSet<Player>(getSelectedBaseTargets());
+        set.addAll(getSelectedAlternativeTargets());
+        set.addAll(getSelectedOptionalTargets1());
+        set.addAll(getSelectedOptionalTargets2());
+        ArrayList<Player> targets = new ArrayList<>(set);*/
+        return this.allShotPlayers;
+    }
+
+    public void addShotPlayer(Player player){
+        this.allShotPlayers.add(player);
     }
 
     private Weapon selectedWeapon = null;

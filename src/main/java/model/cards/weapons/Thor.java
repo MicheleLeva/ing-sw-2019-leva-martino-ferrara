@@ -60,7 +60,8 @@ public class Thor extends WeaponOptional2 {
             if(availableTargets.contains(currentPlayer))
                 availableTargets.remove(currentPlayer);
             if(availableTargets.isEmpty()){
-                getModel().getGameNotifier().notifyGeneric("No available targets for this Fire Mode ");
+                getModel().getGameNotifier().notifyPlayer("No available targets for this Fire Mode ",
+                        currentPlayer.getPlayerColor());
                 getModel().payFireMode(currentPlayer,this);
                 this.getWeaponTree().resetAction();
                 getModel().notifyShoot(currentPlayer);

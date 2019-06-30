@@ -16,6 +16,7 @@ public class TestSquare {
         squareTest.isSpawn = true;
         squareTest.setColor(SquareColor.BLUE);
 
+
         }
 
     /**
@@ -35,5 +36,7 @@ public class TestSquare {
         assertTrue(squareTest.isEmpty());
         squareTest.getWeapon();
         }
+
+
     }
 
