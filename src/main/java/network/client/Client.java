@@ -110,12 +110,16 @@ public class Client extends Observable<String> implements ClientConnection,Runna
                 System.out.println("Insert your name!");
                 Scanner scanner = new Scanner(System.in);
                 String name = scanner.nextLine();
-                this.asyncSend(name);
-                String read = in.nextLine();
-                if (read.equals("ok")){
-                    nameAccepted = true;
-                } else{
-                    System.out.println("Name already taken!");
+                if (!name.equals("")){
+                    this.asyncSend(name);
+                    String read = in.nextLine();
+                    if (read.equals("ok")){
+                        nameAccepted = true;
+                    } else{
+                        System.out.println("Name already taken!");
+                    }
+                } else {
+                    System.out.println("Invalid name!");
                 }
             }
             //todo commentato per velocizzare test
