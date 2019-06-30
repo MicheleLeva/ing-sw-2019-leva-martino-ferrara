@@ -511,7 +511,6 @@ public class WeaponController extends Controller implements WeaponObserver {
         ArrayList<Player> selectedPlayers = new ArrayList<>();
         for (Integer target : event.getSelectedTargets()) {
             int temp = target;
-
             if(temp!=0) {
                 temp--;
                 if (temp < 0 || temp >= current.getAvailableAlternativeTargets().size()) {

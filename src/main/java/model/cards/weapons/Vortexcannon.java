@@ -49,6 +49,8 @@ public class Vortexcannon extends WeaponOptional1 {
             return;
 
         }
+
+
         if (getModel().getCurrent().getBaseCounter() == 1) {
             Square square = getModel().getCurrent().getSelectedWeaponSquare();
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1, currentPlayer, square);

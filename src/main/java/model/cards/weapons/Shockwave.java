@@ -52,6 +52,7 @@ public class Shockwave extends WeaponAlternative {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            finalTargets.clear();
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
             ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
             for(Player player : temp){
@@ -61,6 +62,8 @@ public class Shockwave extends WeaponAlternative {
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
+
+
         if(getModel().getCurrent().getBaseCounter() == 1) {
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();
@@ -81,6 +84,8 @@ public class Shockwave extends WeaponAlternative {
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
+
+
         if(getModel().getCurrent().getBaseCounter() == 2) {
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();

@@ -23,11 +23,14 @@ public class Powerglove extends WeaponAlternative {
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
+            firstTarget = null;
             ArrayList<Square> squares = getModel().getSquaresInCardinal1(currentPlayer);
             squares.remove(currentPlayer.getPosition());
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
+
+
         if(getModel().getCurrent().getAlternativeCounter() == 1) {
             ArrayList<Player> firstAvailablePlayers = new ArrayList<>();
             for(Player player : getModel().getAllPlayers())
@@ -43,6 +46,8 @@ public class Powerglove extends WeaponAlternative {
             endAskTargets(currentPlayer,firstAvailablePlayers,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
+
+
         if(getModel().getCurrent().getAlternativeCounter() == 2) {
             ArrayList<Square> lastSquare = new ArrayList<>();
             if(getModel().getNextPowerGloveSquare(currentPlayer.getPosition(),getModel().getCurrent().getSelectedWeaponSquare())!=null)
@@ -57,6 +62,8 @@ public class Powerglove extends WeaponAlternative {
             endAskSquares(currentPlayer,lastSquare,this.getWeaponTree().getLastAction().getData().getType());
             return;
         }
+
+
         if(getModel().getCurrent().getAlternativeCounter() == 3) {
             if(!getModel().getCurrent().getSelectedAlternativeTargets().isEmpty())
                 firstTarget = getModel().getCurrent().getSelectedAlternativeTargets().get(0);

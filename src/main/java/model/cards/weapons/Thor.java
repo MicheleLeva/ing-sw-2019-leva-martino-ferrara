@@ -90,6 +90,7 @@ public class Thor extends WeaponOptional2 {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            baseTarget = null;
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }

@@ -94,6 +94,8 @@ public class Flamethrower extends WeaponAlternative {
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getBaseTargetsNumber());
             return;
         }
+
+
         if(getModel().getCurrent().getBaseCounter()==1){
             ArrayList<Player> availableTargets = new ArrayList<>();
             Square nextSquare = getModel().getNextPowerGloveSquare(currentPlayer.getPosition(),getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());

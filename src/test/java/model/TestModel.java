@@ -19,9 +19,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * tests if the returned squares are actually those at distance 2 in all cardinal directions
- */
+
 public class TestModel {
     private ArrayList<Player> players = new ArrayList<>();
     private Player player1 ;
@@ -32,7 +30,7 @@ public class TestModel {
     private Square[][] squares;
 
     /**
-     * initializes the variables needed for the tests
+     * Initializes the variables needed for the Tests
      */
     @Before
     public void setUp() throws Exception {
@@ -54,7 +52,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned players are those tha are visible from the current player
+     * Tests if the returned players are those tha are visible from the current player
      */
     @Test
     public void testVisiblePlayers(){
@@ -67,7 +65,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned players are those that are not in the same room of the current player
+     * Tests if the returned players are those that are not in the same room of the current player
      */
     @Test
     public void testPlayersNotInYourRoom(){
@@ -82,7 +80,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned players are thos at distance inferior to the given one
+     * Tests if the returned players are thos at distance inferior to the given one
      */
     @Test
     public void testPlayersAtDistance(){
@@ -98,7 +96,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned players are those at a distance superior to the given one
+     * Tests if the returned players are those at a distance superior to the given one
      */
     @Test
     public void testPlayersAtDistanceMore(){
@@ -115,7 +113,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned players are those in the same square of the current player
+     * Tests if the returned players are those in the same square of the current player
      */
     @Test
     public void testPlayersInSameSquare(){
@@ -132,7 +130,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned squares are actually those at distance 1 in all cardinal directions
+     * Tests if the returned squares are actually those at distance 1 in all cardinal directions
      */
     @Test
     public void testNonVisiblePlayers(){
@@ -149,7 +147,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned squares are actually those at distance 2 in all cardinal directions
+     * Tests if the returned squares are actually those at distance 2 in all cardinal directions
      */
     @Test
     public void testSquaresInCardinal2(){
@@ -159,12 +157,11 @@ public class TestModel {
         player3.setPosition(squares[2][3]);
 
         visibleSquares = model.getSquaresInCardinal2(player1);
-        //visibleSquares.stream().map(x->x.getID()).forEach(x->System.out.println(x));
         assertEquals(4,visibleSquares.size());
     }
 
     /**
-     * tests if the returned players are actually those in all 4 cardinal directions
+     * Tests if the returned players are actually those in all 4 cardinal directions
      */
     @Test
     public void testPlayersInCardinal(){
@@ -180,7 +177,7 @@ public class TestModel {
     }
 
     /**
-     * tests the returned squares are actually those i the selected cardinal direction
+     * Tests the returned squares are actually those i the selected cardinal direction
      */
     @Test
     public void testPlayersInSelectedardinal(){
@@ -195,7 +192,7 @@ public class TestModel {
         assertEquals(1,visiblePlayers.size());
     }
     /**
-     * tests if the returned visible squares from a player are correct
+     * Tests if the returned visible squares from a player are correct
      */
     @Test
     public void testGetVisibleSquares(){
@@ -217,7 +214,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned squares at distance 1 in all 4 cardin directions are correct
+     * Tests if the returned squares at distance 1 in all 4 cardin directions are correct
      */
     @Test
     public void testGetSquaresInCardinal1(){
@@ -234,7 +231,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the method returns players at the selected distance
+     * Tests if the method returns players at the selected distance
      */
     @Test
     public void testGetPlayersAtDistance(){
@@ -249,7 +246,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the method returns players at the selected distance from a selected square
+     * Tests if the method returns players at the selected distance from a selected square
      */
     @Test
     public void testGetPlayersAtDistanceFromSquare(){
@@ -264,7 +261,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the method returns players in the selected cardinal direction
+     * Tests if the method returns players in the selected cardinal direction
      */
     @Test
     public void testGetPlayersInSeletedcardinal(){
@@ -292,7 +289,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned square for the power glove weapon is correct
+     * Tests if the returned square for the power glove weapon is correct
      */
     @Test
     public void testGetNextPowerGloveSquare(){
@@ -322,7 +319,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the squares selected by the BFS method runnable square are correct
+     * Tests if the squares selected by the BFS method runnable square are correct
      */
     @Test
 
@@ -357,7 +354,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the string with the weapon names is created
+     * Tests that the string with the weapon names is created
      */
     @Test
     public void testShowWeaponCards(){
@@ -367,7 +364,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the returned cost of the given fire mode is correct
+     * Tests if the returned cost of the given fire mode is correct
      */
     @Test
     public void testFireCost(){
@@ -389,7 +386,7 @@ public class TestModel {
     }
 
     /**
-     * tests if the correct amount of damage is given
+     * Tests if the correct amount of damage is given
      */
     @Test
     public void testAddDamage(){
@@ -415,7 +412,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the action tree is managed correctly after updating the action
+     * Tests that the action tree is managed correctly after updating the action
      */
     @Test
     public void testVerifyNewAction(){
@@ -424,7 +421,7 @@ public class TestModel {
     }
 
     /**
-     * tests that all the layers in a match are returned correctly
+     * Tests that all the layers in a match are returned correctly
      */
     @Test
     public void testGetEachPlayer(){
@@ -434,7 +431,7 @@ public class TestModel {
 
 
     /**
-     * tests that all damaged players are asked for the targeting scope powerUp
+     * Tests that all damaged players are asked for the targeting scope powerUp
      */
     @Test
     public void testTargetingScopeTargets(){
@@ -444,7 +441,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the player can correctly be set as AFK and removed from the AFK players
+     * Tests that the player can correctly be set as AFK and removed from the AFK players
      */
     @Test
     public void testAFK(){
@@ -457,7 +454,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the tagback grenade request is sent correctly
+     * Tests that the tagback grenade request is sent correctly
      */
     @Test
     public void testTagBackGrenadeRequest(){
@@ -469,7 +466,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the map vote request is sent correctly
+     * Tests that the map vote request is sent correctly
      */
     @Test
     public void testMapVote(){
@@ -489,8 +486,22 @@ public class TestModel {
     }
 
 
+    @Test
+    public void testVoids(){
+        model.showWeaponCards(player1.getPlayerColor());
+        model.notifyNewton(player1.getPlayerColor(),player2);
+        model.chooseNewtonSquare(player1.getPlayerColor(),player2);
+        model.useNewton(player1.getPlayerColor());
+        model.chooseAction(player1.getPlayerColor());
+        model.notifyTeleporter(player1.getPlayerColor());
+        model.useTeleporter(player1.getPlayerColor());
+        model.choosePowerUp(player1.getPlayerColor());
+        model.updateRun();
+        model.printMessage(player1.getPlayerColor(),"message1","message2");
+    }
+
     /**
-     *tests that the selected weapons are correctly swapped
+     *Tests that the selected weapons are correctly swapped
      */
     @Test
     public void testSwapWeapon(){
@@ -505,9 +516,8 @@ public class TestModel {
         model.swapPickUpWeapon(player1,1);
         assertTrue(player1.getResources().getAllWeapon().contains(heatseeker));
         assertTrue(!player1.getResources().getAllWeapon().contains(heatseeker2));
-        for(int i = 0; i<3;i++)
-            System.out.println(i + player1.getPosition().getWeapon()[i].getWeaponName());
         assertSame(player1.getPosition().getWeapon()[0], heatseeker2);
+
         player1.getResources().getAllWeapon().get(0).unload();
         model.requestWeaponReload(player1.getPlayerColor());
 
@@ -515,7 +525,7 @@ public class TestModel {
 
 
     /**
-     * tests that the payment request for reload works as intended
+     * Tests that the payment request for reload works as intended
      */
     @Test
     public void testAskReloadPayment(){
@@ -529,6 +539,7 @@ public class TestModel {
         player1.getResources().addPowerUp(powerUps);
         model.askReloadPayment(player1,heatseeker);
         assertEquals(0, player1.getResources().getAvailableAmmo().getRed());
+
         powerUps.clear();
         Teleporter teleporter2 = new Teleporter(model,AmmoColor.RED);
         ArrayList<PowerUp> powerUps2 = new ArrayList<>();
@@ -539,7 +550,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the payment request for pickUp works as intended
+     * Tests that the payment request for pickUp works as intended
      */
     @Test
     public void testAskPickUpPayment(){
@@ -551,6 +562,7 @@ public class TestModel {
         player1.getResources().addPowerUp(powerUps);
         model.askPickUpPayment(player1,heatseeker);
         assertEquals(0, player1.getResources().getAvailableAmmo().getRed());
+
         powerUps.clear();
         Teleporter teleporter2 = new Teleporter(model,AmmoColor.RED);
         ArrayList<PowerUp> powerUps2 = new ArrayList<>();
@@ -561,7 +573,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the payment request for pickUp works as intended
+     * Tests that the payment request for pickUp works as intended
      */
     @Test
     public void testAskFireModePayment(){
@@ -576,6 +588,7 @@ public class TestModel {
         player1.getResources().addPowerUp(powerUps);
         model.askFireModePayment(player1,hellion,"alternative");
         assertEquals(1, player1.getResources().getAvailableAmmo().getRed());
+
         powerUps.clear();
         Teleporter teleporter2 = new Teleporter(model,AmmoColor.RED);
         ArrayList<PowerUp> powerUps2 = new ArrayList<>();
@@ -595,7 +608,7 @@ public class TestModel {
     }
 
     /**
-     * tests next available action for selected weapon
+     * Tests next available action for selected weapon
      */
     @Test
     public void testCheckNextWeaponAction(){
@@ -607,17 +620,21 @@ public class TestModel {
         ArrayList<PowerUp> powerUps = new ArrayList<>();
         powerUps.add(targetingScope);
         player1.getResources().addPowerUp(powerUps);
-        System.out.println(heatseeker.getWeaponTree().getLastAction().getData().getType());
+        assertEquals("root",heatseeker.getWeaponTree().getLastAction().getData().getType());
+
         heatseeker.getWeaponTree().updateLastAction(0);
-        System.out.println(heatseeker.getWeaponTree().getLastAction().getData().getType());
-        System.out.println(heatseeker.getWeaponTree().getLastActionPerformed().getData().getType());
+        assertEquals("base",heatseeker.getWeaponTree().getLastAction().getData().getType());
+        assertEquals("root",heatseeker.getWeaponTree().getLastActionPerformed().getData().getType());
+
         model.checkNextWeaponAction(heatseeker,player1,new ArrayList<>());
+        assertEquals("root",heatseeker.getWeaponTree().getLastAction().getData().getType());
+
 
     }
 
 
     /**
-     *  tests that the correct amount of ammo is added to the player's resources
+     *  Tests that the correct amount of ammo is added to the player's resources
      */
     @Test
     public void testAddAmmo(){
@@ -629,7 +646,7 @@ public class TestModel {
     }
 
     /**
-     *  tests that Ammo Card is correctly picked up from the current square
+     *  Tests that Ammo Card is correctly picked up from the current square
      */
     @Test
     public void testDiscardAmmo(){
@@ -639,7 +656,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the correct powerup is drawn
+     * Tests that the correct powerup is drawn
      */
     @Test
     public void testDrawPowerUp(){
@@ -648,7 +665,7 @@ public class TestModel {
     }
 
     /**
-     * tests that the targets selection method works with all fire modes
+     * Tests that the targets selection method works with all fire modes
      */
     @Test
     public void testSelectTargets(){
@@ -662,10 +679,12 @@ public class TestModel {
         model.selectTargets(player1.getPlayerColor(),new ArrayList<>(),1);
         electroscythe.getWeaponTree().updateLastAction(0);
         assertEquals("base",electroscythe.getWeaponTree().getLastAction().getData().getType());
+
         model.selectTargets(player1.getPlayerColor(),new ArrayList<>(),1);
         electroscythe.getWeaponTree().resetAction();
         electroscythe.getWeaponTree().updateLastAction(1);
         assertEquals("alternative",electroscythe.getWeaponTree().getLastAction().getData().getType());
+
         model.selectTargets(player1.getPlayerColor(),new ArrayList<>(),1);
         Cyberblade cyberblade = new Cyberblade("hellion",ammo,ammo,ammo,ammo,1,1,
                 1,1,1,1, 1,1,
@@ -675,12 +694,14 @@ public class TestModel {
         cyberblade.getWeaponTree().resetAction();
         cyberblade.getWeaponTree().updateLastAction(1);
         assertEquals("optional1",cyberblade.getWeaponTree().getLastAction().getData().getType());
+
         model.selectTargets(player1.getPlayerColor(),new ArrayList<>(),1);
         cyberblade.getWeaponTree().updateLastAction(1);
         assertEquals("optional1",cyberblade.getWeaponTree().getLastAction().getData().getType());
         cyberblade.getWeaponTree().updateLastActionPerformed();
         cyberblade.getWeaponTree().updateLastAction(0);
         assertEquals("base",cyberblade.getWeaponTree().getLastAction().getData().getType());
+
         cyberblade.getWeaponTree().updateLastActionPerformed();
         cyberblade.getWeaponTree().updateLastAction(0);
         assertEquals("optional2",cyberblade.getWeaponTree().getLastAction().getData().getType());
@@ -688,22 +709,30 @@ public class TestModel {
         model.selectTargets(player1.getPlayerColor(),new ArrayList<>(),1);
     }
 
+
+    /**
+     * Tests that the powerUp cards are discarded correctly from the player's hand
+     */
     @Test
-    public void testVoids(){
-        model.showWeaponCards(player1.getPlayerColor());
-        model.notifyNewton(player1.getPlayerColor(),player2);
-        model.chooseNewtonSquare(player1.getPlayerColor(),player2);
-        model.useNewton(player1.getPlayerColor());
-        model.chooseAction(player1.getPlayerColor());
-        model.notifyTeleporter(player1.getPlayerColor());
-        model.useTeleporter(player1.getPlayerColor());
-        model.choosePowerUp(player1.getPlayerColor());
-        model.updateRun();
-        model.printMessage(player1.getPlayerColor(),"message1","message2");
+    public void testDiscardPowerUp(){
+        ArrayList<PowerUp> powerUps = new ArrayList<>();
+        Teleporter teleporter = new Teleporter(model,AmmoColor.BLUE);
+        powerUps.add(teleporter);
+        player1.getResources().addPowerUp(powerUps);
+        model.discardPowerUp(player1,0);
+        assertTrue(model.getGameBoard().getDecks().getDiscardedPowerUpDeck().contains(teleporter));
+        assertTrue(!player1.getResources().getPowerUp().contains(teleporter));
+
+        player1.getResources().addPowerUp(powerUps);
+        model.requestPowerUpDiscard(player1);
+        powerUps.add(teleporter);
+        powerUps.add(teleporter);
+        player1.getResources().addPowerUp(powerUps);
+        model.requestPowerUpDiscard(player1);
     }
 
     /**
-     * tests that the player is spawned on the right square
+     * Tests that the player is spawned on the right square
      */
     @Test
     public void testSpawnPlayer(){
@@ -715,26 +744,5 @@ public class TestModel {
         assertSame(player1.getPosition(), squares[2][3]);
 
     }
-
-    /**
-     * tests that the powerUp cards are discarded correctly from the player's hand
-     */
-    @Test
-    public void testDiscardPowerUp(){
-        ArrayList<PowerUp> powerUps = new ArrayList<>();
-        Teleporter teleporter = new Teleporter(model,AmmoColor.BLUE);
-        powerUps.add(teleporter);
-        player1.getResources().addPowerUp(powerUps);
-        model.discardPowerUp(player1,0);
-        assertTrue(model.getGameBoard().getDecks().getDiscardedPowerUpDeck().contains(teleporter));
-        assertTrue(!player1.getResources().getPowerUp().contains(teleporter));
-        player1.getResources().addPowerUp(powerUps);
-        model.requestPowerUpDiscard(player1);
-        powerUps.add(teleporter);
-        powerUps.add(teleporter);
-        player1.getResources().addPowerUp(powerUps);
-        model.requestPowerUpDiscard(player1);
-    }
-
 
 }

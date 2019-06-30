@@ -51,6 +51,8 @@ public class KillShotCell {
     }
 
     public void addToken(){
+        System.out.println("GIOCATORE CORRENTE  " + "ADDTOKEN\n");
+
         tokenNumber++;
     }
 }

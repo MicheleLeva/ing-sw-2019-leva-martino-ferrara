@@ -265,8 +265,8 @@ public class Model {
         return playersAtDistance;
 
     }
-/*
-    public Square getSquareInSameDirection(Square currentSquare,Square targetSquare){
+
+/*    public Square getSquareInSameDirection(Square currentSquare,Square targetSquare){
         Square finalSquare = null;
         for(Direction dir : Direction.values()) {
             if (currentSquare.getSide(dir) == targetSquare) {
@@ -285,9 +285,9 @@ public class Model {
             }
         }
         return finalSquare;
-    }
+    }*/
 
-    public ArrayList<Player> getPlayersInSameDirection(Player currentPlayer,Player target){
+/*    public ArrayList<Player> getPlayersInSameDirection(Player currentPlayer,Player target){
         ArrayList<Player> finalPlayers = new ArrayList<>();
         Square currentSquare = currentPlayer.getPosition();
         Square targetSquare = target.getPosition();
@@ -690,6 +690,7 @@ public class Model {
     }
 
     /**
+     * Sends a list of the available targets to the current player
      * @param playerColor current player's color
      * @param availableTargets list of the targets the current player can hit
      * @param targetsNumber maximum number of targets the player can choose

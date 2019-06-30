@@ -112,10 +112,12 @@ public class TestWeapons {
         model.getCurrent().setSelectedWeapon(cyberblade);
         cyberblade.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         ArrayList<Player> selectedTargets = new ArrayList<>();
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         cyberblade.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         player3.setPosition(map.getMap()[1][0]);
         cyberblade.askBaseRequirements(player1);
         cyberblade.askOptionalRequirements1(player1);
@@ -124,6 +126,7 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         cyberblade.askOptionalRequirements2(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
+
         cyberblade.askOptionalRequirements2(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
         selectedTargets.clear();
@@ -163,6 +166,7 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         electroscythe.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         electroscythe.askAlternativeRequirements(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
         model.getCurrent().incrementAlternativeCounter();
@@ -185,8 +189,10 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         zx2.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         zx2.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         zx2.useBaseFireMode(player1,selectedTargets);
         zx2.askAlternativeRequirements(player1);
         zx2.askAlternativeRequirements(player1);
@@ -209,6 +215,7 @@ public class TestWeapons {
         lockrifle.askBaseRequirements(player1);
         lockrifle.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         player3.setPosition(map.getMap()[1][1]);
         selectedTargets.add(player3);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
@@ -229,18 +236,22 @@ public class TestWeapons {
         model.getCurrent().setSelectedWeapon(vortex);
         vortex.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         ArrayList<Player> selectedTargets = new ArrayList<>();
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         model.getCurrent().setSelectedWeaponSquare(map.getMap()[1][1]);
         vortex.askBaseRequirements(player1);
         assertEquals(2,model.getCurrent().getBaseCounter());
+
         vortex.askBaseRequirements(player1);
         assertEquals(2,model.getCurrent().getBaseCounter());
+
         player3.setPosition(map.getMap()[1][1]);
         selectedTargets.add(player3);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         vortex.askOptionalRequirements1(player1);
         assertEquals(1,model.getCurrent().getOptionalCounter1());
+
         vortex.askOptionalRequirements1(player1);
     }
 
@@ -257,6 +268,7 @@ public class TestWeapons {
         player2.setPosition(map.getMap()[1][1]);
         grenadelauncher.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         ArrayList<Player> selectedTargets = new ArrayList<>();
         selectedTargets.add(player2);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
@@ -264,6 +276,7 @@ public class TestWeapons {
         model.getCurrent().incrementBaseCounter();
         grenadelauncher.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         grenadelauncher.askBaseRequirements(player1);
         player3.setPosition(map.getMap()[1][1]);
         selectedTargets.add(player3);
@@ -286,8 +299,10 @@ public class TestWeapons {
         model.getCurrent().setSelectedWeapon(thor);
         thor.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         model.getCurrent().incrementBaseCounter();
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         ArrayList<Player> selectedTargets = new ArrayList<>();
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         thor.askBaseRequirements(player1);
@@ -296,6 +311,7 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         thor.askOptionalRequirements1(player1);
         assertEquals(0,model.getCurrent().getOptionalCounter1());
+
         model.getCurrent().incrementOptionalCounter1();
         thor.askOptionalRequirements1(player1);
         selectedTargets.clear();
@@ -304,9 +320,11 @@ public class TestWeapons {
         model.getCurrent().setSelectedOptionalTargets1(selectedTargets);
         thor.askOptionalRequirements2(player1);
         assertEquals(0,model.getCurrent().getOptionalCounter2());
+
         model.getCurrent().incrementOptionalCounter2();
         thor.askOptionalRequirements2(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         selectedTargets.clear();
         thor.useBaseFireMode(player1,selectedTargets);
         thor.useOptionalFireMode1(player1,selectedTargets);
@@ -325,15 +343,18 @@ public class TestWeapons {
         model.getCurrent().setSelectedWeapon(plasmagun);
         plasmagun.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         ArrayList<Player> selectedTargets = new ArrayList<>();
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         plasmagun.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         player3.setPosition(map.getMap()[1][0]);
         plasmagun.askBaseRequirements(player1);
         plasmagun.askOptionalRequirements1(player1);
         plasmagun.askOptionalRequirements1(player1);
         assertEquals(0,model.getCurrent().getOptionalCounter1());
+
         selectedTargets.clear();
         selectedTargets.add(player3);
         player3.setPosition(map.getMap()[1][1]);
@@ -341,6 +362,7 @@ public class TestWeapons {
         plasmagun.askOptionalRequirements2(player1);
         plasmagun.askOptionalRequirements2(player1);
         assertEquals(1,model.getCurrent().getOptionalCounter2());
+
         selectedTargets.clear();
         plasmagun.useBaseFireMode(player1,selectedTargets);
         plasmagun.useOptionalFireMode1(player1,selectedTargets);
@@ -359,10 +381,12 @@ public class TestWeapons {
         model.getCurrent().setSelectedWeapon(rocketlauncher);
         rocketlauncher.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         ArrayList<Player> selectedTargets = new ArrayList<>();
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         rocketlauncher.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         player3.setPosition(map.getMap()[1][0]);
         model.getCurrent().incrementBaseCounter();
         rocketlauncher.askBaseRequirements(player1);
@@ -375,6 +399,7 @@ public class TestWeapons {
         rocketlauncher.askOptionalRequirements2(player1);
         rocketlauncher.askOptionalRequirements2(player1);
         assertEquals(1,model.getCurrent().getOptionalCounter2());
+
         selectedTargets.clear();
         model.getCurrent().getSelectedBaseTargets().add(player2);
         rocketlauncher.useBaseFireMode(player1,selectedTargets);
@@ -400,14 +425,17 @@ public class TestWeapons {
         selectedTargets.add(player3);
         machinegun.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         model.getCurrent().incrementBaseCounter();
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         machinegun.askOptionalRequirements1(player1);
         machinegun.askOptionalRequirements1(player1);
         assertEquals(1,model.getCurrent().getOptionalCounter1());
+
         machinegun.askOptionalRequirements2(player1);
         machinegun.askOptionalRequirements2(player1);
         assertEquals(1,model.getCurrent().getOptionalCounter2());
+
         machinegun.useBaseFireMode(player1,new ArrayList<>());
         machinegun.useOptionalFireMode1(player1,new ArrayList<>());
         machinegun.useOptionalFireMode2(player1,new ArrayList<>());
@@ -432,6 +460,7 @@ public class TestWeapons {
         //hellion.askBaseRequirements(player1);
         hellion.askAlternativeRequirements(player1);
         assertEquals(1,model.getCurrent().getAlternativeCounter());
+
         player3.setPosition(map.getMap()[1][1]);
         selectedTargets.clear();
         selectedTargets.add(player3);
@@ -452,18 +481,21 @@ public class TestWeapons {
         player2.setPosition(map.getMap()[1][1]);
         shotgun.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         model.getCurrent().incrementBaseCounter();
         ArrayList<Player> selectedTargets = new ArrayList<>();
         selectedTargets.add(player2);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         shotgun.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         selectedTargets.clear();
         selectedTargets.add(player2);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         shotgun.askBaseRequirements(player1);
         shotgun.askAlternativeRequirements(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
+
         selectedTargets.clear();
         selectedTargets.add(player3);
         player3.setPosition(map.getMap()[1][1]);
@@ -482,9 +514,11 @@ public class TestWeapons {
         model.getCurrent().setSelectedWeapon(furnace);
         furnace.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         player2.setPosition(map.getMap()[0][1]);
         furnace.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         model.getCurrent().incrementBaseCounter();
         furnace.askBaseRequirements(player1);
         ArrayList<Player> selectedTargets = new ArrayList<>();
@@ -493,6 +527,7 @@ public class TestWeapons {
         furnace.askBaseRequirements(player1);
         furnace.askAlternativeRequirements(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
+
         furnace.useBaseFireMode(player1,selectedTargets);
         furnace.useAlternativeFireMode(player1,selectedTargets);
     }
@@ -516,6 +551,7 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         shockwave.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
+
         model.getCurrent().incrementBaseCounter();
         selectedTargets.add(player3);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
@@ -525,6 +561,7 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         shockwave.askBaseRequirements(player1);
         assertEquals(3,model.getCurrent().getBaseCounter());
+
         selectedTargets.clear();
         selectedTargets.add(player2);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
@@ -554,6 +591,7 @@ public class TestWeapons {
         railGun.askBaseRequirements(player1);
         railGun.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         model.getCurrent().incrementBaseCounter();
         selectedTargets.clear();
         selectedTargets.add(player2);
@@ -562,11 +600,13 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         railGun.askAlternativeRequirements(player1);
         assertEquals(1,model.getCurrent().getAlternativeCounter());
+
         selectedTargets.clear();
         selectedTargets.add(player3);
         model.getCurrent().setSelectedAlternativeTargets(selectedTargets);
         railGun.askAlternativeRequirements(player1);
         assertEquals(2,model.getCurrent().getAlternativeCounter());
+
         selectedTargets.clear();
         selectedTargets.add(player3);
         player3.setPosition(map.getMap()[1][1]);
@@ -596,6 +636,7 @@ public class TestWeapons {
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         sledgehammer.askAlternativeRequirements(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
+
         model.getCurrent().incrementAlternativeCounter();
         sledgehammer.askAlternativeRequirements(player1);
         model.getCurrent().incrementAlternativeCounter();
@@ -605,6 +646,7 @@ public class TestWeapons {
         model.getCurrent().setSelectedAlternativeTargets(selectedTargets);
         sledgehammer.askAlternativeRequirements(player1);
         assertEquals(3,model.getCurrent().getAlternativeCounter());
+
         selectedTargets.clear();
         selectedTargets.add(player3);
         player3.setPosition(map.getMap()[1][1]);
@@ -635,9 +677,11 @@ public class TestWeapons {
         tractorbeam.askBaseRequirements(player1);
         tractorbeam.askBaseRequirements(player1);
         assertEquals(2,model.getCurrent().getBaseCounter());
+
         tractorbeam.askAlternativeRequirements(player1);
         tractorbeam.askAlternativeRequirements(player1);
         assertEquals(1,model.getCurrent().getAlternativeCounter());
+
         tractorbeam.useBaseFireMode(player1, selectedTargets);
         tractorbeam.useAlternativeFireMode(player1, selectedTargets);
     }
@@ -658,9 +702,11 @@ public class TestWeapons {
         model.getCurrent().incrementBaseCounter();
         powerglove.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         player1.setPosition(map.getMap()[1][1]);
         powerglove.askAlternativeRequirements(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
+
         model.getCurrent().incrementAlternativeCounter();
         model.getCurrent().setSelectedWeaponSquare(map.getMap()[1][0]);
         powerglove.askAlternativeRequirements(player1);
@@ -669,10 +715,12 @@ public class TestWeapons {
         model.getCurrent().setSelectedWeaponSquare(map.getMap()[1][1]);
         powerglove.askAlternativeRequirements(player1);
         assertEquals(6,model.getCurrent().getAlternativeCounter());
+
         model.getCurrent().decrementAlternativeCounter();
         powerglove.askAlternativeRequirements(player1);
         powerglove.askAlternativeRequirements(player1);
         assertEquals(5,model.getCurrent().getAlternativeCounter());
+
         selectedTargets.clear();
         selectedTargets.add(player3);
         player3.setPosition(map.getMap()[1][1]);
@@ -696,15 +744,18 @@ public class TestWeapons {
         player3.setPosition(map.getMap()[1][0]);
         flamethrower.askBaseRequirements(player1);
         assertEquals(1,model.getCurrent().getBaseCounter());
+
         selectedTargets.add(player3);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         flamethrower.askBaseRequirements(player1);
         assertEquals(2,model.getCurrent().getBaseCounter());
+
         model.getCurrent().incrementBaseCounter();
         flamethrower.askBaseRequirements(player1);
         player3.setPosition(null);
         flamethrower.askAlternativeRequirements(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
+
         model.getCurrent().incrementAlternativeCounter();
         model.getCurrent().setSelectedWeaponSquare(map.getMap()[1][1]);
         flamethrower.askAlternativeRequirements(player1);

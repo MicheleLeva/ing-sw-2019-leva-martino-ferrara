@@ -47,6 +47,7 @@ public class KillShotTrack {
      * @param endOfArray indicates if it possible to set the frenzy turn
      */
     public void removeSkull(PlayerColor playerColor,boolean endOfArray) {
+        System.out.println("GIOCATORE CORRENTE   "+model.getTurnManager().getCurrentPlayer().getPlayerName() + "REMOVE SKULL\n");
 
         if (model.getTurnManager().isFrenzy()) {
             if(frenzyTokens.containsKey(playerColor)) {
@@ -59,25 +60,30 @@ public class KillShotTrack {
         else {
 
             if (lastIndex < killShotTrack.length) {
+
                 killShotTrack[lastIndex].addToken(playerColor);
                 lastIndex++;
             }
 
-            if (lastIndex >= killShotTrack.length) {
-                if(endOfArray) {
-                    model.getTurnManager().setFrenzy();
-                }
+            else {
+
                 killShotTrack[killShotTrack.length - 1].addToken();
+            }
+            if(endOfArray && lastIndex>=killShotTrack.length && !model.getTurnManager().isFrenzy()) {
+                model.getTurnManager().setFrenzy();
             }
         }
     }
 
     /**
      * adds the overkill(12th damage)
-     * @param endOfArray determines on which KillShottrack the token is to be added
+     * @param endOfArray determines on which KillShotTrack the token is to be added
      */
     public void addOverKill(boolean endOfArray) {
-        if(endOfArray){
+        System.out.println("GIOCATORE CORRENTE 1  "+model.getTurnManager().getCurrentPlayer().getPlayerName() + "OVERKILL\n");
+        if(endOfArray && !model.getTurnManager().isFrenzy()){
+            System.out.println("GIOCATORE CORRENTE 2 "+model.getTurnManager().getCurrentPlayer().getPlayerName() + "OVERKILL\n");
+
             killShotTrack[lastIndex - 1].addToken();
             return;
         }
@@ -95,7 +101,7 @@ public class KillShotTrack {
             } else {
                 currentIndex = lastIndex - 1;
             }
-
+            System.out.println("GIOCATORE CORRENTE 3  "+model.getTurnManager().getCurrentPlayer().getPlayerName() + "OVERKILL\n");
             killShotTrack[currentIndex].addToken();
         }
     }

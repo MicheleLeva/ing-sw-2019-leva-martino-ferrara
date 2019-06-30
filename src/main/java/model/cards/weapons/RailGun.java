@@ -23,6 +23,7 @@ public class RailGun extends WeaponAlternative {
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
+            firstPlayer = null;
             ArrayList<Player> availableTargets = getModel().getPlayersInCardinalDirection(currentPlayer);
             getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
             getModel().getCurrent().incrementAlternativeCounter();

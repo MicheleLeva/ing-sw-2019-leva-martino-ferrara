@@ -55,8 +55,12 @@ public class TestWeaponController {
         WeaponSelectionEvent event = new WeaponSelectionEvent(view,0);
         player1.setAfk(true);
         weaponController.update(event);
+        assertTrue(player1.isAfk());
+
         player1.setAfk(false);
         weaponController.update(event);
+        assertNull( model.getCurrent().getSelectedWeapon());
+
         event = new WeaponSelectionEvent(view,1);
         electroscythe.reload();
         player1.getResources().addWeapon(electroscythe);
@@ -73,8 +77,12 @@ public class TestWeaponController {
         WeaponReloadEvent event = new WeaponReloadEvent(view,0);
         player1.setAfk(true);
         weaponController.update(event);
+        assertTrue(player1.isAfk());
+
         player1.setAfk(false);
         weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedWeapon());
+
         event = new WeaponReloadEvent(view,1);
         electroscythe.reload();
         player1.getResources().addWeapon(electroscythe);
@@ -82,388 +90,6 @@ public class TestWeaponController {
         assertNull(model.getCurrent().getSelectedWeapon());
     }
 
-    /**
-     * Tests the correct execution for the OptionalFireModes update
-     */
-    @Test
-    public void testOptionalFireModesEvent() {
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        OptionalFireModesEvent event = new OptionalFireModesEvent(view,0);
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        weaponController.update(event);
-        event = new OptionalFireModesEvent(view,1);
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        model.getCurrent().getAvailableFireModes().clear();
-        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("return","a")));
-        weaponController.update(event);
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        model.getCurrent().getAvailableFireModes().clear();
-        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("base","b")));
-        weaponController.update(event);
-        assertSame(electroscythe,model.getCurrent().getSelectedWeapon());
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        player1.getResources().getPowerUp().add(new TargetingScope(model,AmmoColor.BLUE));
-        model.getCurrent().getAvailableFireModes().clear();
-        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("end","c")));
-        weaponController.update(event);
-        assertNull(model.getCurrent().getSelectedWeapon());
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        model.getCurrent().getAvailableFireModes().clear();
-        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("alternative","d")));
-        weaponController.update(event);
-        assertSame(electroscythe,model.getCurrent().getSelectedWeapon());
-    }
-
-    /**
-     * Tests the correct execution for the TargetsSelection update
-     */
-    @Test
-    public void testTargetsSelectionEvent() {
-
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        TargetsSelectionEvent event = new TargetsSelectionEvent(view,new ArrayList<>());
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        weaponController.update(event);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("base","a")));
-        weaponController.update(event);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
-        weaponController.update(event);
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
-        weaponController.update(event);
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
-        weaponController.update(event);
-        ArrayList<Integer> integers = new ArrayList<>();
-        integers.add(1);
-        event = new TargetsSelectionEvent(view,integers);
-        model.getCurrent().getAvailableBaseTargets().add(player2);
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("base","a")));
-        weaponController.update(event);
-        model.getCurrent().getAvailableAlternativeTargets().add(player2);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
-        weaponController.update(event);
-        model.getCurrent().getAvailableOptionalTargets1().add(player2);
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
-        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
-        player2.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
-        weaponController.update(event);
-        model.getCurrent().getAvailableOptionalTargets2().add(player2);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
-        model.getCurrent().getSelectedBaseTargets().add(player2);
-        weaponController.update(event);
-        assertNull(model.getCurrent().getSelectedWeapon());
-        assertEquals(0,model.getCurrent().getBaseCounter());
-        assertEquals(0,model.getCurrent().getAlternativeCounter());
-        assertEquals(0,model.getCurrent().getOptionalCounter1());
-        assertEquals(0,model.getCurrent().getOptionalCounter2());
-
-
-    }
-
-    /**
-     * Tests the correct execution for the ChooseWeaponSquare update
-     */
-    @Test
-    public void testChooseWeaponSquareEvent() {
-        ChooseWeaponSquareEvent event = new ChooseWeaponSquareEvent(view,12);
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        model.getCurrent().getAvailableWeaponSquares().add(model.getGameBoard().getMap().getMap()[0][0]);
-        weaponController.update(event);
-        event = new ChooseWeaponSquareEvent(view,0);
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("base","a")));
-        weaponController.update(event);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
-        weaponController.update(event);
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        model.getCurrent().getAvailableWeaponSquares().clear();
-        model.getCurrent().getAvailableWeaponSquares().add(model.getGameBoard().getMap().getMap()[0][0]);
-        event = new ChooseWeaponSquareEvent(view,0);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
-        player1.setPosition(model.getGameBoard().getMap().getMap()[0][0]);
-        player2.setPosition(model.getGameBoard().getMap().getMap()[0][0]);
-        weaponController.update(event);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
-        model.getCurrent().getSelectedBaseTargets().add(player2);
-        weaponController.update(event);
-    }
-
-    /**
-     * Tests the correct execution for the WeaponPayment update
-     */
-    @Test
-    public void testWeaponPaymentEvent() {
-        ArrayList<Player> selected = new ArrayList<>();
-        player1.setPosition(model.getGameBoard().getMap().getMap()[0][0]);
-        ArrayList<Integer> choices = new ArrayList<>();
-        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
-        WeaponPaymentEvent event = new WeaponPaymentEvent(view,choices);
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
-        weaponController.update(event);
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
-        weaponController.update(event);
-        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
-        selected.add(player2);
-        model.getCurrent().setSelectedBaseTargets(selected);
-        weaponController.update(event);
-        choices.clear();
-        choices.add(15);
-        event = new WeaponPaymentEvent(view,choices);
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
-        choices.clear();
-        choices.add(1);
-        event = new WeaponPaymentEvent(view,choices);
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-        choices.clear();
-        choices.add(1);
-        choices.add(1);
-        event = new WeaponPaymentEvent(view,choices);
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-
-    }
-
-
-    /**
-     * Tests the correct execution for the ReloadPayment update
-     */
-    @Test
-    public void testReloadPaymentEvent() {
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        ArrayList<Integer> choices = new ArrayList<>();
-        choices.add(7);
-        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model,AmmoColor.BLUE));
-        ReloadPaymentEvent event = new ReloadPaymentEvent(view,choices);
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        weaponController.update(event);
-        choices.clear();
-        choices.add(1);
-        event = new ReloadPaymentEvent(view,choices);
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        weaponController.update(event);
-        choices.clear();
-        event = new ReloadPaymentEvent(view,choices);
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
-        choices.clear();
-        choices.add(1);
-        event = new ReloadPaymentEvent(view,choices);
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-        choices.clear();
-        choices.add(1);
-        choices.add(1);
-        event = new ReloadPaymentEvent(view,choices);
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-
-    }
-
-    /**
-     * Tests the correct execution for the PickUpPayment update
-     */
-    @Test
-    public void testPickUpPaymentEvent() {
-        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
-        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
-        ArrayList<Integer> choices = new ArrayList<>();
-        choices.add(7);
-        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model,AmmoColor.BLUE));
-        PickUpPaymentEvent event = new PickUpPaymentEvent(view,choices);
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        weaponController.update(event);
-        choices.clear();
-        choices.add(1);
-        event = new PickUpPaymentEvent(view,choices);
-        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
-        weaponController.update(event);
-        choices.clear();
-        event = new PickUpPaymentEvent(view,choices);
-        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
-        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
-        choices.clear();
-        choices.add(1);
-        event = new PickUpPaymentEvent(view,choices);
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-        choices.clear();
-        choices.add(1);
-        choices.add(1);
-        event = new PickUpPaymentEvent(view,choices);
-        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
-        model.getCurrent().setSelectedWeapon(electroscythe);
-        weaponController.update(event);
-        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
-        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
-
-    }
-
-    /**
-     * Tests the correct execution for the ChoosePickUpWeapon update
-     */
-    @Test
-    public void testChoosePickUpWeaponEvent() {
-        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
-        ChoosePickUpWeaponEvent event = new ChoosePickUpWeaponEvent(view,0);
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        weaponController.update(event);
-        event = new ChoosePickUpWeaponEvent(view,1);
-        model.getCurrent().getPickUpableWeapon().add(electroscythe);
-        weaponController.update(event);
-    }
-
-    /**
-     * Tests the correct execution for the WeaponSwap update
-     */
-    @Test
-    public void testWeaponSwapEvent () {
-        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
-        player1.getResources().getAllWeapon().add(electroscythe);
-        WeaponSwapEvent event = new WeaponSwapEvent(view,0);
-        player1.setAfk(true);
-        weaponController.update(event);
-        player1.setAfk(false);
-        weaponController.update(event);
-        event = new WeaponSwapEvent(view,1);
-        weaponController.update(event);
-
-    }
-
-    /**
-     * Tests the correct execution for the checkBaseTargets method
-     */
-    @Test
-    public void testCheckBaseTargets() {
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        model.getCurrent().getAvailableBaseTargets().add(player2);
-        ArrayList<Integer> selected = new ArrayList<>();
-        selected.add(-1);
-        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
-        weaponController.checkBaseTargets(event,electroscythe,model.getCurrent(),player1);
-        model.getCurrent().getAvailableBaseTargets().add(player2);
-        selected.clear();
-        selected.add(1);
-        event = new TargetsSelectionEvent(view,selected);
-        weaponController.checkBaseTargets(event,electroscythe,model.getCurrent(),player1);
-        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
-    }
-    /**
-     * Tests the correct execution for the checkAlternativeTargets method
-     */
-    @Test
-    public void testCheckAlternativeTargets() {
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        model.getCurrent().getAvailableAlternativeTargets().add(player2);
-        ArrayList<Integer> selected = new ArrayList<>();
-        selected.add(-1);
-        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
-        weaponController.checkAlternativeTargets(event,electroscythe,model.getCurrent(),player1);
-        model.getCurrent().getAvailableAlternativeTargets().add(player2);
-        selected.clear();
-        selected.add(1);
-        event = new TargetsSelectionEvent(view,selected);
-        weaponController.checkAlternativeTargets(event,electroscythe,model.getCurrent(),player1);
-        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
-    }
-
-    /**
-     * Tests the correct execution for the checkOptionalTargets1 method
-     */
-    @Test
-    public void testCheckOptionalTargets1() {
-        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        model.getCurrent().getAvailableOptionalTargets1().add(player2);
-        ArrayList<Integer> selected = new ArrayList<>();
-        selected.add(-1);
-        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
-        weaponController.checkOptionalTargets1(event,cyberblade,model.getCurrent(),player1);
-        model.getCurrent().getAvailableOptionalTargets1().add(player2);
-        selected.clear();
-        selected.add(1);
-        event = new TargetsSelectionEvent(view,selected);
-        weaponController.checkOptionalTargets1(event,cyberblade,model.getCurrent(),player1);
-        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
-
-    }
-
-    /**
-     * Tests the correct execution for the checkOptionalTargets2 method
-     */
-    @Test
-    public void testCheckOptionalTargets2() {
-        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
-        model.getCurrent().setSelectedWeapon(cyberblade);
-        model.getCurrent().getAvailableOptionalTargets2().add(player2);
-        ArrayList<Integer> selected = new ArrayList<>();
-        selected.add(-1);
-        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
-        model.getCurrent().getAvailableOptionalTargets2().add(player2);
-        weaponController.checkOptionalTargets2(event,cyberblade,model.getCurrent(),player1);
-        model.getCurrent().getAvailableOptionalTargets2().add(player2);
-        selected.clear();
-        selected.add(1);
-        event = new TargetsSelectionEvent(view,selected);
-        model.getCurrent().getSelectedBaseTargets().add(player2);
-        weaponController.checkOptionalTargets2(event,cyberblade,model.getCurrent(),player1);
-        assertFalse(model.getCurrent().getSelectedBaseTargets().isEmpty());
-
-    }
 
     /**
      * Tests if the method can correctly detect duplicates in the targets selection
@@ -503,4 +129,456 @@ public class TestWeaponController {
         payment.add(1);
         assertTrue(weaponController.hasDuplicatePayment(payment));
     }
+
+    /**
+     * Tests the correct execution for the OptionalFireModes update
+     */
+    @Test
+    public void testOptionalFireModesEvent() {
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        OptionalFireModesEvent event = new OptionalFireModesEvent(view,0);
+        player1.setAfk(true);
+        weaponController.update(event);
+        assertTrue(player1.isAfk());
+
+        player1.setAfk(false);
+        weaponController.update(event);
+        assertFalse(model.getCurrent().getAvailableFireModes().isEmpty());
+
+        event = new OptionalFireModesEvent(view,1);
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        model.getCurrent().getAvailableFireModes().clear();
+        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("return","a")));
+        weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedWeapon());
+
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        model.getCurrent().getAvailableFireModes().clear();
+        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("base","b")));
+        weaponController.update(event);
+        assertSame(electroscythe,model.getCurrent().getSelectedWeapon());
+
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        player1.getResources().getPowerUp().add(new TargetingScope(model,AmmoColor.BLUE));
+        model.getCurrent().getAvailableFireModes().clear();
+        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("end","c")));
+        weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedWeapon());
+
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        model.getCurrent().getAvailableFireModes().clear();
+        model.getCurrent().getAvailableFireModes().add(new WeaponTreeNode<>(new FireMode("alternative","d")));
+        weaponController.update(event);
+        assertSame(electroscythe,model.getCurrent().getSelectedWeapon());
+    }
+
+    /**
+     * Tests the correct execution for the TargetsSelection update
+     */
+    @Test
+    public void testTargetsSelectionEvent() {
+
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        TargetsSelectionEvent event = new TargetsSelectionEvent(view,new ArrayList<>());
+        player1.setAfk(true);
+        weaponController.update(event);
+        assertTrue(player1.isAfk());
+
+        player1.setAfk(false);
+        weaponController.update(event);
+        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
+        assertTrue(model.getCurrent().getSelectedAlternativeTargets().isEmpty());
+
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("base","a")));
+        weaponController.update(event);
+        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
+
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
+        weaponController.update(event);
+        assertTrue(model.getCurrent().getSelectedAlternativeTargets().isEmpty());
+
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
+        weaponController.update(event);
+        assertTrue(model.getCurrent().getSelectedOptionalTargets1().isEmpty());
+
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
+        weaponController.update(event);
+        assertTrue(model.getCurrent().getSelectedOptionalTargets2().isEmpty());
+
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(1);
+        event = new TargetsSelectionEvent(view,integers);
+        model.getCurrent().getAvailableBaseTargets().add(player2);
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("base","a")));
+        weaponController.update(event);
+        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
+
+        model.getCurrent().getAvailableAlternativeTargets().add(player2);
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
+        weaponController.update(event);
+        assertTrue(model.getCurrent().getSelectedAlternativeTargets().isEmpty());
+
+        model.getCurrent().getAvailableOptionalTargets1().add(player2);
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
+        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
+        player2.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
+        weaponController.update(event);
+        assertSame(model.getCurrent().getSelectedOptionalTargets1().get(0), player2);
+
+        model.getCurrent().getAvailableOptionalTargets2().add(player2);
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
+        model.getCurrent().getSelectedBaseTargets().add(player2);
+        weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedWeapon());
+        assertEquals(0,model.getCurrent().getBaseCounter());
+        assertEquals(0,model.getCurrent().getAlternativeCounter());
+        assertEquals(0,model.getCurrent().getOptionalCounter1());
+        assertEquals(0,model.getCurrent().getOptionalCounter2());
+
+
+    }
+
+    /**
+     * Tests the correct execution for the ChooseWeaponSquare update
+     */
+    @Test
+    public void testChooseWeaponSquareEvent() {
+        ChooseWeaponSquareEvent event = new ChooseWeaponSquareEvent(view,12);
+        player1.setAfk(true);
+        weaponController.update(event);
+        assertTrue(player1.isAfk());
+
+        player1.setAfk(false);
+        model.getCurrent().getAvailableWeaponSquares().add(model.getGameBoard().getMap().getMap()[0][0]);
+        weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedWeaponSquare());
+
+        event = new ChooseWeaponSquareEvent(view,0);
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("base","a")));
+        weaponController.update(event);
+        assertSame(model.getCurrent().getSelectedWeaponSquare(), model.getCurrent().getSquareFromID(0));
+
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
+        weaponController.update(event);
+        assertSame(model.getCurrent().getSelectedWeaponSquare(), model.getCurrent().getSquareFromID(0));
+
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        model.getCurrent().getAvailableWeaponSquares().clear();
+        model.getCurrent().getAvailableWeaponSquares().add(model.getGameBoard().getMap().getMap()[0][0]);
+        event = new ChooseWeaponSquareEvent(view,0);
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
+        player1.setPosition(model.getGameBoard().getMap().getMap()[0][0]);
+        player2.setPosition(model.getGameBoard().getMap().getMap()[0][0]);
+        weaponController.update(event);
+        assertSame(model.getCurrent().getSelectedWeaponSquare(), model.getGameBoard().getMap().getMap()[0][0]);
+
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
+        model.getCurrent().getSelectedBaseTargets().add(player2);
+        weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedWeaponSquare());
+
+
+    }
+
+    /**
+     * Tests the correct execution for the WeaponPayment update
+     */
+    @Test
+    public void testWeaponPaymentEvent() {
+        ArrayList<Player> selected = new ArrayList<>();
+        player1.setPosition(model.getGameBoard().getMap().getMap()[0][0]);
+        ArrayList<Integer> choices = new ArrayList<>();
+        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
+        WeaponPaymentEvent event = new WeaponPaymentEvent(view,choices);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
+        weaponController.update(event);
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional1","a")));
+        weaponController.update(event);
+        cyberblade.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("optional2","a")));
+        selected.add(player2);
+        model.getCurrent().setSelectedBaseTargets(selected);
+        weaponController.update(event);
+
+        choices.clear();
+        choices.add(15);
+        event = new WeaponPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
+        choices.clear();
+        choices.add(1);
+        event = new WeaponPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+        choices.clear();
+        choices.add(1);
+        choices.add(1);
+        event = new WeaponPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+    }
+
+
+    /**
+     * Tests the correct execution for the ReloadPayment update
+     */
+    @Test
+    public void testReloadPaymentEvent() {
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        ArrayList<Integer> choices = new ArrayList<>();
+        choices.add(7);
+        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model,AmmoColor.BLUE));
+        ReloadPaymentEvent event = new ReloadPaymentEvent(view,choices);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
+        weaponController.update(event);
+        choices.clear();
+        choices.add(1);
+        event = new ReloadPaymentEvent(view,choices);
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        weaponController.update(event);
+
+        choices.clear();
+        event = new ReloadPaymentEvent(view,choices);
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
+        choices.clear();
+        choices.add(1);
+        event = new ReloadPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+        choices.clear();
+        choices.add(1);
+        choices.add(1);
+        event = new ReloadPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+    }
+
+    /**
+     * Tests the correct execution for the PickUpPayment update
+     */
+    @Test
+    public void testPickUpPaymentEvent() {
+        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
+        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
+        ArrayList<Integer> choices = new ArrayList<>();
+        choices.add(7);
+        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model,AmmoColor.BLUE));
+        PickUpPaymentEvent event = new PickUpPaymentEvent(view,choices);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
+        weaponController.update(event);
+        choices.clear();
+        choices.add(1);
+        event = new PickUpPaymentEvent(view,choices);
+        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
+        weaponController.update(event);
+
+        choices.clear();
+        event = new PickUpPaymentEvent(view,choices);
+        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+        model.getCurrent().setSelectedPickUpWeapon(electroscythe);
+        model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
+        choices.clear();
+        choices.add(1);
+        event = new PickUpPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+        choices.clear();
+        choices.add(1);
+        choices.add(1);
+        event = new PickUpPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+
+    }
+
+    /**
+     * Tests the correct execution for the ChoosePickUpWeapon update
+     */
+    @Test
+    public void testChoosePickUpWeaponEvent() {
+        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
+        ChoosePickUpWeaponEvent event = new ChoosePickUpWeaponEvent(view,0);
+        player1.setAfk(true);
+        assertTrue(player1.isAfk());
+        weaponController.update(event);
+
+        player1.setAfk(false);
+        weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedPickUpWeapon());
+
+        event = new ChoosePickUpWeaponEvent(view,1);
+        model.getCurrent().getPickUpableWeapon().add(electroscythe);
+        weaponController.update(event);
+        assertNull(model.getCurrent().getSelectedPickUpWeapon());
+    }
+
+    /**
+     * Tests the correct execution for the WeaponSwap update
+     */
+    @Test
+    public void testWeaponSwapEvent () {
+        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
+        player1.getResources().getAllWeapon().add(electroscythe);
+        WeaponSwapEvent event = new WeaponSwapEvent(view,0);
+        player1.setAfk(true);
+        weaponController.update(event);
+        assertTrue(player1.getResources().getAllWeapon().contains(electroscythe));
+
+        player1.setAfk(false);
+        weaponController.update(event);
+        assertTrue(player1.getResources().getAllWeapon().contains(electroscythe));
+
+        event = new WeaponSwapEvent(view,1);
+        weaponController.update(event);
+        assertFalse(player1.getResources().getAllWeapon().contains(electroscythe));
+
+
+    }
+
+    /**
+     * Tests the correct execution for the checkBaseTargets method
+     */
+    @Test
+    public void testCheckBaseTargets() {
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        model.getCurrent().getAvailableBaseTargets().add(player2);
+        ArrayList<Integer> selected = new ArrayList<>();
+        selected.add(-1);
+        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
+        weaponController.checkBaseTargets(event,electroscythe,model.getCurrent(),player1);
+        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
+
+        model.getCurrent().getAvailableBaseTargets().add(player2);
+        selected.clear();
+        selected.add(1);
+        event = new TargetsSelectionEvent(view,selected);
+        weaponController.checkBaseTargets(event,electroscythe,model.getCurrent(),player1);
+        assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
+    }
+    /**
+     * Tests the correct execution for the checkAlternativeTargets method
+     */
+    @Test
+    public void testCheckAlternativeTargets() {
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        model.getCurrent().getAvailableAlternativeTargets().add(player2);
+        ArrayList<Integer> selected = new ArrayList<>();
+        selected.add(-1);
+        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
+        weaponController.checkAlternativeTargets(event,electroscythe,model.getCurrent(),player1);
+        assertTrue(model.getCurrent().getSelectedAlternativeTargets().isEmpty());
+
+        model.getCurrent().getAvailableAlternativeTargets().add(player2);
+        selected.clear();
+        selected.add(1);
+        event = new TargetsSelectionEvent(view,selected);
+        weaponController.checkAlternativeTargets(event,electroscythe,model.getCurrent(),player1);
+        assertTrue(model.getCurrent().getSelectedAlternativeTargets().isEmpty());
+    }
+
+    /**
+     * Tests the correct execution for the checkOptionalTargets1 method
+     */
+    @Test
+    public void testCheckOptionalTargets1() {
+        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        model.getCurrent().getAvailableOptionalTargets1().add(player2);
+        ArrayList<Integer> selected = new ArrayList<>();
+        selected.add(-1);
+        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
+        weaponController.checkOptionalTargets1(event,cyberblade,model.getCurrent(),player1);
+        assertTrue(model.getCurrent().getSelectedOptionalTargets1().isEmpty());
+
+        model.getCurrent().getAvailableOptionalTargets1().add(player2);
+        selected.clear();
+        selected.add(1);
+        event = new TargetsSelectionEvent(view,selected);
+        weaponController.checkOptionalTargets1(event,cyberblade,model.getCurrent(),player1);
+        assertSame(model.getCurrent().getSelectedOptionalTargets1().get(0), player2);
+
+    }
+
+    /**
+     * Tests the correct execution for the checkOptionalTargets2 method
+     */
+    @Test
+    public void testCheckOptionalTargets2() {
+        player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
+        model.getCurrent().setSelectedWeapon(cyberblade);
+        model.getCurrent().getAvailableOptionalTargets2().add(player2);
+        ArrayList<Integer> selected = new ArrayList<>();
+        selected.add(-1);
+        TargetsSelectionEvent event = new TargetsSelectionEvent(view,selected);
+        model.getCurrent().getAvailableOptionalTargets2().add(player2);
+        weaponController.checkOptionalTargets2(event,cyberblade,model.getCurrent(),player1);
+        assertTrue(model.getCurrent().getSelectedOptionalTargets2().isEmpty());
+
+        model.getCurrent().getAvailableOptionalTargets2().add(player2);
+        selected.clear();
+        selected.add(1);
+        event = new TargetsSelectionEvent(view,selected);
+        model.getCurrent().getSelectedBaseTargets().add(player2);
+        weaponController.checkOptionalTargets2(event,cyberblade,model.getCurrent(),player1);
+        assertSame(model.getCurrent().getSelectedOptionalTargets2().get(0), player2);
+
+    }
+
 }

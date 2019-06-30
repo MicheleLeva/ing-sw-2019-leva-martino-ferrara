@@ -79,6 +79,7 @@ public class Rocketlauncher extends WeaponOptional2 {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            originalSquare = null;
             ArrayList<Player> sameSquarePlayers = getModel().getPlayersInSameSquare(currentPlayer);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             if(sameSquarePlayers.contains(currentPlayer))
