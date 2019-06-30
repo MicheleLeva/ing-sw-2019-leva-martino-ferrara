@@ -8,12 +8,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class KillShotTrack {
-
+    /**
+     * KillShotTrack Class
+     * It represents the game KillShotTrack
+     */
     private KillShotCell[] killShotTrack;
     private int lastIndex;
     private Model model;
     private HashMap<PlayerColor, Integer> frenzyTokens = new HashMap<>();
 
+    /**
+     * Constructor of the class
+     * @param size the number of game's skulls
+     * @param model the current game's model
+     */
     public KillShotTrack(int size, Model model) {
         killShotTrack = new KillShotCell[size];
 
@@ -26,10 +34,18 @@ public class KillShotTrack {
         this.model = model;
     }
 
+    /**
+     * @return the killShotTrack
+     */
     public KillShotCell[] getKillShotTrack() {
         return killShotTrack;
     }
 
+    /**
+     * removes the skull from the KillShotTrack, switching it with the current player's token
+     * @param playerColor the color of the token
+     * @param endOfArray indicates if it possible to set the frenzy turn
+     */
     public void removeSkull(PlayerColor playerColor,boolean endOfArray) {
 
         if (model.getTurnManager().isFrenzy()) {
@@ -56,6 +72,10 @@ public class KillShotTrack {
         }
     }
 
+    /**
+     * adds the overkill(12th damage)
+     * @param endOfArray determines on which KillShottrack the token is to be added
+     */
     public void addOverKill(boolean endOfArray) {
         if(endOfArray){
             killShotTrack[lastIndex - 1].addToken();
@@ -80,6 +100,9 @@ public class KillShotTrack {
         }
     }
 
+    /**
+     * @return the rank of the players, based on the number of tokens they have on the KillShotTrack
+     */
     public LinkedHashMap<PlayerColor,Integer> getRank(){
 
         LinkedHashMap<PlayerColor,Integer> result = new LinkedHashMap<>();
@@ -116,6 +139,9 @@ public class KillShotTrack {
         return result;
     }
 
+    /**
+     * @return the string representation of the KillShotTrack to be displayed on the Command Line
+     */
     public String printKillshotTrack(){
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder tokenBuilder = new StringBuilder();
