@@ -117,7 +117,8 @@ public class ScoreManager {
             playerRank.remove(playerColor);
         }
         model.getGameNotifier().notifyGeneric(showPlayerRank());
-        model.getGameNotifier().notifyGeneric(model.getPlayer(getWinner()).getColoredName() + " has won the game!");
+        getWinner();
+
     }
 
     /**
@@ -125,12 +126,12 @@ public class ScoreManager {
      *
      * @return winnerColor the color of the winner
      */
-    public PlayerColor getWinner() {
+    public void getWinner() {
         //check for even scores
         Player first;
         Player second;
         Player winner;
-
+        StringBuilder stringBuilder = new StringBuilder();
 
         first = model.getPlayer(playerRank.get(0));
         second = model.getPlayer(playerRank.get(1));
@@ -154,13 +155,27 @@ public class ScoreManager {
             }
 
             if (firstKillShotTokens == 0 && secondKillShotTokens == 0) {
-                //true tier
+                //tie between the two players
+                stringBuilder.append(first.getColoredName());
+                stringBuilder.append(" ");
+                stringBuilder.append("and");
+                stringBuilder.append(" ");
+                stringBuilder.append(second.getColoredName());
+                stringBuilder.append(" ");
+                stringBuilder.append(" have won the game!");
+                model.getGameNotifier().notifyGeneric(stringBuilder.toString());
+                return;
             } else if (secondKillShotTokens > firstKillShotTokens) {
                 winner = second;
             }
 
         }
-        return winner.getPlayerColor();
+
+        stringBuilder.append(winner.getColoredName());
+        stringBuilder.append(" ");
+        stringBuilder.append("has won the game!");
+        model.getGameNotifier().notifyGeneric(stringBuilder.toString());
+
     }
 
 

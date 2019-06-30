@@ -3,7 +3,10 @@ package model;
 import model.player.PlayerColor;
 
 public class KillShotCell {
-
+    /**
+     * KillShotCell Class
+     * it models the single cell on the KillShotTrack
+     */
     private int tokenNumber;
     private PlayerColor tokenColor;
     private boolean isSkull;
