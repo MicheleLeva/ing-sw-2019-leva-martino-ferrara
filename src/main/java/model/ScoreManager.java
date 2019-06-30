@@ -103,6 +103,7 @@ public class ScoreManager {
             Player player = model.getPlayer(playerColor);
             if (i < frenzyKillShotPoints.length) {
                 player.addScore(frenzyKillShotPoints[i]);
+                player.setScoreFromKillShotTrack(frenzyKillShotPoints[i]);
             }
         }
         updatePlayerRank();
@@ -121,12 +122,8 @@ public class ScoreManager {
 
     }
 
-    /**
-     * This method is used to establish the game's winner
-     *
-     * @return winnerColor the color of the winner
-     */
-    public void getWinner() {
+
+    /*public void getWinner() {
         //check for even scores
         Player first;
         Player second;
@@ -176,10 +173,61 @@ public class ScoreManager {
         stringBuilder.append("has won the game!");
         model.getGameNotifier().notifyGeneric(stringBuilder.toString());
 
+    }*/
+
+    /**
+     * Established the winner(s) of the game and notify to the players
+     */
+    public void getWinner() {
+        int maxScore;
+        ArrayList<Player> evenPlayers = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+        maxScore = model.getPlayer(playerRank.get(0)).getScore().getScore();
+        boolean even = true;
+        int maxScoreFromKillShotTrack;
+        Player singleWinner = model.getPlayer(playerRank.get(0));
+
+        for (int i = 0; i < playerRank.size(); i++) {
+            Player currentPlayer = model.getPlayer(playerRank.get(i));
+            if (currentPlayer.getScore().getScore() == maxScore) {
+                evenPlayers.add(currentPlayer);
+            }
+        }
+
+        if (evenPlayers.size() == 1) { //there's only one winner
+            stringBuilder.append(evenPlayers.get(0).getColoredName());
+            stringBuilder.append(" ");
+            stringBuilder.append("has won the game!");
+            model.getGameNotifier().notifyGeneric(stringBuilder.toString());
+        }
+        else{
+            //find the player who got the highest score from the killShotTrack
+            maxScoreFromKillShotTrack = evenPlayers.get(0).getScoreFromKillShotTrack();
+            for(int i = 0; i < evenPlayers.size(); i++){
+                Player currentPlayer = evenPlayers.get(i);
+                if(currentPlayer.getScoreFromKillShotTrack() > maxScoreFromKillShotTrack){
+                    maxScoreFromKillShotTrack = currentPlayer.getScoreFromKillShotTrack();
+                    singleWinner = currentPlayer;
+                    even = false;
+                }
+            }
+
+            if(even){
+                for (int i = 0; i < evenPlayers.size(); i++){
+                    stringBuilder.append(evenPlayers.get(i).getColoredName());
+                    stringBuilder.append(" | ");
+                }
+                stringBuilder.append("have won the game!");
+            }
+            else{
+                stringBuilder.append(singleWinner.getColoredName());
+                stringBuilder.append(" ");
+                stringBuilder.append("has won the game!");
+            }
+
+            model.getGameNotifier().notifyGeneric(stringBuilder.toString());
+        }
     }
-
-
-
 
     /**
      * This method is an helper method called by updateScore(). It determines the score distribution of the turn.

@@ -25,6 +25,8 @@ public class Player {
     private boolean isDead;
     private boolean isKillShot;
 
+    private int scoreFromKillShotTrack;
+
     /**
      * Constructor for the Player class
      * @param name name of the player
@@ -38,6 +40,7 @@ public class Player {
         score = new Score();
         this.actionTree = new ActionTree(1);
         this.position = null;
+        this.scoreFromKillShotTrack = 0;
     }
 
     public Score getScore() {
@@ -182,4 +185,11 @@ public class Player {
         return false;
     }
 
+    public int getScoreFromKillShotTrack(){
+        return scoreFromKillShotTrack;
+    }
+
+    public void setScoreFromKillShotTrack(int scoreFromKillShotTrack){
+        this.scoreFromKillShotTrack = scoreFromKillShotTrack;
+    }
 }
