@@ -65,7 +65,14 @@ public class ScoreManager {
                 if (deadPlayers.get(i).getPlayerBoard().getDamageCounter().getDamage() == Checks.getMaxDamage()) {
                     model.getGameBoard().getKillShotTrack().addOverKill(i == deadPlayers.size() - 1);
                 }
-
+                //check if the frenzy turn is activated
+                if(i == deadPlayers.size() - 1){
+                    if(model.getGameBoard().getKillShotTrack().getLastIndex() >= model.getGameBoard().getKillShotTrack().getKillShotTrack().length){
+                        if(!model.getTurnManager().isFrenzy()){
+                            model.getTurnManager().setFrenzy();
+                        }
+                    }
+                }
         }
 
         //compute double killshots
