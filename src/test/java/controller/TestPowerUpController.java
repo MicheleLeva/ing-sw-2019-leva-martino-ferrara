@@ -6,6 +6,7 @@ import model.cards.powerups.TagbackGrenade;
 import model.cards.powerups.TargetingScope;
 import model.cards.powerups.Teleporter;
 import model.exchanges.events.*;
+import model.exchanges.messages.ScopePaymentMessage;
 import model.map.Square;
 import model.player.Player;
 import model.player.PlayerColor;
@@ -48,9 +49,13 @@ public class TestPowerUpController {
         powerUpController.update(event);
         player1.setAfk(false);
         powerUpController.update(event);
+        event = new ChoosePowerUpEvent(view,1);
+        powerUpController.update(event);
         players.get(0).getResources().getPowerUp().add(new TargetingScope(model, AmmoColor.BLUE));
         powerUpController.update(event);
         event = new ChoosePowerUpEvent(view,1);
+        powerUpController.update(event);
+        event = new ChoosePowerUpEvent(view,4);
         powerUpController.update(event);
     }
 
@@ -157,7 +162,8 @@ public class TestPowerUpController {
         player1.setAfk(false);
         powerUpController.update(event);
         model.getTurnCurrent().getGrenadePeopleArray().add(player1);
-        powerUpController.update(event);
+        if(model.getTurnCurrent().isReceivedInput() || model.getTurnCurrent().getDeadPlayers().isEmpty())
+            powerUpController.update(event);
         model.getTurnCurrent().getGrenadePeopleArray().add(player1);
         event = new TagbackGrenadeEvent(view,1);
         player1.getResources().getPowerUp().add(new TagbackGrenade(model,AmmoColor.BLUE));
@@ -188,6 +194,25 @@ public class TestPowerUpController {
         player1.setPosition(null);
         powerUpController.update(event);
         assertEquals(0, player1.getResources().getPowerUp().size());
+    }
+
+    /**
+     * Tests
+     */
+    @Test
+    public void testScopePayment(){
+        ScopePaymentEvent event = new ScopePaymentEvent(view,'?');
+        player1.setAfk(true);
+        powerUpController.update(event);
+        player1.setAfk(false);
+        powerUpController.update(event);
+        event = new ScopePaymentEvent(view,'r');
+        powerUpController.update(event);
+        event = new ScopePaymentEvent(view,'b');
+        powerUpController.update(event);
+        event = new ScopePaymentEvent(view,'y');
+        powerUpController.update(event);
+
 
     }
 }

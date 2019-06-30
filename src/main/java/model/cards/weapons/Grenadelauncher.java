@@ -25,14 +25,16 @@ public class Grenadelauncher extends WeaponOptional1 {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             if(     availableTargets.isEmpty() &&
                     !this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
-                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode",
+                        currentPlayer.getPlayerColor());
                 this.getWeaponTree().resetAction();
                 getModel().notifyShoot(currentPlayer);
                 return;
             }
             if(     availableTargets.isEmpty() &&
                     this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
-                getModel().getGameNotifier().notifyGeneric("No available targets for this base Fire Mode");
+                getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode",
+                        currentPlayer.getPlayerColor());
                 this.getWeaponTree().resetAction();
                 getModel().resetCurrent();
                 getModel().getCurrent().setSelectedWeapon(this);
@@ -66,7 +68,8 @@ public class Grenadelauncher extends WeaponOptional1 {
             if(squares.contains(currentPlayer.getPosition()))
                 squares.remove(currentPlayer.getPosition());
             if(squares.isEmpty()){
-                getModel().getGameNotifier().notifyGeneric("No available squares you missed the shot!!!");
+                getModel().getGameNotifier().notifyPlayer("No available squares you missed the shot!!!",
+                        currentPlayer.getPlayerColor());
                 getModel().payFireMode(currentPlayer,this);
                 getModel().getCurrent().incrementOptionalCounter1();
                 getModel().checkNextWeaponAction(this,currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());

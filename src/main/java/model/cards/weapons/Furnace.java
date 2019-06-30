@@ -40,7 +40,8 @@ public class Furnace extends WeaponAlternative {
             else squares.remove(square);
             }
             if(squares.isEmpty()){
-                getModel().getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+                getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
+                        currentPlayer.getPlayerColor());
                 this.getWeaponTree().resetAction();
                 getModel().resetCurrent();
                 getModel().getCurrent().setSelectedWeapon(this);
@@ -90,7 +91,8 @@ public class Furnace extends WeaponAlternative {
                     squares.add(player.getPosition());
             }
             if(squares.isEmpty()){
-                getModel().getGameNotifier().notifyGeneric("No available targets with this Fire Mode choose another one");
+                getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
+                        currentPlayer.getPlayerColor());
                 this.getWeaponTree().resetAction();
                 getModel().resetCurrent();
                 getModel().getCurrent().setSelectedWeapon(this);

@@ -1110,11 +1110,12 @@ public class Model {
      * @param currentPlayer current player
      */
     public void notifyShoot(Player currentPlayer) {
-        Set<Player> set = new LinkedHashSet<Player>(current.getSelectedBaseTargets());
+        /*Set<Player> set = new LinkedHashSet<Player>(current.getSelectedBaseTargets());
         set.addAll(current.getSelectedAlternativeTargets());
         set.addAll(current.getSelectedOptionalTargets1());
         set.addAll(current.getSelectedOptionalTargets2());
-        ArrayList<Player> targets = new ArrayList<>(set);
+        ArrayList<Player> targets = new ArrayList<>(set);*/
+        ArrayList<Player> targets = getCurrent().getAllShotPlayer();
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
         if(getCurrent().getSelectedWeapon()!=null)
             getCurrent().getSelectedWeapon().getWeaponTree().resetAction();
@@ -1239,12 +1240,17 @@ public class Model {
 
         DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
 
+        if(!getCurrent().getAllShotPlayer().contains(opponent))
+            getCurrent().addShotPlayer(opponent);
+
         if (givenDamage != 0) {
+            if(!getCurrent().getAllDamagedPlayer().contains(opponent))
+                getCurrent().addDamagedPlayer(opponent);
             damageCounter.addDamage(shooterColor, givenDamage);
             if (damageCounter.getDamage() >= Checks.getKillshot()) {
                 opponent.setKillshot(true);
 
-                if(damageCounter.getDamage() == Checks.getKillshot()) {
+                if(damageCounter.getDamage() >= Checks.getKillshot()) {
                     turnManager.addKillShot();
                     }
                 }
@@ -1269,6 +1275,10 @@ public class Model {
         MarkCounter markCounter = opponent.getPlayerBoard().getMarkCounter();
         int opponentMark = markCounter.getMarkFromColor(shooterColor);
         int givenMark = Checks.givenMark(opponentMark, mark);
+
+        if(!getCurrent().getAllShotPlayer().contains(opponent))
+            getCurrent().addShotPlayer(opponent);
+
         if (givenMark != 0) {
             markCounter.addMarks(shooterColor, givenMark);
         }
@@ -1389,6 +1399,7 @@ public class Model {
      */
     public void showPickUpWeapons(ArrayList<Weapon> payableWeapons,PlayerColor playerColor){
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("0. RETURN\n");
         for (int i = 0; i < payableWeapons.size(); i++){
             stringBuilder.append(i+1 +". ");
             stringBuilder.append(payableWeapons.get(i).getWeaponName());
@@ -1422,6 +1433,11 @@ public class Model {
         updateAction();
     }
 
+    /**
+     * Asks the current player what color of cube he is going to use to pay
+     * for the Targeting Scope
+     * @param player Player that is going to pay for the Targeting Sscope
+     */
     public void askScopePayment(Player player){
         String message = "Choose the color of the cube to pay: \n";
         message = message + player.getResources().getAvailableAmmo().toString()+"\n";

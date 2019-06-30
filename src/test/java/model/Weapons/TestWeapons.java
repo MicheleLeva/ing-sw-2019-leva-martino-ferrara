@@ -158,12 +158,15 @@ public class TestWeapons {
         electroscythe.setWeaponTree(new WeaponTree("src/resources/Electroscythe.json"));
         model.getCurrent().setSelectedWeapon(electroscythe);
         electroscythe.askBaseRequirements(player1);
+        model.getCurrent().incrementBaseCounter();
         ArrayList<Player> selectedTargets = new ArrayList<>();
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         electroscythe.askBaseRequirements(player1);
         assertEquals(0,model.getCurrent().getBaseCounter());
         electroscythe.askAlternativeRequirements(player1);
         assertEquals(0,model.getCurrent().getAlternativeCounter());
+        model.getCurrent().incrementAlternativeCounter();
+        electroscythe.askAlternativeRequirements(player1);
         electroscythe.useBaseFireMode(player1,selectedTargets);
         electroscythe.useAlternativeFireMode(player1,selectedTargets);
     }

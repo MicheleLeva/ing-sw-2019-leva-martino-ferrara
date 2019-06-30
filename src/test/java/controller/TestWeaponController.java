@@ -48,7 +48,7 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the WeaponSelection update
+     * Tests the correct execution for the WeaponSelection update
      */
     @Test
     public void testWeaponSelectionEvent() {
@@ -66,7 +66,7 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the WeaponReload update
+     * Tests the correct execution for the WeaponReload update
      */
     @Test
     public void testWeaponReloadEvent() {
@@ -83,7 +83,7 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the OptionalFireModes update
+     * Tests the correct execution for the OptionalFireModes update
      */
     @Test
     public void testOptionalFireModesEvent() {
@@ -117,13 +117,16 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the TargetsSelection update
+     * Tests the correct execution for the TargetsSelection update
      */
     @Test
     public void testTargetsSelectionEvent() {
 
         model.getCurrent().setSelectedWeapon(electroscythe);
         TargetsSelectionEvent event = new TargetsSelectionEvent(view,new ArrayList<>());
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
         weaponController.update(event);
         electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("base","a")));
         weaponController.update(event);
@@ -165,11 +168,14 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the ChooseWeaponSquare update
+     * Tests the correct execution for the ChooseWeaponSquare update
      */
     @Test
     public void testChooseWeaponSquareEvent() {
         ChooseWeaponSquareEvent event = new ChooseWeaponSquareEvent(view,12);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
         model.getCurrent().getAvailableWeaponSquares().add(model.getGameBoard().getMap().getMap()[0][0]);
         weaponController.update(event);
         event = new ChooseWeaponSquareEvent(view,0);
@@ -192,7 +198,7 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the WeaponPayment update
+     * Tests the correct execution for the WeaponPayment update
      */
     @Test
     public void testWeaponPaymentEvent() {
@@ -201,6 +207,9 @@ public class TestWeaponController {
         ArrayList<Integer> choices = new ArrayList<>();
         model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model, AmmoColor.BLUE));
         WeaponPaymentEvent event = new WeaponPaymentEvent(view,choices);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
         model.getCurrent().setSelectedWeapon(electroscythe);
         electroscythe.getWeaponTree().setLastAction(new WeaponTreeNode<>(new FireMode("alternative","a")));
         weaponController.update(event);
@@ -230,12 +239,21 @@ public class TestWeaponController {
         assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
         assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
         assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+        choices.clear();
+        choices.add(1);
+        choices.add(1);
+        event = new WeaponPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
 
     }
 
 
     /**
-     * tests the correct execution for the ReloadPayment update
+     * Tests the correct execution for the ReloadPayment update
      */
     @Test
     public void testReloadPaymentEvent() {
@@ -244,6 +262,9 @@ public class TestWeaponController {
         choices.add(7);
         model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model,AmmoColor.BLUE));
         ReloadPaymentEvent event = new ReloadPaymentEvent(view,choices);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
         weaponController.update(event);
         choices.clear();
         choices.add(1);
@@ -267,11 +288,21 @@ public class TestWeaponController {
         assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
         assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
         assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+        choices.clear();
+        choices.add(1);
+        choices.add(1);
+        event = new ReloadPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
 
     }
 
     /**
-     * tests the correct execution for the PickUpPayment update
+     * Tests the correct execution for the PickUpPayment update
      */
     @Test
     public void testPickUpPaymentEvent() {
@@ -281,6 +312,9 @@ public class TestWeaponController {
         choices.add(7);
         model.getCurrent().getAvailablePaymentPowerUps().add(new Teleporter(model,AmmoColor.BLUE));
         PickUpPaymentEvent event = new PickUpPaymentEvent(view,choices);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
         weaponController.update(event);
         choices.clear();
         choices.add(1);
@@ -304,16 +338,29 @@ public class TestWeaponController {
         assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
         assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
         assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
+        choices.clear();
+        choices.add(1);
+        choices.add(1);
+        event = new PickUpPaymentEvent(view,choices);
+        player1.getResources().getPowerUp().add(new Teleporter(model,AmmoColor.BLUE));
+        model.getCurrent().setSelectedWeapon(electroscythe);
+        weaponController.update(event);
+        assertEquals(1,player1.getResources().getAvailableAmmo().getRed());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getBlue());
+        assertEquals(1,player1.getResources().getAvailableAmmo().getYellow());
 
     }
 
     /**
-     * tests the correct execution for the ChoosePickUpWeapon update
+     * Tests the correct execution for the ChoosePickUpWeapon update
      */
     @Test
     public void testChoosePickUpWeaponEvent() {
         player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
         ChoosePickUpWeaponEvent event = new ChoosePickUpWeaponEvent(view,0);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
         weaponController.update(event);
         event = new ChoosePickUpWeaponEvent(view,1);
         model.getCurrent().getPickUpableWeapon().add(electroscythe);
@@ -321,13 +368,16 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the WeaponSwap update
+     * Tests the correct execution for the WeaponSwap update
      */
     @Test
     public void testWeaponSwapEvent () {
         player1.setPosition(model.getGameBoard().getMap().getMap()[1][0]);
         player1.getResources().getAllWeapon().add(electroscythe);
         WeaponSwapEvent event = new WeaponSwapEvent(view,0);
+        player1.setAfk(true);
+        weaponController.update(event);
+        player1.setAfk(false);
         weaponController.update(event);
         event = new WeaponSwapEvent(view,1);
         weaponController.update(event);
@@ -335,7 +385,7 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the checkBaseTargets method
+     * Tests the correct execution for the checkBaseTargets method
      */
     @Test
     public void testCheckBaseTargets() {
@@ -353,7 +403,7 @@ public class TestWeaponController {
         assertTrue(model.getCurrent().getSelectedBaseTargets().isEmpty());
     }
     /**
-     * tests the correct execution for the checkAlternativeTargets method
+     * Tests the correct execution for the checkAlternativeTargets method
      */
     @Test
     public void testCheckAlternativeTargets() {
@@ -372,7 +422,7 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the checkOptionalTargets1 method
+     * Tests the correct execution for the checkOptionalTargets1 method
      */
     @Test
     public void testCheckOptionalTargets1() {
@@ -393,7 +443,7 @@ public class TestWeaponController {
     }
 
     /**
-     * tests the correct execution for the checkOptionalTargets2 method
+     * Tests the correct execution for the checkOptionalTargets2 method
      */
     @Test
     public void testCheckOptionalTargets2() {

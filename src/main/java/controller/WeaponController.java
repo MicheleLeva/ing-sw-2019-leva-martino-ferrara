@@ -395,6 +395,8 @@ public class WeaponController extends Controller implements WeaponObserver {
         Weapon weapon = getModel().getCurrent().getSelectedPickUpWeapon();
         String error;
 
+        System.out.println(event.getSelectedPowerUps());
+
         if(hasDuplicatePayment(event.getSelectedPowerUps())){
             error = "Invalid input: You selected the same powerUp more than once.\n";
             event.getView().reportError(error);
@@ -435,6 +437,12 @@ public class WeaponController extends Controller implements WeaponObserver {
             return;
         }
         int input = event.getInput();
+
+        if(input == 0){
+            getModel().chooseAction(event.getPlayerColor());
+            return;
+        }
+
         if(input < 1 || input > getModel().getCurrent().getPickUpableWeapon().size()){
             String error = "Invalid input.\n";
             event.getView().reportError(error);
@@ -587,7 +595,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         else{
             for(int i = 0; i < event.getSelectedTargets().size();i++){
                 for(int j = i+1; j < event.getSelectedTargets().size();j++){
-                    if(event.getSelectedTargets().get(i) == event.getSelectedTargets().get(j))
+                    if(event.getSelectedTargets().get(i).equals(event.getSelectedTargets().get(j)))
                         return true;
                 }
             }
