@@ -1,6 +1,6 @@
 package model.cards;
 
-import model.Ammo;
+import model.game.Ammo;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

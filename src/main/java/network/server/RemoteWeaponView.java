@@ -1,10 +1,11 @@
-package view;
+package network.server;
 
 import model.exchanges.messages.PlayerMessage;
 import model.exchanges.events.*;
 import network.ClientConnection;
 import utils.Observer;
 import utils.observable.WeaponObservable;
+import view.View;
 
 import java.util.ArrayList;
 

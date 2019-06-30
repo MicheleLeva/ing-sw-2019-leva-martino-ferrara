@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import model.player.Player;
 import model.turn.Turn;

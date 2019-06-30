@@ -1,4 +1,4 @@
-package model;
+package model.turn;
 
 import model.player.Player;
 

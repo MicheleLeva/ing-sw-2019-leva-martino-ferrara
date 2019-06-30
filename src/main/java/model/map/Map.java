@@ -2,15 +2,13 @@ package model.map;
 
 
 
-import model.CLI;
+import model.game.CLI;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**

@@ -1,8 +1,9 @@
-package view;
+package network.server;
 
 import model.player.PlayerColor;
 import network.ClientConnection;
 import utils.Observer;
+import view.View;
 
 
 import java.util.Arrays;

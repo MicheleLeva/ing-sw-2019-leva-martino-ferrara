@@ -1,8 +1,8 @@
 package controller;
 
-import model.Ammo;
-import model.CLI;
-import model.Model;
+import model.game.Ammo;
+import model.game.CLI;
+import model.game.Model;
 import model.adrenaline_exceptions.TagbackGrenadeException;
 import model.adrenaline_exceptions.TargetingScopeException;
 import model.cards.powerups.PowerUp;

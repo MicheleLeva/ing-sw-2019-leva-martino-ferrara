@@ -1,8 +1,8 @@
 package model.player.action;
 
 import controller.Checks;
-import model.Ammo;
-import model.Model;
+import model.game.Ammo;
+import model.game.Model;
 import model.adrenaline_exceptions.CannotPayException;
 import model.adrenaline_exceptions.EmptySquareException;
 import model.adrenaline_exceptions.MaxAmmoException;

@@ -1,5 +1,7 @@
 package model;
 
+import model.game.Game;
+import model.game.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 import network.server.Server;

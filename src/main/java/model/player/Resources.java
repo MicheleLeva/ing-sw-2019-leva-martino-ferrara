@@ -1,6 +1,6 @@
 package model.player;
 
-import model.Ammo;
+import model.game.Ammo;
 import model.cards.powerups.PowerUp;
 import model.cards.weapons.Weapon;
 

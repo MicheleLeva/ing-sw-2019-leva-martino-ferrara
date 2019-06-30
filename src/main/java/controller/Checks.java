@@ -1,7 +1,7 @@
 package controller;
 
-import model.Ammo;
-import model.Model;
+import model.game.Ammo;
+import model.game.Model;
 import model.cards.weapons.Weapon;
 import model.cards.weapons.WeaponAlternative;
 import model.cards.weapons.WeaponOptional1;

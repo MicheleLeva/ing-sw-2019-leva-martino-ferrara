@@ -1,6 +1,6 @@
 package model.map;
 
-import model.Ammo;
+import model.game.Ammo;
 import model.cards.weapons.Heatseeker;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

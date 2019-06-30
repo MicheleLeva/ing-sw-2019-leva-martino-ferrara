@@ -1,6 +1,6 @@
 package model.cards;
 
-import model.Ammo;
+import model.game.Ammo;
 
 /**
  * Representation of a generic Ammo Card

@@ -1,10 +1,11 @@
-package view;
+package network.server;
 
 import model.exchanges.events.*;
 import model.exchanges.messages.PlayerMessage;
 import network.ClientConnection;
 import utils.Observer;
 import utils.observable.PowerUpObservable;
+import view.View;
 
 /**
  * Auxiliary class of the RemoteView that forwards "PowerUp" messages from the Model to the client

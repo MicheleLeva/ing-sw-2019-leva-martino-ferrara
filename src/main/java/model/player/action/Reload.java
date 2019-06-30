@@ -1,8 +1,8 @@
 package model.player.action;
 
 import controller.Checks;
-import model.Ammo;
-import model.Model;
+import model.game.Ammo;
+import model.game.Model;
 import model.adrenaline_exceptions.InsufficientAmmoException;
 import model.adrenaline_exceptions.NoReloadableWeaponsException;
 import model.cards.weapons.Weapon;

@@ -1,9 +1,10 @@
-package view;
+package network.server;
 
-import model.CLI;
+import model.game.CLI;
 import model.exchanges.messages.PlayerMessage;
 import network.ClientConnection;
 import utils.Observer;
+import view.View;
 
 /**
  * Auxiliary class of the RemoteView that forwards "Game" messages from the Model to the client

@@ -1,5 +1,5 @@
 package model.player.action;
-import model.Model;
+import model.game.Model;
 import model.adrenaline_exceptions.NoPowerUpException;
 import model.cards.AmmoColor;
 import model.cards.powerups.PowerUp;

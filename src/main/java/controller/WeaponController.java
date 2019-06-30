@@ -1,7 +1,7 @@
 package controller;
 
-import model.Current;
-import model.Model;
+import model.turn.Current;
+import model.game.Model;
 import model.cards.powerups.PowerUp;
 import model.cards.powerups.TargetingScope;
 import model.cards.weapons.*;

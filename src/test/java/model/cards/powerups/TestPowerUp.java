@@ -1,6 +1,6 @@
 package model.cards.powerups;
 
-import model.Model;
+import model.game.Model;
 import model.adrenaline_exceptions.TagbackGrenadeException;
 import model.adrenaline_exceptions.TargetingScopeException;
 import model.cards.AmmoColor;

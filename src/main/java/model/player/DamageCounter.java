@@ -2,7 +2,7 @@ package model.player;
 
 
 import controller.Checks;
-import model.CLI;
+import model.game.CLI;
 
 import java.util.ArrayList;
 

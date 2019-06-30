@@ -1,7 +1,7 @@
 package controller;
 
-import model.CLI;
-import model.Model;
+import model.game.CLI;
+import model.game.Model;
 import model.adrenaline_exceptions.*;
 import model.exchanges.events.QuitAfkEvent;
 import model.exchanges.events.VoteMapEvent;

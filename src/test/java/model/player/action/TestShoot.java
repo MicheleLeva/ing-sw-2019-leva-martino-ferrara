@@ -1,6 +1,6 @@
 package model.player.action;
-import model.Ammo;
-import model.Model;
+import model.game.Ammo;
+import model.game.Model;
 import model.adrenaline_exceptions.NoReloadedWeaponsExceptions;
 import model.cards.weapons.Cyberblade;
 import model.cards.weapons.Weapon;

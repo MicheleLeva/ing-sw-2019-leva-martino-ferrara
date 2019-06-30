@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import model.cards.AmmoCard;
 import model.cards.powerups.PowerUp;
 import model.cards.weapons.Weapon;
+import model.game.Decks;
+import model.game.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;

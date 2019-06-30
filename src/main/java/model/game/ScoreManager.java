@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import controller.Checks;
 import model.player.Player;

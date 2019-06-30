@@ -1,5 +1,5 @@
 package model.player.action;
-import model.Model;
+import model.game.Model;
 import model.map.Map;
 import model.map.Square;
 import model.player.Player;

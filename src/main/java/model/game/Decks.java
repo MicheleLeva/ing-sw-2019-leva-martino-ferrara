@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 
 import model.cards.*;
@@ -8,9 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Random;
 import java.util.ArrayList;
 

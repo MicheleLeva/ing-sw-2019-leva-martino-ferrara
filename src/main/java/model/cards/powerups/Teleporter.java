@@ -1,5 +1,5 @@
 package model.cards.powerups;
-import model.Model;
+import model.game.Model;
 import model.cards.AmmoColor;
 import model.player.PlayerColor;
 

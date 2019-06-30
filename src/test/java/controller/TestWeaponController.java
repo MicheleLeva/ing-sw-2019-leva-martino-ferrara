@@ -1,7 +1,7 @@
 package controller;
 
-import model.Ammo;
-import model.Model;
+import model.game.Ammo;
+import model.game.Model;
 import model.cards.AmmoColor;
 import model.cards.powerups.TargetingScope;
 import model.cards.powerups.Teleporter;

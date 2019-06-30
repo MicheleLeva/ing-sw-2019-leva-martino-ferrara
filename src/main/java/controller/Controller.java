@@ -1,6 +1,6 @@
 package controller;
 
-import model.Model;
+import model.game.Model;
 
 /**
  * Class that all the specific MVC controllers extend

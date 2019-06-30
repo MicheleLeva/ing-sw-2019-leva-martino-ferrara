@@ -1,5 +1,7 @@
 package model;
 
+import model.game.Model;
+import model.game.ScoreManager;
 import model.player.Player;
 import model.player.PlayerColor;
 

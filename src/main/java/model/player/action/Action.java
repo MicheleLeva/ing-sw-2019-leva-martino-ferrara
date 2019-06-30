@@ -1,6 +1,6 @@
 package model.player.action;
 
-import model.Model;
+import model.game.Model;
 import model.player.PlayerColor;
 
 /**

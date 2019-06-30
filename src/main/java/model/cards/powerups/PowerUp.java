@@ -1,6 +1,6 @@
 package model.cards.powerups;
-import model.CLI;
-import model.Model;
+import model.game.CLI;
+import model.game.Model;
 import model.cards.AmmoColor;
 import model.cards.Card;
 import model.player.PlayerColor;

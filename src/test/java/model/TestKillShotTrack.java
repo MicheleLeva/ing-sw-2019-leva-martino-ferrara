@@ -1,5 +1,8 @@
 package model;
 
+import model.game.KillShotCell;
+import model.game.KillShotTrack;
+import model.game.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;

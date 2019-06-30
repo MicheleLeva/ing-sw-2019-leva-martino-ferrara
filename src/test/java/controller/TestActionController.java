@@ -1,7 +1,7 @@
 package controller;
 
 
-import model.Model;
+import model.game.Model;
 import model.exchanges.events.ActionEvent;
 import model.exchanges.events.QuitAfkEvent;
 import model.exchanges.events.VoteMapEvent;

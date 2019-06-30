@@ -6,13 +6,15 @@ import model.cards.powerups.TagbackGrenade;
 import model.cards.powerups.TargetingScope;
 import model.cards.powerups.Teleporter;
 import model.cards.weapons.*;
+import model.game.Ammo;
+import model.game.Model;
 import model.map.Square;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Test;
 
-import static model.Model.runnableSquare;
+import static model.game.Model.runnableSquare;
 import static org.junit.Assert.*;
 
 

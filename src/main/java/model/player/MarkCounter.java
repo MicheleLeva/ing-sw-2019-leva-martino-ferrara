@@ -1,6 +1,6 @@
 package model.player;
 
-import model.CLI;
+import model.game.CLI;
 
 import java.util.HashMap;
 

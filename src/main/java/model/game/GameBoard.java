@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import model.map.Map;
 import model.map.Square;

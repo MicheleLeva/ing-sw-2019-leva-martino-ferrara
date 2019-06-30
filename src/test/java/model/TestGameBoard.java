@@ -1,5 +1,7 @@
 package model;
 
+import model.game.GameBoard;
+import model.game.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;

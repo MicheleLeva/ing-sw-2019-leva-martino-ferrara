@@ -1,6 +1,6 @@
 package model.player;
 
-import model.CLI;
+import model.game.CLI;
 import model.cards.powerups.PowerUp;
 import model.cards.powerups.TagbackGrenade;
 import model.map.Square;

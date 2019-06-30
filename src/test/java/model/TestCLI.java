@@ -1,5 +1,6 @@
 package model;
 import model.cards.AmmoColor;
+import model.game.CLI;
 import model.map.SquareColor;
 import model.player.PlayerColor;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package view;
+package network.server;
 
 import model.exchanges.events.ActionEvent;
 import model.exchanges.events.QuitAfkEvent;
@@ -7,6 +7,7 @@ import model.exchanges.messages.PlayerMessage;
 import network.ClientConnection;
 import utils.Observer;
 import utils.observable.ActionObservable;
+import view.View;
 
 /**
  * Auxiliary class of the RemoteView that forwards "Action" messages from the Model to the client

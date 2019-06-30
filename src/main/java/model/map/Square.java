@@ -1,6 +1,6 @@
 package model.map;
 
-import model.CLI;
+import model.game.CLI;
 import model.cards.AmmoCard;
 import model.cards.weapons.Weapon;
 

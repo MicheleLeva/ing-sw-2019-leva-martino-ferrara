@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import controller.Checks;
 import model.cards.*;
@@ -19,6 +19,8 @@ import model.player.PlayerColor;
 import java.util.*;
 
 import model.player.action.KeyMap;
+import model.turn.Current;
+import model.turn.TurnCurrent;
 import model.turn.TurnManager;
 
 public class Model {

@@ -1,4 +1,4 @@
-package model;
+package model.turn;
 
 import model.cards.powerups.Newton;
 import model.cards.powerups.PowerUp;

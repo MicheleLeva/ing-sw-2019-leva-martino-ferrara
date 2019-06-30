@@ -1,7 +1,7 @@
 package model.cards.weapons;
 
-import model.Ammo;
-import model.Model;
+import model.game.Ammo;
+import model.game.Model;
 import model.cards.Card;
 import model.map.Square;
 import model.player.Player;

@@ -1,6 +1,6 @@
 package model.turn;
 
-import model.Model;
+import model.game.Model;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package controller;
 
-import model.Model;
+import model.game.Model;
 import model.cards.AmmoColor;
 import model.cards.powerups.TagbackGrenade;
 import model.cards.powerups.TargetingScope;
