@@ -118,7 +118,7 @@ public class ScoreManager {
             playerRank.remove(playerColor);
         }
         model.getGameNotifier().notifyGeneric(showPlayerRank());
-        getWinner();
+        model.getGameNotifier().notifyGeneric(getWinner());
 
     }
 
@@ -178,7 +178,7 @@ public class ScoreManager {
     /**
      * Established the winner(s) of the game and notify to the players
      */
-    public void getWinner() {
+    public String getWinner() {
         int maxScore;
         ArrayList<Player> evenPlayers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
@@ -198,7 +198,6 @@ public class ScoreManager {
             stringBuilder.append(evenPlayers.get(0).getColoredName());
             stringBuilder.append(" ");
             stringBuilder.append("has won the game!");
-            model.getGameNotifier().notifyGeneric(stringBuilder.toString());
         }
         else{
             //find the player who got the highest score from the killShotTrack
@@ -225,8 +224,10 @@ public class ScoreManager {
                 stringBuilder.append("has won the game!");
             }
 
-            model.getGameNotifier().notifyGeneric(stringBuilder.toString());
+
         }
+
+        return stringBuilder.toString();
     }
 
     /**

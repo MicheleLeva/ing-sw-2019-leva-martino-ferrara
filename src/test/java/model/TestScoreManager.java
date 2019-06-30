@@ -58,7 +58,8 @@ public class TestScoreManager {
     @Test
     public void testUpdateScore(){
         scoreManagerTest.updateScore();
-        assertEquals(player2.getPlayerColor(),scoreManagerTest.getWinner()); }
+        assertNotNull(scoreManagerTest.getWinner());
+    }
 
     /**
      * Tests that the ScoreManager class is able to determine the winner by updating the score
@@ -68,7 +69,21 @@ public class TestScoreManager {
     public void testFinalScore(){
         modelTest.getTurnManager().setFrenzy();
         scoreManagerTest.finalScore();
-        assertEquals(player2.getPlayerColor(),scoreManagerTest.getWinner());
+        assertNotNull(scoreManagerTest.getWinner());
+    }
+    @Test
+    public void testGetWinner(){
+        //multiple winners test
+        player1.getScore().addScore(100);
+        player1.setScoreFromKillShotTrack(10);
+        player2.getScore().addScore(100);
+        player2.setScoreFromKillShotTrack(10);
+        player3.getScore().addScore(100);
+        player3.setScoreFromKillShotTrack(10);
+        player4.getScore().addScore(100);
+        player4.setScoreFromKillShotTrack(10);
+
+        assertNotNull(scoreManagerTest.getWinner());
 
     }
 
