@@ -40,14 +40,7 @@ public class Turn {
     };
     private long time;
 
-    private Timer grenadeTimer = new Timer();
     private boolean isGrenadeTimerOn = true;
-    private TimerTask turnGrenadeTimerOff = new TimerTask() {
-        @Override
-        public void run() {
-            isGrenadeTimerOn = false;
-        }
-    };
     private long grenadeTime;
 
     private boolean isRespawnTimerOn = true;
@@ -79,15 +72,6 @@ public class Turn {
 
     public Model getModel(){
         return model;
-    }
-
-    public String grenadeTimeOut(){
-        StringBuilder stringBuilder = new StringBuilder();
-        String color = CLI.getRed();
-        stringBuilder.append(color);
-        stringBuilder.append("Too late! You didn't choose a grenade in time so none has been thrown.");
-        stringBuilder.append(CLI.getResetString());
-        return stringBuilder.toString();
     }
 
     public String respawnTimeOut(){
@@ -164,6 +148,13 @@ public class Turn {
                 for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
                     getModel().tagbackGranadeRequest(grenadePlayer, currentPlayer);
                 }
+                Timer grenadeTimer = new Timer();
+                TimerTask turnGrenadeTimerOff = new TimerTask() {
+                    @Override
+                    public void run() {
+                        isGrenadeTimerOn = false;
+                    }
+                };
                 isGrenadeTimerOn = true;
                 grenadeTimer.schedule(turnGrenadeTimerOff, grenadeTime); //start of timer thread
 
@@ -174,9 +165,6 @@ public class Turn {
                 while (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
                     System.out.print("");
                     if (!isGrenadeTimerOn){
-                        for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
-                            getModel().getGameNotifier().notifyPlayer(grenadeTimeOut(), grenadePlayer.getPlayerColor());
-                        }
                         getModel().getTurnCurrent().getGrenadePeopleArray().clear();
                     }
                 }
