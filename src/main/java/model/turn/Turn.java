@@ -28,7 +28,6 @@ public class Turn {
     private final Model model;
 
     private boolean isFrenzy;
-    private boolean isFirstTurn;
 
     private boolean isTimerOn = false;
     private Timer timer = new Timer();
@@ -47,7 +46,7 @@ public class Turn {
     private long respawnTime;
 
 
-    public void setFrenzy(boolean frenzy) {
+    private void setFrenzy(boolean frenzy) {
         isFrenzy = frenzy;
     }
 
@@ -70,11 +69,11 @@ public class Turn {
         setFrenzy(frenzy);
     }
 
-    public Model getModel(){
+    private Model getModel(){
         return model;
     }
 
-    public String respawnTimeOut(){
+    private String respawnTimeOut(){
         StringBuilder stringBuilder = new StringBuilder();
         String color = CLI.getRed();
         stringBuilder.append(color);
@@ -107,7 +106,7 @@ public class Turn {
             toOthers.append(" is viewing his commands.");
             getModel().printMessage(currentPlayerColor, KeyMap.getCommandList(), toOthers.toString());
             //the current player draws two powerups
-            getModel().drawPowerUp(currentPlayerColor, 5); //todo modificato per test
+            getModel().drawPowerUp(currentPlayerColor, 2);
             //requests the current player to discard one of his powerup
             getModel().requestPowerUpDiscard(currentPlayer);
             getModel().getTurnCurrent().setReceivedInput(false);
@@ -218,8 +217,8 @@ public class Turn {
         if(currentTurnNumber != 0) {
 
             ArrayList<Player> allPlayers = new ArrayList<>(getModel().getEachPlayer());
-            for (int i = 0; i < allPlayers.size(); i++) {
-                stringBuilder.append(allPlayers.get(i).printPlayerInfo());
+            for (Player allPlayer : allPlayers) {
+                stringBuilder.append(allPlayer.printPlayerInfo());
                 stringBuilder.append("\n");
             }
         }

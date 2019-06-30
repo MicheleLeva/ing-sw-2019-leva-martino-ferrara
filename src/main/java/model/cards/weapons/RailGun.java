@@ -110,7 +110,7 @@ public class RailGun extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
 
     }
 }

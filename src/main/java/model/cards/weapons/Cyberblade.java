@@ -26,8 +26,7 @@ public class Cyberblade extends WeaponOptional2 {
         if(getModel().getCurrent().getOptionalCounter2()== 0) {
             Player oldPlayer = getModel().getCurrent().getSelectedBaseTargets().get(0);
             ArrayList<Player> availableTargets = getModel().getPlayersInSameSquare(currentPlayer);
-            if(availableTargets.contains(oldPlayer))
-                availableTargets.remove(oldPlayer);
+            availableTargets.remove(oldPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -67,7 +66,7 @@ public class Cyberblade extends WeaponOptional2 {
      */
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        changePlayerPositionUse(currentPlayer,selectedTargets);
+        changePlayerPositionUse(currentPlayer);
     }
 
     /**

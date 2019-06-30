@@ -33,11 +33,10 @@ public class Powerglove extends WeaponAlternative {
 
         if(getModel().getCurrent().getAlternativeCounter() == 1) {
             ArrayList<Player> firstAvailablePlayers = new ArrayList<>();
-            for(Player player : getModel().getAllPlayers())
+            for(Player player : getModel().getAllSpawnedPlayers())
                 if(getModel().getCurrent().getSelectedWeaponSquare() == player.getPosition())
                     firstAvailablePlayers.add(player);
-            if(firstAvailablePlayers.contains(currentPlayer))
-                firstAvailablePlayers.remove(currentPlayer);
+            firstAvailablePlayers.remove(currentPlayer);
             if(firstAvailablePlayers.isEmpty()){
                 getModel().getCurrent().incrementAlternativeCounter();
                 askAlternativeRequirements(currentPlayer);
@@ -68,12 +67,11 @@ public class Powerglove extends WeaponAlternative {
             if(!getModel().getCurrent().getSelectedAlternativeTargets().isEmpty())
                 firstTarget = getModel().getCurrent().getSelectedAlternativeTargets().get(0);
             ArrayList<Player> firstAvailablePlayers = new ArrayList<>();
-            for(Player player : getModel().getAllPlayers())
+            for(Player player : getModel().getAllSpawnedPlayers())
                 if(getModel().getCurrent().getSelectedWeaponSquare() == player.getPosition())
                     firstAvailablePlayers.add(player);
-            if(firstAvailablePlayers.contains(currentPlayer))
-                firstAvailablePlayers.remove(currentPlayer);
-            if(firstTarget!= null && firstAvailablePlayers.contains(firstTarget))
+            firstAvailablePlayers.remove(currentPlayer);
+            if(firstTarget!= null)
                 firstAvailablePlayers.remove(firstTarget);
             if(firstAvailablePlayers.isEmpty()){
                 getModel().getCurrent().incrementAlternativeCounter();
@@ -105,7 +103,7 @@ public class Powerglove extends WeaponAlternative {
         }
         currentPlayer.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
     /**
@@ -117,12 +115,11 @@ public class Powerglove extends WeaponAlternative {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = new ArrayList<>();
             ArrayList<Square> squares = getModel().getSquaresInCardinal1(currentPlayer);
-            for(Player player : getModel().getAllPlayers()){
+            for(Player player : getModel().getAllSpawnedPlayers()){
                 if(squares.contains(player.getPosition()))
                     availableTargets.add(player);
             }
-            if(availableTargets.contains(currentPlayer))
-                availableTargets.remove(currentPlayer);
+            availableTargets.remove(currentPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
 
@@ -143,6 +140,6 @@ public class Powerglove extends WeaponAlternative {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 }

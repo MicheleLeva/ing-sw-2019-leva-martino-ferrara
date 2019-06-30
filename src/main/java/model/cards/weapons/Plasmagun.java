@@ -61,7 +61,7 @@ public class Plasmagun extends WeaponOptional2 {
      */
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        changePlayerPositionUse(currentPlayer,selectedTargets);
+        changePlayerPositionUse(currentPlayer);
     }
 
     /**

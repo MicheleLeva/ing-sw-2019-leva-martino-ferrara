@@ -21,8 +21,8 @@ public class Decks {
     private ArrayList<AmmoCard> ammoCardDeck;
     private ArrayList<PowerUp> discardedPowerUpDeck;
     private ArrayList<AmmoCard> discardedAmmoCardDeck;
-    private Model model;
-    private Random rand = new Random();
+    private final Model model;
+    private final Random rand = new Random();
 
     public Decks(Model model) {
         this.model = model;
@@ -56,10 +56,10 @@ public class Decks {
      */
     public PowerUp drawPowerUp() {
 
-        if (powerUpDeck.size() > 0) {
+        if (!powerUpDeck.isEmpty()) {
             return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
         } else
-            powerUpDeck = new ArrayList(discardedPowerUpDeck);
+            powerUpDeck = new ArrayList<>(discardedPowerUpDeck);
         discardedPowerUpDeck.clear();
         return powerUpDeck.remove(rand.nextInt(powerUpDeck.size()));
     }
@@ -72,7 +72,7 @@ public class Decks {
         if (ammoCardDeck.size() > 0) {
             return ammoCardDeck.remove(rand.nextInt(ammoCardDeck.size()));
         } else
-            ammoCardDeck = new ArrayList(discardedAmmoCardDeck);
+            ammoCardDeck = new ArrayList<>(discardedAmmoCardDeck);
         discardedAmmoCardDeck.clear();
         return ammoCardDeck.remove(rand.nextInt(ammoCardDeck.size()));
     }
@@ -157,10 +157,6 @@ public class Decks {
                         powerUpDeck.add(new Teleporter(model, AmmoColor.YELLOW));
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -168,7 +164,7 @@ public class Decks {
     /**
      * Fills the Ammo Card deck reading from a json file
      */
-    public void createAmmoCardDeck() {
+    private void createAmmoCardDeck() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("src/resources/ammoCards.json"));
@@ -179,10 +175,6 @@ public class Decks {
                 Ammo ammo = new Ammo(((Long) result1.get("RED")).intValue(), ((Long) result1.get("BLUE")).intValue(), ((Long) result1.get("YELLOW")).intValue());
                 ammoCardDeck.add(new AmmoCard(ammo, (boolean) result1.get("powerUps")));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,7 +183,7 @@ public class Decks {
     /**
      * Fills the weapons deck with weapons that have only the Base Fire Mode
      */
-    public void addBasicWeapons() {
+    private void addBasicWeapons() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
@@ -217,10 +209,6 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Whisper.json"));
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -230,7 +218,7 @@ public class Decks {
     /**
      * Fills the weapons deck with weapons that have an alternative Fire Mode
      */
-    public void addAlternativeWeapons() {
+    private void addAlternativeWeapons() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
@@ -295,10 +283,6 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Sledgehammer.json"));
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -308,7 +292,7 @@ public class Decks {
     /**
      * Fills the weapons deck with weapons that have only one optional Fire Mode
      */
-    public void addOptionalWeapons1() {
+    private void addOptionalWeapons1() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
@@ -341,10 +325,6 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Vortexcannon.json"));
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -354,7 +334,7 @@ public class Decks {
     /**
      * Fills the weapons deck with weapons that have two optional Fire Modes
      */
-    public void addOptionalWeapons2() {
+    private void addOptionalWeapons2() {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
@@ -400,10 +380,6 @@ public class Decks {
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Cyberblade.json"));
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

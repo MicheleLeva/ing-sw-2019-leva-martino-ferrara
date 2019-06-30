@@ -1,7 +1,6 @@
 package model.notifiers;
 
 import model.cards.powerups.PowerUp;
-import model.cards.weapons.Weapon;
 import model.exchanges.messages.*;
 import model.map.Square;
 import model.player.Player;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 
 public class WeaponNotifier extends ViewObservable<PlayerMessage> {
 
+    private final String POWERUP_PAYMENT = "Select the indexes of the power-ups to pay with. Insert 0 to end the selection:\n";
 
     /**
      * Sends the current player a list of the weapons he can use and asks him to select one
@@ -69,21 +69,6 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
 
 
     /**
-     * Asks the current player if he wants to reload one of the reloadable weapons
-     * @param playerColor current player color
-     * @param reloadableWeapon list of weapons the current player can reload
-     */
-    public void askReload(PlayerColor playerColor , String reloadableWeapon){
-        String message = "Reloadable weapon: \n";
-        message = message +reloadableWeapon +"\n";
-        message = message +"Do you want to reload? [Y/N]\n";
-
-        PlayerMessage playerMessage = new AskReloadMessage(message);
-        notify(playerMessage, playerColor);
-
-    }
-
-    /**
      *Sends a list of the powerUps to pay the fire mode with to the current player's view
      */
     public void requestWeaponReload(PlayerColor playerColor , String weapon , String ammo , String powerUp){
@@ -101,13 +86,17 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
     public void askWeaponPayment(PlayerColor playerColor, ArrayList<PowerUp> powerUps){
         int size = powerUps.size();
         int i = 1;
-        String message = "Select the powerUps to pay with:  \n";
+        StringBuilder message = new StringBuilder();
+        message.append(POWERUP_PAYMENT);
         for(PowerUp powerUp : powerUps){
-            message = message + i + ". " + powerUp.toString() + "\n";
+            message.append(i);
+            message.append(". ");
+            message.append(powerUp.toString());
+            message.append("\n");
             i++;
         }
 
-        PlayerMessage playerMessage = new WeaponPaymentMessage(message,size);
+        PlayerMessage playerMessage = new WeaponPaymentMessage(message.toString() ,size);
         notify(playerMessage, playerColor);
     }
     /**
@@ -116,13 +105,17 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
     public void askReloadPayment(PlayerColor playerColor, ArrayList<PowerUp> powerUps){
         int size = powerUps.size();
         int i = 1;
-        String message = "Select the power-ups to pay with :   \n";
+        StringBuilder message = new StringBuilder();
+        message.append(POWERUP_PAYMENT);
         for(PowerUp powerUp : powerUps){
-            message = message + i + ". " + powerUp.toString() + "\n";
+            message.append(i);
+            message.append(". ");
+            message.append(powerUp.toString());
+            message.append("\n");
             i++;
         }
 
-        PlayerMessage playerMessage = new ReloadPaymentMessage(message,size);
+        PlayerMessage playerMessage = new ReloadPaymentMessage(message.toString() ,size);
         notify(playerMessage, playerColor);
     }
 
@@ -132,13 +125,17 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
     public void askPickUpPayment(PlayerColor playerColor, ArrayList<PowerUp> powerUps){
         int size = powerUps.size();
         int i = 1;
-        String message = "Select the power-ups to pay with :  \n";
+        StringBuilder message = new StringBuilder();
+        message.append(POWERUP_PAYMENT);
         for(PowerUp powerUp : powerUps){
-            message = message + i + ". " + powerUp.toString() + "\n";
+            message.append(i);
+            message.append(". ");
+            message.append(powerUp.toString());
+            message.append("\n");
             i++;
         }
 
-        PlayerMessage playerMessage = new PickUpPaymentMessage(message,size);
+        PlayerMessage playerMessage = new PickUpPaymentMessage(message.toString(),size);
         notify(playerMessage, playerColor);
     }
 

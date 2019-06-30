@@ -33,7 +33,7 @@ public class TestModel {
      * Initializes the variables needed for the Tests
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         //map = new model.map.Map(1);
         player1 = new Player("player1",PlayerColor.BLUE);
         player2 = new Player("player2",PlayerColor.GREEN);
@@ -80,7 +80,7 @@ public class TestModel {
     }
 
     /**
-     * Tests if the returned players are thos at distance inferior to the given one
+     * Tests if the returned players are those at distance inferior to the given one
      */
     @Test
     public void testPlayersAtDistance(){
@@ -449,7 +449,7 @@ public class TestModel {
         assertTrue(player1.isAfk());
         model.setPlayerAfk(player1);
         model.wakeUpPlayer(player1);
-        assertTrue(!player1.isAfk());
+        assertFalse(player1.isAfk());
 
     }
 
@@ -515,7 +515,7 @@ public class TestModel {
         player1.getPosition().setWeapon(heatseeker);
         model.swapPickUpWeapon(player1,1);
         assertTrue(player1.getResources().getAllWeapon().contains(heatseeker));
-        assertTrue(!player1.getResources().getAllWeapon().contains(heatseeker2));
+        assertFalse(player1.getResources().getAllWeapon().contains(heatseeker2));
         assertSame(player1.getPosition().getWeapon()[0], heatseeker2);
 
         player1.getResources().getAllWeapon().get(0).unload();
@@ -615,7 +615,7 @@ public class TestModel {
         Ammo ammo = new Ammo(1,0,0);
         Heatseeker heatseeker = new Heatseeker("heat",ammo,ammo,1,1,1,model);
         heatseeker.setWeaponTree(new WeaponTree("src/resources/Heatseeker.json"));
-        model.checkNextWeaponAction(heatseeker,player1,new ArrayList<>());
+        model.checkNextWeaponAction(heatseeker,player1);
         TargetingScope targetingScope = new TargetingScope(model,AmmoColor.BLUE);
         ArrayList<PowerUp> powerUps = new ArrayList<>();
         powerUps.add(targetingScope);
@@ -626,7 +626,7 @@ public class TestModel {
         assertEquals("base",heatseeker.getWeaponTree().getLastAction().getData().getType());
         assertEquals("root",heatseeker.getWeaponTree().getLastActionPerformed().getData().getType());
 
-        model.checkNextWeaponAction(heatseeker,player1,new ArrayList<>());
+        model.checkNextWeaponAction(heatseeker,player1);
         assertEquals("root",heatseeker.getWeaponTree().getLastAction().getData().getType());
 
 
@@ -721,7 +721,7 @@ public class TestModel {
         player1.getResources().addPowerUp(powerUps);
         model.discardPowerUp(player1,0);
         assertTrue(model.getGameBoard().getDecks().getDiscardedPowerUpDeck().contains(teleporter));
-        assertTrue(!player1.getResources().getPowerUp().contains(teleporter));
+        assertFalse(player1.getResources().getPowerUp().contains(teleporter));
 
         player1.getResources().addPowerUp(powerUps);
         model.requestPowerUpDiscard(player1);

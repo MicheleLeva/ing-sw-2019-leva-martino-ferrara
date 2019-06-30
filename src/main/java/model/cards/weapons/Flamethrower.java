@@ -24,10 +24,9 @@ public class Flamethrower extends WeaponAlternative {
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
             ArrayList<Square> availableSquares = new ArrayList<>();
             ArrayList<Square> supportSquares = getModel().getSquaresInCardinal1(currentPlayer);
-            if(supportSquares.contains(currentPlayer.getPosition()))
-                supportSquares.remove(currentPlayer.getPosition());
+            supportSquares.remove(currentPlayer.getPosition());
             for(Square square : supportSquares){
-               for(Player player : getModel().getAllPlayers()){
+               for(Player player : getModel().getAllSpawnedPlayers()){
                    if(player.getPosition() == square)
                        availableSquares.add(square);
                }
@@ -54,7 +53,7 @@ public class Flamethrower extends WeaponAlternative {
      */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : getModel().getAllPlayers()){
+        for(Player target : getModel().getAllSpawnedPlayers()){
             if(target.getPosition()==getModel().getCurrent().getSelectedWeaponSquare()) {
                 getModel().getCurrent().getSelectedBaseTargets().add(target);
                 getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
@@ -63,7 +62,7 @@ public class Flamethrower extends WeaponAlternative {
         }
         Square parallelSquare = getModel().getNextPowerGloveSquare(currentPlayer.getPosition(),getModel().getCurrent().getSelectedWeaponSquare());
         if(parallelSquare!= null){
-            for(Player player : getModel().getAllPlayers()){
+            for(Player player : getModel().getAllSpawnedPlayers()){
                 if(player.getPosition()==parallelSquare){
                     getModel().getCurrent().getSelectedBaseTargets().add(player);
                     getModel().addDamage(currentPlayer.getPlayerColor(), player.getPlayerColor(), 1);
@@ -72,7 +71,7 @@ public class Flamethrower extends WeaponAlternative {
             }
         }
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
 
@@ -86,8 +85,7 @@ public class Flamethrower extends WeaponAlternative {
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
             ArrayList<Player> sameSquarePlayer = getModel().getPlayersInSameSquare(currentPlayer);
             for(Player player : sameSquarePlayer){
-                if(availableTargets.contains(player))
-                    availableTargets.remove(player);
+                availableTargets.remove(player);
             }
             getModel().getCurrent().setAvailableBaseTargets(availableTargets);
             getModel().getCurrent().incrementBaseCounter();
@@ -104,7 +102,7 @@ public class Flamethrower extends WeaponAlternative {
                 askBaseRequirements(currentPlayer);
                 return;
             }
-            for(Player player : getModel().getAllPlayers()){
+            for(Player player : getModel().getAllSpawnedPlayers()){
                 if(player.getPosition() == nextSquare)
                     availableTargets.add(player);
             }
@@ -139,6 +137,6 @@ public class Flamethrower extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), getModel().getCurrent().getFlamethrowerSupportPlayer().getPlayerColor(), this.getBaseDamage());
         }
             getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 }

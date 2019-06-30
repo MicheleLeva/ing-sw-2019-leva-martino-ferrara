@@ -10,9 +10,7 @@ import model.map.Square;
 import model.player.Player;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Support class for the turn.
@@ -57,8 +55,6 @@ public class Current {
     public void setFlamethrowerSupportPlayer(Player player){
         flamethrowerSupportPlayer = player;
     }
-
-    public void decreaseBaseCounter(){this.baseCounter--;}
 
     public ArrayList<Player> getAllDamagedPlayer() {
         /*Set<Player> set = new LinkedHashSet<Player>(getSelectedBaseTargets());
@@ -122,18 +118,18 @@ public class Current {
     }
 
     public Square getSquareFromID(int ID){
-        for (int i = 0; i < square.size(); i++){
-            if(square.get(i).getID() == ID){
-                return square.get(i);
+        for (Square value : square) {
+            if (value.getID() == ID) {
+                return value;
             }
         }
         return null;
     }
 
     public Square getWeaponSquareFromID(int ID){
-        for (int i = 0; i < availableWeaponSquares.size(); i++){
-            if(availableWeaponSquares.get(i).getID() == ID){
-                return availableWeaponSquares.get(i);
+        for (Square availableWeaponSquare : availableWeaponSquares) {
+            if (availableWeaponSquare.getID() == ID) {
+                return availableWeaponSquare;
             }
         }
         return null;
@@ -189,9 +185,6 @@ public class Current {
         this.selectedWeapon = selectedWeapon;
     }
 
-    public ArrayList<Weapon> getReloadableWeapon(){
-        return reloadableWeapon;
-    }
     public ArrayList<Weapon> getPickUpableWeapon(){return pickUpableWeapon;}
     public void setReloadableWeapon(ArrayList<Weapon> reloadableWeapon){
         this.reloadableWeapon = reloadableWeapon;
@@ -209,8 +202,8 @@ public class Current {
         return availableOptionalTargets1;
     }
 
-    public void setAvailableOptionalTargets1(ArrayList<Player> availableOptionaleTargets1) {
-        this.availableOptionalTargets1 = availableOptionaleTargets1;
+    public void setAvailableOptionalTargets1(ArrayList<Player> availableOptionalTargets1) {
+        this.availableOptionalTargets1 = availableOptionalTargets1;
     }
 
     public ArrayList<Player> getAvailableOptionalTargets2() {

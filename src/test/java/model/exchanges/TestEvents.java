@@ -60,9 +60,6 @@ public class TestEvents {
         QuitAfkEvent quitAfkEvent = new QuitAfkEvent(testView,'a');
         assertEquals("QuitAfkEvent,a",quitAfkEvent.toString());
 
-        ReloadEndTurnEvent reloadEndTurnEvent = new ReloadEndTurnEvent(testView, 'a');
-        assertEquals("ReloadEndTurnEvent,a", reloadEndTurnEvent.toString());
-
         ReloadPaymentEvent reloadPaymentEvent = new ReloadPaymentEvent(testView, integers);
         assertEquals("ReloadPaymentEvent,1,2",reloadPaymentEvent.toString());
 

@@ -17,8 +17,6 @@ import java.util.ArrayList;
 public class TestActionController {
 
     private Player player1 ;
-    private Player player2;
-    private Player player3;
     private Model modelTest;
     private ArrayList<Player> players = new ArrayList<>();
     private ActionController actionControllerTest;
@@ -28,8 +26,8 @@ public class TestActionController {
     @Before
     public void initGame(){
         player1 = new Player("player1", PlayerColor.BLUE);
-        player2 = new Player("player2",PlayerColor.GREEN);
-        player3 = new Player("player3",PlayerColor.YELLOW);
+        Player player2 = new Player("player2",PlayerColor.GREEN);
+        Player player3 = new Player("player3",PlayerColor.YELLOW);
         players.add(player1);
         players.add(player2);
         players.add(player3);
@@ -103,8 +101,6 @@ public class TestActionController {
         VoteMapEvent invalidEvent = new VoteMapEvent(blueView, 5);
         actionControllerTest.update(invalidEvent);
         assertTrue(modelTest.getMapVotes().isEmpty());
-
-        modelTest.getMapVotes().clear();
 
         VoteMapEvent notEvent = new VoteMapEvent(blueView, 0);
         actionControllerTest.update(notEvent);

@@ -5,12 +5,12 @@ import static org.junit.Assert.*;
 public class TestNode {
     @Test
     public void testNode(){
-        Node<String> node = new Node("string");
+        Node<String> node = new Node<>("string");
         assertNotNull(node.getData());
         assertNull(node.getParent());
         assertTrue(node.getChildren().isEmpty());
         assertEquals("string",node.getData());
-        Node<String> child = new Node("string2");
+        Node<String> child = new Node<>("string2");
         node.addChild(child);
         assertFalse(node.getChildren().isEmpty());
         assertNotNull(child.getParent());

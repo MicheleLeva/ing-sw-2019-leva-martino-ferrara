@@ -21,9 +21,9 @@ public class Game implements Runnable{
 
     private final Model model;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
-    private Server server;
+    private final Server server;
 
     public int getGameID() {
         return gameID;
@@ -129,7 +129,6 @@ public class Game implements Runnable{
         //model.setGameBoard(1);
         while(!model.getTurnManager().isGameOver()){
             Turn currentTurn = new Turn(model,model.getTurnManager().isFrenzy());
-            System.out.println("Game " + getGameID() + " turn: " + getModel().getTurnManager().getCurrentPlayerColor());
             currentTurn.notifyTurn();
             currentTurn.startTurn();
             currentTurn.endTurn();

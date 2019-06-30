@@ -71,7 +71,7 @@ public class TestGrab {
                                         availableAmmo.getYellow() == 1);
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
 
         square = map.getSpawnSquare(SquareColor.YELLOW);
@@ -106,7 +106,7 @@ public class TestGrab {
             assertTrue(current.getPickUpableWeapon().get(0) instanceof Cyberblade);
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
 
 

@@ -1,7 +1,6 @@
 package model.player.action;
 
 import model.Model;
-import model.adrenaline_exceptions.NoReloadableWeaponsException;
 import model.adrenaline_exceptions.NoReloadedWeaponsExceptions;
 import model.player.Player;
 import model.player.PlayerColor;

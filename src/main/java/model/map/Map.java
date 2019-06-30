@@ -2,9 +2,7 @@ package model.map;
 
 
 
-import model.Decks;
 import model.CLI;
-import model.cards.AmmoColor;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -96,18 +94,15 @@ public class Map {
                     if (result1.get("EAST").equals("door")) map[i][j].setSide(Direction.EAST, map[i][j + 1]);
                     if (result1.get("EAST").equals("square")) map[i][j].setSide(Direction.EAST, map[i][j + 1]);
 
-                    if(result1.get("color").equals("null"));
-                    else
-                        map[i][j].setColor(SquareColor.valueOf((String)result1.get("color")));
+                    if(!result1.get("color").equals("null")) {
+                        map[i][j].setColor(SquareColor.valueOf((String) result1.get("color")));
+                    }
                     map[i][j].isSpawn = (Boolean) result1.get("isSpawn");
                     k++;
 
                 }
             }
-        }
-        catch(FileNotFoundException e) {e.printStackTrace();}
-        catch(IOException e) {e.printStackTrace();}
-        catch(Exception e) {e.printStackTrace();}
+        } catch(Exception e) {e.printStackTrace();}
 
     }
 
@@ -126,9 +121,8 @@ public class Map {
     }
 
     /**
-     * Return the spawn square corresponding to the given color
      * @param color color of the spawn square that method needs to return
-     * @return
+     * @return the spawn square corresponding to the given color
      */
     public Square getSpawnSquare(SquareColor color){
         Square square = null;
@@ -141,16 +135,6 @@ public class Map {
         return square;
     }
 
-    public ArrayList<Square> getAllSpawnSquares(){
-        ArrayList<Square> squares = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++) {
-                if( map[i][j]!=null && map[i][j].isSpawn)
-                    squares.add(map[i][j]);
-            }
-        }
-        return squares;
-    }
 
     /**
      * Prints the map on the player's screen

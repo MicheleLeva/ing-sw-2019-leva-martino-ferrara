@@ -47,7 +47,7 @@ public class WeaponController extends Controller implements WeaponObserver {
             String error;
             error = "Invalid input.\n";
             event.getView().reportError(error);
-            getModel().showWeaponCards(event.getPlayerColor()); //chiede di reinserire l'arma
+            getModel().showWeaponCards(event.getPlayerColor()); //asks again the weapon
         }
         else {
             Weapon selectedWeapon = currentPlayer.getResources().getReloadedWeapon().get(input - 1);
@@ -99,7 +99,7 @@ public class WeaponController extends Controller implements WeaponObserver {
             String error;
             error = "Invalid input.\n";
             event.getView().reportError(error);
-            getModel().showFireModes(event.getPlayerColor(),weapon); //chiede di reinserire input
+            getModel().showFireModes(event.getPlayerColor(),weapon); //asks again the input
             return;
         }
 
@@ -309,7 +309,7 @@ public class WeaponController extends Controller implements WeaponObserver {
                     getModel().getCurrent().getAvailablePaymentPowerUps());
         }
         else {
-            addSelectedPaymentPowerUps(currentPlayer, event.getSelectedPowerUps());
+            addSelectedPaymentPowerUps(event.getSelectedPowerUps());
             if(effectType.equals(ALTERNATIVE)) {
                 ((WeaponAlternative) weapon).askAlternativeRequirements(currentPlayer);
                 return;
@@ -328,10 +328,9 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     /**
      * Support method that saves the list of chosen powerups for later use
-     * @param currentPlayer current player of the game
      * @param selectedPowerUps list of indexes corresponding to the selected powerups
      */
-    public void addSelectedPaymentPowerUps(Player currentPlayer, ArrayList<Integer> selectedPowerUps){
+    private void addSelectedPaymentPowerUps(ArrayList<Integer> selectedPowerUps){
         ArrayList<PowerUp> available = getModel().getCurrent().getAvailablePaymentPowerUps();
         for(int i : selectedPowerUps){
             getModel().getCurrent().addSelectedPaymentPowerUps(available.get(i-1));
@@ -339,7 +338,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the seleced powerUps actually result in a valid payment, if so the cost of the weapon Reload
+     * Controls if the selected powerUps actually result in a valid payment, if so the cost of the weapon Reload
      * gets paid, otherwise the player gets asked for new inputs
      * @param event contains the list of inputs corresponding to the chosen powerUps that
      *              are used to pay for the use of the selected weapon
@@ -375,13 +374,13 @@ public class WeaponController extends Controller implements WeaponObserver {
             getModel().askReloadPayment(currentPlayer, weapon);
         }
         else{
-            addSelectedPaymentPowerUps(currentPlayer, event.getSelectedPowerUps());
+            addSelectedPaymentPowerUps(event.getSelectedPowerUps());
             getModel().payReload(currentPlayer, weapon);
         }
     }
 
     /**
-     * Controls if the seleced powerup actually result in a valid payment, if so the cost of the weapon PickUp cost
+     * Controls if the selected powerup actually result in a valid payment, if so the cost of the weapon PickUp cost
      * gets paid, otherwise the player gets asked for new inputs
      * @param event contains the list of inputs corresponding to the chosen powerUps that
      *              are used to pay for the use of the selected weapon
@@ -421,7 +420,7 @@ public class WeaponController extends Controller implements WeaponObserver {
             getModel().askPickUpPayment(currentPlayer, weapon);
         }
         else{
-            addSelectedPaymentPowerUps(currentPlayer, event.getSelectedPowerUps());
+            addSelectedPaymentPowerUps(event.getSelectedPowerUps());
             getModel().payPickUp(currentPlayer, weapon);
         }
     }

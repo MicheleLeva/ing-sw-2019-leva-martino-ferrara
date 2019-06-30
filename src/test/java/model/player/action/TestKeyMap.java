@@ -98,15 +98,15 @@ public class TestKeyMap {
     }
     @Test
     public void testGetters(){
-        assertNotNull(KeyMap.getMoveUp());
-        assertNotNull(KeyMap.getMoveDown());
-        assertNotNull(KeyMap.getMoveLeft());
-        assertNotNull(KeyMap.getMoveRight());
-        assertNotNull(KeyMap.getShoot());
-        assertNotNull(KeyMap.getGrab());
-        assertNotNull(KeyMap.getReload());
-        assertNotNull(KeyMap.getUsePowerUp());
-        assertNotNull(KeyMap.getEnd());
+        assertNotEquals("",KeyMap.getMoveUp());
+        assertNotEquals("",KeyMap.getMoveDown());
+        assertNotEquals("",KeyMap.getMoveLeft());
+        assertNotEquals("",KeyMap.getMoveRight());
+        assertNotEquals("",KeyMap.getShoot());
+        assertNotEquals("",KeyMap.getGrab());
+        assertNotEquals("",KeyMap.getReload());
+        assertNotEquals("",KeyMap.getUsePowerUp());
+        assertNotEquals("",KeyMap.getEnd());
     }
     @Test
     public void testCommandList(){

@@ -54,8 +54,8 @@ public class DamageCounter {
      */
     public int getDamageFromColor(PlayerColor playerColor){
         int result = 0;
-        for (int i = 0; i < damage.size(); i++){
-            if (damage.get(i).equals(playerColor)){
+        for (PlayerColor color : damage) {
+            if (color.equals(playerColor)) {
                 result++;
             }
         }
@@ -68,8 +68,8 @@ public class DamageCounter {
     public String printDamageCounter(){
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder damageBuilder = new StringBuilder();
-        for (int i = 0; i < damage.size(); i++){
-            damageBuilder.append(CLI.getColor(damage.get(i)));
+        for (PlayerColor playerColor : damage) {
+            damageBuilder.append(CLI.getColor(playerColor));
             damageBuilder.append(CLI.getDamage());
             damageBuilder.append(CLI.getResetString());
         }

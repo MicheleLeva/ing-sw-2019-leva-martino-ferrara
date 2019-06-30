@@ -9,7 +9,7 @@ import java.util.Map;
  * Observable class used by the RemotePowerUpHandler
  */
 public class PowerUpNotify {
-    public final Map<PlayerColor , PowerUpUpdate> listeners = new HashMap();
+    public final Map<PlayerColor , PowerUpUpdate> listeners = new HashMap<>();
 
     public void register(PlayerColor playerColor , PowerUpUpdate observer){
         synchronized (listeners){

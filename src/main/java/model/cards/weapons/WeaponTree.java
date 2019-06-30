@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class WeaponTree {
 
-        private String path = null;
-        private WeaponTreeNode<FireMode> root = null; //Radice dell'albero
-        private WeaponTreeNode<FireMode> lastActionPerformed = null; //Ultima azione inserita
-        private WeaponTreeNode<FireMode> lastAction = null; //Ultima azione inserita, ma non ancora performata
+        private String path;
+        private WeaponTreeNode<FireMode> root = null;
+        private WeaponTreeNode<FireMode> lastActionPerformed = null;
+        private WeaponTreeNode<FireMode> lastAction = null;
 
     /**
      * Weapons Tree's constructor
@@ -44,7 +44,7 @@ public class WeaponTree {
 
                     String type = obj1.get("type").toString();
                     String name = obj1.get("name").toString();
-                    WeaponTreeNode<FireMode> newNode = new WeaponTreeNode<FireMode>(new FireMode(type,name));
+                    WeaponTreeNode<FireMode> newNode = new WeaponTreeNode<>(new FireMode(type, name));
                     parent.addChild(newNode);
                     buildTree(newNode, obj1);
                 }
@@ -61,23 +61,13 @@ public class WeaponTree {
                 Object obj = parser.parse(new FileReader(path));
                 JSONObject myJo = (JSONObject) obj;
 
-                root = new WeaponTreeNode<FireMode>(new FireMode("root","root"));
+                root = new WeaponTreeNode<>(new FireMode("root","root"));
                 root.setParent(null);
                 lastAction = lastActionPerformed = root;
 
                 buildTree(root , myJo);
 
-            }
-
-            catch(FileNotFoundException e ){
-                System.out.println(e);
-            }
-
-            catch(IOException e ){
-                System.out.println(e);
-            }
-
-            catch(ParseException e){
+            } catch(IOException | ParseException e ){
                 System.out.println(e);
             }
         }
@@ -88,7 +78,7 @@ public class WeaponTree {
         public WeaponTreeNode<FireMode> getRoot(){
             return root;
         }
-        //Verifica che la mossa sia possibile
+
     /**
      * updates the tree by changing the last action chosen
      */
@@ -97,27 +87,14 @@ public class WeaponTree {
             List<WeaponTreeNode<FireMode>> children = lastActionPerformed.getChildren();
             lastAction = children.get(index);
         }
-        //Se l'azione è stata eseguita, l'albero si aggiorna
+
     /**
      * updates the tree, after having performed the action
      */
         public void updateLastActionPerformed(){
-            /*if (isActionEnded()){
-                endAction();
-            }
-            else{*/
-                lastActionPerformed = lastAction;
-           // }
+            lastActionPerformed = lastAction;
         }
-/*
-        public String availableAction(){ //Modificare per mostrare tutte le combinazioni
-            String result = "Your available actions: \n";
-            List<WeaponTreeNode<FireMode>> children = lastActionPerformed.getChildren();
-            for(WeaponTreeNode<FireMode> child : children){
-                result = result + child.getData().getEffectName();
-            }
-            return result;
-        }*/
+
 
     /**
      * Checks if the the end of the tree has been reached
@@ -125,19 +102,17 @@ public class WeaponTree {
         public boolean isActionEnded(){
             if(lastActionPerformed.getChildren().isEmpty())
                 return true;
-            else if(lastActionPerformed.getChildren().size()==1 &&
-                    lastActionPerformed.getChildren().get(0).getData().getType().equals("end"))
-                return true;
-            else
-                return false;
+            else return lastActionPerformed.getChildren().size() == 1 &&
+                    lastActionPerformed.getChildren().get(0).getData().getType().equals("end");
         }
 
     /**
      * Resets the tree's by setting root as the last action performed
      */
-    public void resetAction(){
+        public void resetAction(){
             resetLastAction();
         }
+
 
         private void resetLastAction(){
             lastAction = lastActionPerformed = root;
@@ -147,13 +122,8 @@ public class WeaponTree {
             resetLastAction();
         }
 
-        public String getType(){
-            return lastAction.getData().getType();
-        }
 
-        public String getEffectName(){
-            return lastAction.getData().getType();
-    }
+
 
         public WeaponTreeNode<FireMode> getLastActionPerformed(){
             return this.lastActionPerformed;

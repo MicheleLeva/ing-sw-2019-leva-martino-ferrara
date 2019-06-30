@@ -61,18 +61,17 @@ public class Grenadelauncher extends WeaponOptional1 {
             ArrayList<Square> squares = new ArrayList<>();
             ArrayList<Square> squaresBase = getModel().getVisibleSquares(currentPlayer);
             for(Square square : squaresBase){
-                for(Player player : getModel().getAllPlayers())
+                for(Player player : getModel().getAllSpawnedPlayers())
                     if(player.getPosition() == square && !squares.contains(square))
                         squares.add(square);
             }
-            if(squares.contains(currentPlayer.getPosition()))
-                squares.remove(currentPlayer.getPosition());
+            squares.remove(currentPlayer.getPosition());
             if(squares.isEmpty()){
                 getModel().getGameNotifier().notifyPlayer("No available squares you missed the shot!!!",
                         currentPlayer.getPlayerColor());
                 getModel().payFireMode(currentPlayer,this);
                 getModel().getCurrent().incrementOptionalCounter1();
-                getModel().checkNextWeaponAction(this,currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
+                getModel().checkNextWeaponAction(this,currentPlayer);
                 return;
             }
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
@@ -98,14 +97,14 @@ public class Grenadelauncher extends WeaponOptional1 {
      */
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets){
-        for(Player player : getModel().getAllPlayers()){
+        for(Player player : getModel().getAllSpawnedPlayers()){
             if(player != currentPlayer && getModel().getCurrent().getSelectedWeaponSquare() == player.getPosition()){
                 getModel().addDamage(currentPlayer.getPlayerColor(), player.getPlayerColor(), this.getOptionalDamage1());
                 getModel().addMark(currentPlayer.getPlayerColor(), player.getPlayerColor(), this.getOptionalMarks1());
             }
         }
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
+        getModel().checkNextWeaponAction(this,currentPlayer);
     }
 
 }

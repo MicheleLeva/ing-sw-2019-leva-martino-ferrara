@@ -2,9 +2,14 @@ package network.client;
 
 import model.player.PlayerColor;
 import network.ClientConnection;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import utils.Observable;
 import view.View;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -27,17 +32,27 @@ public class Client extends Observable<String> implements ClientConnection,Runna
 
     private View view;
 
-    //da recuperare effettivi dati per connessione
-    private String ip = "localhost";
+    private String ip;
 
-    private int port = 8080;
+    private int port;
 
     private boolean isActive(){
         return active;
     }
 
     public Client(){
-        //magari si importano ip e port dall'input dell'utente?
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("src/resources/client.json"));
+            JSONObject myJo = (JSONObject) obj;
+            JSONArray myArray = (JSONArray) myJo.get("client");
+            JSONObject temp = (JSONObject)myArray.get(0);
+            ip = (String)temp.get("ip");
+            port = ((Long)temp.get("port")).intValue();
+
+        } catch (IOException  | ParseException e) {
+            e.printStackTrace();
+        }
         try {
             socket = new Socket(ip, port);
             System.out.println("Server found!");
@@ -106,6 +121,7 @@ public class Client extends Observable<String> implements ClientConnection,Runna
         try {
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
+            //todo
             while (!nameAccepted){
                 System.out.println("Insert your name!");
                 Scanner scanner = new Scanner(System.in);

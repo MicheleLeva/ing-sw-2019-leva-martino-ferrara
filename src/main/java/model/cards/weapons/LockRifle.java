@@ -53,7 +53,7 @@ public class LockRifle extends WeaponOptional1 {
     }
 
     /**
-     * Uses the Base fire Mode for the CyberBlade
+     * Uses the Base fire Mode for the LockRifle
      * @param currentPlayer current player
      * @param selectedTargets targets chosen for the second optional fire Mode
      */
@@ -64,12 +64,12 @@ public class LockRifle extends WeaponOptional1 {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseMarks());
 
         }
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
 
     }
 
     /**
-     * Uses the first optional fire Mode for the CyberBlade
+     * Uses the first optional fire Mode for the LockRifle
      * @param currentPlayer current player
      * @param selectedTargets targets chosen for the second optional fire Mode
      */

@@ -15,7 +15,7 @@ public class TestActionCreator {
     @Test
     public void testCreateAction()
     {
-        //testing the correspondence bewteen inputs and actions
+        //testing the correspondence between inputs and actions
 
         //testing shoot
         assertTrue(ActionCreator.createAction(KeyMap.getShoot()) instanceof Shoot);

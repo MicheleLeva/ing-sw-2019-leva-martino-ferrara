@@ -9,13 +9,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 public class TestScoreManager {
-    ScoreManager scoreManagerTest;
-    Player player1;
-    Player player2;
-    Player player3;
-    Player player4;
-    Model modelTest;
-    ArrayList<Player> players = new ArrayList<>();
+    private ScoreManager scoreManagerTest;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
+    private Model modelTest;
+    private ArrayList<Player> players = new ArrayList<>();
+
     @Before
     public void initScoreManager(){
         player1 = new Player("player1", PlayerColor.BLUE);

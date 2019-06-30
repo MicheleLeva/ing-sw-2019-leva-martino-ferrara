@@ -44,9 +44,8 @@ public class KillShotTrack {
     /**
      * removes the skull from the KillShotTrack, switching it with the current player's token
      * @param playerColor the color of the token
-     * @param endOfArray indicates if it possible to set the frenzy turn
      */
-    public void removeSkull(PlayerColor playerColor,boolean endOfArray) {
+    public void removeSkull(PlayerColor playerColor) {
 
 
         if (model.getTurnManager().isFrenzy()) {
@@ -69,24 +68,14 @@ public class KillShotTrack {
 
                 killShotTrack[killShotTrack.length - 1].addToken();
             }
-            /*if(endOfArray && lastIndex>=killShotTrack.length && !model.getTurnManager().isFrenzy()) {
-                model.getTurnManager().setFrenzy();
-            }*/
         }
     }
 
     /**
      * adds the overkill(12th damage)
-     * @param endOfArray determines on which KillShotTrack the token is to be added
      */
-    public void addOverKill(boolean endOfArray) {
+    public void addOverKill() {
 
-        /*if(endOfArray && !model.getTurnManager().isFrenzy()){
-            System.out.println("GIOCATORE CORRENTE 2 "+model.getTurnManager().getCurrentPlayer().getPlayerName() + "OVERKILL\n");
-
-            killShotTrack[lastIndex - 1].addToken();
-            return;
-        }*/
         if (model.getTurnManager().isFrenzy()) {
             PlayerColor currentPlayerColor = model.getTurnManager().getCurrentPlayerColor();
             if(frenzyTokens.containsKey(currentPlayerColor))
@@ -122,23 +111,22 @@ public class KillShotTrack {
             }
         }
 
-        for (int i = 0; i < orderKillShotColor.size(); i++){
-            PlayerColor currentPlayerColor = orderKillShotColor.get(i);
+        for (PlayerColor currentPlayerColor : orderKillShotColor) {
             int tokenNumber = 0;
 
-            for (int j = 0; j < killShotTrack.length; j++){
-                if (killShotTrack[j].getTokenColor() != null &&
-                        killShotTrack[j].getTokenColor().equals(currentPlayerColor)){
-                    tokenNumber = tokenNumber + killShotTrack[j].getTokenNumber();
+            for (KillShotCell killShotCell : killShotTrack) {
+                if (killShotCell.getTokenColor() != null &&
+                        killShotCell.getTokenColor().equals(currentPlayerColor)) {
+                    tokenNumber = tokenNumber + killShotCell.getTokenNumber();
                 }
             }
             //add frenzy tokens
-            if(frenzyTokens.containsKey(currentPlayerColor)) {
+            if (frenzyTokens.containsKey(currentPlayerColor)) {
                 tokenNumber = tokenNumber + frenzyTokens.get(currentPlayerColor);
             }
             //build the linkedhashmap
-            if(tokenNumber != 0){
-                result.put(currentPlayerColor , tokenNumber);
+            if (tokenNumber != 0) {
+                result.put(currentPlayerColor, tokenNumber);
             }
         }
 
@@ -152,15 +140,14 @@ public class KillShotTrack {
         StringBuilder stringBuilder = new StringBuilder();
         StringBuilder tokenBuilder = new StringBuilder();
         StringBuilder frenzyBuilder;
-        for (int i = 0; i < killShotTrack.length; i++){
-            if(killShotTrack[i].isSkull()){
-               stringBuilder.append(CLI.getSkull());
-               stringBuilder.append(" ");
-            }
-            else{
+        for (KillShotCell killShotCell : killShotTrack) {
+            if (killShotCell.isSkull()) {
+                stringBuilder.append(CLI.getSkull());
+                stringBuilder.append(" ");
+            } else {
 
-                String currentColor = CLI.getColor(killShotTrack[i].getTokenColor());
-                int tokenNumber = killShotTrack[i].getTokenNumber();
+                String currentColor = CLI.getColor(killShotCell.getTokenColor());
+                int tokenNumber = killShotCell.getTokenNumber();
                 tokenBuilder.append(currentColor);
                 tokenBuilder.append(tokenNumber);
                 tokenBuilder.append(CLI.getResetString());

@@ -10,7 +10,7 @@ public class QuitAfkEvent extends Event {
         this.input = input;
     }
 
-    public char getInput(){
+    private char getInput(){
         return input;
     }
 

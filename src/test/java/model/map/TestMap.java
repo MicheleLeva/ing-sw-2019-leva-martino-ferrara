@@ -126,7 +126,7 @@ public class TestMap {
    @Test(expected = java.io.FileNotFoundException.class)
    public void testException() throws FileNotFoundException{
        String nome;
-       nome = new String("src/resources/map12.json");
+       nome = "src/resources/map12.json";
        int k=0;
        JSONParser parser = new JSONParser();
 
@@ -149,7 +149,6 @@ public class TestMap {
    @Test
     public void showSpawnWeapons(){
        Ammo ammo = new Ammo(0,0,0);
-       map.getAllSpawnSquares();
        Heatseeker heatseeker = new Heatseeker("heat",ammo,ammo,0,0,0,null);
        Square[][] mapTest = map.getMap();
        mapTest[1][0].setWeapon(heatseeker);

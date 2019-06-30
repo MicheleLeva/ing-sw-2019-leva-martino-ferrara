@@ -49,7 +49,7 @@ public class Hellion extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
         }
-        for(Player player : getModel().getAllPlayers()){
+        for(Player player : getModel().getAllSpawnedPlayers()){
             if(player.getPosition()==selectedTargets.get(0).getPosition() && player!=currentPlayer && !selectedTargets.contains(player)){
                 finalList.add(player);
             }
@@ -59,7 +59,7 @@ public class Hellion extends WeaponAlternative {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
         }
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
     /**
@@ -96,7 +96,7 @@ public class Hellion extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
-        for(Player player : getModel().getAllPlayers()){
+        for(Player player : getModel().getAllSpawnedPlayers()){
             if(player.getPosition()==selectedTargets.get(0).getPosition() && player!=currentPlayer && !selectedTargets.contains(player)){
                 finalList.add(player);
             }
@@ -105,6 +105,6 @@ public class Hellion extends WeaponAlternative {
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), 0);
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 }

@@ -2,8 +2,6 @@ package controller;
 
 import model.Ammo;
 import model.Model;
-import model.cards.*;
-import model.cards.powerups.PowerUp;
 import model.cards.weapons.Weapon;
 import model.cards.weapons.WeaponAlternative;
 import model.cards.weapons.WeaponOptional1;
@@ -41,7 +39,7 @@ public class Checks {
      * @param playerAmmo number of ammos the player holds
      */
     public static Ammo drawnAmmo(Ammo grabbedAmmo , Ammo playerAmmo){
-        Checks checks = new Checks();
+
         Ammo drawableAmmo = null;
         int drawableRed;
         int drawableBlue;
@@ -77,9 +75,9 @@ public class Checks {
      * @return true if the player can reload, false otherwise
      */
     public static boolean canReload(ArrayList<Weapon> weapon , Ammo allAmmo){
-        for (int i = 0; i < weapon.size(); i++){
-            Ammo reloadCost = weapon.get(i).getBaseCost();
-            if (allAmmo.isEnough(reloadCost)){
+        for (Weapon value : weapon) {
+            Ammo reloadCost = value.getBaseCost();
+            if (allAmmo.isEnough(reloadCost)) {
                 return true;
             }
         }
@@ -92,7 +90,7 @@ public class Checks {
      * @param player current player
      * @param currentWeapon weapon selected by the current player
      * @param effectType string that indicates the type of fire mode selected
-     * @return true if the fire mode is ussable, false otherwise
+     * @return true if the fire mode is usable, false otherwise
      */
     public static boolean canUseFireMode(Player player, Weapon currentWeapon, String effectType){
         int RED ;
@@ -106,9 +104,7 @@ public class Checks {
 
         switch (effectType) {
             case "return":
-                return true;
             case "end":
-                return true;
             case "base":
                 return true;
             case "alternative": {
@@ -161,7 +157,7 @@ public class Checks {
 
     /**
      * Finds the available actions based on the amount of damage received by the player
-     * @param player cuurrent player
+     * @param player current player
      * @return an integer that indicated the set of actions available to the player
      */
     public static int verifyNewAction(Player player){
@@ -203,7 +199,7 @@ public class Checks {
      * @param currentPlayer current player in the game
      * @param choices integer that indicates the powerUps selected for a payment
      * @param effectType integer that indicates the type of fire mode selected
-     * @return true if the selected payment is valid, flse otherwise
+     * @return true if the selected payment is valid, false otherwise
      */
     public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
         Weapon weapon = model.getCurrent().getSelectedWeapon();

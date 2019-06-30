@@ -160,7 +160,7 @@ public class CLI {
      * reads the map from the given path and color it to display on the command line
      * @param CLIMapPath the path containing the map
      * @return the colored map
-     * @throws IOException
+     * @throws IOException to be thrown
      */
     public static String buildCLIMap(String CLIMapPath)throws IOException {
         String uncoloredMap;

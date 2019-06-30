@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class ViewObservable<T> {
 
-    public final Map<PlayerColor, Observer> listeners = new HashMap<>();
+    private final Map<PlayerColor, Observer> listeners = new HashMap<>();
 
     public void register(PlayerColor playerColor , Observer observer){
         synchronized (listeners){

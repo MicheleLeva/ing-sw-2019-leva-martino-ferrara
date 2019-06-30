@@ -7,9 +7,9 @@ import model.player.PlayerColor;
 
 public abstract class PowerUp extends Card {
 
-    protected AmmoColor ammo;
+    private AmmoColor ammo;
     private final Model model;
-    protected String name;
+    String name;
 
     public PowerUp(Model model , AmmoColor ammo){
         this.model = model;

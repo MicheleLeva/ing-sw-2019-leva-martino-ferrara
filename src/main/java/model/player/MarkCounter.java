@@ -49,9 +49,7 @@ public class MarkCounter {
      * Returns the number of marks received by a player with a specific player color
      */
     public int getMarkFromColor(PlayerColor playerColor){
-        if(markList.containsKey(playerColor))
-            return markList.get(playerColor);
-        else return 0;
+        return markList.getOrDefault(playerColor, 0);
     }
 
     public int getMarkFromColorAndRemove(PlayerColor playerColor){

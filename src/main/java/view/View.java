@@ -60,7 +60,12 @@ public class View {
     public void startScanner(){
         boolean isActive = true;
         while(isActive){
-            in = scanner.nextLine();
+            try {
+                in = scanner.nextLine();
+            } catch (Exception e){
+                isActive = false;
+            }
+
         }
     }
 
@@ -69,7 +74,7 @@ public class View {
      * @param value string to check
      * @return true if the String is an integer, false otherwise
      */
-    public boolean isStringAnInt(final String value){
+    private boolean isStringAnInt(final String value){
         for(int i = 0; 0<=i && i<value.length(); i++){
             char c = value.charAt(i);
             if (!(c >= '0' && c <= '9')){

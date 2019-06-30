@@ -13,13 +13,13 @@ import java.util.ArrayList;
 public class TurnManager {
 
     private final Model model;
-    private  ArrayList<Player> allPlayers; //Lista di tutti i giocatori in ordine di turno
+    private  ArrayList<Player> allPlayers;
 
     private PlayerColor currentPlayerColor;
 
     private  int currentPlayerIndex;
 
-    private int lastPlayerIndex; //Ultimo giocatore della partita (usato per il turno frenesia)
+    private int lastPlayerIndex; //index of the last player (used for the frenzy turns)
 
     private boolean gameOver = false;
 
@@ -41,12 +41,12 @@ public class TurnManager {
      * @param playerColor of the player
      * @return Player of the given color.
      */
-    public Player getPlayerFromColor(PlayerColor playerColor){ //Dato il colore, ritorna il giocatore corrispondente
+    public Player getPlayerFromColor(PlayerColor playerColor){
         Player result = null;
 
-        for (int i = 0; i < allPlayers.size(); i++){
-            if(allPlayers.get(i).getPlayerColor() == playerColor)
-                result = allPlayers.get(i);
+        for (Player allPlayer : allPlayers) {
+            if (allPlayer.getPlayerColor() == playerColor)
+                result = allPlayer;
         }
 
         return result;
@@ -106,7 +106,7 @@ public class TurnManager {
     /**
      * Sets the current player index to the next player in the list.
      */
-    public void getNextPlayer(){
+    private void getNextPlayer(){
 
         if (currentPlayerIndex == allPlayers.size() - 1) //Last player in the list
         {
@@ -184,13 +184,10 @@ public class TurnManager {
             }
         }
 
-        for (int i = 0; i < allPlayers.size(); i++)
-        {
-            Player currentPlayer = allPlayers.get(i);
-
-            if(     currentPlayer.getPlayerBoard().getDamageCounter().getDamage() == 0 ||
+        for (Player currentPlayer : allPlayers) {
+            if (currentPlayer.getPlayerBoard().getDamageCounter().getDamage() == 0 ||
                     currentPlayer.isKillShot() ||
-                    currentPlayer.isDead()){
+                    currentPlayer.isDead()) {
                 //change player's points in frenzy points
                 currentPlayer.getPlayerBoard().getPoints().setFrenzyPoints();
 

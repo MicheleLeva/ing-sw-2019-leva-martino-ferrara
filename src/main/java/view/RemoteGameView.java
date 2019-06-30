@@ -11,7 +11,6 @@ import utils.Observer;
  */
 public class RemoteGameView implements Observer<PlayerMessage> {
     private ClientConnection clientConnection;
-    private View view;
 
     public void setClientConnection(ClientConnection clientConnection) {
         this.clientConnection = clientConnection;
@@ -19,7 +18,6 @@ public class RemoteGameView implements Observer<PlayerMessage> {
 
     public RemoteGameView(ClientConnection clientConnection, View view){
         this.clientConnection = clientConnection;
-        this.view = view;
 
         String message = "GAME,GenericMessage,Welcome to the game! Your player color is ";
         message = message + CLI.getColor(view.getPlayerColor()) + view.getPlayerColor().toString() + CLI.getResetString();
@@ -33,11 +31,7 @@ public class RemoteGameView implements Observer<PlayerMessage> {
      * @param inputs array of strings received from the RemoteView.
      */
     public void stringToMessage(String[] inputs){
-
-        switch(inputs[0]) {
-            default:
-                System.out.println("An event is in the wrong remote view!\n" + inputs[0]);
-        }
+        System.out.println("An event is in the wrong remote view!\n" + inputs[0]);
     }
 
     /**

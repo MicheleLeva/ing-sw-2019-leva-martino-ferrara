@@ -45,7 +45,7 @@ public class Tractorbeam extends WeaponAlternative {
         }
 
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Tractorbeam extends WeaponAlternative {
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Square> visibleSquares = getModel().getVisibleSquares(currentPlayer);
-            ArrayList<Player> allTargets = getModel().getAllPlayers();
+            ArrayList<Player> allTargets = getModel().getAllSpawnedPlayers();
             ArrayList<Player> availableTargets = new ArrayList<>();
             for(Player player : allTargets){
                 ArrayList<Square> playerSquares = Model.runnableSquare(2,player.getPosition());
@@ -107,7 +107,7 @@ public class Tractorbeam extends WeaponAlternative {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
 
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 }
 

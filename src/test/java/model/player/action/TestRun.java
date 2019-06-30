@@ -49,7 +49,7 @@ public class TestRun {
             assertEquals(actionTree.getLastActionPerformed(), actionTree.getLastAction());
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
 
         playerTest.setPosition(square);
@@ -69,7 +69,7 @@ public class TestRun {
             assertEquals(actionTree.getLastActionPerformed(), actionTree.getLastAction());
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
 
 

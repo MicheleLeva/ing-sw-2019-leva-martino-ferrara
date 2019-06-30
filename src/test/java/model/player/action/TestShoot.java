@@ -45,10 +45,10 @@ public class TestShoot {
         playerTest.getResources().getAllWeapon().add(weapon);
         try{
             shoot.perform(modelTest,playerTest.getPlayerColor());
-            assertTrue(!playerTest.getResources().getAllWeapon().isEmpty());
+            assertFalse(playerTest.getResources().getAllWeapon().isEmpty());
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
     }
 }

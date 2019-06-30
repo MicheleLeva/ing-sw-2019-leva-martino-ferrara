@@ -27,10 +27,8 @@ public class Thor extends WeaponOptional2 {
         if(getModel().getCurrent().getOptionalCounter2()==0){
             Player player = getModel().getCurrent().getSelectedOptionalTargets1().get(0);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(player);
-            if(availableTargets.contains(currentPlayer))
-                availableTargets.remove(currentPlayer);
-            if(availableTargets.contains(baseTarget))
-                availableTargets.remove(baseTarget);
+            availableTargets.remove(currentPlayer);
+            availableTargets.remove(baseTarget);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -57,8 +55,7 @@ public class Thor extends WeaponOptional2 {
             Player player = getModel().getCurrent().getSelectedBaseTargets().get(0);
             baseTarget = player;
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(player);
-            if(availableTargets.contains(currentPlayer))
-                availableTargets.remove(currentPlayer);
+            availableTargets.remove(currentPlayer);
             if(availableTargets.isEmpty()){
                 getModel().getGameNotifier().notifyPlayer("No available targets for this Fire Mode ",
                         currentPlayer.getPlayerColor());

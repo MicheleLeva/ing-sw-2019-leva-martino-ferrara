@@ -9,7 +9,7 @@ import java.util.List;
  * Observable class used by the RemoteWeaponView
  */
 public class WeaponObservable {
-    public final List<WeaponObserver> listeners = new ArrayList();
+    public final List<WeaponObserver> listeners = new ArrayList<>();
 
     public void register(WeaponObserver observer){
         synchronized (listeners){

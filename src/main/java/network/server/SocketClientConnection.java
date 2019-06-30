@@ -6,8 +6,6 @@ import utils.Observable;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -127,7 +125,7 @@ public class SocketClientConnection extends Observable<String> implements Client
     /**
      * Closes the connection with the client.
      */
-    public synchronized void closeConnection() { //mando messaggio al network.client e chiudo la connessione
+    public synchronized void closeConnection() {
         asyncSend("GAME,GenericMessage,The server is closing the connection!");
         try {
             socket.close();
@@ -143,7 +141,7 @@ public class SocketClientConnection extends Observable<String> implements Client
     private void close() {
         server.setPlayerAFK(playerName);
         closeConnection();
-        System.out.println("Deregistering of the connection!");
+        System.out.println("Deregistering of " + playerName + "'s connection!");
         server.deregisterConnection(this);
     }
 

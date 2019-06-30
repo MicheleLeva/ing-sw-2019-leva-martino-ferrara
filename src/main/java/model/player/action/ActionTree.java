@@ -8,9 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
-import model.Model;
 
 /**
  * Contains all the possible actions the player is allowed to perform
@@ -34,7 +32,7 @@ public class ActionTree {
     private Node<String> lastAction = null;
     //number of total action available for the player's turn
     private int actionCounter;
-    //number of action already perfomed by the player in his turn
+    //number of action already performed by the player in his turn
     private int performedAction;
     //true if the current player has ended his turn
     private boolean doneTurn = false;
@@ -78,10 +76,11 @@ public class ActionTree {
                 actionCounter = 2;
                 break;
 
-            case 5:
+            default:
                 path = "src/resources/actionTree5.json";
                 actionCounter = 1;
                 break;
+
         }
     }
 
@@ -116,23 +115,13 @@ public class ActionTree {
             Object obj = parser.parse(new FileReader(path));
             JSONObject myJo = (JSONObject) obj;
 
-            root = new Node<String>("root");
+            root = new Node<>("root");
             root.setParent(null);
             lastAction = lastActionPerformed = root;
 
             buildTree(root , myJo);
 
-        }
-
-        catch(FileNotFoundException e ){
-            System.out.println(e);
-        }
-
-        catch(IOException e ){
-            System.out.println(e);
-        }
-
-        catch(ParseException e){
+        } catch(ParseException | IOException e ){
             System.out.println(e);
         }
     }
@@ -145,7 +134,7 @@ public class ActionTree {
     }
 
     /**
-     * //cheks whether or not the input move is valid
+     * //checks whether or not the input move is valid
      * @param move player's input
      * @return a boolean that tells whether the input is or not valid
      */
@@ -164,10 +153,10 @@ public class ActionTree {
 
         List<Node<String>> children = lastActionPerformed.getChildren();
 
-        for (int i = 0; i < children.size(); i++){
-            String type = children.get(i).getData();
-            if (KeyMap.isValid(type , move)){
-                lastAction = children.get(i);
+        for (Node<String> child : children) {
+            String type = child.getData();
+            if (KeyMap.isValid(type, move)) {
+                lastAction = child;
                 return true;
             }
         }
@@ -201,7 +190,7 @@ public class ActionTree {
 
     /**
      * This method is used to print the current player's available actions
-     * @return a String contaning the availaboe actions
+     * @return a String containing the available actions
      */
     public String availableAction(){
         StringBuilder result = new StringBuilder();

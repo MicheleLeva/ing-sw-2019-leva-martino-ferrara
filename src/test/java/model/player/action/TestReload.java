@@ -64,7 +64,7 @@ public class TestReload {
 
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
     }
 }

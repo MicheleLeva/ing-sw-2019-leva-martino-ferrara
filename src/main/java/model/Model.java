@@ -2,15 +2,10 @@ package model;
 
 import controller.Checks;
 import model.cards.*;
-import model.cards.powerups.Newton;
 import model.cards.powerups.PowerUp;
 import model.cards.powerups.TagbackGrenade;
 import model.cards.powerups.TargetingScope;
-import model.cards.weapons.FireMode;
-import model.cards.weapons.Weapon;
 import model.cards.weapons.*;
-import model.cards.weapons.WeaponTreeNode;
-import model.map.Direction;
 import model.map.*;
 import model.notifiers.ActionNotifier;
 import model.notifiers.GameNotifier;
@@ -88,8 +83,8 @@ public class Model {
      * @param skulls number of skulls on the killShotTrack
      */
     public Model(ArrayList<Player> playersList, int skulls) {
-        for (int i = 0; i < playersList.size();i++){
-            players.put(playersList.get(i).getPlayerColor(),playersList.get(i));
+        for (Player player : playersList) {
+            players.put(player.getPlayerColor(), player);
         }
 
         this.skulls = skulls;
@@ -161,7 +156,7 @@ public class Model {
     public ArrayList<Player> getVisiblePlayers(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> visiblePlayers = new ArrayList<>();
-        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> allPlayers = getAllSpawnedPlayers();
         for (Player player : allPlayers) {
 
             if (player.getPosition().getColor() == square.getColor() && currentPlayer != player)
@@ -256,7 +251,7 @@ public class Model {
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistance = new ArrayList<>();
-        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllSpawnedPlayers());
         for (Player player : allPlayers) {
             if (runnableSquare(distance, square).contains(player.getPosition()) && player != currentPlayer) {
                 playersAtDistance.add(player);
@@ -266,40 +261,6 @@ public class Model {
 
     }
 
-/*    public Square getSquareInSameDirection(Square currentSquare,Square targetSquare){
-        Square finalSquare = null;
-        for(Direction dir : Direction.values()) {
-            if (currentSquare.getSide(dir) == targetSquare) {
-                if (dir == Direction.NORTH)
-                    if (targetSquare.getSide(Direction.NORTH) != null)
-                        finalSquare = targetSquare.getSide(Direction.NORTH);
-                if (dir == Direction.EAST)
-                    if (targetSquare.getSide(Direction.EAST) != null)
-                        finalSquare = targetSquare.getSide(Direction.EAST);
-                if (dir == Direction.SOUTH)
-                    if (targetSquare.getSide(Direction.SOUTH) != null)
-                        finalSquare = targetSquare.getSide(Direction.SOUTH);
-                if (dir == Direction.WEST)
-                    if (targetSquare.getSide(Direction.WEST) != null)
-                        finalSquare = targetSquare.getSide(Direction.WEST);
-            }
-        }
-        return finalSquare;
-    }*/
-
-/*    public ArrayList<Player> getPlayersInSameDirection(Player currentPlayer,Player target){
-        ArrayList<Player> finalPlayers = new ArrayList<>();
-        Square currentSquare = currentPlayer.getPosition();
-        Square targetSquare = target.getPosition();
-        Square finalSquare = getSquareInSameDirection(currentSquare,targetSquare);
-        for(Player player : getAllPlayers()){
-            if(player.getPosition() == finalSquare)
-                finalPlayers.add(player);
-        }
-        return finalPlayers;
-    }*/
-
-
     /**
      * Method that returns a list of the visible players at a given distance from a selected square
      * @param currentPlayer current player
@@ -308,7 +269,7 @@ public class Model {
      */
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer, Square square){
         ArrayList<Player> playersAtDistance = new ArrayList<>();
-        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> allPlayers = getAllSpawnedPlayers();
         for(Player player : allPlayers) {
             if(runnableSquare(distance, square).contains(player.getPosition())&& player!=currentPlayer){
                 playersAtDistance.add(player);
@@ -326,16 +287,14 @@ public class Model {
      * @param distance maximum distance for the targets
      */
     public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer){
-        Square square = currentPlayer.getPosition();
         ArrayList<Player> playersAtDistanceMore = new ArrayList<>();
         ArrayList<Player> playersAtDistance = getPlayersAtDistance(distance, currentPlayer);
-        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllSpawnedPlayers());
         for (Player player : allPlayers) {
             if (!playersAtDistance.contains(player))
                 playersAtDistanceMore.add(player);
         }
-        if (playersAtDistanceMore.contains(currentPlayer))
-            playersAtDistanceMore.remove(currentPlayer);
+        playersAtDistanceMore.remove(currentPlayer);
 
         return playersAtDistanceMore;
     }
@@ -349,7 +308,7 @@ public class Model {
     public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInCardinalDirection = new ArrayList<>();
-        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllSpawnedPlayers());
 
         for (Player player : allPlayers) {
             if (    player.getPosition()!=null &&
@@ -358,8 +317,7 @@ public class Model {
                 playersInCardinalDirection.add(player);
             }
         }
-        if (playersInCardinalDirection.contains(currentPlayer))
-            playersInCardinalDirection.remove(currentPlayer);
+        playersInCardinalDirection.remove(currentPlayer);
         return playersInCardinalDirection;
     }
 
@@ -370,7 +328,7 @@ public class Model {
      * @param cardinal selected cardinal direction
      */
     public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal) {
-        ArrayList<Player> allPlayers = new ArrayList<>(getAllPlayers());
+        ArrayList<Player> allPlayers = new ArrayList<>(getAllSpawnedPlayers());
         ArrayList<Player> finalPlayers = new ArrayList<>();
         if (cardinal == 'n') {
             for (Player player : allPlayers)
@@ -417,7 +375,7 @@ public class Model {
     public ArrayList<Player> getPlayersInSameSquare(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
         ArrayList<Player> playersInSameSquare = new ArrayList<>();
-        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> allPlayers = getAllSpawnedPlayers();
 
         for (Player player : allPlayers) {
             if (player.getPosition().getSquareRow() == square.getSquareRow() &&
@@ -430,20 +388,19 @@ public class Model {
 
 
     /**
-     * Method that returns a list of the players that are not visiible from the current player
+     * Method that returns a list of the players that are not visible from the current player
      * @param currentPlayer current player
      */
     public ArrayList<Player> getNonVisiblePlayers(Player currentPlayer) {
         ArrayList<Player> nonVisiblePlayers = new ArrayList<>();
-        ArrayList<Player> allPlayers = getAllPlayers();
+        ArrayList<Player> allPlayers = getAllSpawnedPlayers();
 
         for (Player player : allPlayers) {
 
             if (!(getVisiblePlayers(currentPlayer).contains(player)))
                 nonVisiblePlayers.add(player);
         }
-        if (nonVisiblePlayers.contains(currentPlayer))
-            nonVisiblePlayers.remove(currentPlayer);
+        nonVisiblePlayers.remove(currentPlayer);
         return nonVisiblePlayers;
     }
 
@@ -515,7 +472,7 @@ public class Model {
     }
 
     /**
-     * Sets the player position to the spwan square with the selected color
+     * Sets the player position to the spawn square with the selected color
      * @param player current player
      * @param ammoColor color of the spawn square
      */
@@ -634,10 +591,10 @@ public class Model {
         getCurrent().setSelectedNewton(null);
 
         String opponentList = "";
-        for (int i = 0; i < allPlayersCopy.size(); i++) {
-            if (allPlayersCopy.get(i).getPlayerColor() != playerColor) {
-                current.addOpponent(allPlayersCopy.get(i));
-                opponentList = opponentList + allPlayersCopy.get(i).getPlayerName() + " ";
+        for (Player value : allPlayersCopy) {
+            if (value.getPlayerColor() != playerColor) {
+                current.addOpponent(value);
+                opponentList = opponentList + value.getPlayerName() + " ";
             }
         }
         powerUpNotifier.chooseNewtonOpponent(playerColor, opponentList);
@@ -654,8 +611,8 @@ public class Model {
         current.setSquare(possibleSquare);
         possibleSquare.remove(currentOpponentSquare);
         String squareList = "";
-        for (int i = 0; i < possibleSquare.size(); i++) {
-            squareList = squareList + possibleSquare.get(i).getID() + " ";
+        for (Square square : possibleSquare) {
+            squareList = squareList + square.getID() + " ";
         }
         powerUpNotifier.chooseNewtonSquare(playerColor, squareList);
     }
@@ -730,10 +687,10 @@ public class Model {
             }
         }
         int j = 1;
-        for (int i = 0; i < availableTargets.size(); i++) {
-            if (availableTargets.get(i).getPlayerColor() != playerColor) {
-                current.addOpponent(availableTargets.get(i));
-                opponentList = opponentList+(j) + ". "+availableTargets.get(i).getPlayerName() + " | \n";
+        for (Player availableTarget : availableTargets) {
+            if (availableTarget.getPlayerColor() != playerColor) {
+                current.addOpponent(availableTarget);
+                opponentList = opponentList + (j) + ". " + availableTarget.getPlayerName() + " | \n";
                 j++;
             }
         }
@@ -834,14 +791,17 @@ public class Model {
         ArrayList<PowerUp> powerUps = current.getSelectedPaymentPowerUps();
 
         for(PowerUp powerUp : powerUps){
-            if (powerUp.getAmmo().toString().equals("RED"))
-                powerUpRED++;
-            else
-            if(powerUp.getAmmo().toString().equals("BLUE"))
-                powerUpBLUE++;
-            else
-            if(powerUp.getAmmo().toString().equals("YELLOW"))
-                powerUpYELLOW++;
+            switch (powerUp.getAmmo().toString()) {
+                case "RED":
+                    powerUpRED++;
+                    break;
+                case "BLUE":
+                    powerUpBLUE++;
+                    break;
+                case "YELLOW":
+                    powerUpYELLOW++;
+                    break;
+            }
         }
         for(PowerUp powerUp : getCurrent().getSelectedPaymentPowerUps()){
             currentPlayer.getResources().removePowerUp(powerUp);
@@ -910,14 +870,17 @@ public class Model {
         ArrayList<PowerUp> powerUps = current.getSelectedPaymentPowerUps();
 
         for(PowerUp powerUp : powerUps){
-            if (powerUp.getAmmo().toString().equals("RED"))
-                powerUpRED++;
-            else
-            if(powerUp.getAmmo().toString().equals("BLUE"))
-                powerUpBLUE++;
-            else
-            if(powerUp.getAmmo().toString().equals("YELLOW"))
-                powerUpYELLOW++;
+            switch (powerUp.getAmmo().toString()) {
+                case "RED":
+                    powerUpRED++;
+                    break;
+                case "BLUE":
+                    powerUpBLUE++;
+                    break;
+                case "YELLOW":
+                    powerUpYELLOW++;
+                    break;
+            }
         }
 
         for(PowerUp powerUp : getCurrent().getSelectedPaymentPowerUps()){
@@ -982,14 +945,17 @@ public class Model {
             fireYELLOW = fireModeCost.getYellow();
 
         for(PowerUp powerUp : powerUps){
-            if (powerUp.getAmmo().toString().equals("RED"))
-                powerUpRED++;
-            else
-            if(powerUp.getAmmo().toString().equals("BLUE"))
-                powerUpBLUE++;
-            else
-            if(powerUp.getAmmo().toString().equals("YELLOW"))
-                powerUpYELLOW++;
+            switch (powerUp.getAmmo().toString()) {
+                case "RED":
+                    powerUpRED++;
+                    break;
+                case "BLUE":
+                    powerUpBLUE++;
+                    break;
+                case "YELLOW":
+                    powerUpYELLOW++;
+                    break;
+            }
 
             }
         for(PowerUp powerUp : getCurrent().getSelectedPaymentPowerUps()){
@@ -1117,6 +1083,7 @@ public class Model {
         set.addAll(current.getSelectedOptionalTargets2());
         ArrayList<Player> targets = new ArrayList<>(set);*/
         ArrayList<Player> targets = getCurrent().getAllShotPlayer();
+        targets.remove(currentPlayer);
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
         if(getCurrent().getSelectedWeapon()!=null)
             getCurrent().getSelectedWeapon().getWeaponTree().resetAction();
@@ -1129,9 +1096,8 @@ public class Model {
      * are sent, otherwise the Shoot Action ends
      * @param weapon selected weapon
      * @param currentPlayer current player in game
-     * @param selectedTargets targets the player has hit
      */
-    public void checkNextWeaponAction(Weapon weapon, Player currentPlayer, ArrayList<Player> selectedTargets) {
+    public void checkNextWeaponAction(Weapon weapon, Player currentPlayer) {
 
         weapon.unload();
         weapon.getWeaponTree().updateLastActionPerformed();
@@ -1236,8 +1202,7 @@ public class Model {
         int opponentDamage = opponent.getPlayerBoard().getDamageCounter().getDamage();
         //move the shooter color's marks on the opponent damage board
         int pastMarks = opponent.getPlayerBoard().getMarkCounter().getMarkFromColorAndRemove(shooterColor);
-        opponentDamage = opponentDamage + pastMarks;
-        int givenDamage = Checks.givenDamage(opponentDamage, damage);
+        int givenDamage = Checks.givenDamage(opponentDamage, damage + pastMarks);
 
         DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
 
@@ -1257,6 +1222,12 @@ public class Model {
                 }
 
                 if (damageCounter.getDamage() == Checks.getMaxDamage()) {
+                    int playermark = getPlayer(shooterColor).getPlayerBoard().getMarkCounter().getMarkFromColor(opponentColor);
+                    if (Checks.givenMark(playermark, 1) != 0){
+                        getGameNotifier().notifyPlayer("You have been marked by " + getPlayer(opponentColor).getColoredName(),
+                                shooterColor);
+                    }
+                    addMark(opponentColor, shooterColor, 1);
                     opponent.setDead();
                 }
             }
@@ -1267,21 +1238,21 @@ public class Model {
 
     /**
      * Adds the selected number of marks to the target's playerBoard
-     * @param shooterColor current player color
-     * @param opponentColor color of the target
+     * @param markerColor current player color
+     * @param markedColor color of the target
      * @param mark number of damage to deal to the target
      */
-    public void addMark(PlayerColor shooterColor, PlayerColor opponentColor, int mark) {
-        Player opponent = getPlayer(opponentColor);
+    public void addMark(PlayerColor markerColor, PlayerColor markedColor, int mark) {
+        Player opponent = getPlayer(markedColor);
         MarkCounter markCounter = opponent.getPlayerBoard().getMarkCounter();
-        int opponentMark = markCounter.getMarkFromColor(shooterColor);
+        int opponentMark = markCounter.getMarkFromColor(markerColor);
         int givenMark = Checks.givenMark(opponentMark, mark);
 
         if(!getCurrent().getAllShotPlayer().contains(opponent))
             getCurrent().addShotPlayer(opponent);
 
         if (givenMark != 0) {
-            markCounter.addMarks(shooterColor, givenMark);
+            markCounter.addMarks(markerColor, givenMark);
         }
     }
 
@@ -1303,7 +1274,7 @@ public class Model {
     /**
      * Returns all in game players but not those that are not on the map
      */
-    public ArrayList<Player> getAllPlayers() {
+    public ArrayList<Player> getAllSpawnedPlayers() {
         ArrayList<Player> def = new ArrayList<>(players.values());
         for(Player player : players.values())
             if(player.getPosition() == null)
@@ -1314,11 +1285,7 @@ public class Model {
      * Returns all in game players
      */
     public List<Player> getEachPlayer(){
-        ArrayList<Player> temp = new ArrayList<>();
-        for(Player player : players.values()){
-            temp.add(player);
-        }
-        return temp;
+        return new ArrayList<>(players.values());
     }
 
     /**
@@ -1402,7 +1369,8 @@ public class Model {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("0. RETURN\n");
         for (int i = 0; i < payableWeapons.size(); i++){
-            stringBuilder.append(i+1 +". ");
+            stringBuilder.append(i+1);
+            stringBuilder.append(". ");
             stringBuilder.append(payableWeapons.get(i).getWeaponName());
             stringBuilder.append(" ");
             stringBuilder.append(payableWeapons.get(i).getPickUpCost().toString());
@@ -1437,7 +1405,7 @@ public class Model {
     /**
      * Asks the current player what color of cube he is going to use to pay
      * for the Targeting Scope
-     * @param player Player that is going to pay for the Targeting Sscope
+     * @param player Player that is going to pay for the Targeting Scope
      */
     public void askScopePayment(Player player){
         String message = "Choose the color of the cube to pay: \n";

@@ -1,13 +1,8 @@
 package model;
 
-import model.cards.AmmoCard;
-import model.cards.powerups.PowerUp;
-import model.cards.weapons.Weapon;
 import model.map.Map;
 import model.map.Square;
 import model.player.PlayerColor;
-
-import java.util.ArrayList;
 
 public class GameBoard {
 
@@ -23,7 +18,7 @@ public class GameBoard {
     }
 
     public void addToken(PlayerColor playerColor){
-    this.killShotTrack.removeSkull(playerColor,false);
+    this.killShotTrack.removeSkull(playerColor);
     }
 
     public KillShotTrack getKillShotTrack(){

@@ -53,16 +53,17 @@ public class PowerUpController extends Controller implements PowerUpObserver {
             String error;
             error = "Invalid input.";
             choosePowerUpEvent.getView().reportError(error);
-            getModel().choosePowerUp(choosePowerUpEvent.getPlayerColor()); //chiede di reinserire il powerup
+            getModel().choosePowerUp(choosePowerUpEvent.getPlayerColor()); //asks again the powerup
         } else {
             PowerUp chosenPowerUp = currentPlayer.getResources().getPowerUp().get(input - 1);
             try {
                 chosenPowerUp.usePowerUp(choosePowerUpEvent.getPlayerColor());
-                //scarta powerup(è stato usato)
+                //discards the powerup if used
             } catch (TargetingScopeException | TagbackGrenadeException e) {
                 choosePowerUpEvent.getView().reportError(e.getMessage());
-                getModel().chooseAction(choosePowerUpEvent.getPlayerColor()); //chiede di reinserire azione
+                getModel().chooseAction(choosePowerUpEvent.getPlayerColor()); //asks again the action
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -81,7 +82,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         int input = chooseTeleporterSquareEvent.getInput();
         ArrayList<Integer> allIDs = getModel().getGameBoard().getMap().getAllIDs();
 
-        if (!allIDs.contains(input)) { //riempire con: se lo square non esiste, serve una legenda per gli square
+        if (!allIDs.contains(input)) {
             chooseTeleporterSquareEvent.getView().reportError("Invalid square.\nInsert another one.");
             getModel().useTeleporter(chooseTeleporterSquareEvent.getPlayerColor());
         } else {
@@ -107,7 +108,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
         if (input < 1 || input > getModel().getCurrent().getOpponent().size()) {
             chooseNewtonOpponentEvent.getView().reportError("Invalid player.\nInsert another one.");
-            getModel().useNewton(chooseNewtonOpponentEvent.getPlayerColor()); //richiede di riusare il newton
+            getModel().useNewton(chooseNewtonOpponentEvent.getPlayerColor()); //asks again the Newton's target
         } else {
             ArrayList<Player> chosenPlayer = new ArrayList<>();
             chosenPlayer.add(getModel().getCurrent().getOpponent().get(input - 1));

@@ -168,7 +168,7 @@ public class TestChecks {
 
         Weapon electroscythe = new Electroscythe("electro",cost,cost,cost,1,1,
                 1,1,1,1,null);
-        Weapon machinegun = new Machinegun("machin",cost,cost,cost,cost,1,1,
+        Weapon machinegun = new Machinegun("machine",cost,cost,cost,cost,1,1,
                 1,1,1,1,1,1,1,null);
         ArrayList<Integer> choices= new ArrayList<>();
         choices.add(1);

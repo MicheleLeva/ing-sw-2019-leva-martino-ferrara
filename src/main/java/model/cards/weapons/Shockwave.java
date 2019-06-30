@@ -24,8 +24,7 @@ public class Shockwave extends WeaponAlternative {
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
             ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
             for(Player player : temp){
-                if(availableTargets.contains(player))
-                    availableTargets.remove(player);
+                availableTargets.remove(player);
             }
             getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
             getModel().getCurrent().incrementAlternativeCounter();
@@ -56,8 +55,7 @@ public class Shockwave extends WeaponAlternative {
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
             ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
             for(Player player : temp){
-                if(availableTargets.contains(player))
-                    availableTargets.remove(player);
+                availableTargets.remove(player);
             }
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;

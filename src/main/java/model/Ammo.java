@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Ammo {
 
-    private HashMap<AmmoColor, Integer> ammo ;
+    private final HashMap<AmmoColor, Integer> ammo ;
 
     /**
      * Constructor for the Ammo class
@@ -23,12 +23,6 @@ public class Ammo {
         setBlue(blue);
         setYellow(yellow);
     }
-
-/*    public Ammo(Ammo ammo){
-            addRed(ammo.getRed());
-            addBlue(ammo.getBlue());
-            addYellow(ammo.getYellow());
-    }*/
 
     /**
      * @return The number of red cubes
@@ -102,8 +96,8 @@ public class Ammo {
     }
 
     /**
-     *
-     * @param ammoColor
+     * Adds ammo of the given colors
+     * @param ammoColor to add
      */
     public void addAmmo(AmmoColor ammoColor){
         switch(ammoColor){
@@ -147,12 +141,6 @@ public class Ammo {
 
 
     }
-
-/*    public void add(Ammo ammo){
-        setRed(getRed() + ammo.getRed());
-        setBlue(getBlue() + ammo.getBlue());
-        setYellow(getYellow() + ammo.getYellow());
-    }*/
 
     public void remove(Ammo ammo){
         setRed(getRed() - ammo.getRed());

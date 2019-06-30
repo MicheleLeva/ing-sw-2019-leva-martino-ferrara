@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeaponTreeNode<T> {
-    private T data = null;
-    private List<WeaponTreeNode<T>> children = new ArrayList();
+    private T data;
+    private List<WeaponTreeNode<T>> children = new ArrayList<>();
     private WeaponTreeNode<T> parent = null;
 
     public WeaponTreeNode(T data) {

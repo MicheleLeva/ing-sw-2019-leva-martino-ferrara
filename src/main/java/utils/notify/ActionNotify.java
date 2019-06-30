@@ -10,7 +10,7 @@ import java.util.Map;
  * Observable class used by the RemoteActionHandler
  */
 public class ActionNotify {
-    public final Map<PlayerColor, ActionUpdate> listeners = new HashMap();
+    public final Map<PlayerColor, ActionUpdate> listeners = new HashMap<>();
 
     public void register(PlayerColor playerColor , ActionUpdate observer) {
         synchronized (listeners) {

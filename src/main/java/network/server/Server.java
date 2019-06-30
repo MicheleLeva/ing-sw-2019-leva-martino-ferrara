@@ -3,6 +3,7 @@ package network.server;
 import controller.ActionController;
 import controller.PowerUpController;
 import controller.WeaponController;
+import model.CLI;
 import model.Game;
 import model.Model;
 import model.player.Player;
@@ -29,7 +30,7 @@ import java.util.concurrent.Executors;
 public class Server {
     private ServerSocket serverSocket;
 
-    private int PORT = 8080;
+    private int PORT;
 
     private boolean isServerActive = false;
 
@@ -52,13 +53,47 @@ public class Server {
     private long serverTimer;
     private int skulls;
 
-    public void setServerActive(boolean serverActive) {
+    private void setServerActive(boolean serverActive) {
         isServerActive = serverActive;
     }
 
     //todo usato per test
     public LinkedHashMap<String, ClientConnection> getWaitingConnection() {
         return waitingConnection;
+    }
+
+    /**
+     * Prints the state of the server lobbies
+     */
+    private void serverState(){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(CLI.getBlue());
+        stringBuilder.append("Players in the lobby:\n");
+        for (Map.Entry<String, ClientConnection> entry : playerLobby.entrySet()){
+            stringBuilder.append(entry.getKey());
+            stringBuilder.append(" | ");
+        }
+        stringBuilder.append("\n");
+        stringBuilder.append("Players in the waiting room:\n");
+        for (Map.Entry<String, ClientConnection> entry : waitingConnection.entrySet()){
+            stringBuilder.append(entry.getKey());
+            stringBuilder.append(" | ");
+        }
+        stringBuilder.append("\n");
+        stringBuilder.append("Playing groups:\n");
+        for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingGroup.entrySet()){
+            stringBuilder.append(entry.getKey());
+            stringBuilder.append(" | ");
+        }
+        stringBuilder.append("\n");
+        stringBuilder.append("Games:\n");
+        for(Game game : games){
+            stringBuilder.append(game.getGameID());
+            stringBuilder.append(" | ");
+        }
+        stringBuilder.append(CLI.getResetString());
+        System.out.println(stringBuilder.toString());
     }
 
     /**
@@ -84,20 +119,21 @@ public class Server {
         } catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }
+        serverState();
     }
 
     /**
      *  Deregister a group of players from the server, called after a game has ended
      * @param id of the game.
      */
-    public synchronized void deregisterGroup(int id){
-        System.out.println("Deregistering a pool!");
+    private synchronized void deregisterGroup(int id){
+        System.out.println("Deregistering pool " + id + " !");
         ArrayList<ClientConnection> clientConnections = new ArrayList<>(playingGroup.get(id));
         for (ClientConnection clientConnection : clientConnections){
             deregisterConnection(clientConnection);
         }
         playingGroup.remove(id);
-
+        serverState();
     }
 
     /**
@@ -189,6 +225,7 @@ public class Server {
             JSONObject temp = (JSONObject)myArray.get(0);
             serverTimer = (long) temp.get("ServerTimer");
             skulls = ((Long) temp.get("Skulls")).intValue();
+            PORT = ((Long)temp.get("serverPort")).intValue();
 
         } catch (IOException  | ParseException e) {
             e.printStackTrace();
@@ -206,6 +243,7 @@ public class Server {
         waitingConnection.put(name, c);
         playerLobby.put(name, c);
         checkConnected();
+        serverState();
     }
 
     /**
@@ -271,7 +309,7 @@ public class Server {
             }
         }).start();
         isTimerOn = false;
-        //se finisce il timer faccio un createGame
+        //when the timer ends it creates a new game
     }
 
     /**
@@ -282,13 +320,20 @@ public class Server {
      */
     private void createGame(){
         System.out.println("Starting a game!");
-        if (!playingGroup.isEmpty()) {
-            for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingGroup.entrySet()) {
-                lastID = entry.getKey();
-            }
-            lastID ++;
-        } else {
+        if (playingGroup.isEmpty()) {
             lastID = 1;
+        } else {
+            boolean idFound = false;
+            for (int i = 1; !idFound; i++){
+                idFound = true;
+                lastID = i;
+                for (Map.Entry<Integer, ArrayList<ClientConnection>> entry : playingGroup.entrySet()) {
+                    if (i == entry.getKey()) {
+                        idFound = false;
+                        break;
+                    }
+                }
+            }
         }
         playingGroup.put(lastID, new ArrayList<>());
 
@@ -352,6 +397,7 @@ public class Server {
 
         waitingConnection.clear();
         System.out.println("Clearing the waiting room!");
+        serverState();
     }
 
     /**
@@ -366,7 +412,7 @@ public class Server {
                 currentGame = game;
                 deregisterGroup(id);
                 ArrayList<String> playerNames = new ArrayList<>();
-                for (Player player : game.getModel().getAllPlayers()){
+                for (Player player : game.getModel().getAllSpawnedPlayers()){
                     playerNames.add(player.getPlayerName());
                 }
                 for (String name : playerNames){
@@ -377,21 +423,18 @@ public class Server {
         if (currentGame != null){
             games.remove(currentGame);
         }
-        /*System.out.println("Updated list of games: " + games.toString());
-        System.out.println("PlayerLobby: " + playerLobby.toString());
-        System.out.println("PlayingPool: " + playingGroup.toString());
-        System.out.println("RemoteViews: " + playerViews.toString());*/
+        serverState();
     }
 
-    public void run(){
+    private void run(){
         setServerActive(true);
         System.out.println("The server is running!");
-        while(isServerActive){ //finchè il server è attivo cerco client che vogliono connettersi
+        while(isServerActive){
             try {
-                Socket newSocket = serverSocket.accept(); //trovo il client
+                Socket newSocket = serverSocket.accept();
                 SocketClientConnection socketConnection = new SocketClientConnection(newSocket, this);
                 System.out.println("Found a client!");
-                executor.submit(socketConnection); //istanzio la connessione su un nuovo thread
+                executor.submit(socketConnection);
             } catch (IOException e) {
                 System.out.println("Connection error!");
             }

@@ -8,7 +8,7 @@ import model.Ammo;
 public class AmmoCard extends Card{
 
     private final Ammo ammo;
-    private boolean hasPowerUp;
+    private final boolean hasPowerUp;
 
     /**
      * Constructor for the AmmoCard class

@@ -7,7 +7,6 @@ public class Score {
 
     private int score;
 
-    private int numKillShot;
 
     /**
      * Constructor for the Score class

@@ -29,7 +29,7 @@ public class Furnace extends WeaponAlternative {
             boolean flag;
             for(Square square : squaresCopy) {
                 flag = false;
-                for(Player player : getModel().getAllPlayers()){
+                for(Player player : getModel().getAllSpawnedPlayers()){
                     if(player.getPosition()==square) {
                         flag = true;
                         break;
@@ -64,7 +64,7 @@ public class Furnace extends WeaponAlternative {
      */
     @Override
     public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        ArrayList<Player> allPlayers = getModel().getAllPlayers();
+        ArrayList<Player> allPlayers = getModel().getAllSpawnedPlayers();
 
         for(Player target : allPlayers){
             if(target.getPosition()==getModel().getCurrent().getSelectedWeaponSquare()) {
@@ -74,7 +74,7 @@ public class Furnace extends WeaponAlternative {
         }
 
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
     /**
@@ -114,7 +114,7 @@ public class Furnace extends WeaponAlternative {
      */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        ArrayList<Player> allPlayers = getModel().getAllPlayers();
+        ArrayList<Player> allPlayers = getModel().getAllSpawnedPlayers();
         for(Player target : allPlayers){
             if(target.getPosition()==getModel().getCurrent().getSelectedWeaponSquare()) {
                 getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
@@ -122,7 +122,7 @@ public class Furnace extends WeaponAlternative {
             }
         }
 
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
 

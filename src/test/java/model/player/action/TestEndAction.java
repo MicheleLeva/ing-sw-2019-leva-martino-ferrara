@@ -44,7 +44,7 @@ public class TestEndAction {
 
         }
         catch(Exception e ){
-
+            e.printStackTrace();
         }
 
     }

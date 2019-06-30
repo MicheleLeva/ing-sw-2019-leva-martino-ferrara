@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class Reload extends Action {
     /**
-     * Performes the reload move
+     * Performs the reload move
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
-     * @throws NoReloadableWeaponsException
-     * @throws InsufficientAmmoException
+     * @throws NoReloadableWeaponsException when the player hasn't any reloadable weapons
+     * @throws InsufficientAmmoException when the player hasn't enough ammo to reload the weapon
      */
     @Override
     public void perform(Model model, PlayerColor playerColor) throws NoReloadableWeaponsException,InsufficientAmmoException {

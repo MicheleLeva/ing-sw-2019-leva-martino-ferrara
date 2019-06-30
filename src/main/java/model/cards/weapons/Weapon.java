@@ -173,7 +173,7 @@ public abstract class Weapon extends Card {
         }
 
         getModel().payFireMode(currentPlayer,weapon);
-        getModel().checkNextWeaponAction(weapon, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(weapon, currentPlayer);
     }
 
     /**
@@ -195,20 +195,20 @@ public abstract class Weapon extends Card {
         }
 
         getModel().payFireMode(currentPlayer,weapon);
-        getModel().checkNextWeaponAction(weapon, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(weapon, currentPlayer);
     }
 
     /**
      * Moves the current player to the previously selected weapon square
      * @param currentPlayer current player
-     * @param selectedTargets targets selected by the current player
+     *
      */
-    public void changePlayerPositionUse(Player currentPlayer, ArrayList<Player> selectedTargets){
+    public void changePlayerPositionUse(Player currentPlayer){
         currentPlayer.setPosition(getModel().getCurrent().getSelectedWeaponSquare());
 
         getModel().payFireMode(currentPlayer,this);
 
-        getModel().checkNextWeaponAction(this,currentPlayer,selectedTargets);
+        getModel().checkNextWeaponAction(this,currentPlayer);
     }
 
     /**

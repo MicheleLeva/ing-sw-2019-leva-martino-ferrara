@@ -3,7 +3,7 @@ package model.player.action;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -31,8 +31,8 @@ public class KeyMap {
 
     private static char usePowerUp;
 
-    private final static String defaultPath = "src/resources/keyMapping.json";
-    //Metodo che legge la classe da File JSON
+    private static final String DEFAULT_PATH = "src/resources/keyMapping.json";
+
     public KeyMap(String path){
         JSONParser parser = new JSONParser();
         try{
@@ -61,7 +61,7 @@ public class KeyMap {
     }
 
     public KeyMap(){
-        this(defaultPath);
+        this(DEFAULT_PATH);
     }
 
     /**

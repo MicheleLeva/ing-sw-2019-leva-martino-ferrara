@@ -10,7 +10,7 @@ public class UsePowerUp extends Action {
      * performs the use powerup move
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
-     * @throws NoPowerUpException
+     * @throws NoPowerUpException when the player has no powerUp cards
      */
     @Override
     public void perform(Model model , PlayerColor playerColor) throws NoPowerUpException {

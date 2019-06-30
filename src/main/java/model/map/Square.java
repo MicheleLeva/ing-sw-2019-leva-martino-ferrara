@@ -25,7 +25,7 @@ public class Square {
      * @param column column of the square in the current map
      */
     public Square(int row, int column){
-        sides = new HashMap<Direction,Square>();
+        sides = new HashMap<>();
         squareRow = row;
         squareColumn = column;
         weapons = new Weapon[3];
@@ -58,18 +58,6 @@ public class Square {
              return;
          weapons[i] = weapon;
 
-    }
-
-    /**
-     * checks if the square has an less than 3 weapons on it
-     */
-    public boolean hasEmptyWeaponSlot(){
-        for (int i = 0; i<3; i++){
-            if (weapons[i] == null){
-                    return true;
-            }
-        }
-        return false;
     }
 
     /**

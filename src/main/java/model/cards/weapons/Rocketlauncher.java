@@ -26,7 +26,7 @@ public class Rocketlauncher extends WeaponOptional2 {
     public void askOptionalRequirements2(Player currentPlayer) {
         if(getModel().getCurrent().getOptionalCounter2()== 0) {
             ArrayList<Player> availableTargets = new ArrayList<>();
-            for(Player player : getModel().getAllPlayers())
+            for(Player player : getModel().getAllSpawnedPlayers())
                 if(player.getPosition() == originalSquare && player!=currentPlayer)
                     availableTargets.add(player);
             if(!availableTargets.contains(getModel().getCurrent().getSelectedBaseTargets().get(0)))
@@ -69,7 +69,7 @@ public class Rocketlauncher extends WeaponOptional2 {
      */
     @Override
     public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        changePlayerPositionUse(currentPlayer,selectedTargets);
+        changePlayerPositionUse(currentPlayer);
     }
 
     /**
@@ -82,11 +82,9 @@ public class Rocketlauncher extends WeaponOptional2 {
             originalSquare = null;
             ArrayList<Player> sameSquarePlayers = getModel().getPlayersInSameSquare(currentPlayer);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
-            if(sameSquarePlayers.contains(currentPlayer))
-                sameSquarePlayers.remove(currentPlayer);
+            sameSquarePlayers.remove(currentPlayer);
             for(Player player : sameSquarePlayers)
-                if(availableTargets.contains(player))
-                    availableTargets.remove(player);
+                availableTargets.remove(player);
 
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
             return;
@@ -98,7 +96,7 @@ public class Rocketlauncher extends WeaponOptional2 {
                 return;
             }
             originalSquare = getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition();
-            ArrayList<Square> squares = getModel().runnableSquare(1, getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
+            ArrayList<Square> squares = Model.runnableSquare(1, getModel().getCurrent().getSelectedBaseTargets().get(0).getPosition());
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
@@ -118,7 +116,7 @@ public class Rocketlauncher extends WeaponOptional2 {
                 getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
                 getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
             }
-            getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+            getModel().checkNextWeaponAction(this, currentPlayer);
         }
         else{
             this.getWeaponTree().resetAction();

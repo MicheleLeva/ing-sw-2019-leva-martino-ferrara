@@ -1,7 +1,6 @@
 package view;
 
 import model.exchanges.events.*;
-import model.exchanges.events.Event;
 import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import utils.Observable;
@@ -58,13 +57,7 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
 
     }
 
-/*    @Override
-    public void update(AskReloadMessage askReloadMessage){
-        view.printMessage(askReloadMessage.getMessage());
 
-        Event event = new ReloadEndTurnEvent(view , view.inputChar());
-        notify(event);
-    }*/
 
     @Override
     public void update(WeaponReloadMessage weaponReloadMessage){
@@ -88,7 +81,6 @@ public class WeaponView extends Observable<Event> implements WeaponUpdate {
     }
     @Override
     public void update(WeaponPaymentMessage message) {
-        System.out.println("weaponpaymentmessage in weaponview");
         ArrayList<Integer> choices = new ArrayList<>();
         int counter = message.getSize();
         int selection = 1;

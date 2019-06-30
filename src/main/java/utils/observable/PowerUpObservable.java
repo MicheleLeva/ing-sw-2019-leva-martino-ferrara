@@ -9,7 +9,7 @@ import java.util.List;
  * Observable class used by the RemotePowerUpView
  */
 public class PowerUpObservable {
-    public final List<PowerUpObserver> listeners = new ArrayList();
+    public final List<PowerUpObserver> listeners = new ArrayList<>();
 
     public void register(PowerUpObserver observer){
         synchronized (listeners){

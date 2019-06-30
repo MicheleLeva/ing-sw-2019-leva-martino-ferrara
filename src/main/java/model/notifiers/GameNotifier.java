@@ -7,7 +7,6 @@ import model.player.PlayerColor;
 import utils.ViewObservable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameNotifier extends ViewObservable<PlayerMessage> {
 

@@ -49,7 +49,7 @@ public class Sledgehammer extends WeaponAlternative {
         }
 
         getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
     /**
@@ -78,5 +78,5 @@ public class Sledgehammer extends WeaponAlternative {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseMarks());
         }
 
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);    }
+        getModel().checkNextWeaponAction(this, currentPlayer);    }
 }

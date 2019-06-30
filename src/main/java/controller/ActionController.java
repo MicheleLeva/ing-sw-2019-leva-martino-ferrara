@@ -5,7 +5,6 @@ import model.Model;
 import model.adrenaline_exceptions.*;
 import model.exchanges.events.QuitAfkEvent;
 import model.exchanges.events.VoteMapEvent;
-import model.turn.TurnManager;
 import model.exchanges.events.ActionEvent;
 import model.player.action.Action;
 import model.player.action.ActionCreator;
@@ -53,9 +52,9 @@ public class ActionController extends Controller implements ActionObserver {
             return;
         }
 
-        //modifica tree in modo che ad ogni turno si possano fare usePowerUp e end
+        //change tree to use powerups and 'end' command every turn
 
-        Player player = getModel().getTurnManager().getPlayerFromColor(playerColor); //giocatore che ha mosso
+        Player player = getModel().getTurnManager().getPlayerFromColor(playerColor); //current player
 
         if(!player.getActionTree().checkAction(move)){
             String error = "You can't perform this move now.\n";
@@ -63,7 +62,7 @@ public class ActionController extends Controller implements ActionObserver {
             getModel().chooseAction(playerColor);
             return;
         }
-        //l'azione è valida e possibile
+        //the valid action is possible
         Action action = ActionCreator.createAction(move);
         try{
             action.perform(getModel() , playerColor);
@@ -79,6 +78,7 @@ public class ActionController extends Controller implements ActionObserver {
             getModel().updateAction();
         }
         catch(Exception e){
+            e.printStackTrace();
         }
     }
 

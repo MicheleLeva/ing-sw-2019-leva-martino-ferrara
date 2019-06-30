@@ -33,9 +33,4 @@ public abstract class Event {
         }
         return stringBuilder.toString();
     }
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

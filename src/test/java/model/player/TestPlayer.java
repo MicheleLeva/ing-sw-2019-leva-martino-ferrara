@@ -13,7 +13,7 @@ public class TestPlayer {
 
     @Before
     public void initPlayerTest(){
-        playerTest = new Player("giocatore", YELLOW);
+        playerTest = new Player("player", YELLOW);
 
     }
 
@@ -26,7 +26,7 @@ public class TestPlayer {
         assertNotNull(playerTest.getPlayerBoard());
         assertNotNull(playerTest.getResources());
         assertEquals(PlayerColor.YELLOW, playerTest.getPlayerColor());
-        assertEquals("giocatore", playerTest.getPlayerName());
+        assertEquals("player", playerTest.getPlayerName());
     }
 
     /**

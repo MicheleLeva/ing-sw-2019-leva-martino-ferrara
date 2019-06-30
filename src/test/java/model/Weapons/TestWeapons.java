@@ -454,7 +454,6 @@ public class TestWeapons {
         hellion.askBaseRequirements(player1);
         ArrayList<Player> selectedTargets = new ArrayList<>();
         player3.setPosition(map.getMap()[1][1]);
-        selectedTargets.clear();
         selectedTargets.add(player3);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         //hellion.askBaseRequirements(player1);
@@ -593,7 +592,6 @@ public class TestWeapons {
         assertEquals(1,model.getCurrent().getBaseCounter());
 
         model.getCurrent().incrementBaseCounter();
-        selectedTargets.clear();
         selectedTargets.add(player2);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         selectedTargets.add(player2);
@@ -629,7 +627,6 @@ public class TestWeapons {
         model.getCurrent().incrementBaseCounter();
         sledgehammer.askBaseRequirements(player1);
         model.getCurrent().incrementBaseCounter();
-        selectedTargets.clear();
         selectedTargets.add(player2);
         model.getCurrent().setSelectedBaseTargets(selectedTargets);
         selectedTargets.add(player2);
@@ -656,8 +653,6 @@ public class TestWeapons {
         model.getCurrent().setSelectedAlternativeTargets(selectedTargets);
         sledgehammer.useAlternativeFireMode(player1,selectedTargets);
         sledgehammer.getWeaponTree().endAction();
-        sledgehammer.getWeaponTree().getEffectName();
-        sledgehammer.getWeaponTree().getType();
     }
 
     /**

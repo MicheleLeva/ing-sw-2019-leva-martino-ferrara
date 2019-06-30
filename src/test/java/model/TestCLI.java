@@ -1,13 +1,10 @@
 package model;
 import model.cards.AmmoColor;
 import model.map.SquareColor;
-import model.player.Player;
 import model.player.PlayerColor;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 public class TestCLI {
@@ -64,7 +61,7 @@ public class TestCLI {
             result = CLI.buildCLIMap("src/resources/map1.txt");
         }
         catch(IOException e){
-
+            e.printStackTrace();
         }
 
         assertNotNull(result);

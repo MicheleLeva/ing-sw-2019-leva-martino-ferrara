@@ -91,6 +91,6 @@ public class TestGame {
     @Test
     public void testGetters(){
         assertNotNull(gameTest.getModel());
-        assertNotNull(gameTest.getGameID());
+        assertNotEquals(0, gameTest.getGameID());
     }
 }

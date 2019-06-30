@@ -24,16 +24,15 @@ public class Vortexcannon extends WeaponOptional1 {
         if (getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Square> availableSquares = getModel().getVisibleSquares(currentPlayer);
             ArrayList<Square> chosenSquares = new ArrayList<>();
-            if (availableSquares.contains(currentPlayer.getPosition()))
-                availableSquares.remove(currentPlayer.getPosition());
+            availableSquares.remove(currentPlayer.getPosition());
             for (Square square : availableSquares) {
-                for (Player player : getModel().getAllPlayers())
+                for (Player player : getModel().getAllSpawnedPlayers())
                     if (player != currentPlayer && Model.runnableSquare(1, square).contains(player.getPosition()) &&
                     !chosenSquares.contains(square))
                         chosenSquares.add(square);
 
             }
-            //check squares vuoti
+            //check empty squares
             if(chosenSquares.isEmpty()){
                 getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
                         currentPlayer.getPlayerColor());
@@ -71,10 +70,8 @@ public class Vortexcannon extends WeaponOptional1 {
         if (getModel().getCurrent().getOptionalCounter1() == 0) {
             Square square = getModel().getCurrent().getSelectedWeaponSquare();
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1, currentPlayer, square);
-            if(availableTargets.contains(getModel().getCurrent().getSelectedBaseTargets().get(0)))
-                availableTargets.remove(getModel().getCurrent().getSelectedBaseTargets().get(0));
-            if(availableTargets.contains(currentPlayer))
-                availableTargets.remove(currentPlayer);
+            availableTargets.remove(getModel().getCurrent().getSelectedBaseTargets().get(0));
+            availableTargets.remove(currentPlayer);
             getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
             getModel().getCurrent().incrementOptionalCounter1();
             getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getOptionalTargetsNumber1());
@@ -96,7 +93,7 @@ public class Vortexcannon extends WeaponOptional1 {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseMarks());
         }
 
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);
+        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
     /**

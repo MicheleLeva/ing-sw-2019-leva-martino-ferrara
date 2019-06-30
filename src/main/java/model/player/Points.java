@@ -4,7 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,8 +94,8 @@ public class Points {
      */
     public String printPoints(){
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < points.size(); i++){
-            stringBuilder.append(points.get(i));
+        for (Integer point : points) {
+            stringBuilder.append(point);
             stringBuilder.append(" ");
         }
 

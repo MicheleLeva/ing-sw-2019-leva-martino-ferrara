@@ -3,12 +3,9 @@ package model;
 import model.player.Player;
 import model.player.PlayerColor;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
-import javax.swing.*;
-import javax.swing.text.ParagraphView;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -55,7 +52,7 @@ public class TestKillShotTrack {
     @Test
     public void testRemove(){
         KillShotCell[] KSTrack = killShotTrackTest.getKillShotTrack();
-        killShotTrackTest.removeSkull(PlayerColor.YELLOW,false);
+        killShotTrackTest.removeSkull(PlayerColor.YELLOW);
         assertFalse(KSTrack[0].isSkull());
         assertEquals(PlayerColor.YELLOW, KSTrack[0].getTokenColor());
         assertEquals(1, KSTrack[0].getTokenNumber());

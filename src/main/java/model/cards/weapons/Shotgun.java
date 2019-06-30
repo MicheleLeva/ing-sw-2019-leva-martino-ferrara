@@ -23,14 +23,12 @@ public class Shotgun extends  WeaponAlternative{
         if(getModel().getCurrent().getAlternativeCounter() == 0) {
             ArrayList<Player> availableTargets = new ArrayList<>();
             ArrayList<Square> squares = getModel().getSquaresInCardinal1(currentPlayer);
-            if(squares.contains(currentPlayer.getPosition()))
-                squares.remove(currentPlayer.getPosition());
-            for(Player player : getModel().getAllPlayers()){
+            squares.remove(currentPlayer.getPosition());
+            for(Player player : getModel().getAllSpawnedPlayers()){
                 if(squares.contains(player.getPosition()))
                     availableTargets.add(player);
             }
-            if(availableTargets.contains(currentPlayer))
-                availableTargets.remove(currentPlayer);
+            availableTargets.remove(currentPlayer);
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
 
         }
@@ -79,5 +77,5 @@ public class Shotgun extends  WeaponAlternative{
             getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseMarks());
         }
-        getModel().checkNextWeaponAction(this, currentPlayer, selectedTargets);    }
+        getModel().checkNextWeaponAction(this, currentPlayer);    }
 }

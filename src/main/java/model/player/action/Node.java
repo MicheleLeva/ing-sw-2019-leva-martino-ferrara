@@ -2,12 +2,12 @@ package model.player.action;
 
 import java.util.ArrayList;
 import java.util.List;
-//Classe nodo, usata per la costruzione dell'albero delle azioni
+
 public class Node<T> {
 
-    private T data = null;
+    private T data;
 
-    private List<Node<T>> children = new ArrayList();
+    private List<Node<T>> children = new ArrayList<>();
 
     private Node<T> parent = null;
 

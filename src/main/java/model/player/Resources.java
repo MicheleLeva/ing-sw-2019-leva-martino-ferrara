@@ -1,7 +1,6 @@
 package model.player;
 
 import model.Ammo;
-import model.cards.AmmoColor;
 import model.cards.powerups.PowerUp;
 import model.cards.weapons.Weapon;
 
@@ -14,7 +13,6 @@ public class Resources {
     private Ammo availableAmmo;
     private final ArrayList<Weapon> weapon;
     private final ArrayList<PowerUp> powerUp;
-    private final ArrayList<Weapon> reloadableWeapon;
 
     /**
      * Constructor for the Resources class
@@ -23,7 +21,6 @@ public class Resources {
         this.availableAmmo = new Ammo(1,1,1);
         weapon = new ArrayList<>();
         powerUp = new ArrayList<>();
-        reloadableWeapon = new ArrayList<>();
     }
 
 
@@ -38,7 +35,8 @@ public class Resources {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < powerUp.size(); i++){
-            stringBuilder.append(i+1 +". ");
+            stringBuilder.append(i+1);
+            stringBuilder.append(". ");
             stringBuilder.append(powerUp.get(i).toString());
             stringBuilder.append(" ");
         }
@@ -68,9 +66,9 @@ public class Resources {
      */
     public ArrayList<Weapon> getReloadedWeapon(){
         ArrayList<Weapon> reloadedWeapon = new ArrayList<>();
-        for (int i = 0; i< weapon.size(); i++){
-            if (weapon.get(i).isReloaded()){
-                reloadedWeapon.add(weapon.get(i));
+        for (Weapon value : weapon) {
+            if (value.isReloaded()) {
+                reloadedWeapon.add(value);
             }
         }
 
@@ -115,14 +113,13 @@ public class Resources {
     }
 
     /**
-     * Returns all the cubes a player has added with all the powerUps a player has
-     * @return
+     * @return all the cubes a player has added with all the powerUps a player has
      */
     public Ammo getAllAmmo(){
 
         Ammo allAmmo = new Ammo(availableAmmo.getRed(),availableAmmo.getBlue(),availableAmmo.getYellow());
-        for (int i = 0; i < powerUp.size(); i++){
-            allAmmo.addAmmo(powerUp.get(i).getAmmo());
+        for (PowerUp up : powerUp) {
+            allAmmo.addAmmo(up.getAmmo());
         }
         return allAmmo;
     }
@@ -163,9 +160,9 @@ public class Resources {
      */
     public ArrayList<Weapon> getReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
-        for (int i = 0; i< weapon.size(); i++){
-            if (!weapon.get(i).isReloaded()){
-                reloadableWeapon.add(weapon.get(i));
+        for (Weapon value : weapon) {
+            if (!value.isReloaded()) {
+                reloadableWeapon.add(value);
             }
         }
 
@@ -215,9 +212,6 @@ public class Resources {
     }
 
     public boolean hasOneCube(){
-        if(availableAmmo.getRed()>0 || availableAmmo.getBlue()>0 || availableAmmo.getYellow()>0)
-            return true;
-        else
-            return false;
+        return availableAmmo.getRed() > 0 || availableAmmo.getBlue() > 0 || availableAmmo.getYellow() > 0;
     }
 }

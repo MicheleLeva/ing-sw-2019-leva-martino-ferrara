@@ -44,10 +44,10 @@ public class TestUsePowerUp {
 
         try{
             usePowerUp.perform(modelTest,playerTest.getPlayerColor());
-            assertTrue(!playerTest.getResources().getPowerUp().isEmpty());
+            assertFalse(playerTest.getResources().getPowerUp().isEmpty());
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
     }
 }

@@ -39,10 +39,6 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 WeaponSelectionEvent weaponSelectionEvent = new WeaponSelectionEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(weaponSelectionEvent));
                 break;
-            /*case "ReloadEndTurnEvent":
-                ReloadEndTurnEvent reloadEndTurnEvent = new ReloadEndTurnEvent(view, inputs[1].charAt(0));
-                listeners.forEach(l -> l.update(reloadEndTurnEvent));
-                break;*/
             case "WeaponReloadEvent":
                 WeaponReloadEvent weaponReloadEvent = new WeaponReloadEvent(view, Integer.parseInt(inputs[1]));
                 listeners.forEach(l -> l.update(weaponReloadEvent));
@@ -52,7 +48,6 @@ public class RemoteWeaponView extends WeaponObservable implements Observer<Playe
                 listeners.forEach(l -> l.update(optionalFireModesEvent));
                 break;
             case "TargetsSelectionEvent":
-                System.out.println("targetsselectionevent in weaponviewremote");
                 ArrayList<Integer> selectedTargets = new ArrayList<>();
                 for (int i = 1; i<= inputs.length-1; i++){
                     selectedTargets.add(Integer.parseInt(inputs[i]));
