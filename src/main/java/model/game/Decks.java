@@ -18,7 +18,9 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class Decks {
-
+    /**
+     * Decks class. It models all the game's decks.
+     */
     private ArrayList<Weapon> weaponsDeck;
     private ArrayList<PowerUp> powerUpDeck;
     private ArrayList<AmmoCard> ammoCardDeck;
@@ -27,6 +29,10 @@ public class Decks {
     private final Model model;
     private final Random rand = new Random();
 
+    /**
+     * Constructor of the class
+     * @param model the game's model
+     */
     public Decks(Model model) {
         this.model = model;
 
@@ -44,7 +50,8 @@ public class Decks {
     }
 
     /**
-     * returns a random weapon from the weapon deck
+     * Returns a random weapon from the weapon deck
+     * @return a random weapon from the weapon deck. Returns null if the weapon deck is empty.
      */
     public Weapon drawWeapon() {
         if (!weaponsDeck.isEmpty())
@@ -55,7 +62,8 @@ public class Decks {
     }
 
     /**
-     * returns a random powerup from the powerup deck
+     * Returns a random powerup from the powerup deck
+     * @return a random powerup from the powerup deck
      */
     public PowerUp drawPowerUp() {
 
@@ -68,7 +76,8 @@ public class Decks {
     }
 
     /**
-     * returns a random Ammo Card from the Ammo Card deck
+     * Returns a random Ammo Card from the Ammo Card deck
+     * @return a random Ammo Card from the Ammo Card deck
      */
     public AmmoCard drawAmmoCard() {
 
@@ -81,35 +90,40 @@ public class Decks {
     }
 
     /**
-     * returns an arrayList containing the weapons in weaponDeck
+     * Returns an arrayList containing the weapons in weaponDeck
+     * @return an arrayList containing the weapons in weaponDeck
      */
     public ArrayList<Weapon> getWeaponsDeck() {
         return weaponsDeck;
 
     }
     /**
-     * returns an arrayList containing the powerUps in powerUp deck
+     * Returns an arrayList containing the powerUps in powerUp deck
+     * @return an arrayList containing the powerUps in powerUp deck
      */
     public ArrayList<PowerUp> getPowerUpDeck() {
         return powerUpDeck;
 
     }
     /**
-     * returns an arrayList containing the Ammo cards in AmmoCard deck
+     * Returns an arrayList containing the Ammo cards in AmmoCard deck
+     * @return an arrayList containing the Ammo cards in AmmoCard deck
      */
     public ArrayList<AmmoCard> getAmmoCardDeck() {
         return ammoCardDeck;
 
     }
     /**
-     * returns an arrayList containing the discarded powerUps
+     * Returns an arrayList containing the discarded powerUps
+     * @return an arrayList containing the discarded powerUps
      */
     public ArrayList<PowerUp> getDiscardedPowerUpDeck() {
         return discardedPowerUpDeck;
 
     }
     /**
-     * returns an arrayList containing the discarded Ammo cards
+     * Returns an arrayList containing the discarded Ammo cards
+     * @return an arrayList containing the discarded Ammo cards
      */
     public ArrayList<AmmoCard> getDiscardedAmmoCardDeck() {
         return discardedAmmoCardDeck;

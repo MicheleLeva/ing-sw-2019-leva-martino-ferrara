@@ -24,7 +24,9 @@ import model.turn.TurnCurrent;
 import model.turn.TurnManager;
 
 public class Model {
-
+    /**
+     * Model Class. It represents the current game's state.
+     */
     private final HashMap<PlayerColor, Player> players = new HashMap<>();
 
     private GameBoard gameBoard;
