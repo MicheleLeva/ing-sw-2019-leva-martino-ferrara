@@ -130,7 +130,8 @@ public class ScoreManager {
     }
 
     /**
-     * Established the winner(s) of the game and notify to the players
+     * Established the winner(s) of the game and notify to the players.
+     * @return the message with the winners.
      */
     public String getWinner() {
         int maxScore;

@@ -59,7 +59,8 @@ public class DamageCounter {
 
     /**
      * Returns the damage received from a player with a specific color
-     * @return  the damage received from a player with a specific color
+     * @param playerColor of the given player.
+     * @return the damage received from a player with a specific color
      */
     public int getDamageFromColor(PlayerColor playerColor){
         int result = 0;

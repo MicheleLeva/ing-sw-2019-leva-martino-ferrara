@@ -189,6 +189,7 @@ public class Player {
 
     /**
      * Returns the name of the player colored with the player's color
+     * @return the name of the player colored with the player's color
      */
     public String getColoredName(){
         StringBuilder stringBuilder = new StringBuilder();
@@ -200,7 +201,9 @@ public class Player {
     }
 
     /**
-     *Returns the Position, the damaged received, the marks received, the available points ad all the unloaded
+     * Returns the Position, the damaged received, the marks received, the available points ad all the unloaded
+     * weapons of the player
+     * @return the Position, the damaged received, the marks received, the available points ad all the unloaded
      * weapons of the player
      */
     public String printPlayerInfo(){

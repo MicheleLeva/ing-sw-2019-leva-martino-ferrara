@@ -69,7 +69,11 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
 
 
     /**
-     *Sends a list of the powerUps to pay the fire mode with to the current player's view
+     * Sends a list of the weapons to reload and available ammo and powerUp to the current player's view.
+     * @param playerColor of the player that has to pay.
+     * @param weapon list of reloadable weapons.
+     * @param ammo of the player.
+     * @param powerUp of the player.
      */
     public void requestWeaponReload(PlayerColor playerColor , String weapon , String ammo , String powerUp){
         String message;
@@ -80,8 +84,11 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage playerMessage = new WeaponReloadMessage(message);
         notify(playerMessage, playerColor);
     }
+
     /**
-     *Sends a list of the powerUps to pay the fire mode with to the current player's view
+     * Sends a list of the powerUps to pay the fire mode with to the current player's view
+     * @param playerColor of the player.
+     * @param powerUps to pay the fire mode.
      */
     public void askWeaponPayment(PlayerColor playerColor, ArrayList<PowerUp> powerUps){
         int size = powerUps.size();
@@ -99,8 +106,11 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
         PlayerMessage playerMessage = new WeaponPaymentMessage(message.toString() ,size);
         notify(playerMessage, playerColor);
     }
+
     /**
-     *Sends a list of the powerUps to pay the reload cost with to the current player's view
+     * Sends a list of the powerUps to pay the reload cost with to the current player's view.
+     * @param playerColor of the player.
+     * @param powerUps to pay the reload.
      */
     public void askReloadPayment(PlayerColor playerColor, ArrayList<PowerUp> powerUps){
         int size = powerUps.size();
@@ -120,7 +130,9 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
     }
 
     /**
-     *Sends a list of the powerUps to pay the pick up cost with to the current player's view
+     * Sends a list of the powerUps to pay the pick up cost with to the current player's view.
+     * @param playerColor of the player.
+     * @param powerUps to pay the pick up of the weapon.
      */
     public void askPickUpPayment(PlayerColor playerColor, ArrayList<PowerUp> powerUps){
         int size = powerUps.size();

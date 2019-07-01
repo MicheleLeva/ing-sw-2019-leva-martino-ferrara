@@ -35,7 +35,8 @@ public class MarkCounter {
     }
 
     /**
-     * Removes all the marks received from a specific player
+     * Removes all the marks received from a specific player.
+     * @param color of the player.
      */
     public void clearMarks(PlayerColor color){
         markList.put(color, 0);
@@ -50,8 +51,9 @@ public class MarkCounter {
     }
 
     /**
-     * Returns the number of marks received by a player with a specific player color
-     * @return the number of marks received by a player with a specific player color
+     * Returns the number of marks received by a player with a specific player color.
+     * @param playerColor of the player that placed the marks.
+     * @return the number of marks received by a player with a specific player color.
      */
     public int getMarkFromColor(PlayerColor playerColor){
         return markList.getOrDefault(playerColor, 0);

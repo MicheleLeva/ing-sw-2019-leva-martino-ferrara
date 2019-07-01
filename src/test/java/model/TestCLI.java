@@ -93,8 +93,10 @@ public class TestCLI {
 
         assertNotNull(result);
     }
+
     /**
      * Test buildCLIMap
+     * @throws IOException if the input path is not correctly recognized.
      */
     @Test (expected =  java.io.IOException.class)
     public void testBuildCLIMap() throws IOException{
