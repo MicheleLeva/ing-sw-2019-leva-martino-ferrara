@@ -20,6 +20,10 @@ public class TestEndAction {
         modelTest = new Model(playerList,8);
         endAction = new EndAction();
     }
+
+    /**
+     * Tests the correctness of the end action
+     */
     @Test
     public void testPerform(){
         try{

@@ -67,6 +67,10 @@ public class TestActionTree {
         actionTree.updateAction();
         assertEquals(actionTree.getPerformedAction(), performedAction + 1);
     }
+
+    /**
+     * Tests setters
+     */
     @Test
     public void testSetMoveEnded(){
         actionTree.setMoveEnded(true);
@@ -74,6 +78,7 @@ public class TestActionTree {
         actionTree.setMoveEnded(false);
         assertFalse(actionTree.isMoveEnded());
     }
+
     @Test
     public void testIsMoveEnded(){
         assertFalse(actionTree.isMoveEnded());
