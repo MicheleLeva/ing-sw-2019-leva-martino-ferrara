@@ -10,6 +10,8 @@ import utils.ViewObservable;
 public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
     /**
      * Sends the list of powerUps to choose from to the players' views
+     * @param playerColor color of the current player
+     * @param availablePowerUp list of powerUps the player can choose from
      */
     public void choosePowerUp(PlayerColor playerColor , String availablePowerUp){
         String message = "Choose a PowerUp: \n";
@@ -21,6 +23,7 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
     }
     /**
      * Sends the list of squares to choose from for the teleporter to the current player view
+     * @param playerColor color of the current player
      */
     public void chooseTeleporterSquare(PlayerColor playerColor){
         String message = "Choose a square to teleport to:\n";
@@ -30,6 +33,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
     }
     /**
      * Sends the list of the opponents to choose from for the Newton PowerUp to the current player view
+     * @param playerColor color of the current player
+     * @param opponentList list of opponents the current player can use the Newton on
      */
     public void chooseNewtonOpponent(PlayerColor playerColor , String opponentList){
         String message = "Choose an opponent: \n";
@@ -41,6 +46,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
 
     /**
      * Sends the list of the squares to choose from for the Newton powerUp to the current player view
+     * @param playerColor color of the current player
+     * @param squareList list of squares the current player can choose from and move the selected opponent to
      */
     public void chooseNewtonSquare(PlayerColor playerColor , String squareList){
         String message = "Choose a square: \n";
@@ -52,6 +59,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
 
     /**
      * Asks the current player if he wants to use the targeting scope
+     * @param playerColor color of the current player
+     * @param powerUp targeting scope the current player can choose to use
      */
     public void askTargetingScope(PlayerColor playerColor,PowerUp powerUp){
         String message = "Want to use this "+powerUp.toString()+" ? Y/N";
@@ -61,6 +70,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
 
     /**
      * Asks the current player which cube to pay the scope with
+     * @param playerColor color of the current player
+     * @param message list of cubes the player can pay with
      */
     public void askScopePayment(PlayerColor playerColor,String message){
         PlayerMessage playerMessage = new ScopePaymentMessage(message);
@@ -69,6 +80,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
 
     /**
      * Sends the list of targets to choose from for the targeting scope to the current player view
+     * @param playerColor color of the current player
+     * @param message list of targets the current player can hit with the Targeting scope
      */
     public void targetingScopeTargets(PlayerColor playerColor, String message){
         PlayerMessage playerMessage = new TargetingScopeSelectionMessage(message);
@@ -77,6 +90,9 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
 
     /**
      * Asks the damaged players if they want to use the tagback grenade
+     * @param player current player that damaged the opponent
+     * @param opponent player damaged by current player in the game
+     * @param powerUps list of tagBack grenades the opponent can choose to use
      */
     public void askTagbackGrenade(Player player, Player opponent, String powerUps){
         String message = opponent.getColoredName() + " hit you. Do you want to use a TagbackGrenade on them?\n";
@@ -89,6 +105,8 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
 
     /**
      * Sends the list of powerUps and asks the current player to discard one of those
+     * @param playerColor color of the current player
+     * @param powerUps list of powerUps the player can discard
      */
     public void requestPowerUpDiscard(PlayerColor playerColor, String powerUps){
         String message = "Choose powerUp to discard: ";

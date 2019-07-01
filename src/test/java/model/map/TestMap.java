@@ -30,6 +30,8 @@ public class TestMap {
     /**
      * Tests that all the squares on the ma are in the correct position, of the correct color and of the correct
      * type( spawn or not spawn )
+     * @throws IOException Signals that an I/O exception of some sort has occurred
+     * @throws ParseException Signals that an error has been reached unexpectedly while parsing the json
      */
    @Test
     public void testMapLayout() throws IOException, ParseException {

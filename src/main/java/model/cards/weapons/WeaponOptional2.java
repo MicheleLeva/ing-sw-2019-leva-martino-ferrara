@@ -16,6 +16,24 @@ public abstract class WeaponOptional2 extends WeaponOptional1 {
     protected int optionalTargetsNumber2;
     protected Ammo optionalCost2;
 
+    /**
+     * Constructor for all weapons with two optional fire modes
+     * @param name name of the weapon
+     * @param pickUpCost the cost to pay to pickup the weapon
+     * @param baseCost the cost to pay to reload the weapon
+     * @param optionalCost1 the cost to pay to use the first optional fire mode
+     * @param optionalCost2 the cost to pay to use the second optional fire mode
+     * @param baseDamage amount of damage for the base fire mode
+     * @param optionalDamage1 amount of damage for the first optional fire mode
+     * @param optionalDamage2 amount of damage for the second optional fire mode
+     * @param baseMarks number of marks for the base fire mode
+     * @param optionalMarks1 number of marks for the first optional fire mode
+     * @param optionalMarks2 number of marks for the second optional fire mode
+     * @param baseTargetsNumber number of available targets for the base fire mode
+     * @param optionalTargetsNumber1 number of available targets for the first optional fire mode
+     * @param optionalTargetsNumber2 number of available targets for the second optional fire mode
+     * @param model instance if the Model class
+     */
     public WeaponOptional2(String name, Ammo pickUpCost,Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage,
                            int optionalDamage1, int optionalDamage2, int baseMarks, int optionalMarks1, int optionalMarks2,
                            int baseTargetsNumber, int optionalTargetsNumber1, int optionalTargetsNumber2,Model model) {

@@ -5,7 +5,9 @@ import model.game.Model;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the Thor weapon
+ */
 public class Thor extends WeaponOptional2 {
 
     public Thor(String name,Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1,Ammo optionalCost2, int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,

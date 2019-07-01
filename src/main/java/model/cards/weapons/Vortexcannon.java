@@ -6,7 +6,9 @@ import model.map.Square;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the Vortex Cannon weapon
+ */
 public class Vortexcannon extends WeaponOptional1 {
     public Vortexcannon(String name, Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,
                         int optionalMarks1, int baseTargetsNumber, int optionalTargetsNumber1, Model model) {

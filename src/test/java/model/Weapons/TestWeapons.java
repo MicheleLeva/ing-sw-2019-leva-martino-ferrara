@@ -12,6 +12,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+/**
+ * Tests that all the weapons in the weapon cards Deck execute without interruption
+ */
 public class TestWeapons {
     private Ammo pickUpCost = new Ammo(0,0,1);
     private Ammo baseCost = new Ammo(0,1,0);

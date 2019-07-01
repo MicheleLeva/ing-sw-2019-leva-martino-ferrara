@@ -6,7 +6,9 @@ import model.map.Square;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the Grenade Launcher weapon
+ */
 public class Grenadelauncher extends WeaponOptional1 {
 
     public Grenadelauncher(String name, Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,

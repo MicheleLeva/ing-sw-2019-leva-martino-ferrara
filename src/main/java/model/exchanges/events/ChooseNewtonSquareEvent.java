@@ -2,6 +2,10 @@ package model.exchanges.events;
 
 import view.View;
 
+/**
+ * Event sent by the PowerUp View and received from the PowerUp Controller to choose the square to
+ * move the chosen Newton target to
+ */
 public class ChooseNewtonSquareEvent extends Event {
     private final int input;
     public ChooseNewtonSquareEvent(View view , int input){

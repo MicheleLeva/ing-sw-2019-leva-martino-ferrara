@@ -5,7 +5,9 @@ import model.game.Model;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the Railgun weapon
+ */
 public class RailGun extends WeaponAlternative {
 
     public RailGun(String name, Ammo pickUpCost,Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,

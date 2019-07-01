@@ -1,6 +1,7 @@
 package view;
 
 import model.exchanges.events.*;
+import model.exchanges.events.Event;
 import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import utils.Observable;

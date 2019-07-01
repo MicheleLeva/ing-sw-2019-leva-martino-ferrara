@@ -2,6 +2,10 @@ package model.exchanges.events;
 
 import view.View;
 
+/**
+ * Event sent by the PowerUp View and received from the PowerUp Controller to choose whether to use
+ * the Targeting scope or not
+ */
 public class TargetingScopeEvent extends Event {
     private char choice;
     public TargetingScopeEvent(View view,char choice) {

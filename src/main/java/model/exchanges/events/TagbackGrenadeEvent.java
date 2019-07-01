@@ -2,6 +2,10 @@ package model.exchanges.events;
 
 import view.View;
 
+/**
+ * Event sent by the PowerUp View and received from the PowerUp Controller to choose which one of the
+ * TagBack Grenades in the damaged player's hand to use
+ */
 public class TagbackGrenadeEvent extends Event {
 
     private int input;

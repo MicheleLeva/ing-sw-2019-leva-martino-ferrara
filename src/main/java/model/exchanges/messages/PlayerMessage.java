@@ -1,5 +1,8 @@
 package model.exchanges.messages;
 
+/**
+ * Abstract class extended by all other messages
+ */
 public abstract class PlayerMessage {
     private final String message;
     private String name = getClass().getSimpleName();

@@ -74,6 +74,7 @@ public class Square {
 
     /**
      * Checks if the square has an no ammo card on it
+     * @return true if the current square has no ammo card on it
      */
     public boolean hasEmptyAmmoSlot(){
         return (ammo == null);
@@ -146,7 +147,7 @@ public class Square {
 
     /**
      * Checks if the square has neither ammo nor weapons on it
-     * @return true is the square is empty, false otherwise
+     * @return true if the square is empty, false otherwise
      */
     public boolean isEmpty(){
         if(isSpawn){

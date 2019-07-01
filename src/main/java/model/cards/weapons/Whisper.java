@@ -5,7 +5,9 @@ import model.game.Model;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the Whisper weapon
+ */
 public class Whisper extends Weapon {
     public Whisper(String name, Ammo pickUpCost,Ammo baseCost, int baseDamage, int baseMarks,
                       int baseTargetsNumber, Model model){

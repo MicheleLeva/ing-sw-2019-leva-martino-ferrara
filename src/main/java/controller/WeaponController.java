@@ -26,6 +26,7 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     /**
      * Constructor for the WeaponController class
+     * @param model instance of Model class
      */
     public WeaponController(Model model){
         super(model);
@@ -475,7 +476,11 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Support method that saves the selected targets for the base fire mode
+     * Support weapon that saves the selected targets for the base fire mode
+     * @param event event dor target selection received by the player's Weapon View
+     * @param weapon selected weapon
+     * @param current instance of Current class
+     * @param currentPlayer current player in the game
      */
     public void checkBaseTargets(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -504,7 +509,11 @@ public class WeaponController extends Controller implements WeaponObserver {
         weapon.askBaseRequirements(currentPlayer);
     }
     /**
-     * Support method that saves the selected targets for the alternative fire mode
+     * Support weapon that saves the selected targets for the alternative fire mode
+     * @param event event dor target selection received by the player's Weapon View
+     * @param weapon selected weapon
+     * @param current instance of Current class
+     * @param currentPlayer current player in the game
      */
     public void checkAlternativeTargets(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer) {
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -530,7 +539,11 @@ public class WeaponController extends Controller implements WeaponObserver {
         ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
     }
     /**
-     * Support method that saves the selected targets for the first optional fire mode
+     * Support weapon that saves the selected targets for the first optional fire mode
+     * @param event event dor target selection received by the player's Weapon View
+     * @param weapon selected weapon
+     * @param current instance of Current class
+     * @param currentPlayer current player in the game
      */
     public void checkOptionalTargets1(TargetsSelectionEvent event, Weapon weapon, Current current, Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -559,8 +572,13 @@ public class WeaponController extends Controller implements WeaponObserver {
         ((WeaponOptional1)weapon).askOptionalRequirements1(currentPlayer);
 
     }
+
     /**
-     * Support method that saves the selected targets for the second optional fire mode
+     * Support weapon that saves the selected targets for the second optional fire mode
+     * @param event event dor target selection received by the player's Weapon View
+     * @param weapon selected weapon
+     * @param current instance of Current class
+     * @param currentPlayer current player in the game
      */
     public void checkOptionalTargets2(TargetsSelectionEvent event, Weapon weapon, Current current, Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();

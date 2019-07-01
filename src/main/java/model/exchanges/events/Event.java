@@ -5,6 +5,9 @@ import view.View;
 
 import java.util.List;
 
+/**
+ * Abstract class extended by all concrete events
+ */
 public abstract class Event {
     private final PlayerColor playerColor;
 
@@ -24,9 +27,9 @@ public abstract class Event {
     }
 
     /**
-     *
-     * @param array
-     * @return
+     * Turns the given list of integers into a string
+     * @param array list of integers
+     * @return the String created from the given list of integers
      */
     public String arrayToString(List<Integer> array){
         StringBuilder stringBuilder = new StringBuilder();

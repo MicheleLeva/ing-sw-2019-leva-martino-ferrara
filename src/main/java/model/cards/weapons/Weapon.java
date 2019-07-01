@@ -44,7 +44,14 @@ public abstract class Weapon extends Card {
     }
 
     /**
-     *Constructor for all weapons with no additional fire mode
+     * Constructor for all weapons with no additional fire mode
+     * @param name name of the weapon
+     * @param pickUpCost the cost to pay to pickup the weapon
+     * @param baseCost the cost to pay to reload the weapon
+     * @param baseDamage amount of damage for the base fire mode
+     * @param baseMarks number of marks for the base fire mode
+     * @param baseTargetsNumber number of available targets for the base fire mode
+     * @param model instance if the Model class
      */
     public Weapon(String name, Ammo pickUpCost, Ammo baseCost,int baseDamage,int baseMarks,int baseTargetsNumber,Model model){
         this.name = name;

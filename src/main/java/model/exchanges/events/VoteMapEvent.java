@@ -2,6 +2,9 @@ package model.exchanges.events;
 
 import view.View;
 
+/**
+ * Event sent by the Action View and received from the Action Controller to choose which map to vote for
+ */
 public class VoteMapEvent extends Event {
     private int input;
 

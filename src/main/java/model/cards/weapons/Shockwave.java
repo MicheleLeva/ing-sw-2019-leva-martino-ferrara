@@ -4,7 +4,9 @@ import model.game.Ammo;
 import model.game.Model;
 import model.player.Player;
 import java.util.ArrayList;
-
+/**
+ * Representation of the Shockwave weapon
+ */
 public class Shockwave extends WeaponAlternative {
     public Shockwave(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
                    int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){

@@ -5,7 +5,9 @@ import model.game.Model;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the Lock Rifle weapon
+ */
 public class LockRifle extends WeaponOptional1 {
 
     public LockRifle(String name,Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1, int baseDamage, int optionalDamage1, int baseMarks,

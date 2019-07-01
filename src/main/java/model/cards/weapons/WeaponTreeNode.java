@@ -3,9 +3,14 @@ package model.cards.weapons;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Node of the weapon tree that represents a single fire mode with its name and type(base, alternative, first optional
+ * and second optional
+ * @param <T> Will always be the FireMode class(representation of a particular fire mode)
+ */
 public class WeaponTreeNode<T> {
     private T data;
-    private List<WeaponTreeNode<T>> children = new ArrayList<>();
+    private List<WeaponTreeNode<T>> children = new ArrayList();
     private WeaponTreeNode<T> parent = null;
 
     public WeaponTreeNode(T data) {
@@ -28,17 +33,5 @@ public class WeaponTreeNode<T> {
     public void setParent(WeaponTreeNode<T> parent) {
         this.parent = parent;
     }
-
-/*    public WeaponTreeNode<T> getParent() {
-        return parent;
-    }
-
-    public String showChildren(){
-        String result = "";
-        for (int i = 0; i< children.size(); i++){
-            result = result +children.get(i).data +" ";
-        }
-        return result;
-    }*/
 
 }

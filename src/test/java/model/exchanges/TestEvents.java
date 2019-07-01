@@ -9,6 +9,9 @@ import view.View;
 
 import java.util.ArrayList;
 
+/**
+ * Tests that all the events used for the game are created correctly
+ */
 public class TestEvents {
 
     private View testView;

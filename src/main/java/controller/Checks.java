@@ -37,6 +37,7 @@ public class Checks {
      * Returns the number of ammos actually drawn from the picked up Ammo Card
      * @param grabbedAmmo number of ammos drawn from an Ammo card
      * @param playerAmmo number of ammos the player holds
+     * @return the number of ammos actually drawn from the picked up Ammo Card
      */
     public static Ammo drawnAmmo(Ammo grabbedAmmo , Ammo playerAmmo){
 
@@ -130,6 +131,7 @@ public class Checks {
      * Returns the amount of damage actually given to an opponent
      * @param playerDamage the damage on the opponents' board
      * @param damage the damage given to the opponent
+     * @return the amount of damage actually given to an opponent
      */
     public static int givenDamage(int playerDamage , int damage){
         if (MAX_DAMAGE - playerDamage < damage){
@@ -144,6 +146,7 @@ public class Checks {
      * Returns the number of marks actually given to an opponent
      * @param playerMark the marks on the opponents' board
      * @param mark the marks given to the opponent
+     * @return the number of marks actually given to an opponent
      */
     public static int givenMark(int playerMark , int mark){
         if(MAX_MARK_FOR_COLOR - playerMark < mark){
@@ -199,6 +202,7 @@ public class Checks {
      * @param currentPlayer current player in the game
      * @param choices integer that indicates the powerUps selected for a payment
      * @param effectType integer that indicates the type of fire mode selected
+     * @param model instance of the Model class
      * @return true if the selected payment is valid, false otherwise
      */
     public static boolean validPayment(Player currentPlayer, ArrayList<Integer> choices,String effectType, Model model) {
@@ -270,6 +274,11 @@ public class Checks {
 
     /**
      * Calculates if the sum of red powerups and red ammos is enough to pay the red fire mode ammo
+     * @param fireRED number of red cubes the current fire mode costs
+     * @param powerUpRED number of red powerUp the current player holds
+     * @param playerRED number of red cubes the current player holds
+     * @return returns true if the sum of red powerups and red ammos is enough to pay the red fire mode ammo,
+     *         false otherwise
      */
     private static boolean checkValidRed(int fireRED, int powerUpRED, int playerRED) {
 
@@ -284,7 +293,12 @@ public class Checks {
     }
 
     /**
-     * calculates if the sum of blue powerups and blue ammos is enough to pay the blue fire mode ammo
+     * Calculates if the sum of blue powerups and blue ammos is enough to pay the blue fire mode ammo,
+     * @param fireBLUE number of blue cubes the current fire mode costs
+     * @param powerUpBLUE number of blue powerUp the current player holds
+     * @param playerBLUE number of blue cubes the current player holds
+     * @return returns true if the sum of blue powerups and blue ammos is enough to pay the blue fire mode ammo
+     *         false otherwise
      */
     private static boolean checkValidBlue (int fireBLUE, int powerUpBLUE, int playerBLUE){
 
@@ -299,7 +313,12 @@ public class Checks {
     }
 
     /**
-     * calculates if the sum of yellow powerups and yellow ammos is enough to pay the yellow fire mode ammo
+     * Calculates if the sum of yellow powerups and yellow ammos is enough to pay the yellow fire mode ammo
+     * @param fireYELLOW number of yellow cubes the current fire mode costs
+     * @param powerUpYELLOW number of yellow powerUp the current player holds
+     * @param playerYELLOW number of yellow cubes the current player holds
+     * @return returns true if the sum of yellow powerups and yellow ammos is enough to pay the yellow fire mode ammo,
+     *         false otherwise
      */
     private static boolean checkValidYellow (int fireYELLOW, int powerUpYELLOW, int playerYELLOW){
 

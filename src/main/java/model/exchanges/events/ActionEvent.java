@@ -2,6 +2,9 @@ package model.exchanges.events;
 
 import view.View;
 
+/**
+ * Event sent by the Action View and received from the Action Controller to choose the next action
+ */
 public class ActionEvent extends Event {
     private final char input;
 

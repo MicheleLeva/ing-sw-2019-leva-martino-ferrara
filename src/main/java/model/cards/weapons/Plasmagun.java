@@ -7,6 +7,9 @@ import model.player.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Representation of the Plasmagun weapon
+ */
 public class Plasmagun extends WeaponOptional2 {
     public Plasmagun(String name, Ammo picUpCost, Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,
                       int optionalMarks1, int optionalMarks2, int baseTargetsNumber, int optionalTargetsNumber1,

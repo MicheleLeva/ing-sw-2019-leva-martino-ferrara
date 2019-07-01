@@ -3,7 +3,9 @@ package model.exchanges;
 import model.exchanges.messages.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+/**
+ * Tests that all the messages used for the game are created correctly
+ */
 public class TestMessages {
 
     /**

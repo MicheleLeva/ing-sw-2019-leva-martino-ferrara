@@ -5,7 +5,9 @@ import model.game.Model;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the ZX-2 weapon
+ */
 public class ZX2 extends WeaponAlternative{
     public ZX2(String name,Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
                    int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){

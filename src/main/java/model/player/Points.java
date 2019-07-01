@@ -110,6 +110,7 @@ public class Points {
 
     /**
      * Outputs the list of available points
+     * @return the list of available points
      */
     public String printPoints(){
         StringBuilder stringBuilder = new StringBuilder();

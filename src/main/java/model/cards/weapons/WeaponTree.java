@@ -29,7 +29,7 @@ public class WeaponTree {
         }
 
     /**
-     * helper method used to build the tree
+     * Helper method used to build the tree
      * @param parent the father node
      * @param obj the current JSon object
      */
@@ -51,7 +51,7 @@ public class WeaponTree {
         }
 
     /**
-     * builds the action tree
+     * Builds the action tree
      */
         private void parseActionTree(){
             JSONParser parser = new JSONParser();
@@ -83,6 +83,7 @@ public class WeaponTree {
         }
 
     /**
+     * Returns the root of the Weapon Tree
      * @return the tree's root
      */
         public WeaponTreeNode<FireMode> getRoot(){
@@ -90,7 +91,8 @@ public class WeaponTree {
         }
 
     /**
-     * updates the tree by changing the last action chosen
+     * Updates the tree by changing the last action chosen
+     * @param index index of the fire mode to choose from between the children of the last action performed
      */
         public void updateLastAction(int index){
 
@@ -99,7 +101,7 @@ public class WeaponTree {
         }
 
     /**
-     * updates the tree, after having performed the action
+     * Updates the tree, after having performed the action
      */
         public void updateLastActionPerformed(){
             lastActionPerformed = lastAction;
@@ -108,6 +110,7 @@ public class WeaponTree {
 
     /**
      * Checks if the the end of the tree has been reached
+     * @return true if the end of the weaponTree has been reached, false otherwise
      */
         public boolean isActionEnded(){
             if(lastActionPerformed.getChildren().isEmpty())

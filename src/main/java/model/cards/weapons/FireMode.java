@@ -1,5 +1,9 @@
 package model.cards.weapons;
 
+/**
+ * Representation of a single fire Mode with its particular name and type(base, alternative, first optional and
+ * second optional
+ */
 public class FireMode {
     private final String type;
     private final String effectName;

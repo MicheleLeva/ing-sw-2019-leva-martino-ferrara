@@ -227,7 +227,7 @@ public class Server {
 
     /**
      * Constructor class of the server. Initializes server parameters from the JSON and the server socket.
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception of some sort has occurred
      */
     public Server() throws IOException {
         JSONParser parser = new JSONParser();

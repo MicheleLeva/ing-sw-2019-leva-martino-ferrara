@@ -18,7 +18,18 @@ public abstract class WeaponAlternative extends Weapon {
 
 
     /**
-     *Constructor for all weapons with an alternative fire mode
+     * Constructor for all weapons with an alternative fire mode
+     * @param name name of the weapon
+     * @param pickUpCost the cost to pay to pickup the weapon
+     * @param baseCost the cost to pay to reload the weapon
+     * @param alternativeCost the cost to pay to use the alternative fire mode
+     * @param baseDamage amount of damage for the base fire mode
+     * @param alternativeDamage amount of damage for the alternative fire mode
+     * @param baseMarks number of marks for the base fire mode
+     * @param alternativeMarks number of marks for the alternative fire mode
+     * @param baseTargetsNumber number of available targets for the base fire mode
+     * @param alternativeTargetsNumber number of available targets for the alternative fire mode
+     * @param model instance if the Model class
      */
     public WeaponAlternative(String name, Ammo pickUpCost,Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
                              int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){

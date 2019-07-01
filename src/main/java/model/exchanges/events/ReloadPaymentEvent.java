@@ -4,6 +4,10 @@ import view.View;
 
 import java.util.ArrayList;
 
+/**
+ * Event sent by the Weapon View and received from the Weapon Controller to choose which powerUps to
+ * pay the selected unloaded weapon with
+ */
 public class ReloadPaymentEvent extends Event {
         private ArrayList<Integer> choices;
 

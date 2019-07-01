@@ -1,5 +1,9 @@
 package model.exchanges.messages;
 
+/**
+ * Message sent by the PowerUp Notifier and received from the PowerUp View to let the player choose which
+ * TagBack Grenade in his resources he wants to use
+ */
 public class TagbackGrenadeMessage extends PlayerMessage {
 
     public TagbackGrenadeMessage(String message){

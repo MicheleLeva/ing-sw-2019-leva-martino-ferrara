@@ -2,6 +2,10 @@ package model.exchanges.events;
 
 import view.View;
 
+/**
+ * Event sent by the PowerUp View and received from the PowerUp Controller to choose the square to move
+ * the current player to using the teleporter
+ */
 public class ChooseTeleporterSquareEvent extends Event {
     private final int input;
     public ChooseTeleporterSquareEvent(View view , int input){

@@ -5,7 +5,9 @@ import model.game.Model;
 import model.player.Player;
 
 import java.util.ArrayList;
-
+/**
+ * Representation of the Machinegun weapon
+ */
 public class Machinegun extends WeaponOptional2 {
     public Machinegun(String name, Ammo pickUpCost, Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,
                 int optionalMarks1, int optionalMarks2, int baseTargetsNumber, int optionalTargetsNumber1,

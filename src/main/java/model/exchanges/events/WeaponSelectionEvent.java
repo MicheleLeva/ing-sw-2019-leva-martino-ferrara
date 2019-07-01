@@ -2,6 +2,10 @@ package model.exchanges.events;
 
 import view.View;
 
+/**
+ * Event sent by the Weapon View and received from the Weapon Controller to choose which of the loaded weapons
+ * in the current player's resources to shoot with
+ */
 public class WeaponSelectionEvent extends Event {
     private final int index;
 

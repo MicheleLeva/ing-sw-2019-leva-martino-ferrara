@@ -4,6 +4,10 @@ import view.View;
 
 import java.util.ArrayList;
 
+/**
+ * Event sent by the Weapon View and received from the Weapon Controller to choose which powerUps to pay the
+ * selected fire mode for the current weapon with
+ */
 public class WeaponPaymentEvent extends Event {
     private ArrayList<Integer> choices;
 

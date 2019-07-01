@@ -1,5 +1,9 @@
 package model.exchanges.messages;
 
+/**
+ * Message sent by the Weapon Notifier and received from the Weapon View to let the player choose which of the available
+ * targets he wants to hit
+ */
 public class TargetsSelectionMessage extends PlayerMessage{
 
     private final int targetsNumber;
