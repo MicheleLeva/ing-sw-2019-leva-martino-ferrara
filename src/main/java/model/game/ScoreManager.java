@@ -129,59 +129,6 @@ public class ScoreManager {
 
     }
 
-
-    /*public void getWinner() {
-        //check for even scores
-        Player first;
-        Player second;
-        Player winner;
-        StringBuilder stringBuilder = new StringBuilder();
-
-        first = model.getPlayer(playerRank.get(0));
-        second = model.getPlayer(playerRank.get(1));
-        winner = first;
-
-        if (first.getScore().getScore() == second.getScore().getScore()) {
-            LinkedHashMap<PlayerColor, Integer> killShotRank = model.getGameBoard().getKillShotTrack().getRank();
-            int firstKillShotTokens;
-            int secondKillShotTokens;
-            if (killShotRank.containsKey(first.getPlayerColor())) {
-                 firstKillShotTokens = killShotRank.get(first.getPlayerColor());
-            }
-            else{
-                firstKillShotTokens = 0;
-            }
-            if(killShotRank.containsKey(second.getPlayerColor())) {
-                secondKillShotTokens = killShotRank.get(second.getPlayerColor());
-            }
-            else{
-                secondKillShotTokens = 0;
-            }
-
-            if (firstKillShotTokens == 0 && secondKillShotTokens == 0) {
-                //tie between the two players
-                stringBuilder.append(first.getColoredName());
-                stringBuilder.append(" ");
-                stringBuilder.append("and");
-                stringBuilder.append(" ");
-                stringBuilder.append(second.getColoredName());
-                stringBuilder.append(" ");
-                stringBuilder.append(" have won the game!");
-                model.getGameNotifier().notifyGeneric(stringBuilder.toString());
-                return;
-            } else if (secondKillShotTokens > firstKillShotTokens) {
-                winner = second;
-            }
-
-        }
-
-        stringBuilder.append(winner.getColoredName());
-        stringBuilder.append(" ");
-        stringBuilder.append("has won the game!");
-        model.getGameNotifier().notifyGeneric(stringBuilder.toString());
-
-    }*/
-
     /**
      * Established the winner(s) of the game and notify to the players
      */

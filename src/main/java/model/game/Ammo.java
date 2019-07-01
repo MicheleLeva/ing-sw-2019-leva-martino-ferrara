@@ -25,6 +25,7 @@ public class Ammo {
     }
 
     /**
+     * Returns the number of red cubes
      * @return The number of red cubes
      */
     public int getRed(){
@@ -32,6 +33,7 @@ public class Ammo {
     }
 
     /**
+     * Returns the number of yellow cubes
      * @return The number of yellow cubes
      */
     public int getYellow(){
@@ -39,6 +41,7 @@ public class Ammo {
     }
 
     /**
+     * Returns the number of blue cubes
      * @return The number of blue cubes
      */
     public int getBlue(){
@@ -121,6 +124,10 @@ public class Ammo {
         return (getRed() >= ammo.getRed() && getBlue() >= ammo.getBlue() && getYellow() >= ammo.getYellow());
     }
 
+    /**
+     * Represents the ammo class on the CLI.
+     * @return a string representing the ammo class on the CLI.
+     */
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
@@ -142,6 +149,10 @@ public class Ammo {
 
     }
 
+    /**
+     * Removes the input ammo from the ammo
+     * @param ammo the quantity to remove
+     */
     public void remove(Ammo ammo){
         setRed(getRed() - ammo.getRed());
         setBlue(getBlue() - ammo.getBlue());

@@ -3,6 +3,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 public class TestNode {
+    /**
+     * Tests node properties
+     */
     @Test
     public void testNode(){
         Node<String> node = new Node<>("string");

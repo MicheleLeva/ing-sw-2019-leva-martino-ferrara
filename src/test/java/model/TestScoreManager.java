@@ -48,6 +48,9 @@ public class TestScoreManager {
         modelTest.addDamage(player4.getPlayerColor(),player1.getPlayerColor(),4);
     }
 
+    /**
+     * Test player rank displaying
+     */
     @Test
     public void testShowPlayerRank(){
         String result;
@@ -74,6 +77,10 @@ public class TestScoreManager {
         scoreManagerTest.finalScore();
         assertNotNull(scoreManagerTest.getWinner());
     }
+
+    /**
+     * Test the getWinner method
+     */
     @Test
     public void testGetWinner(){
         //multiple winners test

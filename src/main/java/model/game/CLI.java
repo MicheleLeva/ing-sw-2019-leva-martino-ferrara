@@ -29,7 +29,7 @@ public class CLI {
     private static final String CONT_GREEN = "\u001B[40m";
 
     /**
-     * given the player's color, it returns the string code for the color
+     * Given the player's color, it returns the string code for the color
      * @param playerColor player's color
      * @return string code
      */
@@ -54,7 +54,7 @@ public class CLI {
     }
 
     /**
-     * given the ammo's color, it return the string code for the color
+     * Given the ammo's color, it return the string code for the color
      * @param ammoColor ammo's color
      * @return string code
      */
@@ -71,7 +71,7 @@ public class CLI {
     }
 
     /**
-     * given the square's color, it return the string code for the color
+     * Given the square's color, it return the string code for the color
      * @param squareColor square's color
      * @return string code
      */
@@ -100,6 +100,7 @@ public class CLI {
     }
 
     /**
+     * Returns the string code to represent the skull in the command line
      * @return the string code to represent the skull in the command line
      */
     public static String getSkull(){
@@ -107,6 +108,7 @@ public class CLI {
     }
 
     /**
+     * Returns the reset string to reset the color
      * @return the reset string to reset the color
      */
     public static String getResetString(){
@@ -114,6 +116,7 @@ public class CLI {
     }
 
     /**
+     * Returns the string code to represent the damage in the command line
      * @return the string code to represent the damage in the command line
      */
     public static String getDamage(){
@@ -121,12 +124,14 @@ public class CLI {
     }
 
     /**
+     * Returns string code for blue
      * @return string code for blue
      */
     public static String getBlue(){
         return BLUE;
     }
     /**
+     * Returns string code for red
      * @return string code for red
      */
     public static String getRed(){
@@ -134,6 +139,7 @@ public class CLI {
     }
 
     /**
+     * Returns string code for yellow
      * @return string code for yellow
      */
     public static String getYellow(){
@@ -141,7 +147,7 @@ public class CLI {
     }
 
     /**
-     * helper method called by buildCLIMap
+     * Helper method called by buildCLIMap
      * @param uncoloredMap the map without color
      * @return the colored map
      */
@@ -158,7 +164,7 @@ public class CLI {
     }
 
     /**
-     * reads the map from the given path and color it to display on the command line
+     * Reads the map from the given path and color it to display on the command line
      * @param CLIMapPath the path containing the map
      * @return the colored map
      * @throws IOException to be thrown

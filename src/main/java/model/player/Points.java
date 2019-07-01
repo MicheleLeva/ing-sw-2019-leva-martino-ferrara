@@ -77,16 +77,28 @@ public class Points {
         points.remove(0);
     }
 
+    /**
+     * Sets player's point to frenzy points
+     */
     public void setFrenzyPoints(){
         isFrenzy = true;
         points = frenzyPoints;
         firstBlood = frenzyFirstBlood;
     }
 
+    /**
+     * Returns the damage for the first blood
+     * @return the damage for the first blood
+     */
     public int getFirstBlood(){
         return firstBlood;
     }
 
+    /**
+     * Returns the number of points gained based on the rank's position
+     * @param position the rank's position
+     * @return the points
+     */
     public int getPoint(int position){
         if(position >= points.size()){
             return 0;
@@ -109,6 +121,10 @@ public class Points {
         return stringBuilder.toString();
     }
 
+    /**
+     * Checks whether the points are or aren't frenzy
+     * @return true if the points are frenzy, false otherwise
+     */
     public boolean isFrenzy(){
         return this.isFrenzy;
     }

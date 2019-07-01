@@ -35,23 +35,33 @@ public class MarkCounter {
     }
 
     /**
-     * removes all the marks received from a specific player
+     * Removes all the marks received from a specific player
      */
     public void clearMarks(PlayerColor color){
         markList.put(color, 0);
     }
 
+    /**
+     * Returns the mark counter
+     * @return the mark counter
+     */
     public HashMap<PlayerColor, Integer> getMarkCounter(){
         return markList;
     }
 
     /**
      * Returns the number of marks received by a player with a specific player color
+     * @return the number of marks received by a player with a specific player color
      */
     public int getMarkFromColor(PlayerColor playerColor){
         return markList.getOrDefault(playerColor, 0);
     }
 
+    /**
+     * Returns and remove all the marks of the given color
+     * @param playerColor the given color
+     * @return the removed marks
+     */
     public int getMarkFromColorAndRemove(PlayerColor playerColor){
         if(markList.containsKey(playerColor))
             return markList.remove(playerColor);
@@ -59,6 +69,7 @@ public class MarkCounter {
     }
     /**
      * Outputs the number of marks received
+     * @return a string representing the number of received marks
      */
     public String printMarkCounter(){
         StringBuilder stringBuilder = new StringBuilder();

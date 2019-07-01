@@ -12,10 +12,14 @@ public class TestActionCreator {
         //initializes the keymap used for the correspondence between inputs and actions
         keyMap = new KeyMap();
     }
+
+    /**
+     * Tests the correspondence between inputs and actions
+     */
     @Test
     public void testCreateAction()
     {
-        //testing the correspondence between inputs and actions
+
 
         //testing shoot
         assertTrue(ActionCreator.createAction(KeyMap.getShoot()) instanceof Shoot);

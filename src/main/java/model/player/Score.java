@@ -20,6 +20,10 @@ public class Score {
 
     }
 
+    /**
+     * Returns the player's score
+     * @return the player's score
+     */
     public int getScore(){
         return score;
 

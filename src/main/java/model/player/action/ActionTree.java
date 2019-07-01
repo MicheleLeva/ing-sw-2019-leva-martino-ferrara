@@ -51,7 +51,7 @@ public class ActionTree {
     }
 
     /**
-     * sets the JSon path based upon the ID
+     * Sets the JSon path based upon the ID
      */
     private void init(){
         switch (ID)
@@ -85,7 +85,7 @@ public class ActionTree {
     }
 
     /**
-     * helper method used to build the tree
+     * Helper method used to build the tree
      * @param parent the father node
      * @param obj the current JSon object
      */
@@ -106,7 +106,7 @@ public class ActionTree {
     }
 
     /**
-     * builds the action tree
+     * Builds the action tree
      */
     private void parseActionTree(){
         JSONParser parser = new JSONParser();
@@ -137,6 +137,7 @@ public class ActionTree {
     }
 
     /**
+     * Return the tree's root
      * @return the tree's root
      */
     public Node<String> getRoot(){
@@ -144,7 +145,7 @@ public class ActionTree {
     }
 
     /**
-     * //checks whether or not the input move is valid
+     * Checks whether or not the input move is valid
      * @param move player's input
      * @return a boolean that tells whether the input is or not valid
      */
@@ -175,7 +176,7 @@ public class ActionTree {
     }
 
     /**
-     * updates the tree, after having executed the action
+     * Updates the tree, after having executed the action
      */
     public void updateAction(){
 
@@ -190,10 +191,18 @@ public class ActionTree {
         setMoveEnded(true);
     }
 
+    /**
+     * Sets move ended equal to the parameter
+     * @param moveEnded the given parameter
+     */
     public void setMoveEnded(boolean moveEnded) {
         isMoveEnded = moveEnded;
     }
 
+    /**
+     * Checks whether or not the move is ended
+     * @return true if the move is ended, false otherwise
+     */
     public boolean isMoveEnded() {
         return isMoveEnded;
     }
@@ -232,13 +241,16 @@ public class ActionTree {
 
     }
 
-    //returns true if the player has walked the tree to a leaf
+    /**
+     * Returns true if the player has walked the tree to a leaf
+     * @return true if the player has walked the tree to a leaf, false otherwise
+     */
     public boolean isActionEnded(){
         return lastActionPerformed.getChildren().isEmpty();
     }
 
     /**
-     * resets the action Tree
+     * Resets the action Tree
      */
     public void resetAction(){
         performedAction = 0;
@@ -246,6 +258,7 @@ public class ActionTree {
     }
 
     /**
+     * Returns true if the player has done all the actions
      * @return true if the player has done all the actions
      */
     public boolean isTurnEnded(){
@@ -253,6 +266,7 @@ public class ActionTree {
     }
 
     /**
+     * Returns true if the player has completed his or her turn
      * @return true if the player has completed his or her turn
      */
     public boolean hasDoneTurn(){
@@ -270,24 +284,38 @@ public class ActionTree {
     }
 
     /**
-     * called when the player has finished the whole action
+     * Called when the player has finished the whole action
      */
     public void endAction(){
         performedAction++;
         setMoveEnded(true);
         resetLastAction();
     }
-    //returns the tree's ID
+
+    /**
+     * Returns the tree's ID
+     * @return the tree's ID
+     */
     public int getID(){
         return  ID;
     }
-    //returns the last action
+    /**
+     * Returns the last action
+     * @return the last action
+     */
     public Node<String> getLastAction() {
         return lastAction;
     }
-
+    /**
+     * Returns the last action performed
+     * @return the last action performed
+     */
     public Node<String> getLastActionPerformed(){return lastActionPerformed;}
 
+    /**
+     * Returns the number of performed actions
+     * @return the number of performed actions
+     */
     public int getPerformedAction(){return performedAction;}
 }
 

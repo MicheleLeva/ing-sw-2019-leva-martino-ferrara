@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Grab extends Action {
     /**
-     * performed the grab move
+     * Performs the grab move
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
      * @throws EmptySquareException when the player tries to grab from an empty square

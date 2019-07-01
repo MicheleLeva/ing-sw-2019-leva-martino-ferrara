@@ -6,7 +6,7 @@ import model.player.PlayerColor;
 
 public class EndAction extends Action {
     /**
-     * ends the current action
+     * Ends the current action
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
      */

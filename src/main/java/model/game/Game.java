@@ -12,11 +12,11 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-/**
- * Main class which runs the game
- */
-public class Game implements Runnable{
 
+public class Game implements Runnable{
+    /**
+     * Main class which runs the game
+     */
     private final int gameID;
 
     private final Model model;

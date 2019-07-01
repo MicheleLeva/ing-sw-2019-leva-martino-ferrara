@@ -35,6 +35,7 @@ public class KillShotTrack {
     }
 
     /**
+     * Returns the killshottrack
      * @return the killShotTrack
      */
     public KillShotCell[] getKillShotTrack() {
@@ -42,7 +43,7 @@ public class KillShotTrack {
     }
 
     /**
-     * removes the skull from the KillShotTrack, switching it with the current player's token
+     * Removes the skull from the KillShotTrack, switching it with the current player's token
      * @param playerColor the color of the token
      */
     public void removeSkull(PlayerColor playerColor) {
@@ -72,7 +73,7 @@ public class KillShotTrack {
     }
 
     /**
-     * adds the overkill(12th damage)
+     * Adds the overkill(12th damage)
      */
     public void addOverKill() {
 
@@ -96,6 +97,7 @@ public class KillShotTrack {
     }
 
     /**
+     * Returns the rank of the players, based on the number of tokens they have on the KillShotTrack
      * @return the rank of the players, based on the number of tokens they have on the KillShotTrack
      */
     public LinkedHashMap<PlayerColor,Integer> getRank(){
@@ -134,6 +136,7 @@ public class KillShotTrack {
     }
 
     /**
+     * Returns the string representation of the KillShotTrack to be displayed on the Command Line
      * @return the string representation of the KillShotTrack to be displayed on the Command Line
      */
     public String printKillshotTrack(){
@@ -177,6 +180,10 @@ public class KillShotTrack {
 
     }
 
+    /**
+     * Returns the last occupied index
+     * @return the last occupied index
+     */
     public int getLastIndex(){
         return lastIndex;
     }
