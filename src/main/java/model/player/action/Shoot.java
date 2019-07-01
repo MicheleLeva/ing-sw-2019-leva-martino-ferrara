@@ -8,7 +8,7 @@ import model.player.PlayerColor;
 public class Shoot extends Action {
 
     /**
-     * performs the shoot move
+     * Performs the shoot move
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
      * @throws NoReloadedWeaponsExceptions exception thrown if the player doesn't have loaded weapons

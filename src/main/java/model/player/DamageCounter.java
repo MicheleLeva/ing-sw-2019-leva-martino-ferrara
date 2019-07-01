@@ -41,16 +41,25 @@ public class DamageCounter {
         damage.clear();
     }
 
+    /**
+     * Returns the damage counter
+     * @return the damage counter
+     */
     public ArrayList<PlayerColor> getDamageCounter(){
         return this.damage;
     }
 
+    /**
+     * Returns the amount of damage received
+     * @return the amount of damage received
+     */
     public int getDamage(){
         return damage.size();
     }
 
     /**
      * Returns the damage received from a player with a specific color
+     * @return  the damage received from a player with a specific color
      */
     public int getDamageFromColor(PlayerColor playerColor){
         int result = 0;
@@ -64,6 +73,7 @@ public class DamageCounter {
 
     /**
      * Outputs the amount of damage received
+     * @return a string representing the received damage
      */
     public String printDamageCounter(){
         StringBuilder stringBuilder = new StringBuilder();

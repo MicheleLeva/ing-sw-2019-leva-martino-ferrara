@@ -43,46 +43,84 @@ public class Player {
         this.scoreFromKillShotTrack = 0;
     }
 
+    /**
+     * Returns the player's score
+     * @return the player's score
+     */
     public Score getScore() {
         return score;
     }
 
+    /**
+     * Adds score
+     * @param score to add
+     */
     public void addScore(int score){
         this.score.addScore(score);
     }
-
+    /**
+     * Returns the playerboard
+     * @return the playerboard
+     */
     public PlayerBoard getPlayerBoard(){
         return playerBoard;
     }
-
+    /**
+     * Returns player's resources
+     * @return player's resources
+     */
     public Resources getResources(){
         return resources;
     }
-
+    /**
+     * Returns player's color
+     * @return player's color
+     */
     public PlayerColor getPlayerColor(){
         return playerColor;
     }
-
+    /**
+     * Returns player's position
+     * @return player's position
+     */
     public Square getPosition(){
         return position;
     }
 
+    /**
+     * Sets player's position
+     * @param square player's position
+     */
     public void setPosition(Square square){
         position = square;
     }
-
+    /**
+     * Returns player's name
+     * @return player's name
+     */
     public String getPlayerName() {
         return playerName;
     }
-
+    /**
+     * Returns player's action tree
+     * @return player0's action tree
+     */
     public ActionTree getActionTree(){
         return this.actionTree;
     }
 
+    /**
+     * Stes player's action tree
+     * @param ID action's tree ID
+     */
     public void setActionTree(int ID){
         actionTree = new ActionTree(ID);
     }
 
+    /**
+     * Sets the player's vote
+     * @param vote chosen map
+     */
     public void setVote(boolean vote) {
         this.vote = vote;
     }
@@ -99,30 +137,52 @@ public class Player {
         return isDead;
     }
 
+    /**
+     * Sets the player dead
+     */
     public void setDead(){
         isDead = true;
         position = null;
     }
 
+    /**
+     * Sets the player alive
+     */
     public void setAlive(){
         isDead = false;
         isKillShot = false;
         playerBoard.getDamageCounter().clearDamage();
     }
 
+    /**
+     * Sets the player afk
+     * @param afk boolean
+     */
     public void setAfk(boolean afk) {
         this.afk = afk;
     }
 
+    /**
+     * Checks whether the player is or is not afk
+     * @return true if the player is afk, false otherwise
+     */
     public boolean isAfk() {
         return afk;
     }
 
+    /**
+     * Sets the player killshot
+     * @param killshot boolean value
+     */
     public void setKillshot(boolean killshot){
         position = null;
         isKillShot = killshot;
     }
 
+    /**
+     * Checks whether or not the player is killshot
+     * @return true if the player is killshot, false otherwise
+     */
     public boolean isKillShot(){
         return isKillShot;
     }
@@ -185,10 +245,18 @@ public class Player {
         return false;
     }
 
+    /**
+     * Returns the number of killshottrack score
+     * @return the number of killshottrack score
+     */
     public int getScoreFromKillShotTrack(){
         return scoreFromKillShotTrack;
     }
 
+    /**
+     * Sets the score gained from the killshottrack
+     * @param scoreFromKillShotTrack the score gained
+     */
     public void setScoreFromKillShotTrack(int scoreFromKillShotTrack){
         this.scoreFromKillShotTrack = scoreFromKillShotTrack;
     }

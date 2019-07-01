@@ -16,7 +16,7 @@ public class Run extends Action {
     }
 
     /**
-     * performs the run move
+     * Performs the run move
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
      * @throws WallException when the player tries to move into a wall
