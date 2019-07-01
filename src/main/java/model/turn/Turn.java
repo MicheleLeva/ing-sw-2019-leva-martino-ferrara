@@ -50,6 +50,11 @@ public class Turn {
         isFrenzy = frenzy;
     }
 
+    /**
+     * Constructor class of Turn. It initializes the turn and timer parameters from JSON.
+     * @param model of the game.
+     * @param frenzy if it's a frenzy turn.
+     */
     public Turn(Model model, Boolean frenzy){
         JSONParser parser = new JSONParser();
         try {
@@ -81,6 +86,10 @@ public class Turn {
         return model;
     }
 
+    /**
+     * Message to be sent to a player who timed out while respawning.
+     * @return the message to be sent to the player.
+     */
     private String respawnTimeOut(){
         StringBuilder stringBuilder = new StringBuilder();
         String color = CLI.getRed();

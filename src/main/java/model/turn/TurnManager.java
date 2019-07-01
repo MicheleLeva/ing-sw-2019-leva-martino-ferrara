@@ -138,6 +138,9 @@ public class TurnManager {
         return currentTurnNumber;
     }
 
+    /**
+     * Increments the turn number.
+     */
     private void updateCurrentTurnNumber(){
         currentTurnNumber++;
     }
@@ -150,10 +153,16 @@ public class TurnManager {
         this.gameOver = gameOver;
     }
 
+    /**
+     * Increments the killshot counter.
+     */
     public void addKillShot(){
         currentTurnKillshots++;
     }
 
+    /**
+     * Sets to zero the killshot counter.
+     */
     private void resetKillShot(){
         currentTurnKillshots = 0;
     }

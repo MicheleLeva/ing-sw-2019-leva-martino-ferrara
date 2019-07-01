@@ -13,6 +13,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import utils.observable.PowerUpObservable;
+import utils.observer.ActionObserver;
+import utils.observer.PowerUpObserver;
+import utils.observer.WeaponObserver;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -91,6 +95,12 @@ public class Server {
             stringBuilder.append(game.getGameID());
             stringBuilder.append(" | ");
         }
+        stringBuilder.append("\n");
+        stringBuilder.append("Remote Views:\n");
+        for (Map.Entry<String, RemoteView> entry : playerViews.entrySet()){
+            stringBuilder.append(entry.getKey());
+            stringBuilder.append(" | ");
+        }
         stringBuilder.append(CLI.getResetString());
         System.out.println(stringBuilder.toString());
     }
@@ -122,7 +132,7 @@ public class Server {
     }
 
     /**
-     *  Deregister a group of players from the server, called after a game has ended
+     * Deregister a group of players from the server, called after a game has ended
      * @param id of the game.
      */
     private synchronized void deregisterGroup(int id){
@@ -215,6 +225,10 @@ public class Server {
         return false;
     }
 
+    /**
+     * Constructor class of the server. Initializes server parameters from the JSON and the server socket.
+     * @throws IOException
+     */
     public Server() throws IOException {
         JSONParser parser = new JSONParser();
         try {
@@ -418,10 +432,27 @@ public class Server {
                 currentGame = game;
                 deregisterGroup(id);
                 ArrayList<String> playerNames = new ArrayList<>();
-                for (Player player : game.getModel().getAllSpawnedPlayers()){
+                for (Player player : game.getModel().getEachPlayer()){
+                    currentGame.getModel().getGameNotifier().deregister(player.getPlayerColor());
+                    currentGame.getModel().getActionNotifier().deregister(player.getPlayerColor());
+                    currentGame.getModel().getPowerUpNotifier().deregister(player.getPlayerColor());
+                    currentGame.getModel().getWeaponNotifier().deregister(player.getPlayerColor());
                     playerNames.add(player.getPlayerName());
                 }
                 for (String name : playerNames){
+                    RemoteView remoteView = playerViews.get(name);
+                    ArrayList<ActionObserver> actionObservers = new ArrayList<>(remoteView.getRemoteActionView().listeners);
+                    ArrayList<PowerUpObserver> powerUpObservers = new ArrayList<>(remoteView.getRemotePowerUpView().listeners);
+                    ArrayList<WeaponObserver> weaponObservers = new ArrayList<>(remoteView.getRemoteWeaponView().listeners);
+                    for (ActionObserver actionObserver : actionObservers){
+                        remoteView.getRemoteActionView().deregister(actionObserver);
+                    }
+                    for (PowerUpObserver powerUpObserver : powerUpObservers){
+                        remoteView.getRemotePowerUpView().deregister(powerUpObserver);
+                    }
+                    for (WeaponObserver weaponObserver : weaponObservers){
+                        remoteView.getRemoteWeaponView().deregister(weaponObserver);
+                    }
                     playerViews.remove(name);
                 }
             }
@@ -432,6 +463,9 @@ public class Server {
         serverState();
     }
 
+    /**
+     * Main thread of the server. Listen to the socket for new Clients and registers them.
+     */
     private void run(){
         setServerActive(true);
         System.out.println("The server is running!");

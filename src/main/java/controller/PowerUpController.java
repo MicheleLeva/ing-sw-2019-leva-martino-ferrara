@@ -159,7 +159,6 @@ public class PowerUpController extends Controller implements PowerUpObserver {
 
             if (choice == 'Y') {
                 getModel().askScopePayment(getModel().getPlayer(event.getPlayerColor()));
-                //getModel().targetingScopeTargets(event.getPlayerColor(),getModel().getCurrent().getAllDamagedPlayer());
             } else {
                 if(!getModel().getCurrent().getAllTargetingScopes().isEmpty())
                     getModel().getCurrent().getAllTargetingScopes().remove(0);
@@ -271,7 +270,7 @@ public class PowerUpController extends Controller implements PowerUpObserver {
     }
 
     /**
-     * Controls if the powerUp selection is valid and in that case proceeds to remove the
+     * Checks if the powerUp selection is valid and in that case proceeds to remove the
      * chosen powerUp
      * @param discardPowerUpEvent contains the selected powerup to discard
      */
@@ -297,6 +296,11 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
     }
 
+    /**
+     * Checks if the input for the payment of the Targeting Scope is valid then asks the target of the Power Up to the
+     * player
+     * @param event which contains the input of the player
+     */
     @Override
     public void update(ScopePaymentEvent event){
         if (getModel().getPlayer(event.getPlayerColor()).isAfk()){

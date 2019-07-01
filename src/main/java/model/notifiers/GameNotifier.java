@@ -12,7 +12,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
 
     /**
-     * Notifies all players that the current player has used the Run action and tells them where he moved
+     * Notifies all players that the current player has used the Run action and tells them where he moved.
+     * @param playerColor of the player that run.
+     * @param playerName of the player that run.
+     * @param newSquare position of the player.
      */
     public void notifyRun(PlayerColor playerColor , String playerName , int newSquare){
         String toPlayer = "You ";
@@ -30,7 +33,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
 
     /**
-     * Notifies all players that the current payer has used the teleporter and tells them where he moved
+     * Notifies all players that the current player has used the teleporter and tells them where he moved.
+     * @param playerColor of the player that teleported.
+     * @param playerName of the player that teleported.
+     * @param newSquare position of the player that teleported.
      */
     public void notifyTeleporter(PlayerColor playerColor , String playerName , String newSquare){
         String toPlayer = "You ";
@@ -49,7 +55,12 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
 
     /**
-     * Notifies all players that the current player has used the Newton powerUp also telling them how it was used
+     * Notifies all players that the current player has used the Newton powerUp also telling them how it was used.
+     * @param playerName of the player that used the Newton.
+     * @param opponentName of the target of the Newton.
+     * @param playerColor of the player that used the Newton.
+     * @param opponentColor of the target of the Newton.
+     * @param newSquare position of the target that has been moved.
      */
     public void notifyNewton(String playerName , String opponentName , PlayerColor playerColor , PlayerColor opponentColor , int newSquare){
         String toPlayer ="You moved " +opponentName +" to: " +newSquare +".\n";
@@ -69,7 +80,11 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
     }
 
     /**
-     * Notifies all players that the current player has drawn a particular powerUp
+     * Notifies all players that the current player has drawn a number of powerUp.
+     * @param playerColor of the player that drew the PowerUp.
+     * @param playerName of the player that drew the PowerUp.
+     * @param powerUpList list of PowerUp drawn (shown to the player that drew them).
+     * @param num the number of PowerUp drawn (shown to the other players).
      */
     public void notifyDrawPowerUp(PlayerColor playerColor ,String playerName , String powerUpList , int num){
         String toPlayer = "You drew: " +powerUpList +".\n";
@@ -88,7 +103,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
     }
 
     /**
-     * Notifies the players that the current player drew ammo from a square and shows what ammo he picked up
+     * Notifies the players that the current player drew ammo from a square and shows what ammo he picked up.
+     * @param playerColor of the player that drew the ammo.
+     * @param playerName of the player that drew the ammo.
+     * @param ammo picked up by the player.
      */
     public void notifyDrawAmmo(PlayerColor playerColor , String playerName , String ammo){
         String toPlayer = "You drew: \n";
@@ -105,7 +123,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
     }
 
     /**
-     * Notifies all players that the Shoot Action is ended and sends them the list of damage the players have received
+     * Notifies all players that the Shoot Action is ended and sends them the list of damage the players have received.
+     * @param currentPlayer player that shoot.
+     * @param targets hit by the player.
+     * @param allPlayers list of all the player (used to send the correct messages to the hit players).
      */
     public void notifyShoot(Player currentPlayer, ArrayList<Player> targets, ArrayList<Player> allPlayers){
         ArrayList<PlayerColor> targetsColor = new ArrayList<>();
@@ -157,23 +178,39 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
 
     }
 
+    /**
+     * Notifies a message to all the player.
+     * @param message to be notified.
+     */
     public void notifyGeneric(String message){
         PlayerMessage playerMessage = new GenericMessage(message);
         notify(playerMessage);
     }
 
+    /**
+     * Notifies a message to the given player.
+     * @param message to be notified.
+     * @param playerColor of the player to be notified.
+     */
     public void notifyPlayer(String message, PlayerColor playerColor){
         PlayerMessage playerMessage = new GenericMessage(message);
         notify(playerMessage, playerColor);
     }
 
+    /**
+     * Notifies a message to all but the chosen player.
+     * @param message to be notified.
+     * @param playerColor of the player not to be notified.
+     */
     public void notifyOtherPlayers(String message, PlayerColor playerColor){
         PlayerMessage playerMessage = new GenericMessage(message);
         notifyOthers(playerMessage, playerColor);
     }
 
     /**
-     * notifies all players that a tagBack grenade was used and how it was used
+     * Notifies all players that a TagBack grenade was used and how it was used.
+     * @param user of the grenade.
+     * @param victim of the grenade.
      */
     public void notifyGrenade(PlayerColor user, PlayerColor victim){
         String toOthers = user.toString() + "has used a grenade on " + victim.toString();
@@ -189,6 +226,12 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
         notify(messageToVictim, victim);
     }
 
+    /**
+     * Notifies a message to a player and another message to the others.
+     * @param playerColor of the player that receives the first message.
+     * @param toPlayer to be sent to the player.
+     * @param toOthers to be sent to the other players.
+     */
     public void notifyMessages(PlayerColor playerColor, String toPlayer, String toOthers){
         PlayerMessage messageToPlayer = new GenericMessage(toPlayer);
         PlayerMessage messageToOthers = new GenericMessage(toOthers);

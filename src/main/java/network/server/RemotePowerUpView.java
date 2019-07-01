@@ -39,9 +39,7 @@ public class RemotePowerUpView extends PowerUpObservable implements Observer<Pla
                 listeners.forEach(l -> l.update(choosePowerUpEvent));
                 break;
             case "ChooseTeleporterSquareEvent":
-                System.out.println("teleportter1");
                 ChooseTeleporterSquareEvent chooseTeleporterSquareEvent = new ChooseTeleporterSquareEvent(view, Integer.parseInt(inputs[1]));
-                System.out.println("teleporter2");
                 listeners.forEach(l -> l.update(chooseTeleporterSquareEvent));
                 break;
             case "ChooseNewtonOpponentEvent":

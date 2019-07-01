@@ -39,6 +39,9 @@ public class Client extends Observable<String> implements ClientConnection,Runna
         return active;
     }
 
+    /**
+     * Constructor for the Client class. It initializes the network parameters from JSON and the socket.
+     */
     public Client(){
         JSONParser parser = new JSONParser();
         try {
@@ -155,6 +158,16 @@ public class Client extends Observable<String> implements ClientConnection,Runna
             System.out.println("The connection has been closed!");
             System.out.println("If you want to play a new game or reconnect restart the client.");
         }
+
+        networkHandler.getRemoteActionHandler().deregister(playerColor);
+        networkHandler.getRemoteWeaponHandler().deregister(playerColor);
+        networkHandler.getRemoteGameHandler().deregister(playerColor);
+        networkHandler.getRemotePowerUpHandler().deregister(playerColor);
+
+        view.getActionView().deregister(networkHandler.getRemoteActionHandler());
+        view.getWeaponView().deregister(networkHandler.getRemoteWeaponHandler());
+        view.getGameView().deregister(networkHandler.getRemoteGameHandler());
+        view.getPowerUpView().deregister(networkHandler.getRemotePowerUpHandler());
     }
 
     public static void main(String[] args) {

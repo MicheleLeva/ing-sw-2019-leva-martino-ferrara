@@ -32,7 +32,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the received input corresponds to a valid weapon, and in that case,
+     * Checks if the received input corresponds to a valid weapon, and in that case,
      * shows the available fire modes for that weapon
      * @param event contains the index of the weapon selected by the player
      */
@@ -58,7 +58,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the received input corresponds to a reloadable weapon and in that case
+     * Checks if the received input corresponds to a reloadable weapon and in that case
      * proceeds to reload it
      * @param weaponReloadEvent contains the index of the selected weapon to reload
      */
@@ -83,7 +83,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the received index corresponds to a valid fire mode and in that case
+     * Checks if the received index corresponds to a valid fire mode and in that case
      * proceeds to use the chosen fire mode
      * @param event contains the index of the selected fire mode for the current weapon
      */
@@ -147,7 +147,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the received inputs correspond to valid targets and in that case
+     * Checks if the received inputs correspond to valid targets and in that case
      * proceeds to ask the next requirement for the current weapon
      * @param event contains the index of the selected targets to shoot at
      */
@@ -221,7 +221,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the selected square is valid and in that case proceeds to save it
+     * Checks if the selected square is valid and in that case proceeds to save it
      * for later use in the selected weapon class
      * @param event contains the index of the square selected by the player
      */
@@ -266,7 +266,7 @@ public class WeaponController extends Controller implements WeaponObserver {
 
 
     /**
-     * Controls if the selected powerUps actually result in a valid payment, if so the cost of the weapon fire mode
+     * Checks if the selected powerUps actually result in a valid payment, if so the cost of the weapon fire mode
      * gets paid, otherwise the player gets asked for new inputs
      * @param event contains the list of inputs corresponding to the chosen powerUps that
      *              are used to pay for the use of the selected weapon
@@ -338,7 +338,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the selected powerUps actually result in a valid payment, if so the cost of the weapon Reload
+     * Checks if the selected powerUps actually result in a valid payment, if so the cost of the weapon Reload
      * gets paid, otherwise the player gets asked for new inputs
      * @param event contains the list of inputs corresponding to the chosen powerUps that
      *              are used to pay for the use of the selected weapon
@@ -380,7 +380,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the selected powerup actually result in a valid payment, if so the cost of the weapon PickUp cost
+     * Checks if the selected powerup actually result in a valid payment, if so the cost of the weapon PickUp cost
      * gets paid, otherwise the player gets asked for new inputs
      * @param event contains the list of inputs corresponding to the chosen powerUps that
      *              are used to pay for the use of the selected weapon
@@ -426,7 +426,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the received input corresponds to a valid weapon to grab, if so
+     * Checks if the received input corresponds to a valid weapon to grab, if so
      * the weapon is grabbed, otherwise the player gets asked for a new input
      * @param event contains the index of the weapon to grab from spawn square
      */
@@ -454,7 +454,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Controls if the received input actually corresponds to a weapon the player can swap,
+     * Checks if the received input actually corresponds to a weapon the player can swap,
      * if so the weapon gets swapped, otherwise the player is asked for a new input
      * @param event contains the index of the weapon of the current player to swap
      */
@@ -475,7 +475,7 @@ public class WeaponController extends Controller implements WeaponObserver {
     }
 
     /**
-     * Support weapon that saves the selected targets for the base fire mode
+     * Support method that saves the selected targets for the base fire mode
      */
     public void checkBaseTargets(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -504,7 +504,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         weapon.askBaseRequirements(currentPlayer);
     }
     /**
-     * Support weapon that saves the selected targets for the alternative fire mode
+     * Support method that saves the selected targets for the alternative fire mode
      */
     public void checkAlternativeTargets(TargetsSelectionEvent event,Weapon weapon,Current current,Player currentPlayer) {
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -530,7 +530,7 @@ public class WeaponController extends Controller implements WeaponObserver {
         ((WeaponAlternative)weapon).askAlternativeRequirements(currentPlayer);
     }
     /**
-     * Support weapon that saves the selected targets for the first optional fire mode
+     * Support method that saves the selected targets for the first optional fire mode
      */
     public void checkOptionalTargets1(TargetsSelectionEvent event, Weapon weapon, Current current, Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -560,7 +560,7 @@ public class WeaponController extends Controller implements WeaponObserver {
 
     }
     /**
-     * Support weapon that saves the selected targets for the second optional fire mode
+     * Support method that saves the selected targets for the second optional fire mode
      */
     public void checkOptionalTargets2(TargetsSelectionEvent event, Weapon weapon, Current current, Player currentPlayer){
         ArrayList<Player> selectedPlayers = new ArrayList<>();
@@ -587,6 +587,11 @@ public class WeaponController extends Controller implements WeaponObserver {
         ((WeaponOptional2)weapon).askOptionalRequirements2(currentPlayer);
     }
 
+    /**
+     * Support method for the target selection
+     * @param event which contains the array of the chosen targets
+     * @return true if there are duplicates in the array, otherwise false
+     */
     public boolean hasDuplicates(TargetsSelectionEvent event){
         if(event.getSelectedTargets().size()==1)
             return false;
@@ -601,6 +606,11 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
     }
 
+    /**
+     * Support method for the Power Up selection for payments
+     * @param selection arraylist of inputs
+     * @return true if there are duplicates in the array, otherwise false
+     */
     public boolean hasDuplicatePayment(ArrayList<Integer> selection){
         if(selection.size()==1)
             return false;

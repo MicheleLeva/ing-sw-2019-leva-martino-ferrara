@@ -173,7 +173,7 @@ public class Checks {
         }
     }
 
-    /**
+     /**
      * @return an integer that indicated the max damage receivable
      */
     public static int getMaxDamage(){

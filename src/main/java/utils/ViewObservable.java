@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Custom Observable class used by the Model Notifiers to send messages to different Observer by their PlayerColor
+ * Custom Observable class used by the Model Notifiers to send messages to different Observers by their PlayerColor
  */
 public class ViewObservable<T> {
 
@@ -25,12 +25,21 @@ public class ViewObservable<T> {
         }
     }
 
+    /**
+     * Notify a message to all the listeners.
+     * @param message to be notified.
+     */
     protected void notify(T message){
         for(Map.Entry<PlayerColor , Observer> entry : listeners.entrySet()) {
                 entry.getValue().update(message);
         }
     }
 
+    /**
+     * Notifies a message to the chose listener.
+     * @param message to be notified.
+     * @param playerColor of the chosen listener.
+     */
     protected void notify(T message, PlayerColor playerColor){
         for(Map.Entry<PlayerColor , Observer> entry : listeners.entrySet()) {
             if (entry.getKey() == playerColor) {
@@ -39,6 +48,11 @@ public class ViewObservable<T> {
         }
     }
 
+    /**
+     * Notifies a message to all but the chosen listener.
+     * @param message to be notified.
+     * @param playerColor of the chosen listener.
+     */
     protected void notifyOthers(T message, PlayerColor playerColor){
         for(Map.Entry<PlayerColor , Observer> entry : listeners.entrySet()) {
             if (entry.getKey() != playerColor) {
@@ -47,6 +61,12 @@ public class ViewObservable<T> {
         }
     }
 
+    /**
+     * Notifies a message to all but two chosen listeners.
+     * @param message to be notified.
+     * @param p1 color of the first listener.
+     * @param p2 color of the second listener.
+     */
     protected void notifyOthers(T message, PlayerColor p1, PlayerColor p2){
         for(Map.Entry<PlayerColor , Observer> entry : listeners.entrySet()) {
             if ((entry.getKey() != p1) && (entry.getKey() != p2)) {

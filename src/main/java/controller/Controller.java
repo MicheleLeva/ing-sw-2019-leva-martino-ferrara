@@ -18,7 +18,8 @@ public class Controller {
     }
 
     /**
-     * returns the model class
+     * Returns the model class
+     * @return the model class
      */
     public Model getModel(){
         return model;
