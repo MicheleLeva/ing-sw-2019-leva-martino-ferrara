@@ -147,6 +147,7 @@ public class Map {
     }
 
     /**
+     * Returns the spawn square corresponding to the given color
      * @param color color of the spawn square that method needs to return
      * @return the spawn square corresponding to the given color
      */
@@ -164,6 +165,7 @@ public class Map {
 
     /**
      * Prints the map on the player's screen
+     * @return the map to be displayed on the screen
      */
     public String printMap(){
         return mapCLI;
@@ -171,6 +173,7 @@ public class Map {
 
     /**
      * Returns the IDs of all the squares in the map
+     * @return the IDs of all the squares in the map
      */
     public ArrayList<Integer> getAllIDs(){
         ArrayList<Integer> allIDs = new ArrayList<>();
@@ -184,6 +187,7 @@ public class Map {
     /**
      * Returns the square corresponding to the given ID
      * @param ID ID of the square the method needs to return
+     * @return the square corresponding to the given ID
      *
      */
     public Square getSquareFromID(int ID){
@@ -198,6 +202,7 @@ public class Map {
 
     /**
      * Shows spawn weapons
+     * @return a string representing all the weapons on the spawn points
      */
     public String showSpawnWeapons(){
         StringBuilder stringBuilder = new StringBuilder();

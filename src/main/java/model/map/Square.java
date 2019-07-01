@@ -9,7 +9,9 @@ import java.util.HashMap;
 
 
 public class Square {
-
+    /**
+     * Square Class. It represents the map square.
+     */
     private HashMap<Direction, Square> sides;
     public boolean isSpawn;
     private SquareColor color;
@@ -31,15 +33,25 @@ public class Square {
         weapons = new Weapon[3];
     }
 
+    /**
+     * Sets the square's ID
+     * @param ID the square's ID
+     */
     public void setID(int ID){
         this.ID = ID;
     }
 
-
+    /**
+     * Returns the weapon on the square
+     * @return the weapon on the square
+     */
     public Weapon[] getWeapon(){
         return weapons;
     }
-
+    /**
+     * Returns the ammo on the square
+     * @return the ammo on the square
+     */
     public AmmoCard getAmmoCard(){
         return ammo;
     }
@@ -61,7 +73,7 @@ public class Square {
     }
 
     /**
-     * checks if the square has an no ammo card on it
+     * Checks if the square has an no ammo card on it
      */
     public boolean hasEmptyAmmoSlot(){
         return (ammo == null);
@@ -75,30 +87,54 @@ public class Square {
         ammo = ammoCard;
 
     }
-
+    /**
+     * Returns the square's color
+     * @return the square's color
+     */
     public SquareColor getColor(){
 
         return this.color;
     }
 
+    /**
+     * Sets the square's color
+     * @param color the square's color
+     */
     public void setColor(SquareColor color){
         this.color = color;
     }
 
+    /**
+     * Returns the square adjacent to the given direction
+     * @param direction the given direction
+     * @return the square adjacent to the given direction
+     */
     public Square getSide(Direction direction ){
 
         return sides.get(direction);
     }
 
+    /**
+     * Sets the square adjacent to the given direction
+     * @param direction the given direction
+     * @param element the adjacent square
+     */
     public void setSide(Direction direction, Square element){
 
         sides.put(direction, element);
     }
 
+    /**
+     * Returns the square's row
+     * @return the square's row
+     */
     public int getSquareRow(){
         return squareRow;
     }
-
+    /**
+     * Returns the square's column
+     * @return the square's column
+     */
     public int getSquareColumn(){
         return squareColumn;
     }
@@ -110,6 +146,7 @@ public class Square {
 
     /**
      * Checks if the square has neither ammo nor weapons on it
+     * @return true is the square is empty, false otherwise
      */
     public boolean isEmpty(){
         if(isSpawn){
@@ -119,6 +156,10 @@ public class Square {
             return (ammo == null);
     }
 
+    /**
+     * Returns the square's ID
+     * @return the square's ID
+     */
     public int getID(){
         return ID;
     }
@@ -132,6 +173,7 @@ public class Square {
 
     /**
      * Shows weapons on the spawn point
+     * @return a string that represents the spawn weapons on the screen
      */
     public String showSpawnWeapons(){
         StringBuilder stringBuilder = new StringBuilder();
