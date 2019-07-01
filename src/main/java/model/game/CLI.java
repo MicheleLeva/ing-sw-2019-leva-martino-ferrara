@@ -3,8 +3,9 @@ package model.game;
 import model.cards.AmmoColor;
 import model.map.SquareColor;
 import model.player.PlayerColor;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class CLI {
     /**
@@ -162,12 +163,22 @@ public class CLI {
      * @return the colored map
      * @throws IOException to be thrown
      */
-    public static String buildCLIMap(String CLIMapPath)throws IOException {
+    public String buildCLIMap(String CLIMapPath)throws IOException {
         String uncoloredMap;
         String coloredMap;
+
         try (FileReader fr = new FileReader(CLIMapPath)) {
             uncoloredMap = "";
             int i;
+            while ((i = fr.read()) != -1) {
+                uncoloredMap = uncoloredMap + (char) i;
+            }
+        } catch (FileNotFoundException e){
+            uncoloredMap = "";
+            int i;
+
+            InputStream configStream = this.getClass().getResourceAsStream(CLIMapPath);
+            InputStreamReader fr = new InputStreamReader(configStream, StandardCharsets.UTF_8);
             while ((i = fr.read()) != -1) {
                 uncoloredMap = uncoloredMap + (char) i;
             }

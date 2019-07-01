@@ -9,10 +9,9 @@ import org.json.simple.parser.ParseException;
 import utils.Observable;
 import view.View;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -43,8 +42,15 @@ public class Client extends Observable<String> implements ClientConnection,Runna
     public Client(){
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/client.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/client.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = this.getClass().getResourceAsStream("/client.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
             JSONArray myArray = (JSONArray) myJo.get("client");
             JSONObject temp = (JSONObject)myArray.get(0);
             ip = (String)temp.get("ip");

@@ -5,8 +5,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -40,8 +40,15 @@ public class Points {
         JSONParser parser = new JSONParser();
         int value;
         try{
-            Object obj = parser.parse(new FileReader(path));
-            JSONObject myJo = (JSONObject)obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader(path));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = this.getClass().getResourceAsStream("/playerPoints.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
             JSONArray standardPointsArray = (JSONArray) myJo.get("standard points");
             firstBlood = ((Long)standardPointsArray.get(0)).intValue();
             for (int i = 1; i < standardPointsArray.size(); i++){

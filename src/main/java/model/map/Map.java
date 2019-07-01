@@ -8,7 +8,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +22,7 @@ public class Map {
 
     private Square[][] map;
     private String mapCLI;
+    private CLI cli = new CLI();
 
     /**
      * Constructor for the Map class
@@ -26,25 +31,38 @@ public class Map {
     public Map(int chosenMap) {
         String JSONpath;
         String CLIMapPath;
+        String jarPath;
+        String jarCLIPath;
+
         if(chosenMap==1) {
             JSONpath = "src/resources/map1.json";
             CLIMapPath = "src/resources/map1.txt";
+            jarPath = "/map1.json";
+            jarCLIPath = "/map1.txt";
         }
         else if(chosenMap==2) {
             JSONpath = "src/resources/map2.json";
             CLIMapPath = "src/resources/map2.txt";
+            jarPath = "/map2.json";
+            jarCLIPath = "/map2.txt";
         }
         else if(chosenMap==3) {
             JSONpath = "src/resources/map3.json";
             CLIMapPath = "src/resources/map3.txt";
+            jarPath = "/map3.json";
+            jarCLIPath = "/map3.txt";
         }
         else if(chosenMap==4) {
             JSONpath = "src/resources/map4.json";
             CLIMapPath = "src/resources/map4.txt";
+            jarPath = "/map4.json";
+            jarCLIPath = "/map4.txt";
         }
         else {
             JSONpath = "/src/resources/map2.json";
             CLIMapPath = "src/resources/map2.txt";
+            jarPath = "/map2.json";
+            jarCLIPath = "/map2.txt";
         }
 
         map = new Square[3][4];
@@ -58,10 +76,20 @@ public class Map {
         int k=0;
         JSONParser parser = new JSONParser();
 
+
         try {
-            mapCLI = CLI.buildCLIMap(CLIMapPath);
-            Object obj = parser.parse(new FileReader(JSONpath));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader(JSONpath));
+                myJo = (JSONObject) obj;
+                mapCLI = cli.buildCLIMap(CLIMapPath);
+            } catch (FileNotFoundException e) {
+                InputStream configStream = this.getClass().getResourceAsStream(jarPath);
+                mapCLI = cli.buildCLIMap(jarCLIPath);
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("map");
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 4; j++) {

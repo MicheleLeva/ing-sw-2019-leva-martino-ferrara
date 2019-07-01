@@ -10,8 +10,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,8 +53,16 @@ public class Turn {
     public Turn(Model model, Boolean frenzy){
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/constants.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/constants.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = this.getClass().getResourceAsStream("/constants.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("constants");
             JSONObject temp = (JSONObject)myArray.get(0);
             time = (long)temp.get("TurnTimer");

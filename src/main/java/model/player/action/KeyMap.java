@@ -4,8 +4,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * KeyMap Class
@@ -36,8 +36,15 @@ public class KeyMap {
     public KeyMap(String path){
         JSONParser parser = new JSONParser();
         try{
-            Object obj = parser.parse(new FileReader(path));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader(DEFAULT_PATH));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = this.getClass().getResourceAsStream("/keyMapping.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
 
             moveUp = myJo.get("moveUp").toString().charAt(0);
             moveDown = myJo.get("moveDown").toString().charAt(0);

@@ -4,11 +4,16 @@ package model.game;
 import model.cards.*;
 import model.cards.powerups.*;
 import model.cards.weapons.*;
+import network.server.Server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -42,7 +47,7 @@ public class Decks {
      * returns a random weapon from the weapon deck
      */
     public Weapon drawWeapon() {
-        if (weaponsDeck.size() > 0)
+        if (!weaponsDeck.isEmpty())
             return weaponsDeck.remove(rand.nextInt(weaponsDeck.size()));
         else
             return null;
@@ -67,7 +72,7 @@ public class Decks {
      */
     public AmmoCard drawAmmoCard() {
 
-        if (ammoCardDeck.size() > 0) {
+        if (!ammoCardDeck.isEmpty()) {
             return ammoCardDeck.remove(rand.nextInt(ammoCardDeck.size()));
         } else
             ammoCardDeck = new ArrayList<>(discardedAmmoCardDeck);
@@ -117,8 +122,16 @@ public class Decks {
     private void createPowerUpDeck() {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/powerUps.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/powerUps.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = Server.class.getResourceAsStream("/powerUps.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("powerUps");
             for (int i = 0; i < myArray.size(); i++) {
                 JSONObject result1 = (JSONObject) myArray.get(i);
@@ -165,8 +178,16 @@ public class Decks {
     private void createAmmoCardDeck() {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/ammoCards.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/ammoCards.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = Server.class.getResourceAsStream("/ammoCards.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("ammoCards");
             for (int i = 0; i < myArray.size(); i++) {
                 JSONObject result1 = (JSONObject) myArray.get(i);
@@ -184,8 +205,16 @@ public class Decks {
     private void addBasicWeapons() {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = Server.class.getResourceAsStream("/weaponCards.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("weaponCards");
             JSONObject result1 = (JSONObject) myArray.get(0);
             JSONArray myArray2 = (JSONArray) result1.get("basic");
@@ -219,8 +248,16 @@ public class Decks {
     private void addAlternativeWeapons() {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = Server.class.getResourceAsStream("/weaponCards.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("weaponCards");
             JSONObject result1 = (JSONObject) myArray.get(1);
             JSONArray myArray2 = (JSONArray) result1.get("alternative");
@@ -293,8 +330,16 @@ public class Decks {
     private void addOptionalWeapons1() {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = Server.class.getResourceAsStream("/weaponCards.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("weaponCards");
             JSONObject result1 = (JSONObject) myArray.get(2);
             JSONArray myArray2 = (JSONArray) result1.get("optional1");
@@ -335,8 +380,16 @@ public class Decks {
     private void addOptionalWeapons2() {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
-            JSONObject myJo = (JSONObject) obj;
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/weaponCards.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = Server.class.getResourceAsStream("/weaponCards.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+
             JSONArray myArray = (JSONArray) myJo.get("weaponCards");
             JSONObject result1 = (JSONObject) myArray.get(3);
             JSONArray myArray2 = (JSONArray) result1.get("optional2");

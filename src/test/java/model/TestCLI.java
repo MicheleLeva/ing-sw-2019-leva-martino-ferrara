@@ -3,12 +3,14 @@ import model.cards.AmmoColor;
 import model.game.CLI;
 import model.map.SquareColor;
 import model.player.PlayerColor;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static org.junit.Assert.*;
 public class TestCLI {
+
     @Test
     public void testGetColor(){
         assertEquals(CLI.getBlue(),CLI.getColor(PlayerColor.BLUE));
@@ -57,9 +59,10 @@ public class TestCLI {
     }
     @Test
     public void testColorMap(){
+        CLI cli = new CLI();
         String result = null;
         try{
-            result = CLI.buildCLIMap("src/resources/map1.txt");
+            result = cli.buildCLIMap("src/resources/map1.txt");
         }
         catch(IOException e){
             e.printStackTrace();
@@ -69,8 +72,9 @@ public class TestCLI {
     }
     @Test (expected =  java.io.IOException.class)
     public void testBuildCLIMap() throws IOException{
+        CLI cli = new CLI();
         try{
-            CLI.buildCLIMap("wrongpath");
+            cli.buildCLIMap("wrongpath");
         }
         catch(IOException e){
             throw new IOException();

@@ -5,6 +5,9 @@ import model.cards.AmmoColor;
 import model.cards.Card;
 import model.player.PlayerColor;
 
+/**
+ * Power Up Abstract class
+ */
 public abstract class PowerUp extends Card {
 
     private AmmoColor ammo;

@@ -23,6 +23,11 @@ public abstract class Event {
         return playerColor;
     }
 
+    /**
+     *
+     * @param array
+     * @return
+     */
     public String arrayToString(List<Integer> array){
         StringBuilder stringBuilder = new StringBuilder();
         for(int i = 0; i<array.size(); i++){

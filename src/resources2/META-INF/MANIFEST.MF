@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: src\main\java\network\client\Client.java
+Main-Class: network.client.Client
+

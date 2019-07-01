@@ -5,9 +5,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -58,8 +57,19 @@ public class WeaponTree {
             JSONParser parser = new JSONParser();
 
             try{
-                Object obj = parser.parse(new FileReader(path));
-                JSONObject myJo = (JSONObject) obj;
+                JSONObject myJo;
+                try {
+                    Object obj = parser.parse(new FileReader(path));
+                    myJo = (JSONObject) obj;
+                } catch (FileNotFoundException e) {
+                    String[] splitPath = path.split("/");
+                    String newPath = splitPath[splitPath.length - 1];
+                    newPath = "/" + newPath;
+                    InputStream configStream = this.getClass().getResourceAsStream(newPath);
+                    myJo = (JSONObject)parser.parse(
+                            new InputStreamReader(configStream, StandardCharsets.UTF_8));
+                }
+
 
                 root = new WeaponTreeNode<>(new FireMode("root","root"));
                 root.setParent(null);
