@@ -22,6 +22,8 @@ public class KillShotCell {
 
     /**
      * Alternative constructor for the killShotCell class
+     * @param playerColor color of the chosen player
+     * @param tokenNumber number of tokens to add to the killShotCell
      */
     public KillShotCell(PlayerColor playerColor, int tokenNumber){
         this.isSkull = false;

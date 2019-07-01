@@ -50,6 +50,7 @@ public class Ammo {
 
     /**
      * Sets the number of red cubes
+     * @param red number of yellow cubes to set in the ammo
      */
     public void setRed(int red){
         ammo.put(AmmoColor.RED, red);
@@ -57,6 +58,7 @@ public class Ammo {
 
     /**
      * Sets the number of blue cubes
+     * @param blue number of yellow cubes to set in the ammo
      */
     public void setBlue(int blue){
         ammo.put(AmmoColor.BLUE, blue);
@@ -65,6 +67,7 @@ public class Ammo {
 
     /**
      * Sets the number of yellow cubes
+     * @param yellow number of yellow cubes to set in the ammo
      */
     public void setYellow(int yellow){
         ammo.put(AmmoColor.YELLOW, yellow);
@@ -119,6 +122,7 @@ public class Ammo {
     /**
      * Check if the ammo the player holds is greater than the given ammo
      * @param ammo given ammo to confront with the layer's ammo
+     * @return true if the ammo the player holds is greater than the given ammo, false otherwise
      */
     public boolean isEnough(Ammo ammo){
         return (getRed() >= ammo.getRed() && getBlue() >= ammo.getBlue() && getYellow() >= ammo.getYellow());

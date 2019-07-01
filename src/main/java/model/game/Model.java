@@ -156,6 +156,7 @@ public class Model {
     /**
      * Method that returns a list of the players that are visible by the current player
      * @param currentPlayer current player
+     * @return list of the players that are visible by the current player
      */
     public ArrayList<Player> getVisiblePlayers(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
@@ -178,6 +179,7 @@ public class Model {
     /**
      * Method that returns a list of the squares that are visible by the current player
      * @param currentPlayer current player
+     * @return list of the squares that are visible by the current player
      */
     public ArrayList<Square> getVisibleSquares(Player currentPlayer){
         Square currentSquare = currentPlayer.getPosition();
@@ -203,6 +205,7 @@ public class Model {
     /**
      * Method that returns a list of the players that are not in the current player's room
      * @param currentPlayer current player
+     * @return list of the players that are not in the current player's room
      */
     public ArrayList<Player> getPlayersNotInYourRoom(Player currentPlayer){
         ArrayList<Player> visiblePlayers = getVisiblePlayers(currentPlayer);
@@ -217,6 +220,7 @@ public class Model {
     /**
      * Method that returns a list of the squares at distance 2 in all cardinal directions
      * @param currentPlayer current player
+     * @return list of the squares at distance 2 in all cardinal directions
      */
     public ArrayList<Square> getSquaresInCardinal2(Player currentPlayer) {
         ArrayList<Square> finalList = new ArrayList<>();
@@ -234,6 +238,7 @@ public class Model {
     /**
      * Method that returns a list of the squares at distance 1 in all cardinal directions
      * @param currentPlayer current player
+     * @return list of the squares at distance 1 in all cardinal directions
      */
     public ArrayList<Square> getSquaresInCardinal1(Player currentPlayer) {
         ArrayList<Square> finalList = new ArrayList<>();
@@ -251,6 +256,7 @@ public class Model {
      * Method that returns a list of the visible players at a given distance
      * @param currentPlayer current player
      * @param distance maximum distance for the targets
+     * @return list of the visible players at a given distance
      */
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer) {
         Square square = currentPlayer.getPosition();
@@ -270,6 +276,7 @@ public class Model {
      * @param currentPlayer current player
      * @param distance maximum distance for the targets
      * @param square selected square to calculate the distance from
+     * @return list of the visible players at a given distance from a selected square
      */
     public ArrayList<Player> getPlayersAtDistance(int distance, Player currentPlayer, Square square){
         ArrayList<Player> playersAtDistance = new ArrayList<>();
@@ -289,6 +296,7 @@ public class Model {
      * Method that returns a list of the visible players at a distance superior to the given one
      * @param currentPlayer current player
      * @param distance maximum distance for the targets
+     * @return list of the visible players at a distance superior to the given one
      */
     public ArrayList<Player> getPlayersAtDistanceMore(int distance, Player currentPlayer){
         ArrayList<Player> playersAtDistanceMore = new ArrayList<>();
@@ -308,6 +316,7 @@ public class Model {
     /**
      * Method that returns a list of the players in all cardinal directions
      * @param currentPlayer current player
+     * @return list of the players in all cardinal directions
      */
     public ArrayList<Player> getPlayersInCardinalDirection(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
@@ -330,6 +339,7 @@ public class Model {
      * Method that returns a list of the visible players in a selected cardinal direction
      * @param currentPlayer current player
      * @param cardinal selected cardinal direction
+     * @return list of the visible players in a selected cardinal direction
      */
     public ArrayList<Player> getPlayersInSelectedCardinal(Player currentPlayer, char cardinal) {
         ArrayList<Player> allPlayers = new ArrayList<>(getAllSpawnedPlayers());
@@ -375,6 +385,7 @@ public class Model {
     /**
      * Method that returns a list of the players in the same square of the current player
      * @param currentPlayer current player
+     * @return list of the players in the same square of the current player
      */
     public ArrayList<Player> getPlayersInSameSquare(Player currentPlayer) {
         Square square = currentPlayer.getPosition();
@@ -394,6 +405,7 @@ public class Model {
     /**
      * Method that returns a list of the players that are not visible from the current player
      * @param currentPlayer current player
+     * @return list of the players that are not visible from the current player
      */
     public ArrayList<Player> getNonVisiblePlayers(Player currentPlayer) {
         ArrayList<Player> nonVisiblePlayers = new ArrayList<>();
@@ -410,6 +422,9 @@ public class Model {
 
     /**
      * Method that returns the next square for the power glove weapon
+     * @param playerSquare position of the current player
+     * @param secondSquare position where the target was moved to
+     * @return the next square for the power glove weapon
      */
     public Square getNextPowerGloveSquare(Square playerSquare, Square secondSquare){
         if(playerSquare.getSquareRow()==secondSquare.getSquareRow()) {
@@ -979,6 +994,7 @@ public class Model {
      * Sends the player a list of the powerups he can use to pay the fire mode cost of the selected weapon
      * @param currentPlayer current player
      * @param weapon selected weapon
+     * @param effectType type of the current fire mode
      */
     public void askFireModePayment(Player currentPlayer,Weapon weapon,String effectType){
         Ammo fireModeCost;
@@ -1032,8 +1048,12 @@ public class Model {
         weaponNotifier.askWeaponPayment(currentPlayer.getPlayerColor(),getCurrent().getAvailablePaymentPowerUps());
     }
 
+
     /**
      * Support method that calculates the cost of the multiple payment methods from the selected weapon
+     * @param effectType current type of fire mode
+     * @param weapon current selected weapon
+     * @return the cost of the multiple payment methods from the selected weapon
      */
     public Ammo setFireCost(String effectType,Weapon weapon){
         Ammo fireModeCost;
@@ -1263,6 +1283,7 @@ public class Model {
     /**
      *  Called at the end of Turn on all damaged players after having managed marks and dead players to
      *  set the Frenzy action tree
+     * @param playerColor color of the current player
      */
 
     public void verifyNewAction(PlayerColor playerColor) {
@@ -1277,6 +1298,7 @@ public class Model {
 
     /**
      * Returns all in game players but not those that are not on the map
+     * @return all in game players but not those that are not on the map
      */
     public ArrayList<Player> getAllSpawnedPlayers() {
         ArrayList<Player> def = new ArrayList<>(players.values());
@@ -1287,6 +1309,7 @@ public class Model {
     }
     /**
      * Returns all in game players
+     * @return all in game players
      */
     public List<Player> getEachPlayer(){
         return new ArrayList<>(players.values());
@@ -1352,6 +1375,7 @@ public class Model {
 
     /**
      * Sends to the players a list of the maps to choose from
+     * @param player player to send the list of maps to
      */
     public void mapVote(Player player){
         actionNotifier.mapVote(player.getPlayerColor());
@@ -1359,6 +1383,7 @@ public class Model {
 
     /**
      * Getter for the map votes
+     * @return the votes for the map
      */
     public ArrayList<Integer> getMapVotes() {
         return mapVotes;

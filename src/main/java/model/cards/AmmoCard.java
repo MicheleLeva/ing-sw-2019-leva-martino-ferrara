@@ -22,13 +22,15 @@ public class AmmoCard extends Card{
 
     /**
      * Returns the ammo contained in the card
+     * @return the ammo contained in the Ammo Card
      */
     public Ammo getAmmo(){
         return ammo;
     }
 
     /**
-     * Returns true if the card has a powerUp in it, false otherwise
+     * Returns whether the card has a powerUp in it or not
+     * @return true if the card has a powerUp in it, false otherwise
      */
     public boolean hasPowerUp(){
         return hasPowerUp;

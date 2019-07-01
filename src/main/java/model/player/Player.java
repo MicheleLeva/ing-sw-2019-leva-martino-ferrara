@@ -201,10 +201,10 @@ public class Player {
     }
 
     /**
-     * Returns the Position, the damaged received, the marks received, the available points ad all the unloaded
+     *Returns the position, the damage received, the marks received, the available points and all the unloaded
      * weapons of the player
-     * @return the Position, the damaged received, the marks received, the available points ad all the unloaded
-     * weapons of the player
+     * @return the position, the damage received, the marks received, the available points and all the unloaded
+     *         weapons of the player
      */
     public String printPlayerInfo(){
         StringBuilder stringBuilder = new StringBuilder();
