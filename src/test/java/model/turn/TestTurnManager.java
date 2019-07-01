@@ -36,6 +36,9 @@ public class TestTurnManager {
         testTurnManager = modelTest.getTurnManager();
     }
 
+    /**
+     * Tests the getPlayerFromColor method.
+     */
     @Test
     public void testGetPlayerFromColor(){
         assertEquals(player1, testTurnManager.getPlayerFromColor(PlayerColor.BLUE));
@@ -44,6 +47,9 @@ public class TestTurnManager {
         assertNotEquals(player1, testTurnManager.getPlayerFromColor(PlayerColor.PURPLE));
     }
 
+    /**
+     * Tests the Update method.
+     */
     @Test
     public void testUpdate(){
         testTurnManager.update();

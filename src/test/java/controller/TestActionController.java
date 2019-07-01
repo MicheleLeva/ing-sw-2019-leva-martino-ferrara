@@ -37,6 +37,9 @@ public class TestActionController {
         greenView = new View(player2.getPlayerColor());
     }
 
+    /**
+     * Tests the player's action tree after multiple update(ActionEvent) methods.
+     */
     @Test
     public void  testActionEvent(){
         ActionEvent actionEvent = new ActionEvent(blueView, 'Z');
@@ -77,6 +80,9 @@ public class TestActionController {
 
     }
 
+    /**
+     * Tests the player correctly wakes up after the Update(QuitAfkEvent).
+     */
     @Test
     public void  testQuitAfkEvent(){
         modelTest.setPlayerAfk(player1);
@@ -85,6 +91,9 @@ public class TestActionController {
         assertFalse(player1.isAfk());
     }
 
+    /**
+     * Tests the population of model.getMapVotes after Update(VoteMapEvent).
+     */
     @Test
     public void  testVoteMapEvent(){
         modelTest.setPlayerAfk(player1);
