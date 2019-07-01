@@ -472,7 +472,7 @@ public class Model {
         gameBoard.getDecks().getDiscardedPowerUpDeck().add(discardedPowerUp);
 
         String toPlayer = "You discarded " + discardedPowerUp.toString();
-        String toOthers = player.getPlayerName() + " discarded " + discardedPowerUp.toString();
+        String toOthers = player.getColoredName() + " discarded " + discardedPowerUp.toString();
         printMessage(player.getPlayerColor(), toPlayer, toOthers);
 
         spawnPlayer(player, discardedPowerUp.getAmmo());
@@ -526,7 +526,7 @@ public class Model {
     public void updateRun() {
         Player currentPlayer = turnManager.getCurrentPlayer();
         PlayerColor currentPlayerColor = currentPlayer.getPlayerColor();
-        gameNotifier.notifyRun(currentPlayerColor, currentPlayer.getPlayerName(), currentPlayer.getPosition().getID());
+        gameNotifier.notifyRun(currentPlayerColor, currentPlayer.getColoredName(), currentPlayer.getPosition().getID());
     }
 
     /**
@@ -561,7 +561,7 @@ public class Model {
      * @param playerColor current player color
      */
     public void notifyTeleporter(PlayerColor playerColor) {
-        String playerName = getPlayer(playerColor).getPlayerName();
+        String playerName = getPlayer(playerColor).getColoredName();
         String newSquare = String.valueOf(getPlayer(playerColor).getPosition().getID());
         gameNotifier.notifyTeleporter(playerColor, playerName, newSquare);
         chooseAction(playerColor);
@@ -609,14 +609,19 @@ public class Model {
         getGameBoard().getDecks().getDiscardedPowerUpDeck().add(getCurrent().getSelectedNewton());
         getCurrent().setSelectedNewton(null);
 
-        String opponentList = "";
+        int i = 1;
+        StringBuilder stringBuilder = new StringBuilder();
         for (Player value : allPlayersCopy) {
             if (value.getPlayerColor() != playerColor) {
                 current.addOpponent(value);
-                opponentList = opponentList + value.getPlayerName() + " ";
+                stringBuilder.append(i);
+                stringBuilder.append(". ");
+                stringBuilder.append(value.getColoredName());
+                stringBuilder.append("\n");
+                i++;
             }
         }
-        powerUpNotifier.chooseNewtonOpponent(playerColor, opponentList);
+        powerUpNotifier.chooseNewtonOpponent(playerColor, stringBuilder.toString());
     }
 
     /**
@@ -629,11 +634,12 @@ public class Model {
         ArrayList<Square> possibleSquare = getSquaresInCardinal2(opponent);
         current.setSquare(possibleSquare);
         possibleSquare.remove(currentOpponentSquare);
-        String squareList = "";
+        StringBuilder stringBuilder = new StringBuilder();
         for (Square square : possibleSquare) {
-            squareList = squareList + square.getID() + " ";
+            stringBuilder.append(square.getID());
+            stringBuilder.append(" | ");
         }
-        powerUpNotifier.chooseNewtonSquare(playerColor, squareList);
+        powerUpNotifier.chooseNewtonSquare(playerColor, stringBuilder.toString());
     }
 
     /**
@@ -642,8 +648,8 @@ public class Model {
      * @param opponent player moved by the newton
      */
     public void notifyNewton(PlayerColor playerColor, Player opponent) {
-        String playerName = getPlayer(playerColor).getPlayerName();
-        String opponentName = opponent.getPlayerName();
+        String playerName = getPlayer(playerColor).getColoredName();
+        String opponentName = opponent.getColoredName();
         int newSquare = opponent.getPosition().getID();
         PlayerColor opponentColor = opponent.getPlayerColor();
         gameNotifier.notifyNewton(playerName, opponentName, playerColor, opponentColor, newSquare);
@@ -709,7 +715,7 @@ public class Model {
         for (Player availableTarget : availableTargets) {
             if (availableTarget.getPlayerColor() != playerColor) {
                 current.addOpponent(availableTarget);
-                opponentList = opponentList + (j) + ". " + availableTarget.getPlayerName() + " | \n";
+                opponentList = opponentList + (j) + ". " + availableTarget.getColoredName() + " | \n";
                 j++;
             }
         }
@@ -1176,7 +1182,7 @@ public class Model {
         currentPlayer.getResources().addPowerUp(drawnPowerUp);
 
 
-        gameNotifier.notifyDrawPowerUp(playerColor, currentPlayer.getPlayerName(), stringBuilder.toString(), num);
+        gameNotifier.notifyDrawPowerUp(playerColor, currentPlayer.getColoredName(), stringBuilder.toString(), num);
 
     }
 
@@ -1189,7 +1195,7 @@ public class Model {
     public void addAmmo(PlayerColor playerColor, Ammo ammo) {
         Player currentPlayer = getPlayer(playerColor);
         currentPlayer.getResources().addToAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
-        gameNotifier.notifyDrawAmmo(playerColor, currentPlayer.getPlayerName(), ammo.toString());
+        gameNotifier.notifyDrawAmmo(playerColor, currentPlayer.getColoredName(), ammo.toString());
     }
 
     /**
@@ -1324,7 +1330,7 @@ public class Model {
         String message="Select Targeting Scope target: \n";
         int i=1;
         for(Player player : damagedPlayers) {
-            message =  message+ i + ". " + player.getPlayerName() + " | \n";
+            message =  message + i + ". " + player.getColoredName() + " | \n";
             i++;
         }
         powerUpNotifier.targetingScopeTargets(playerColor,message);
