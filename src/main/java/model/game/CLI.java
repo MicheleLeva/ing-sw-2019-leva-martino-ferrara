@@ -19,7 +19,7 @@ public class CLI {
     private static final String PURPLE = "\u001B[35m";
     private static final String GREY = "\u001B[37m";
 
-    private static final String SKULL = "\u25A0";
+    private static final String SKULL = "#";
     private static final String DAMAGE = "*";
     private static final String CONT_RED = "\u001B[41m";
     private static final String CONT_YELLOW = "\u001B[42m";

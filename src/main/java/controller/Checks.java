@@ -269,7 +269,7 @@ public class Checks {
     }
 
     /**
-     * calculates if the sum of red powerups and red ammos is enough to pay the red fire mode ammo
+     * Calculates if the sum of red powerups and red ammos is enough to pay the red fire mode ammo
      */
     private static boolean checkValidRed(int fireRED, int powerUpRED, int playerRED) {
 

@@ -60,7 +60,7 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
     }
 
     /**
-     *
+     * Asks the current player which cube to pay the scope with
      */
     public void askScopePayment(PlayerColor playerColor,String message){
         PlayerMessage playerMessage = new ScopePaymentMessage(message);
