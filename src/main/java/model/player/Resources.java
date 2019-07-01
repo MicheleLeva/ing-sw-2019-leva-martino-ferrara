@@ -26,6 +26,7 @@ public class Resources {
 
     /**
      * Returns a string with the name and color of the powerUps a player has
+     * @return a string with the name and color of the powerUps a player has
      */
     public String showpowerUp(){
         if (powerUp.isEmpty()){
@@ -47,6 +48,7 @@ public class Resources {
     /**
      * Removes the powerUp in the player's inventory related to the given index
      * @param index index of the powerUp in the player's inventory to remove
+     * @return the powerUp in the player's inventory related to the given index
      */
     public PowerUp removePowerUp(int index){
         return powerUp.remove(index);
@@ -63,6 +65,7 @@ public class Resources {
 
     /**
      * Returns a list containing the reloaded weapons a player has
+     * @return a list containing the reloaded weapons a player has
      */
     public ArrayList<Weapon> getReloadedWeapon(){
         ArrayList<Weapon> reloadedWeapon = new ArrayList<>();
@@ -77,6 +80,7 @@ public class Resources {
 
     /**
      * Returns a string containing the names of all the weapons a player has
+     * @return a string containing the names of all the weapons a player has
      */
     public String showWeapon(){
         if (weapon.isEmpty()){
@@ -95,24 +99,38 @@ public class Resources {
 
     /**
      *Returns a string containing the number of cubes of ammo a player has
+     * @return a string containing the number of cubes of ammo a player has
      */
     public String showAmmo(){
         return ("Available Ammo: " +availableAmmo.toString());
     }
 
+    /**
+     * Returns player's powerups
+     * @return player's powerups
+     */
     public ArrayList<PowerUp> getPowerUp(){
         return powerUp;
     }
 
+    /**
+     * Adds a weapon to the player's resources
+     * @param weapon to add
+     */
     public void addWeapon(Weapon weapon){
         this.weapon.add(weapon);
     }
 
+    /**
+     * Adds a powerup to the player's resources
+     * @param powerUp to add
+     */
     public void addPowerUp(ArrayList<PowerUp> powerUp){
         this.powerUp.addAll(powerUp);
     }
 
     /**
+     * Returns all the cubes a player has added with all the powerUps a player has
      * @return all the cubes a player has added with all the powerUps a player has
      */
     public Ammo getAllAmmo(){
@@ -157,6 +175,7 @@ public class Resources {
 
     /**
      * Returns a List containing the names of all the weapons a player can reload
+     * @return a List containing the names of all the weapons a player can reload
      */
     public ArrayList<Weapon> getReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapon = new ArrayList<>();
@@ -171,11 +190,13 @@ public class Resources {
 
     /**
      * Returns a List containing  all the weapons a player has
+     * @return Returns a List containing  all the weapons a player has
      */
     public ArrayList<Weapon> getAllWeapon(){return this.weapon;}
 
     /**
      * Returns a string containing the names of all the weapons a player can reload
+     * @return a string containing the names of all the weapons a player can reload
      */
     public String showReloadableWeapon(){
         ArrayList<Weapon> reloadableWeapons = getReloadableWeapon();
@@ -200,6 +221,7 @@ public class Resources {
 
     /**
      * Returns a string containing the names of all the unloaded weapons a player has
+     * @return a string containing the names of all the unloaded weapons a player has
      */
     public String printUnloadedWeapons(){
         StringBuilder stringBuilder = new StringBuilder();
@@ -211,6 +233,10 @@ public class Resources {
         return stringBuilder.toString();
     }
 
+    /**
+     * Checks whether the player has at least one cube
+     * @return true if the player has at least one cube, false otherwise
+     */
     public boolean hasOneCube(){
         return availableAmmo.getRed() > 0 || availableAmmo.getBlue() > 0 || availableAmmo.getYellow() > 0;
     }
