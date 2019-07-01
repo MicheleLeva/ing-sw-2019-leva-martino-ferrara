@@ -15,17 +15,29 @@ public class TestActionTree {
         keyMap = new KeyMap();
 
     }
+
+    /**
+     * Tests action tree initialization
+     */
     @Test
     public void testInit(){
         assertEquals(1,actionTree.getID());
         assertEquals(0,actionTree.getPerformedAction());
         assertEquals(actionTree.getLastActionPerformed(),actionTree.getLastAction());
     }
+
+    /**
+     * Tests getter
+     */
     @Test
     public void testGetRoot(){
         assertNotNull(actionTree.getRoot());
         assertNull(actionTree.getRoot().getParent());
     }
+
+    /**
+     * Tests action tree well formation
+     */
     @Test
     public void testCheckAction(){
         assertTrue(actionTree.checkAction(KeyMap.getEnd()));
@@ -41,6 +53,9 @@ public class TestActionTree {
 
     }
 
+    /**
+     * Tests action tree walking
+     */
     @Test
     public void testUpdateAction(){
         actionTree.updateAction();
@@ -119,6 +134,10 @@ public class TestActionTree {
     public void testGetPerformedAction(){
         assertEquals(0,actionTree.getPerformedAction());
     }
+
+    /**
+     * Tests tree initialization with different IDs
+     */
     @Test
     public void testID(){
         actionTree = new ActionTree(1);

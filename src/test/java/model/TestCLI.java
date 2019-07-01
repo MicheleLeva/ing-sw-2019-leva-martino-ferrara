@@ -10,7 +10,9 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 public class TestCLI {
-
+    /**
+     * Test getters
+     */
     @Test
     public void testGetColor(){
         assertEquals(CLI.getBlue(),CLI.getColor(PlayerColor.BLUE));
@@ -31,32 +33,53 @@ public class TestCLI {
         assertEquals("",CLI.getColor(SquareColor.WHITE));
 
     }
+    /**
+     * Test getters
+     */
     @Test
     public void testGetSkull(){
         assertNotNull(CLI.getSkull());
     }
+    /**
+     * Test getters
+     */
     @Test
     public void testGetResetString(){
         assertNotNull(CLI.getResetString());
         assertEquals("\u001B[0m",CLI.getResetString());
     }
+    /**
+     * Test getters
+     */
     @Test
     public void testGedDamage(){
         assertEquals("*",CLI.getDamage());
     }
+    /**
+     * Test getters
+     */
     @Test
     public void testGetBlue(){
         assertEquals("\u001B[34m",CLI.getBlue());
     }
+    /**
+     * Test getters
+     */
     @Test
     public void testGetRed(){
         assertEquals("\u001B[31m",CLI.getRed());
 
     }
+    /**
+     * Test getters
+     */
     @Test
     public void testGetYellow(){
         assertEquals("\u001B[33m",CLI.getYellow());
     }
+    /**
+     * Test getters
+     */
     @Test
     public void testColorMap(){
         CLI cli = new CLI();
@@ -70,6 +93,9 @@ public class TestCLI {
 
         assertNotNull(result);
     }
+    /**
+     * Test buildCLIMap
+     */
     @Test (expected =  java.io.IOException.class)
     public void testBuildCLIMap() throws IOException{
         CLI cli = new CLI();
