@@ -144,7 +144,7 @@ public class TestMap {
 
    @Test
     public void printMap(){
-        Map map4 = new Map(3);
+        Map map4 = new Map(4);
         System.out.print(map4.printMap());
    }
 
