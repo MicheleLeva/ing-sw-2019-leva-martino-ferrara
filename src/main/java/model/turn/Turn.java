@@ -161,6 +161,8 @@ public class Turn {
             getModel().resetCurrent();
             //grenadePeopleArray is populated by model.addDamage if the hit player has a TagbackGranade
             if (!getModel().getTurnCurrent().getGrenadePeopleArray().isEmpty()){
+                String message = "The players you hit are choosing if they want to use a Tagback Grenade!";
+                getModel().getGameNotifier().notifyPlayer(message,currentPlayerColor);
                 for (Player grenadePlayer : getModel().getTurnCurrent().getGrenadePeopleArray()){
                     getModel().tagbackGranadeRequest(grenadePlayer, currentPlayer);
                 }

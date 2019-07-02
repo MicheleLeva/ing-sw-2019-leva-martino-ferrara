@@ -163,6 +163,7 @@ public class CLI {
         coloredMap = coloredMap.replaceAll("S","  ");
         coloredMap = coloredMap.replaceAll("G",CONT_GREEN +"  " +RESET);
         coloredMap = coloredMap.replaceAll("P", CONT_PURPLE + "  " +RESET);
+        coloredMap = coloredMap.replaceAll("x","|");
         return coloredMap;
     }
 

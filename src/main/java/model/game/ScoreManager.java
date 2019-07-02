@@ -125,7 +125,11 @@ public class ScoreManager {
             playerRank.remove(playerColor);
         }
         model.getGameNotifier().notifyGeneric(showPlayerRank());
-        model.getGameNotifier().notifyGeneric(getWinner());
+        try{
+            model.getGameNotifier().notifyGeneric(getWinner());
+        } catch (Exception e){
+            System.out.print("");
+        }
 
     }
 
