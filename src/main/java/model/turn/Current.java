@@ -189,6 +189,10 @@ public class Current {
     public void setReloadableWeapon(ArrayList<Weapon> reloadableWeapon){
         this.reloadableWeapon = reloadableWeapon;
     }
+
+    public ArrayList<Weapon> getReloadableWeapon(){
+        return this.reloadableWeapon;
+    }
     public void setPickUpableWeapon(ArrayList<Weapon> pickUpableWeapon){this.pickUpableWeapon = pickUpableWeapon;}
     public ArrayList<Player> getAvailableAlternativeTargets() {
         return availableAlternativeTargets;

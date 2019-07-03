@@ -72,12 +72,12 @@ public class WeaponController extends Controller implements WeaponObserver {
         PlayerColor currentPlayerColor = weaponReloadEvent.getPlayerColor();
         Player currentPlayer = getModel().getPlayer(currentPlayerColor);
         ArrayList<Weapon> reloadableWeapon = currentPlayer.getResources().getReloadableWeapon();
-        if(input < 1 || input > reloadableWeapon.size()){
+        if(input < 1 || input > getModel().getCurrent().getReloadableWeapon().size()){
             weaponReloadEvent.getView().reportError("Invalid input.\n");
             getModel().requestWeaponReload(currentPlayerColor);
         }
         else{
-            Weapon chosenWeapon = reloadableWeapon.get(input - 1);
+            Weapon chosenWeapon = getModel().getCurrent().getReloadableWeapon().get(input - 1);
             getModel().getCurrent().setSelectedWeapon(chosenWeapon);
             getModel().askReloadPayment(currentPlayer,chosenWeapon);
         }

@@ -76,8 +76,8 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
      * @param powerUp of the player.
      */
     public void requestWeaponReload(PlayerColor playerColor , String weapon , String ammo , String powerUp){
-        String message;
-        message = weapon;
+        String message = "Choose a weapon to reload:\n";
+        message = message + weapon;
         message = message +"Available ammo: " +ammo +".\n";
         message = message +"Available powerUp: " +powerUp +"\n";
 
