@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Class that manages the turn counters.
+ * @author Stefano Martino, Michele Leva, Marco Maria Ferrara
  */
 public class TurnManager {
 

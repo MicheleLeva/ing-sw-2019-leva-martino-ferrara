@@ -7,11 +7,12 @@ import model.cards.weapons.Weapon;
 import java.util.HashMap;
 
 
-
+/**
+ * Square Class. It represents the map square.
+ * @author Stefano Martino, Michele Leva, Marco Maria Ferrara
+ */
 public class Square {
-    /**
-     * Square Class. It represents the map square.
-     */
+
     private HashMap<Direction, Square> sides;
     public boolean isSpawn;
     private SquareColor color;

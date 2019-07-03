@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Support class for the turn.
  * Contains attributes used to save previous choices of a player for the creation of an action.
+ * @author Stefano Martino, Michele Leva, Marco Maria Ferrara
  */
 public class Current {
     ///For PowerUps///

@@ -8,6 +8,7 @@ import model.player.PlayerColor;
 
 /**
  * Class of the Tagback Grenade PowerUp
+ * @author Michele Leva
  */
 public class TagbackGrenade extends PowerUp {
 
