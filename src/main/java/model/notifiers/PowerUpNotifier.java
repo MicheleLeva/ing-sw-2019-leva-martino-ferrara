@@ -9,6 +9,10 @@ import utils.ViewObservable;
 
 public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
     /**
+     * PowerUp Notifier Class
+     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+     */
+    /**
      * Sends the list of powerUps to choose from to the players' views
      * @param playerColor color of the current player
      * @param availablePowerUp list of powerUps the player can choose from

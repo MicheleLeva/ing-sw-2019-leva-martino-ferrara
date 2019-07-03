@@ -6,6 +6,7 @@ public class KillShotCell {
     /**
      * KillShotCell Class
      * it models the single cell on the KillShotTrack
+     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
      */
     private int tokenNumber;
     private PlayerColor tokenColor;

@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 /**
  * Representation of a player's ammunition cubes
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class Ammo {
 

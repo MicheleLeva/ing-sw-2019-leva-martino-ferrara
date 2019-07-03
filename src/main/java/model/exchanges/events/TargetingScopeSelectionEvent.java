@@ -5,6 +5,7 @@ import view.View;
 /**
  * Event sent by the PowerUp View and received from the PowerUp Controller to choose which target to
  * use the TargetingScope on
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class TargetingScopeSelectionEvent extends Event{
 

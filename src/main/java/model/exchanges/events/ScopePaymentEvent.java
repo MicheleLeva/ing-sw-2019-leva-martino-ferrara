@@ -5,6 +5,7 @@ import view.View;
 /**
  * Event sent by the PowerUp View and received from the PowerUp Controller to choose which color of cube
  * to use to pay the Targeting Scope PowerUp
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class ScopePaymentEvent extends Event {
     private char choice;

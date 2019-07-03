@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Representation of the player's Resources, which are: Weapons, Ammunition and PowerUps
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class Resources {
     private Ammo availableAmmo;

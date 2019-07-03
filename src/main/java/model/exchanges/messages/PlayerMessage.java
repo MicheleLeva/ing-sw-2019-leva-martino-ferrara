@@ -2,6 +2,7 @@ package model.exchanges.messages;
 
 /**
  * Abstract class extended by all other messages
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public abstract class PlayerMessage {
     private final String message;

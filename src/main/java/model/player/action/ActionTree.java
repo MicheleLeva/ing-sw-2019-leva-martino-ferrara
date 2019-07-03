@@ -19,6 +19,7 @@ import java.util.List;
  *  3: tree with two powered actions
  *  4: frenzy tree for players whose turn comes after the first player's one
  *  5: frenzy tree for players whose turn comes before the first player's one
+ *  @author Stefano Martino
  */
 public class ActionTree {
     private final int ID;

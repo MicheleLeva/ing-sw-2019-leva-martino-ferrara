@@ -18,6 +18,7 @@ public class Reload extends Action {
      * @param playerColor the color of the player who performed the action
      * @throws NoReloadableWeaponsException when the player hasn't any reloadable weapons
      * @throws InsufficientAmmoException when the player hasn't enough ammo to reload the weapon
+     * @author Stefano Martino
      */
     @Override
     public void perform(Model model, PlayerColor playerColor) throws NoReloadableWeaponsException,InsufficientAmmoException {

@@ -11,6 +11,7 @@ public class KillShotTrack {
     /**
      * KillShotTrack Class
      * It represents the game KillShotTrack
+     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
      */
     private KillShotCell[] killShotTrack;
     private int lastIndex;

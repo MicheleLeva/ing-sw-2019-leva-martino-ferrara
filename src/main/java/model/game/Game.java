@@ -16,6 +16,7 @@ import java.util.*;
 public class Game implements Runnable{
     /**
      * Main class which runs the game
+     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
      */
     private final int gameID;
 

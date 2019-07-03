@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * Event sent by the Weapon View and received from the Weapon Controller to choose which of the given
  * targets to hit
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class TargetsSelectionEvent extends Event {
     private ArrayList<Integer> selectedTargets;

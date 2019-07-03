@@ -2,6 +2,7 @@ package model.player;
 
 /**
  * Represents a player's score
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class Score {
 

@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 public class CLI {
     /**
      * Command Line Input Class
+     * @author Stefano Martino
      */
     private static final String RESET = "\u001B[0m";
     private static final String RED = "\u001B[31m";

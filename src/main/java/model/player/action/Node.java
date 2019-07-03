@@ -6,6 +6,7 @@ import java.util.List;
 public class Node<T> {
     /**
      * Node Class. It represents a node of the actionTree
+     * @author Stefano Martino
      */
     private T data;
 
