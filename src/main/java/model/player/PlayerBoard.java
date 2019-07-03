@@ -3,6 +3,7 @@ package model.player;
 
 /**
  * Representation of the player's Board
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class PlayerBoard {
 

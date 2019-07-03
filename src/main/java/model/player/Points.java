@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Class that manages the available points on the player's Board
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class Points {
 

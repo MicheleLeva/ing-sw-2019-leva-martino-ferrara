@@ -4,6 +4,7 @@ import model.game.Ammo;
 
 /**
  * Representation of a generic Ammo Card
+ * @author Stefano Martino, Michele Leva, Marco Maria Ferrara
  */
 public class AmmoCard extends Card{
 

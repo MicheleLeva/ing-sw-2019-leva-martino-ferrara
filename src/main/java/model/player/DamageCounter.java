@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Representation of the player's received damage
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class DamageCounter {
 

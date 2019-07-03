@@ -5,6 +5,7 @@ import view.View;
 /**
  * Event sent by the Weapon View and received from the Weapon Controller to choose which weapon in the
  * current player's resources to swap with one on the current spawn point
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class WeaponSwapEvent extends Event {
     private final int input;

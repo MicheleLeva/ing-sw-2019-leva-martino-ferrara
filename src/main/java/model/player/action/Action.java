@@ -5,6 +5,7 @@ import model.player.PlayerColor;
 
 /**
  * Abstract class that represents the player's action
+ * @author Stefano Martino
  */
 public abstract class Action {
     /**

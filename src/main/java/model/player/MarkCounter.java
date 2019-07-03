@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 /**
  * Representation of the player's list of marks
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class MarkCounter {
 

@@ -7,6 +7,7 @@ import model.player.PlayerColor;
 
 /**
  * Power Up Abstract class
+ * @author Stefano Martino, Michele Leva, Marco Maria Ferrara
  */
 public abstract class PowerUp extends Card {
 

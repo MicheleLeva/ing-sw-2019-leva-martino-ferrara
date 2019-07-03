@@ -12,6 +12,7 @@ public class Shoot extends Action {
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
      * @throws NoReloadedWeaponsExceptions exception thrown if the player doesn't have loaded weapons
+     * @author Stefano Martino
      */
     @Override
     public void perform (Model model, PlayerColor playerColor) throws NoReloadedWeaponsExceptions {

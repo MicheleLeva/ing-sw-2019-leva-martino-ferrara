@@ -7,6 +7,7 @@ import model.player.PlayerColor;
 public class GameBoard {
     /**
      * Gameboard Class. It models Adrenaline's gameboard
+     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
      */
     private KillShotTrack killShotTrack;
     private Map map;

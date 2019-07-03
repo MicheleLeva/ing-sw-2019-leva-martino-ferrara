@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Class for all the available maps for the game
+ * @author Marco Maria Ferrara, Stefano Martino
  */
 public class Map {
 

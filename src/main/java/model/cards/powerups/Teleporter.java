@@ -5,6 +5,7 @@ import model.player.PlayerColor;
 
 /**
  * Class of the Teleporter Power Up
+ * @author Marco Maria Ferrara
  */
 public class Teleporter extends PowerUp {
 

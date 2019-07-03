@@ -10,7 +10,10 @@ import utils.ViewObservable;
 import java.util.ArrayList;
 
 public class GameNotifier extends ViewObservable<PlayerMessage> {
-
+    /**
+     * Game Notifier
+     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+     */
 
     /**
      * Notifies all players that the current player has used the Run action and tells them where he moved.

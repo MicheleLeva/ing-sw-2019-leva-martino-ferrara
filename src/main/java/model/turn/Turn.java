@@ -21,6 +21,7 @@ import java.util.ArrayList;
 /**
  * Class that manages the turn flow.
  * It is initialized by the Game class which also calls its methods.
+ * @author Stefano Martino, Michele Leva, Marco Maria Ferrara
  */
 public class Turn {
 

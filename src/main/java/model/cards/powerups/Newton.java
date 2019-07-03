@@ -6,6 +6,7 @@ import model.player.PlayerColor;
 
 /**
  * Class of the Newton Power Up
+ * @author Stefano Martino, Michele Leva, Marco Maria Ferrara
  */
 public class Newton extends PowerUp {
 

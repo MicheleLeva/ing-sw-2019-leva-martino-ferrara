@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * KeyMap Class
  * Contains the binding between keys and moves
+ * @author Stefano Martino
  */
 public class KeyMap {
 
