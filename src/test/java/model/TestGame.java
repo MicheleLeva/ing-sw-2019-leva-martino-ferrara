@@ -12,6 +12,10 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Tests the methods of the Game class
+ * @author Michele Leva
+ */
 public class TestGame {
 
     private Game gameTest;

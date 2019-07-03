@@ -15,6 +15,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Test the initialization and the methods of the Map class
+ * @author Marco Maria Ferrara
+ */
 public class TestMap {
     private Map map;
 

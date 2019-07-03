@@ -12,6 +12,7 @@ import utils.notify.ActionNotify;
 /**
  * Handler for the "Action" message and event objects.
  * It works both as a Controller and as a Model for the View.
+ * @author Michele Leva
  */
 public class RemoteActionHandler extends ActionNotify implements Observer<Event> {
 

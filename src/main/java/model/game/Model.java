@@ -23,11 +23,12 @@ import model.turn.Current;
 import model.turn.TurnCurrent;
 import model.turn.TurnManager;
 
+/**
+ * Model Class. It represents the current game's state.
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class Model {
-    /**
-     * Model Class. It represents the current game's state.
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     private final HashMap<PlayerColor, Player> players = new HashMap<>();
 
     private GameBoard gameBoard;

@@ -12,6 +12,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the Shoot class
+ * @author Stefano Martino
+ */
 public class TestShoot {
     private Player playerTest;
     private Model modelTest;

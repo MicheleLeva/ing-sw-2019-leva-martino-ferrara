@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * MVC Controller for the weapon-related actions
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class WeaponController extends Controller implements WeaponObserver {
 

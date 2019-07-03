@@ -17,6 +17,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the Update methods of the WeaponController class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestWeaponController {
 
     private Ammo ammo = new Ammo(0,0,0);

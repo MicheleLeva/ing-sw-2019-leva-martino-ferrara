@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 /**
  * Class for the management of the socket connection with a client.
+ * @author Michele Leva
  */
 public class SocketClientConnection extends Observable<String> implements ClientConnection,Runnable{
 

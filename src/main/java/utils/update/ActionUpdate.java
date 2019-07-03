@@ -6,6 +6,7 @@ import model.exchanges.messages.VoteMapMessage;
 
 /**
  * Observer interface implemented by the ActionView
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public interface ActionUpdate {
     void update(ChooseActionMessage chooseActionMessage);

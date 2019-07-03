@@ -2,6 +2,11 @@ package model.player.action;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the Node class
+ * @author Stefano Martino
+ */
 public class TestNode {
     /**
      * Tests node properties

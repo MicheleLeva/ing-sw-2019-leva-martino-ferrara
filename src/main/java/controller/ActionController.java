@@ -15,7 +15,8 @@ import utils.observer.ActionObserver;
 import view.View;
 
 /**
- *MVC Controller for the actions selection
+ * MVC Controller for the actions selection
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class ActionController extends Controller implements ActionObserver {
     /**

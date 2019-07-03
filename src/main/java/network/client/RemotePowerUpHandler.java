@@ -10,6 +10,7 @@ import utils.notify.PowerUpNotify;
 /**
  * Handler for the "PowerUp" Message and Event objects.
  * It works both as a Controller and as a Model for the View.
+ * @author Michele Leva
  */
 public class RemotePowerUpHandler extends PowerUpNotify implements Observer<Event> {
 

@@ -4,6 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
+/**
+ * Test the methods of the ActionTree class
+ * @author Stefano Martino
+ */
 public class TestActionTree {
 
     private ActionTree actionTree;

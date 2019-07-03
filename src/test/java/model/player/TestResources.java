@@ -13,6 +13,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the Resources class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestResources {
 
     private Resources resourcesTest;

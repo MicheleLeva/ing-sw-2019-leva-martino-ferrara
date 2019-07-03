@@ -32,37 +32,31 @@ public class Map {
     public Map(int chosenMap) {
         String JSONpath;
         String CLIMapPath;
-        String jarPath;
         String jarCLIPath;
 
         if(chosenMap==1) {
             JSONpath = "src/resources/map1.json";
             CLIMapPath = "src/resources/map1.txt";
-            jarPath = "/map1.json";
             jarCLIPath = "/map1.txt";
         }
         else if(chosenMap==2) {
             JSONpath = "src/resources/map2.json";
             CLIMapPath = "src/resources/map2.txt";
-            jarPath = "/map2.json";
             jarCLIPath = "/map2.txt";
         }
         else if(chosenMap==3) {
             JSONpath = "src/resources/map3.json";
             CLIMapPath = "src/resources/map3.txt";
-            jarPath = "/map3.json";
             jarCLIPath = "/map3.txt";
         }
         else if(chosenMap==4) {
             JSONpath = "src/resources/map4.json";
             CLIMapPath = "src/resources/map4.txt";
-            jarPath = "/map4.json";
             jarCLIPath = "/map4.txt";
         }
         else {
             JSONpath = "/src/resources/map2.json";
             CLIMapPath = "src/resources/map2.txt";
-            jarPath = "/map2.json";
             jarCLIPath = "/map2.txt";
         }
 
@@ -85,7 +79,10 @@ public class Map {
                 myJo = (JSONObject) obj;
                 mapCLI = cli.buildCLIMap(CLIMapPath);
             } catch (FileNotFoundException e) {
-                InputStream configStream = this.getClass().getResourceAsStream(jarPath);
+                String[] splitPath = JSONpath.split("/");
+                String newPath = splitPath[splitPath.length - 1];
+                newPath = "/" + newPath;
+                InputStream configStream = this.getClass().getResourceAsStream(newPath);
                 mapCLI = cli.buildCLIMap(jarCLIPath);
                 myJo = (JSONObject)parser.parse(
                         new InputStreamReader(configStream, StandardCharsets.UTF_8));

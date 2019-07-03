@@ -12,6 +12,7 @@ import utils.notify.GameNotify;
 /**
  * Handler for the "Game" Message and Event objects.
  * It works both as a Controller and as a Model for the View.
+ * @author Michele Leva
  */
 public class RemoteGameHandler extends GameNotify implements Observer<Event> {
 

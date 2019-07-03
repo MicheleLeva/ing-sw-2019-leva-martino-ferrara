@@ -4,6 +4,7 @@ import model.exchanges.events.*;
 
 /**
  * Observer interface implemented by the WeaponController
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public interface WeaponObserver {
     void update(WeaponSelectionEvent event);

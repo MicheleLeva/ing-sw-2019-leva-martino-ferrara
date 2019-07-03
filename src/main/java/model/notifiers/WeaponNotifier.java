@@ -9,11 +9,12 @@ import utils.ViewObservable;
 
 import java.util.ArrayList;
 
+/**
+ * Weapon Notifier Class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class WeaponNotifier extends ViewObservable<PlayerMessage> {
-    /**
-     * Weapon Notifier Class
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     private final String POWERUP_PAYMENT = "Select the indexes of the power-ups to pay with. Insert 0 to end the selection:\n";
 
     /**

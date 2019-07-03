@@ -17,6 +17,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the Update methods of the PowerUpController class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestPowerUpController {
 
     private Model model;

@@ -10,6 +10,7 @@ import utils.notify.WeaponNotify;
 /**
  * Handler for the "Weapon" Message and Event objects.
  * It works both as a Controller and as a Model for the View.
+ * @author Michele Leva
  */
 public class RemoteWeaponHandler extends WeaponNotify implements Observer<Event> {
 

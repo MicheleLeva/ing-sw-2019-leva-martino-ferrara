@@ -10,6 +10,7 @@ import utils.update.PowerUpUpdate;
  * View which manages the PowerUp Exchanges
  * each update prints the contents of the given message
  * and collects the inputs of the player to create a new event to be sent to the server
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class PowerUpView extends Observable<Event> implements PowerUpUpdate {
     private final PlayerColor playerColor;

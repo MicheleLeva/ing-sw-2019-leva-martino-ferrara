@@ -4,6 +4,7 @@ import model.exchanges.events.*;
 
 /**
  * Observer interface implemented by the PowerUpController
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public interface PowerUpObserver {
     void update(ChoosePowerUpEvent choosePowerUpEvent);

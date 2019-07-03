@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Observable class used by the RemoteActionHandler
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class ActionNotify {
     public final Map<PlayerColor, ActionUpdate> listeners = new HashMap<>();

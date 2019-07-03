@@ -3,7 +3,8 @@ package network;
 import utils.Observer;
 
 /**
- * Interface fot the connection used by the server and the client.
+ * Interface for the connection used by the server and the client.
+ * @author Michele Leva
  */
 public interface ClientConnection {
 

@@ -14,6 +14,10 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+/**
+ * Tests the Update methods of the ActionController class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestActionController {
 
     private Player player1 ;

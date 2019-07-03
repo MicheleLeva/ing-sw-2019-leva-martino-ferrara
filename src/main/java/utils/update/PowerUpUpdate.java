@@ -4,6 +4,7 @@ import model.exchanges.messages.*;
 
 /**
  * Observer interface implemented by the PowerUpView
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public interface PowerUpUpdate {
     void update(ChoosePowerUpMessage choosePowerUpMessage);

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the correct initialization of the Controller class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestController {
 
     /**

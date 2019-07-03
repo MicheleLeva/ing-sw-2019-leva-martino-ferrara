@@ -9,6 +9,10 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+/**
+ * Tests the methods of the TurnManager class
+ * Stefano Martino, Michele Leva, Marco Maria Ferrara
+ */
 public class TestTurnManager {
 
     private Player player1 ;

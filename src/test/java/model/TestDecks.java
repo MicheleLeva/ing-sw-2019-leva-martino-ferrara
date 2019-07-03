@@ -13,6 +13,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * Tests the methods of the Decks class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestDecks {
     private Decks decksTest;
     private Model modelTest;

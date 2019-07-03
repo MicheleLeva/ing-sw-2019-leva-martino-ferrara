@@ -9,6 +9,7 @@ import view.View;
 /**
  * Auxiliary class of the RemoteView that forwards "Game" messages from the Model to the client
  * and events in the opposite direction
+ * @author Michele Leva
  */
 public class RemoteGameView implements Observer<PlayerMessage> {
     private ClientConnection clientConnection;

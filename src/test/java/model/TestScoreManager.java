@@ -1,6 +1,5 @@
 package model;
 
-import model.game.KillShotCell;
 import model.game.Model;
 import model.game.ScoreManager;
 import model.player.Player;
@@ -11,6 +10,11 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the ScoreManager class
+ * @author Stefano Martino
+ */
 public class TestScoreManager {
     private ScoreManager scoreManagerTest;
     private Player player1;

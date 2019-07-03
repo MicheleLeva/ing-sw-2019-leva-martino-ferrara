@@ -5,6 +5,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the MarkCounter class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestMarkCounter {
 
     private MarkCounter markCounterTest;

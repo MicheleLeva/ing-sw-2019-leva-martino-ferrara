@@ -4,6 +4,7 @@ import model.exchanges.messages.*;
 
 /**
  * Observer interface implemented by the WeaponView
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public interface WeaponUpdate {
     void update(ShowWeaponCardsMessage weaponCardsMessage);

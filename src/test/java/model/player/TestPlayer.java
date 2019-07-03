@@ -7,6 +7,10 @@ import org.junit.Test;
 import static model.player.PlayerColor.YELLOW;
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the Player class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestPlayer {
 
     private Player playerTest;

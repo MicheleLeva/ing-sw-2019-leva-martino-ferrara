@@ -13,6 +13,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the effects of the Power Up cards
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestPowerUp {
     private Model model;
     private ArrayList<Player> players;

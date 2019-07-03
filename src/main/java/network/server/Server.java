@@ -13,7 +13,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import utils.observable.PowerUpObservable;
 import utils.observer.ActionObserver;
 import utils.observer.PowerUpObserver;
 import utils.observer.WeaponObserver;
@@ -29,6 +28,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Server class which manages the games, the connections and contains the main thread.
+ * @author Michele Leva
  */
 public class Server {
     private ServerSocket serverSocket;

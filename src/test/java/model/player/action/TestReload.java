@@ -1,4 +1,5 @@
 package model.player.action;
+
 import model.game.Ammo;
 import model.game.Model;
 import model.adrenaline_exceptions.InsufficientAmmoException;
@@ -13,6 +14,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the Reload class
+ * @author Stefano Martino
+ */
 public class TestReload {
     private Player playerTest;
     private Model modelTest;

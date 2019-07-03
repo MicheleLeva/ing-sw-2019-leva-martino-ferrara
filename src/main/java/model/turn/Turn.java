@@ -58,27 +58,24 @@ public class Turn {
      */
     public Turn(Model model, Boolean frenzy){
         JSONParser parser = new JSONParser();
+        JSONObject myJo = new JSONObject();
         try {
-            JSONObject myJo;
-            try {
-                Object obj = parser.parse(new FileReader("src/resources/constants.json"));
-                myJo = (JSONObject) obj;
-            } catch (FileNotFoundException e) {
-                InputStream configStream = this.getClass().getResourceAsStream("/constants.json");
-                myJo = (JSONObject)parser.parse(
-                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
-            }
-
-            JSONArray myArray = (JSONArray) myJo.get("constants");
-            JSONObject temp = (JSONObject)myArray.get(0);
-            time = (long)temp.get("TurnTimer");
-            grenadeTime = (long)temp.get("GrenadeTimer");
-            respawnTime = (long)temp.get("RespawnTimer");
-
-
+            Object obj = parser.parse(new FileReader("src/resources/constants.json"));
+            myJo = (JSONObject) obj;
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            try {
+                InputStream configStream = this.getClass().getResourceAsStream("/constants.json");
+                myJo = (JSONObject) parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            } catch (IOException | ParseException f) {
+                f.printStackTrace();
+            }
         }
+        JSONArray myArray = (JSONArray) myJo.get("constants");
+        JSONObject temp = (JSONObject)myArray.get(0);
+        time = (long)temp.get("TurnTimer");
+        grenadeTime = (long)temp.get("GrenadeTimer");
+        respawnTime = (long)temp.get("RespawnTimer");
         this.model = model;
         setFrenzy(frenzy);
     }

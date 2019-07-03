@@ -12,6 +12,7 @@ import view.View;
 /**
  * Auxiliary class of the RemoteView that forwards "Action" messages from the Model to the client
  * and events in the opposite direction
+ * @author Michele Leva
  */
 public class RemoteActionView  extends ActionObservable implements Observer<PlayerMessage>{
 

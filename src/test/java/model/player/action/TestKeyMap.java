@@ -5,6 +5,11 @@ import org.junit.Test;
 
 
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the KeyMap class
+ * @author Stefano Martino
+ */
 public class TestKeyMap {
     private KeyMap keyMap;
     @Before

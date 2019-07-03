@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 /**
  * Class that obtains the message from the socket and sends it to the correct handler to be handled.
+ * @author Michele Leva
  */
 public class NetworkHandler implements Observer<String> {
 

@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Custom Observable class used by the Model Notifiers to send messages to different Observers by their PlayerColor
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class ViewObservable<T> {
 

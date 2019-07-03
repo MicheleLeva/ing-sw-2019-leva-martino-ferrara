@@ -4,6 +4,7 @@ import model.game.Model;
 
 /**
  * Class that all the specific MVC controllers extend
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class Controller {
 

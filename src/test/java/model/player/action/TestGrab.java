@@ -17,6 +17,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the Grab class
+ * @author Stefano Martino
+ */
 public class TestGrab {
     private Player playerTest;
     private Model modelTest;

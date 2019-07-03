@@ -17,11 +17,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.ArrayList;
 
+/**
+ * Decks class. It models all the game's decks.
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class Decks {
-    /**
-     * Decks class. It models all the game's decks.
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     private ArrayList<Weapon> weaponsDeck;
     private ArrayList<PowerUp> powerUpDeck;
     private ArrayList<AmmoCard> ammoCardDeck;

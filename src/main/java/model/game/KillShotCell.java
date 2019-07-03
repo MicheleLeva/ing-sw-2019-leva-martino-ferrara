@@ -2,12 +2,13 @@ package model.game;
 
 import model.player.PlayerColor;
 
+/**
+ * KillShotCell Class
+ * it models the single cell on the KillShotTrack
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class KillShotCell {
-    /**
-     * KillShotCell Class
-     * it models the single cell on the KillShotTrack
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     private int tokenNumber;
     private PlayerColor tokenColor;
     private boolean isSkull;

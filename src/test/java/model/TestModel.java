@@ -21,7 +21,10 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Tests the methods of the Model class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestModel {
     private ArrayList<Player> players = new ArrayList<>();
     private Player player1 ;

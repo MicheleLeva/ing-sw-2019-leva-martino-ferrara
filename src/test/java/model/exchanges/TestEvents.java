@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Tests that all the events used for the game are created correctly
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class TestEvents {
 

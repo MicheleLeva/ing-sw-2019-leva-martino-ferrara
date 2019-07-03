@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Observable class used by the RemoteWeaponView
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class WeaponObservable {
     public final List<WeaponObserver> listeners = new ArrayList<>();

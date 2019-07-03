@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 /**
  * Tests that all the messages used for the game are created correctly
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class TestMessages {
 

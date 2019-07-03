@@ -4,11 +4,12 @@ import model.map.Map;
 import model.map.Square;
 import model.player.PlayerColor;
 
+/**
+ * GameBoard Class. It models Adrenaline's game board
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class GameBoard {
-    /**
-     * Gameboard Class. It models Adrenaline's gameboard
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     private KillShotTrack killShotTrack;
     private Map map;
     private Decks decks;

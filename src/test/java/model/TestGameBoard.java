@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the GameBoard class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestGameBoard {
 
     private GameBoard gameBoardTest;

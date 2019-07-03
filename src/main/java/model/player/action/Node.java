@@ -3,11 +3,12 @@ package model.player.action;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Node Class. It represents a node of the actionTree
+ * @author Stefano Martino
+ */
 public class Node<T> {
-    /**
-     * Node Class. It represents a node of the actionTree
-     * @author Stefano Martino
-     */
+
     private T data;
 
     private List<Node<T>> children = new ArrayList<>();

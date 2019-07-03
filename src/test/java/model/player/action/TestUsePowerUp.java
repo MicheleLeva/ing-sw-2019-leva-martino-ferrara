@@ -12,6 +12,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the UsePowerUp class
+ * @author Stefano Martino
+ */
 public class TestUsePowerUp {
     private Player playerTest;
     private Model modelTest;

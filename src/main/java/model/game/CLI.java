@@ -7,11 +7,12 @@ import model.player.PlayerColor;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Command Line Input Class
+ * @author Stefano Martino
+ */
 public class CLI {
-    /**
-     * Command Line Input Class
-     * @author Stefano Martino
-     */
+
     private static final String RESET = "\u001B[0m";
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";

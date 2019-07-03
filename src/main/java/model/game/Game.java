@@ -12,12 +12,12 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-
+/**
+ * Main class which runs the game
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class Game implements Runnable{
-    /**
-     * Main class which runs the game
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     private final int gameID;
 
     private final Model model;
@@ -119,6 +119,10 @@ public class Game implements Runnable{
             };
             isMapTimerOn = true;
             mapTimer.schedule(turnMapTimerOff, mapTime);
+
+            if (getModel().getEachPlayer().size() == 6){
+                isMapTimerOn = false;
+            }
 
             model.getTurnCurrent().setReceivedInput(false);
             while (!model.getTurnCurrent().isReceivedInput()){

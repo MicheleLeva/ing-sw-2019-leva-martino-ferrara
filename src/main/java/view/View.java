@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 /**
  * Main View used as a CLI interface
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class View {
     private final ActionView actionView;

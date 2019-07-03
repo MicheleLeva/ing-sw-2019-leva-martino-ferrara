@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Support class that checks the validity of multiple actions
+ * @author Stefano Martino, Marco Maria Ferrara
  */
 public class Checks {
 

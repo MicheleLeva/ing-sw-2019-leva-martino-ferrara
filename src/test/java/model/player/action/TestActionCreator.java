@@ -4,6 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the class ActionCreator
+ * @author Stefano Martino
+ */
 public class TestActionCreator {
     private KeyMap keyMap;
     @Before

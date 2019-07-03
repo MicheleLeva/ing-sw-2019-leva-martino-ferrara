@@ -5,6 +5,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test the methods of the Points class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestPoints {
 
     private Points pointsTest;

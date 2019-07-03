@@ -14,6 +14,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the behaviour of the methods in the class Checks
+ * @author Stefano Martino, Marco Maria Ferrara
+ */
 public class TestChecks {
 
 

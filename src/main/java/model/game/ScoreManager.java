@@ -6,12 +6,13 @@ import model.player.PlayerColor;
 
 import java.util.*;
 
+/**
+ * Score Manager Class
+ * @author Stefano Martino
+ */
 public class ScoreManager {
 
-    /**
-     * Score Manager Class
-     * @author Stefano Martino
-     */
+
     private final Model model;
     //rank of the player
     private ArrayList<PlayerColor> playerRank = new ArrayList<>();

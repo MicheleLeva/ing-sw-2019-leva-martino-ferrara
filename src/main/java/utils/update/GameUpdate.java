@@ -6,6 +6,7 @@ import model.exchanges.messages.ShootMessage;
 
 /**
  * Observer interface implemented by the GameView
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public interface GameUpdate {
     void update(GenericMessage message);

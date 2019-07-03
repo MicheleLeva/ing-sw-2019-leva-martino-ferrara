@@ -1,12 +1,11 @@
 package model.map;
 
 /**
- * List of cardinal directions
+ * Direction Enum. It represents the directions of the side of a square on the map.
  * @author Marco Maria Ferrara
  */
 public enum Direction {
-    /**Direction Class. It represents the direction of the square on the map.
-     */
+
     NORTH,
     SOUTH,
     EAST,

@@ -5,6 +5,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the PlayerBoard class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestPlayerBoard {
 
     private PlayerBoard playerBoardTest;

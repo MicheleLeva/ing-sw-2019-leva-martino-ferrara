@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Observable class used by the RemoteWeaponHandler
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class WeaponNotify {
     public final Map<PlayerColor,WeaponUpdate> listeners = new HashMap<>();

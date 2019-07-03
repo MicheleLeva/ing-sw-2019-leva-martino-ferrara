@@ -10,6 +10,7 @@ import view.View;
 /**
  * Auxiliary class of the RemoteView that forwards "PowerUp" messages from the Model to the client
  * and events in the opposite direction
+ * @author Michele Leva
  */
 public class RemotePowerUpView extends PowerUpObservable implements Observer<PlayerMessage> {
 

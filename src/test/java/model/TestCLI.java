@@ -9,6 +9,11 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the CLI class
+ * @author Stefano Martino
+ */
 public class TestCLI {
     /**
      * Test getters

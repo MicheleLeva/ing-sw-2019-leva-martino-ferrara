@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Standard Observable class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class Observable<T> {
 

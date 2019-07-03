@@ -12,6 +12,11 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+
+/**
+ * Tests the methods of the KillShotTrack class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestKillShotTrack {
 
     private KillShotTrack killShotTrackTest;

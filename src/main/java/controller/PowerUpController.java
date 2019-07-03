@@ -17,7 +17,8 @@ import utils.observer.PowerUpObserver;
 import java.util.ArrayList;
 
 /**
- *MVC Controller for the powerUp-related actions
+ * MVC Controller for the powerUp-related actions
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class PowerUpController extends Controller implements PowerUpObserver {
     public PowerUpController(Model model) {

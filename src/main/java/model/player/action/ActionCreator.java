@@ -1,9 +1,9 @@
 package model.player.action;
-
+/**
+ * @author Stefano Martino
+ */
 public class ActionCreator {
-    /**
-     * @author Stefano Martino
-     */
+
     /**
      * This static method returns the action based upon the player's input
      * @param move the player's input

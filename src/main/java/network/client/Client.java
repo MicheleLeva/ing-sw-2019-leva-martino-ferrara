@@ -18,6 +18,7 @@ import java.util.Scanner;
 /**
  * Main class of the client.
  * It works both as main thread and socket manager.
+ * @author Michele Leva
  */
 public class Client extends Observable<String> implements ClientConnection,Runnable{
 

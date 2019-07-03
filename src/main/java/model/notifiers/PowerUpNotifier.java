@@ -6,12 +6,12 @@ import model.player.Player;
 import model.player.PlayerColor;
 import utils.ViewObservable;
 
-
+/**
+ * PowerUp Notifier Class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
-    /**
-     * PowerUp Notifier Class
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     /**
      * Sends the list of powerUps to choose from to the players' views
      * @param playerColor color of the current player

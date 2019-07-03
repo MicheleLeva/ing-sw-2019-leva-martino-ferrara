@@ -4,11 +4,12 @@ import model.exchanges.messages.*;
 import model.player.PlayerColor;
 import utils.ViewObservable;
 
+/**
+ * Action notifier Class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class ActionNotifier extends ViewObservable<PlayerMessage> {
-    /**
-     * Action notifier Class
-     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
-     */
+
     /**
      * Sends a list of available actions to the current player's view
      * @param playerColor current player color

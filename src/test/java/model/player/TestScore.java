@@ -5,6 +5,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+
+/**
+ * Tests the methods of the Score class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestScore {
 
     private Score scoreTest;

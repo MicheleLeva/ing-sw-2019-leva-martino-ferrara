@@ -5,6 +5,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests the methods of the AmmoCard class
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
+ */
 public class TestAmmoCard {
 
     private AmmoCard ammoCard = new AmmoCard(new Ammo(1,1,1),true);
