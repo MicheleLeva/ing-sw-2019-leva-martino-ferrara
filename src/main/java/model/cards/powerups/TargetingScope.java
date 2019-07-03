@@ -6,6 +6,7 @@ import model.player.PlayerColor;
 
 /**
  * Class of the Targeting Scope Power Up
+ * @author Marco Maria Ferrara
  */
 public class TargetingScope  extends PowerUp{
 

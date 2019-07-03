@@ -7,6 +7,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Heatseeker weapon
+ * @author Marco Maria Ferrara
  */
 public class Heatseeker extends Weapon {
     public Heatseeker(String name,Ammo pickUpCost, Ammo baseCost, int baseDamage, int baseMarks,

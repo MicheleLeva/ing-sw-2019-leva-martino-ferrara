@@ -7,6 +7,7 @@ import java.util.List;
  * Node of the weapon tree that represents a single fire mode with its name and type(base, alternative, first optional
  * and second optional
  * @param <T> Will always be the FireMode class(representation of a particular fire mode)
+ * @author Marco Maria Ferrara
  */
 public class WeaponTreeNode<T> {
     private T data;

@@ -8,6 +8,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Grenade Launcher weapon
+ * @author Marco Maria Ferrara
  */
 public class Grenadelauncher extends WeaponOptional1 {
 
@@ -64,12 +65,12 @@ public class Grenadelauncher extends WeaponOptional1 {
             ArrayList<Square> squaresBase = getModel().getVisibleSquares(currentPlayer);
             for(Square square : squaresBase){
                 for(Player player : getModel().getAllSpawnedPlayers())
-                    if(player.getPosition() == square && !squares.contains(square))
+                    if(player!=currentPlayer && player.getPosition() == square && !squares.contains(square))
                         squares.add(square);
             }
-            squares.remove(currentPlayer.getPosition());
+
             if(squares.isEmpty()){
-                getModel().getGameNotifier().notifyPlayer("No available squares you missed the shot!!!",
+                getModel().getGameNotifier().notifyPlayer("No available squares, you missed the shot!!!",
                         currentPlayer.getPlayerColor());
                 getModel().payFireMode(currentPlayer,this);
                 getModel().getCurrent().incrementOptionalCounter1();

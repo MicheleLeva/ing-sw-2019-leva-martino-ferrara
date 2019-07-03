@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Representation of the Cyberblade weapon
+ * @author Marco Maria Ferrara
  */
 public class Cyberblade extends WeaponOptional2 {
 

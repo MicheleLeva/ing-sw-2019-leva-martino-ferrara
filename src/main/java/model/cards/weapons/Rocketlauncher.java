@@ -8,6 +8,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Rocket Launcher weapon
+ * @author Marco Maria Ferrara
  */
 public class Rocketlauncher extends WeaponOptional2 {
     public Rocketlauncher(String name, Ammo picUpCost, Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,

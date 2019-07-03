@@ -7,6 +7,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Thor weapon
+ * @author Marco Maria Ferrara
  */
 public class Thor extends WeaponOptional2 {
 
@@ -34,7 +35,7 @@ public class Thor extends WeaponOptional2 {
             endAskTargets(currentPlayer,availableTargets,this,this.getWeaponTree().getLastAction().getData().getType());
         }
         else
-            useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
+            useOptionalFireMode2(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets2());
     }
 
     /**

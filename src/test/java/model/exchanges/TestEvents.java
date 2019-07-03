@@ -1,6 +1,7 @@
 package model.exchanges;
 
 import model.exchanges.events.*;
+import model.exchanges.messages.ScopePaymentMessage;
 import model.player.PlayerColor;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,6 +93,9 @@ public class TestEvents {
 
         WeaponSwapEvent weaponSwapEvent = new WeaponSwapEvent(testView, 1);
         assertEquals("WeaponSwapEvent,1", weaponSwapEvent.toString());
+
+        ScopePaymentEvent scopePaymentEvent = new ScopePaymentEvent(testView, 'X');
+        assertEquals("ScopePaymentEvent,X", scopePaymentEvent.toString());
 
         assertNotNull(weaponSwapEvent.getPlayerColor());
         assertNotNull(weaponSwapEvent.getView());

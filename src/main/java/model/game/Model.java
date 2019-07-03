@@ -1228,32 +1228,35 @@ public class Model {
      * @param damage number of damage to deal to the target
      */
     public void addDamage(PlayerColor shooterColor, PlayerColor opponentColor, int damage) {
+        Player currentPlayer = getPlayer(shooterColor);
         Player opponent = getPlayer(opponentColor);
         int opponentDamage = opponent.getPlayerBoard().getDamageCounter().getDamage();
-        //move the shooter color's marks on the opponent damage board
-        int pastMarks = opponent.getPlayerBoard().getMarkCounter().getMarkFromColorAndRemove(shooterColor);
-        int givenDamage = Checks.givenDamage(opponentDamage, damage + pastMarks);
 
-        DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
-
-        if(!getCurrent().getAllShotPlayer().contains(opponent))
+        if(!getCurrent().getAllShotPlayer().contains(opponent)) {
             getCurrent().addShotPlayer(opponent);
+        }
+        if(damage != 0) {
+            //move the shooter color's marks on the opponent damage board
+            int pastMarks = opponent.getPlayerBoard().getMarkCounter().getMarkFromColorAndRemove(shooterColor);
+            int givenDamage = Checks.givenDamage(opponentDamage, damage + pastMarks);
 
-        if (givenDamage != 0) {
-            if(!getCurrent().getAllDamagedPlayer().contains(opponent))
-                getCurrent().addDamagedPlayer(opponent);
-            damageCounter.addDamage(shooterColor, givenDamage);
-            if (damageCounter.getDamage() >= Checks.getKillshot()) {
-                opponent.setKillshot(true);
+            DamageCounter damageCounter = opponent.getPlayerBoard().getDamageCounter();
 
-                if(damageCounter.getDamage() >= Checks.getKillshot()) {
-                    turnManager.addKillShot();
+            if (givenDamage != 0) {
+                if (!getCurrent().getAllDamagedPlayer().contains(opponent))
+                    getCurrent().addDamagedPlayer(opponent);
+                damageCounter.addDamage(shooterColor, givenDamage);
+                if (damageCounter.getDamage() >= Checks.getKillshot()) {
+                    opponent.setKillshot(true);
+
+                    if (damageCounter.getDamage() >= Checks.getKillshot()) {
+                        turnManager.addKillShot();
                     }
                 }
 
                 if (damageCounter.getDamage() == Checks.getMaxDamage()) {
                     int playermark = getPlayer(shooterColor).getPlayerBoard().getMarkCounter().getMarkFromColor(opponentColor);
-                    if (Checks.givenMark(playermark, 1) != 0){
+                    if (Checks.givenMark(playermark, 1) != 0) {
                         getGameNotifier().notifyPlayer("You have been marked by " + getPlayer(opponentColor).getColoredName(),
                                 shooterColor);
                     }
@@ -1261,10 +1264,12 @@ public class Model {
                     opponent.setDead();
                 }
             }
-        if (getPlayer(opponentColor).hasTagBackGrenade() && !getTurnCurrent().getGrenadePeopleArray().contains(opponent)) {
-            getTurnCurrent().getGrenadePeopleArray().add(opponent);
+            if (getPlayer(opponentColor).hasTagBackGrenade() && !getTurnCurrent().getGrenadePeopleArray().contains(opponent)
+                    && getVisiblePlayers(opponent).contains(currentPlayer)) {
+                getTurnCurrent().getGrenadePeopleArray().add(opponent);
+            }
         }
-        }
+    }
 
     /**
      * Adds the selected number of marks to the target's playerBoard

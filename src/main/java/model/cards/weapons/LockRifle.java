@@ -7,6 +7,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Lock Rifle weapon
+ * @author Marco Maria Ferrara
  */
 public class LockRifle extends WeaponOptional1 {
 

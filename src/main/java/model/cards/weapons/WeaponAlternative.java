@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Superclass from which all weapons with an alternative fire mode extend
+ * @author Marco Maria Ferrara
  */
 public abstract class WeaponAlternative extends Weapon {
 

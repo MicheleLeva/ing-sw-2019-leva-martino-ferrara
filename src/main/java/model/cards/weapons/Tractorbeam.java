@@ -8,6 +8,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Tractorbeam weapon
+ * @author Marco Maria Ferrara
  */
 public class Tractorbeam extends WeaponAlternative {
     public Tractorbeam(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,

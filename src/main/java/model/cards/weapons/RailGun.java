@@ -7,6 +7,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Railgun weapon
+ * @author Marco Maria Ferrara
  */
 public class RailGun extends WeaponAlternative {
 

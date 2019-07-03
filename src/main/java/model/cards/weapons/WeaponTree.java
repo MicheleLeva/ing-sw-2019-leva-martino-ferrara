@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Contains all the possible combinations of fire modes a weapon can have
+ * @author Marco Maria Ferrara
  */
 public class WeaponTree {
 

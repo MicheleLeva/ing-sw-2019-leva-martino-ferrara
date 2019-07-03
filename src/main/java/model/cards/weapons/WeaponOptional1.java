@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Superclass from which all weapons with 2 optional fire modes extend
+ * @author Marco Maria Ferrara
  */
 public abstract class WeaponOptional1 extends Weapon {
     protected int optionalDamage1;

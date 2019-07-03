@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Representation of the Shotgun weapon
+ * @author Marco Maria Ferrara
  */
 public class Shotgun extends  WeaponAlternative{
     public Shotgun(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,

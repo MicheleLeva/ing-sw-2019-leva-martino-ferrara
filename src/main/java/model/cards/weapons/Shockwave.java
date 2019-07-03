@@ -6,6 +6,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Shockwave weapon
+ * @author Marco Maria Ferrara
  */
 public class Shockwave extends WeaponAlternative {
     public Shockwave(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
@@ -115,6 +116,9 @@ public class Shockwave extends WeaponAlternative {
      */
     @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
+        if(!finalTargets.contains(getModel().getCurrent().getSelectedBaseTargets().get(0))) {
+            finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
+        }
         generalUse(currentPlayer, finalTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 /**
  * Tests that all the weapons in the weapon cards Deck execute without interruption
+ * @author Marco Maria Ferrara
  */
 public class TestWeapons {
     private Ammo pickUpCost = new Ammo(0,0,1);

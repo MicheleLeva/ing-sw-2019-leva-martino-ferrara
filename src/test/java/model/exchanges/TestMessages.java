@@ -88,5 +88,8 @@ public class TestMessages {
         WeaponSwapMessage weaponSwapMessage = new WeaponSwapMessage("a");
         assertEquals("WeaponSwapMessage,a", weaponSwapMessage.toString());
 
+        ScopePaymentMessage scopePaymentMessage = new ScopePaymentMessage("a");
+        assertEquals("ScopePaymentMessage,a", scopePaymentMessage.toString());
+
     }
 }

@@ -8,6 +8,7 @@ import model.player.Player;
 import java.util.ArrayList;
 /**
  * Representation of the Flamethrower weapon
+ * @author Marco Maria Ferrara
  */
 public class Flamethrower extends WeaponAlternative {
     public Flamethrower(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
