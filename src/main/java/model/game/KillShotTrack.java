@@ -106,7 +106,7 @@ public class KillShotTrack {
         //order of player that dealt the killshot damage
         ArrayList<PlayerColor> orderKillShotColor = new ArrayList<>();
          //build the orderKillShotColor array list
-        for (int i = 0; i < killShotTrack.length - 1; i++){
+        for (int i = 0; i < killShotTrack.length; i++){
             PlayerColor currentPlayerColor = killShotTrack[i].getTokenColor();
             if(!orderKillShotColor.contains(currentPlayerColor)){
                 orderKillShotColor.add(currentPlayerColor);

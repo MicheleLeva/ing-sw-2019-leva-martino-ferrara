@@ -1,5 +1,6 @@
 package model;
 
+import model.game.KillShotCell;
 import model.game.Model;
 import model.game.ScoreManager;
 import model.player.Player;
@@ -21,9 +22,9 @@ public class TestScoreManager {
 
     @Before
     public void initScoreManager(){
-        player1 = new Player("player1", PlayerColor.BLUE);
-        player2 = new Player("player2",PlayerColor.YELLOW);
-        player3 = new Player("player3",PlayerColor.GREEN);
+        player1 = new Player("Stefano", PlayerColor.BLUE);
+        player2 = new Player("Marco",PlayerColor.YELLOW);
+        player3 = new Player("Michele",PlayerColor.GREEN);
         player4 = new Player("player4",PlayerColor.PURPLE);
 
         players.add(player1);
@@ -31,7 +32,7 @@ public class TestScoreManager {
         players.add(player3);
         players.add(player4);
 
-        modelTest = new Model(players,8);
+        modelTest = new Model(players,1);
         modelTest.setGameBoard(1);
 
         scoreManagerTest = new ScoreManager(modelTest);

@@ -104,6 +104,7 @@ public class ScoreManager {
 
         killShotTrackRank = sortRank(unsortRank);
 
+
         //add killshot track points
         for (int i = 0; i < killShotTrackRank.size(); i++) {
             PlayerColor playerColor = killShotTrackRank.get(i);
