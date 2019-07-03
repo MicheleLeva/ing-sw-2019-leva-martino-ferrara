@@ -9,6 +9,7 @@ public class EndAction extends Action {
      * Ends the current action
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
+     * @author Stefano Martino
      */
     @Override
     public void perform(Model model , PlayerColor playerColor){

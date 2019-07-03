@@ -8,6 +8,7 @@ import model.player.action.ActionTree;
 
 /**
  * Representation of an in game player
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class Player {
 

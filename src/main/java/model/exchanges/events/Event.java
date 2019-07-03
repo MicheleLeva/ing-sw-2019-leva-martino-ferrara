@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Abstract class extended by all concrete events
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public abstract class Event {
     private final PlayerColor playerColor;

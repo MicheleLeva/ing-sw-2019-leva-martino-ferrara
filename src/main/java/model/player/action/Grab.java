@@ -22,6 +22,7 @@ public class Grab extends Action {
      * @throws EmptySquareException when the player tries to grab from an empty square
      * @throws MaxAmmoException when the player grabs an ammoCard with ammo of the color they already have the maximum of
      * @throws CannotPayException  when the player cannot pay the ammo cost of the weapon to grab
+     * @author Stefano Martino
      */
     @Override
     public void perform(Model model , PlayerColor playerColor) throws EmptySquareException, MaxAmmoException,CannotPayException {

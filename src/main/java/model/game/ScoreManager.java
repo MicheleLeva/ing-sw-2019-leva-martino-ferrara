@@ -10,6 +10,7 @@ public class ScoreManager {
 
     /**
      * Score Manager Class
+     * @author Stefano Martino
      */
     private final Model model;
     //rank of the player

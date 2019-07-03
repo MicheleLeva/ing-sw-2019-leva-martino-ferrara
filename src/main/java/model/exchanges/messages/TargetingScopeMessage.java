@@ -3,6 +3,7 @@ package model.exchanges.messages;
 /**
  * Message sent by the PowerUp Notifier and received from the PowerUp View to let the player choose whether he wants
  * to use the TargetingScope PowerUp
+ * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
  */
 public class TargetingScopeMessage extends PlayerMessage {
     public TargetingScopeMessage(String message) {

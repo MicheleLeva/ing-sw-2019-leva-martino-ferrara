@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class Decks {
     /**
      * Decks class. It models all the game's decks.
+     * @author Michele Leva, Stefano Martino, Marco Maria Ferrara
      */
     private ArrayList<Weapon> weaponsDeck;
     private ArrayList<PowerUp> powerUpDeck;

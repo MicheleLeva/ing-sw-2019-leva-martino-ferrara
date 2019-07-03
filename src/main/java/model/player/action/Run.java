@@ -20,6 +20,7 @@ public class Run extends Action {
      * @param model modified by the action
      * @param playerColor the color of the player who performed the action
      * @throws WallException when the player tries to move into a wall
+     * @author Stefano Martino
      */
     public void perform(Model model , PlayerColor playerColor) throws WallException{
         Player currentPlayer = model.getPlayer(playerColor);
