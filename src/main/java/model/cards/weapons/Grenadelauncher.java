@@ -28,7 +28,8 @@ public class Grenadelauncher extends WeaponOptional1 {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             if(     availableTargets.isEmpty() &&
                     !this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
-                getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode",
+                getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode, " +
+                                "you missed the shot",
                         currentPlayer.getPlayerColor());
                 this.getWeaponTree().resetAction();
                 getModel().notifyShoot(currentPlayer);
@@ -70,12 +71,24 @@ public class Grenadelauncher extends WeaponOptional1 {
             }
 
             if(squares.isEmpty()){
-                getModel().getGameNotifier().notifyPlayer("No available squares, you missed the shot!!!",
-                        currentPlayer.getPlayerColor());
-                getModel().payFireMode(currentPlayer,this);
-                getModel().getCurrent().incrementOptionalCounter1();
-                getModel().checkNextWeaponAction(this,currentPlayer);
-                return;
+                if(!this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())) {
+                    getModel().getGameNotifier().notifyPlayer("No available squares, you missed the shot!!!",
+                            currentPlayer.getPlayerColor());
+                    getModel().payFireMode(currentPlayer, this);
+                    getModel().getCurrent().incrementOptionalCounter1();
+                    getModel().checkNextWeaponAction(this, currentPlayer);
+                    return;
+                }
+                if(this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
+                    getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode",
+                            currentPlayer.getPlayerColor());
+                    this.getWeaponTree().resetAction();
+                    getModel().resetCurrent();
+                    getModel().getCurrent().setSelectedWeapon(this);
+                    getModel().showFireModes(currentPlayer.getPlayerColor(),this);
+                    return;
+                }
+
             }
             endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
         }
