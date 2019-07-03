@@ -485,6 +485,7 @@ public class TestWeaponController {
         weaponController.update(event);
         assertTrue(player1.getResources().getAllWeapon().contains(electroscythe));
 
+        model.getCurrent().setSelectedPickUpWeapon(cyberblade);
         event = new WeaponSwapEvent(view,1);
         weaponController.update(event);
         assertFalse(player1.getResources().getAllWeapon().contains(electroscythe));

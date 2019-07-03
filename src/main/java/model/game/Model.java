@@ -577,8 +577,8 @@ public class Model {
         String availableAction = currentPlayer.getActionTree().availableAction();
         currentPlayer.getActionTree().setMoveEnded(false);
         actionNotifier.chooseAction(playerColor, availableAction);
-        String toOthers = currentPlayer.getColoredName() + " is choosing between his actions.";
-        getGameNotifier().notifyOtherPlayers(toOthers, playerColor);
+        /*String toOthers = currentPlayer.getColoredName() + " is choosing between his actions.";
+        getGameNotifier().notifyOtherPlayers(toOthers, playerColor);*/
 
     }
 
@@ -838,6 +838,11 @@ public class Model {
         Ammo ammo = new Ammo(fireRED,fireBLUE,fireYELLOW);
         currentPlayer.getResources().removeFromAvailableAmmo(ammo.getRed(),ammo.getBlue(),ammo.getYellow());
         weapon.reload();
+
+        gameNotifier.notifyPlayer("You reloaded "+ weapon.getWeaponName(), currentPlayer.getPlayerColor());
+        gameNotifier.notifyOtherPlayers(currentPlayer.getColoredName() + " reloaded " +
+                weapon.getWeaponName(), currentPlayer.getPlayerColor());
+
         resetCurrent();
         updateAction();
     }
@@ -929,6 +934,10 @@ public class Model {
             }
         }
 
+        gameNotifier.notifyPlayer("You grabbed " +
+                weapon.getWeaponName(), currentPlayer.getPlayerColor());
+        gameNotifier.notifyOtherPlayers(currentPlayer.getColoredName() + " grabbed " +
+                weapon.getWeaponName(), currentPlayer.getPlayerColor());
 
         resetCurrent();
         updateAction();
@@ -1437,7 +1446,11 @@ public class Model {
             if(currentPlayer.getPosition().getWeapon()[i] == getCurrent().getSelectedPickUpWeapon())
                 currentPlayer.getPosition().getWeapon()[i] = currentPlayer.getResources().getAllWeapon().get(input-1);
         }
-        currentPlayer.getResources().getAllWeapon().remove(input-1);
+        Weapon swapped = currentPlayer.getResources().getAllWeapon().remove(input-1);
+        gameNotifier.notifyPlayer("You just swapped " + swapped.getWeaponName() + " for " +
+                getCurrent().getSelectedPickUpWeapon().getWeaponName(), currentPlayer.getPlayerColor());
+        gameNotifier.notifyOtherPlayers(currentPlayer.getColoredName() + " swapped " + swapped.getWeaponName() +
+                " for " + getCurrent().getSelectedPickUpWeapon().getWeaponName(), currentPlayer.getPlayerColor());
         resetCurrent();
         updateAction();
     }

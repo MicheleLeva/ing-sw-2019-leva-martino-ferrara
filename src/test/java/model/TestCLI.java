@@ -4,7 +4,6 @@ import model.game.CLI;
 import model.map.SquareColor;
 import model.player.PlayerColor;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -94,23 +93,5 @@ public class TestCLI {
 
         assertNotNull(result);
     }
-
-    /**
-     * Test buildCLIMap
-     * @throws IOException if the input path is not correctly recognized.
-     */
-    @Ignore
-    @Test (expected =  java.io.IOException.class)
-    public void testBuildCLIMap() throws IOException{
-        CLI cli = new CLI();
-        try{
-            cli.buildCLIMap("src/resources/map1.json");
-        }
-        catch(IOException e){
-            throw new IOException();
-        }
-    }
-
-
 
 }

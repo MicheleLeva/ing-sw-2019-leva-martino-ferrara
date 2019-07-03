@@ -246,7 +246,6 @@ public class Checks {
             }
             case "alternative": {
                 fireModeCost = ((WeaponAlternative) weapon).getAlternativeCost();
-                System.out.println("alternative in checks valid" );
 
                 break;
             }
