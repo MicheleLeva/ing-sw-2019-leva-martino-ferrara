@@ -2,6 +2,7 @@ package model.notifiers;
 
 import model.exchanges.messages.GenericMessage;
 import model.exchanges.messages.PlayerMessage;
+import model.game.CLI;
 import model.player.Player;
 import model.player.PlayerColor;
 import utils.ViewObservable;
@@ -213,9 +214,10 @@ public class GameNotifier extends ViewObservable<PlayerMessage> {
      * @param victim of the grenade.
      */
     public void notifyGrenade(PlayerColor user, PlayerColor victim){
-        String toOthers = user.toString() + "has used a grenade on " + victim.toString();
-        String toPlayer = "You used a grenade on " + victim.toString();
-        String toVictim = user.toString() + "has used a grenade on you";
+        String toOthers = CLI.getColor(user) + user.toString() + CLI.getResetString() +
+                " has used a grenade on " + CLI.getColor(victim) + victim.toString() + CLI.getResetString();
+        String toPlayer = "You used a grenade on " + CLI.getColor(victim) + victim.toString() + CLI.getResetString();
+        String toVictim = CLI.getColor(user) + user.toString() + CLI.getResetString() + " has used a grenade on you";
 
         PlayerMessage messageToOthers = new GenericMessage(toOthers);
         PlayerMessage messageToPlayer = new GenericMessage(toPlayer);

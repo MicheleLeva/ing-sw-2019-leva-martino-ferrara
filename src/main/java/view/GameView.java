@@ -27,7 +27,7 @@ public class GameView extends Observable<Event> implements GameUpdate {
 
     @Override
     public void update(RunMessage runMessage){
-        System.out.println(runMessage.getMessage());
+        view.printMessage(runMessage.getMessage());
     }
 
     @Override
@@ -37,6 +37,6 @@ public class GameView extends Observable<Event> implements GameUpdate {
 
     @Override
     public void update(ShootMessage shootMessage) {
-        System.out.println(shootMessage.getMessage());
+        view.printMessage(shootMessage.getMessage());
     }
 }

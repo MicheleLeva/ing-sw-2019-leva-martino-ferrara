@@ -139,8 +139,22 @@ public class Turn {
                 }
             }
         }
+
+
         //while the current player hasn't completed his turn
         while (!currentPlayer.getActionTree().hasDoneTurn()){
+
+            //show the current player resources
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("Your weapons: ");
+            stringBuilder.append(currentPlayer.getResources().showWeapon());
+            stringBuilder.append("\n");
+            stringBuilder.append("Your Power Up cards: ");
+            stringBuilder.append(currentPlayer.getResources().showpowerUp());
+            stringBuilder.append("\n");
+            stringBuilder.append("Your ammo: ");
+            stringBuilder.append(currentPlayer.getResources().showAmmo());
+            model.getGameNotifier().notifyPlayer(stringBuilder.toString() ,currentPlayerColor);
 
             //show the current player his available actions
             //requests the action input

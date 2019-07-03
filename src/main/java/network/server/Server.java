@@ -71,7 +71,7 @@ public class Server {
     private void serverState(){
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(CLI.getBlue());
+        stringBuilder.append(CLI.getColor(PlayerColor.GREEN));
         stringBuilder.append("Players in the lobby:\n");
         for (Map.Entry<String, ClientConnection> entry : playerLobby.entrySet()){
             stringBuilder.append(entry.getKey());

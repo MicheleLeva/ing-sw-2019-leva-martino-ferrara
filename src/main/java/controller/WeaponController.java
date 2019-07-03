@@ -395,8 +395,6 @@ public class WeaponController extends Controller implements WeaponObserver {
         Weapon weapon = getModel().getCurrent().getSelectedPickUpWeapon();
         String error;
 
-        System.out.println(event.getSelectedPowerUps());
-
         if(hasDuplicatePayment(event.getSelectedPowerUps())){
             error = "Invalid input: You selected the same powerUp more than once.\n";
             event.getView().reportError(error);
