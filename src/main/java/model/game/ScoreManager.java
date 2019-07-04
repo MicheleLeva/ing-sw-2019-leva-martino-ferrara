@@ -147,9 +147,8 @@ public class ScoreManager {
 
         if(!playerRank.isEmpty()) {
             maxScore = model.getPlayer(playerRank.get(0)).getScore().getScore();
-            boolean even = true;
+
             int maxScoreFromKillShotTrack;
-            Player singleWinner = model.getPlayer(playerRank.get(0));
 
             for (PlayerColor playerColor : playerRank) {
                 Player currentPlayer = model.getPlayer(playerColor);
@@ -165,28 +164,30 @@ public class ScoreManager {
             } else {
                 //find the player who got the highest score from the killShotTrack
                 maxScoreFromKillShotTrack = evenPlayers.get(0).getScoreFromKillShotTrack();
-                for (Player currentPlayer : evenPlayers) {
-                    if (currentPlayer.getScoreFromKillShotTrack() > maxScoreFromKillShotTrack) {
-                        maxScoreFromKillShotTrack = currentPlayer.getScoreFromKillShotTrack();
-                        singleWinner = currentPlayer;
-                        even = false;
+                ArrayList<Player> winners = new ArrayList<>();
+                for (Player evenPlayer : evenPlayers) {
+                    if (evenPlayer.getScoreFromKillShotTrack() > maxScoreFromKillShotTrack) {
+                        maxScoreFromKillShotTrack = evenPlayer.getScoreFromKillShotTrack();
+                    }
+                }
+                for (Player evenPlayer : evenPlayers) {
+                    if(evenPlayer.getScoreFromKillShotTrack() == maxScoreFromKillShotTrack) {
+                        winners.add(evenPlayer);
                     }
                 }
 
-                if (even) {
-                    for (Player evenPlayer : evenPlayers) {
-                        if(evenPlayer.getScoreFromKillShotTrack() == maxScoreFromKillShotTrack) {
-                            stringBuilder.append(evenPlayer.getColoredName());
-                            stringBuilder.append(" | ");
-                        }
+
+                if (winners.size() > 1) {
+                    for (Player evenPlayer : winners) {
+                        stringBuilder.append(evenPlayer.getColoredName());
+                        stringBuilder.append(" | ");
                     }
                     stringBuilder.append("have won the game!");
                 } else {
-                    stringBuilder.append(singleWinner.getColoredName());
+                    stringBuilder.append(winners.get(0).getColoredName());
                     stringBuilder.append(" ");
                     stringBuilder.append("has won the game!");
                 }
-
 
             }
         }
