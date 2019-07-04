@@ -67,32 +67,6 @@ public class SocketClientConnection extends Observable<String> implements Client
                 }
             }
             String read;
-            //todo modificato per velocizzare test
-            /*int c = 0;
-            for (Map.Entry<String, ClientConnection> entry : server.getWaitingConnection().entrySet()){
-                if (entry.getKey().equals("Asdrubale")){
-                    c ++;
-                }
-                if (entry.getKey().equals("Bruno")){
-                    c ++;
-                }
-            }
-            if (c == 0){
-                playerName = "Asdrubale";
-                server.addPlayer(this, "Asdrubale");
-
-            }
-            if (c == 1){
-                playerName = "Bruno";
-                server.addPlayer(this, "Bruno");
-            }
-            if (c == 2){
-                playerName = "Carlo";
-                server.addPlayer(this, "Carlo");
-            }
-            String read;
-            asyncSend("GAME,GenericMessage,Connected to the server! Waiting for a game...");*/
-            //todo modificato per velocizzare test
             while(isActive()){
                 read = in.nextLine();
                 notify(read);

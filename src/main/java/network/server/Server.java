@@ -60,11 +60,6 @@ public class Server {
         isServerActive = serverActive;
     }
 
-    //todo usato per test
-    public LinkedHashMap<String, ClientConnection> getWaitingConnection() {
-        return waitingConnection;
-    }
-
     /**
      * Prints the state of the server lobbies
      */

@@ -131,7 +131,6 @@ public class Client extends Observable<String> implements ClientConnection,Runna
         try {
             in = new Scanner(socket.getInputStream());
             out = new PrintStream(socket.getOutputStream());
-            //todo
             while (!nameAccepted){
                 System.out.println("Insert your name!");
                 Scanner scanner = new Scanner(System.in);
@@ -148,7 +147,6 @@ public class Client extends Observable<String> implements ClientConnection,Runna
                     System.out.println("Invalid name!");
                 }
             }
-            //todo commentato per velocizzare test
             String read;
             new Thread(() -> view.startScanner()).start();
             while(isActive()){
