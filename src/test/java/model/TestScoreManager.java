@@ -2,6 +2,7 @@ package model;
 
 import model.game.Model;
 import model.game.ScoreManager;
+import model.player.DamageCounter;
 import model.player.Player;
 import model.player.PlayerColor;
 
@@ -26,9 +27,9 @@ public class TestScoreManager {
 
     @Before
     public void initScoreManager(){
-        player1 = new Player("Stefano", PlayerColor.BLUE);
-        player2 = new Player("Marco",PlayerColor.YELLOW);
-        player3 = new Player("Michele",PlayerColor.GREEN);
+        player1 = new Player("player1", PlayerColor.BLUE);
+        player2 = new Player("player2",PlayerColor.YELLOW);
+        player3 = new Player("player3",PlayerColor.GREEN);
         player4 = new Player("player4",PlayerColor.PURPLE);
 
         players.add(player1);
@@ -89,17 +90,16 @@ public class TestScoreManager {
     @Test
     public void testGetWinner(){
         //multiple winners test
-        player1.getScore().addScore(100);
+        player1.getScore().addScore(0);
         player1.setScoreFromKillShotTrack(10);
-        player2.getScore().addScore(100);
+        player2.getScore().addScore(0);
         player2.setScoreFromKillShotTrack(10);
-        player3.getScore().addScore(100);
+        player3.getScore().addScore(0);
         player3.setScoreFromKillShotTrack(10);
-        player4.getScore().addScore(100);
+        player4.getScore().addScore(0);
         player4.setScoreFromKillShotTrack(10);
-
+        scoreManagerTest.updateScore();
         assertNotNull(scoreManagerTest.getWinner());
-
     }
 
 }
