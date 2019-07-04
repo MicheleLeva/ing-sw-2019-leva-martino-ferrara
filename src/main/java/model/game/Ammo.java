@@ -55,6 +55,8 @@ public class Ammo {
      */
     public void setRed(int red){
         ammo.put(AmmoColor.RED, red);
+        if(ammo.get(AmmoColor.RED)<0)
+            ammo.put(AmmoColor.RED,0);
     }
 
     /**
@@ -63,6 +65,8 @@ public class Ammo {
      */
     public void setBlue(int blue){
         ammo.put(AmmoColor.BLUE, blue);
+        if(ammo.get(AmmoColor.BLUE)<0)
+            ammo.put(AmmoColor.BLUE,0);
 
     }
 
@@ -72,6 +76,8 @@ public class Ammo {
      */
     public void setYellow(int yellow){
         ammo.put(AmmoColor.YELLOW, yellow);
+        if(ammo.get(AmmoColor.YELLOW)<0)
+            ammo.put(AmmoColor.YELLOW,0);
     }
 
 
@@ -162,5 +168,6 @@ public class Ammo {
         setRed(getRed() - ammo.getRed());
         setBlue(getBlue() - ammo.getBlue());
         setYellow(getYellow() - ammo.getYellow());
+
     }
 }

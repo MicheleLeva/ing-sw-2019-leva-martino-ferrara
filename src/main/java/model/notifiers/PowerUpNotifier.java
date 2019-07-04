@@ -19,7 +19,7 @@ public class PowerUpNotifier extends ViewObservable<PlayerMessage> {
      */
     public void choosePowerUp(PlayerColor playerColor , String availablePowerUp){
         String message = "Choose a PowerUp: \n";
-        message = message + "0. Return ";
+        message = message + "0. Return\n";
         message = message +availablePowerUp +"\n";
 
         PlayerMessage playerMessage = new ChoosePowerUpMessage(message);

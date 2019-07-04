@@ -349,7 +349,8 @@ public class Model {
         if (cardinal == 'n') {
             for (Player player : allPlayers)
                 if (player.getPosition().getSquareColumn() == currentPlayer.getPosition().getSquareColumn() &&
-                        player.getPosition().getSquareRow() < currentPlayer.getPosition().getSquareRow() && player != currentPlayer)
+                        player.getPosition().getSquareRow() < currentPlayer.getPosition().getSquareRow() &&
+                        player != currentPlayer)
                     finalPlayers.add(player);
         }
         if (cardinal == 'e') {
@@ -377,7 +378,8 @@ public class Model {
             finalPlayers = getPlayersInCardinalDirection(currentPlayer);
         }
         for (Player player : allPlayers) {
-            if (player.getPosition() == currentPlayer.getPosition() && player != currentPlayer)
+            if (player.getPosition() == currentPlayer.getPosition() && player != currentPlayer &&
+                    !finalPlayers.contains(player))
                 finalPlayers.add(player);
         }
         return finalPlayers;

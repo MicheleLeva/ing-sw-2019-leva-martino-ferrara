@@ -45,6 +45,12 @@ public class WeaponController extends Controller implements WeaponObserver {
         }
         int input = event.getIndex();
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
+
+        if(input == 0){
+            getModel().chooseAction(event.getPlayerColor());
+            return;
+        }
+
         if (input < 1 || input > currentPlayer.getResources().getReloadedWeapon().size()){
             String error;
             error = "Invalid input.\n";

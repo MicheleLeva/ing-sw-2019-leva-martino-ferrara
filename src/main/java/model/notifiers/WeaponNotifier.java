@@ -24,6 +24,7 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
      */
     public void showWeaponCards(PlayerColor playerColor , String availableWeapons){
         String message = "Choose a Weapon: \n";
+        message = message + "0. RETURN\n";
         message = message +availableWeapons +"\n";
 
         PlayerMessage playerMessage = new ShowWeaponCardsMessage(message);

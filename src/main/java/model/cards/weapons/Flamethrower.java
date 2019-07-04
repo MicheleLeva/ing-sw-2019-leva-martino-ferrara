@@ -30,7 +30,7 @@ public class Flamethrower extends WeaponAlternative {
             supportSquares.remove(currentPlayer.getPosition());
             for(Square square : supportSquares){
                for(Player player : getModel().getAllSpawnedPlayers()){
-                   if(player.getPosition() == square)
+                   if(player.getPosition() == square && !availableSquares.contains(square))
                        availableSquares.add(square);
                }
             }

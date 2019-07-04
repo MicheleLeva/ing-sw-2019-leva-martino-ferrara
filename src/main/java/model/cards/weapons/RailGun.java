@@ -44,12 +44,15 @@ public class RailGun extends WeaponAlternative {
                 if (currentPlayer.getPosition().getSquareColumn() < previousPlayer.getPosition().getSquareColumn())
                     cardinal = 'e';
             }
-            else
-            if(currentPlayer.getPosition().getSquareColumn()==previousPlayer.getPosition().getSquareColumn()) {
-                if (currentPlayer.getPosition().getSquareRow() > previousPlayer.getPosition().getSquareRow())
-                    cardinal = 'n';
-                if (currentPlayer.getPosition().getSquareColumn() < previousPlayer.getPosition().getSquareColumn())
-                    cardinal = 's';
+            else {
+                if (currentPlayer.getPosition().getSquareColumn() == previousPlayer.getPosition().getSquareColumn()) {
+                    if (currentPlayer.getPosition().getSquareRow() > previousPlayer.getPosition().getSquareRow()) {
+                        cardinal = 'n';
+                    }
+                    if (currentPlayer.getPosition().getSquareRow() < previousPlayer.getPosition().getSquareRow()) {
+                        cardinal = 's';
+                    }
+                }
             }
             secondAvailableTargets = getModel().getPlayersInSelectedCardinal(currentPlayer, cardinal);
             secondAvailableTargets.addAll(getModel().getCurrent().getSelectedAlternativeTargets());

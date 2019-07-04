@@ -171,6 +171,12 @@ public class Resources {
         availableAmmo.setRed(availableAmmo.getRed()-red);
         availableAmmo.setBlue(availableAmmo.getBlue()-blue);
         availableAmmo.setYellow(availableAmmo.getYellow()-yellow);
+        if(availableAmmo.getRed()<0)
+            availableAmmo.setRed(0);
+        if(availableAmmo.getBlue() <0)
+            availableAmmo.setBlue(0);
+        if(availableAmmo.getYellow()<0)
+            availableAmmo.setYellow(0);
     }
 
 

@@ -80,7 +80,7 @@ public class Grenadelauncher extends WeaponOptional1 {
                     return;
                 }
                 if(this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
-                    getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode",
+                    getModel().getGameNotifier().notifyPlayer("No available squares for this Fire Mode",
                             currentPlayer.getPlayerColor());
                     this.getWeaponTree().resetAction();
                     getModel().resetCurrent();
