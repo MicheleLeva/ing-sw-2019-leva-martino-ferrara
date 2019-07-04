@@ -75,7 +75,7 @@ public class Points {
      */
 
     public void removeHighestPoint(){
-        if(points.size()>1){
+        if(points.size() > 1){
             points.remove(0);
         }
     }
