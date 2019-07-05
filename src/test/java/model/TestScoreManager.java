@@ -1,5 +1,6 @@
 package model;
 
+import model.game.CLI;
 import model.game.Model;
 import model.game.ScoreManager;
 import model.player.DamageCounter;
@@ -70,7 +71,7 @@ public class TestScoreManager {
     @Test
     public void testUpdateScore(){
         scoreManagerTest.updateScore();
-        assertNotNull(scoreManagerTest.getWinner());
+        assertEquals(CLI.getColor(player2.getPlayerColor()) +"player2" +CLI.getResetString() +" has won the game!",scoreManagerTest.getWinner());
     }
 
     /**
@@ -81,7 +82,7 @@ public class TestScoreManager {
     public void testFinalScore(){
         modelTest.getTurnManager().setFrenzy();
         scoreManagerTest.finalScore();
-        assertNotNull(scoreManagerTest.getWinner());
+        assertEquals(CLI.getColor(player2.getPlayerColor()) +"player2" +CLI.getResetString() +" has won the game!",scoreManagerTest.getWinner());
     }
 
     /**
@@ -90,7 +91,7 @@ public class TestScoreManager {
     @Test
     public void testGetWinner(){
         //multiple winners test
-        player1.getScore().addScore(0);
+        player1.getScore().addScore(10);
         player1.setScoreFromKillShotTrack(10);
         player2.getScore().addScore(0);
         player2.setScoreFromKillShotTrack(10);
@@ -99,7 +100,7 @@ public class TestScoreManager {
         player4.getScore().addScore(0);
         player4.setScoreFromKillShotTrack(10);
         scoreManagerTest.updateScore();
-        assertNotNull(scoreManagerTest.getWinner());
+        assertEquals(CLI.getColor(player1.getPlayerColor()) +"player1" +CLI.getResetString()+" has won the game!",scoreManagerTest.getWinner());
     }
 
 }
