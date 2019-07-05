@@ -11,44 +11,12 @@ import java.util.ArrayList;
  * @author Marco Maria Ferrara
  */
 public class Tractorbeam extends WeaponAlternative {
-    public Tractorbeam(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
-                   int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){
-        super(name,pickUpCost,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
+    public Tractorbeam(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage,
+                       int alternativeDamage, int baseMarks,int alternativeMarks, int baseTargetsNumber,
+                       int alternativeTargetsNumber, Model model){
+        super(name,pickUpCost,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,
+                baseTargetsNumber,alternativeTargetsNumber,model);
 
-    }
-
-
-    /**
-     * Asks the requirements of the Alternative fire mode for the TractorBeam
-     * @param currentPlayer current player
-     */
-    @Override
-    public void askAlternativeRequirements(Player currentPlayer) {
-        if(getModel().getCurrent().getAlternativeCounter() == 0) {
-            ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(2,currentPlayer);
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-            getModel().getCurrent().incrementAlternativeCounter();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
-        }
-        else
-            useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
-    }
-
-    /**
-     * Uses the Alternative fire Mode for the TractorBeam
-     * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the second optional fire Mode
-     */
-    @Override
-    public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        for(Player target : selectedTargets){
-            target.setPosition(currentPlayer.getPosition());
-            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
-            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
-        }
-
-        getModel().payFireMode(currentPlayer,this);
-        getModel().checkNextWeaponAction(this, currentPlayer);
     }
 
     /**
@@ -58,9 +26,12 @@ public class Tractorbeam extends WeaponAlternative {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            //gets all squares the current player can see
             ArrayList<Square> visibleSquares = getModel().getVisibleSquares(currentPlayer);
             ArrayList<Player> allTargets = getModel().getAllSpawnedPlayers();
             ArrayList<Player> availableTargets = new ArrayList<>();
+            //adds to the available targets all the targets that, moved 0,1 or 2 squares, end up being on one of the
+            //squares vsible by the current player
             for(Player player : allTargets){
                 ArrayList<Square> playerSquares = Model.runnableSquare(2,player.getPosition());
                 for(Square square : playerSquares){
@@ -110,6 +81,40 @@ public class Tractorbeam extends WeaponAlternative {
             getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
         }
 
+        getModel().checkNextWeaponAction(this, currentPlayer);
+    }
+
+    /**
+     * Asks the requirements of the Alternative fire mode for the TractorBeam
+     * @param currentPlayer current player
+     */
+    @Override
+    public void askAlternativeRequirements(Player currentPlayer) {
+        if(getModel().getCurrent().getAlternativeCounter() == 0) {
+            //gets all players that are 0,1 or 2 moves away from the current player
+            ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(2,currentPlayer);
+            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
+            getModel().getCurrent().incrementAlternativeCounter();
+            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getAlternativeTargetsNumber());
+        }
+        else
+            useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
+    }
+
+    /**
+     * Uses the Alternative fire Mode for the TractorBeam
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
+    public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
+        for(Player target : selectedTargets){
+            target.setPosition(currentPlayer.getPosition());
+            getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getAlternativeDamage());
+            getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getAlternativeMarks());
+        }
+
+        getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer);
     }
 }

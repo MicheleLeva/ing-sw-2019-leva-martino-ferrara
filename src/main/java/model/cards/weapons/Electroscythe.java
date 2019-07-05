@@ -13,7 +13,8 @@ public class Electroscythe extends WeaponAlternative {
 
     public Electroscythe(String name, Ammo pickUpCost,Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
                          int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber,Model model){
-        super(name,pickUpCost,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
+        super(name,pickUpCost,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,
+                baseTargetsNumber,alternativeTargetsNumber,model);
 
     }
 
@@ -23,7 +24,10 @@ public class Electroscythe extends WeaponAlternative {
      */
     @Override
     public void askBaseRequirements(Player currentPlayer){
+        //finds all the players in the same square of the current player
         ArrayList<Player> selectedTargets = getModel().getPlayersInSameSquare(currentPlayer);
+        //if there is no possible target to hit, the player is granted a second chance in choosing his
+        //fire mode
         if(selectedTargets.isEmpty()){
             getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
                     currentPlayer.getPlayerColor());
@@ -38,12 +42,25 @@ public class Electroscythe extends WeaponAlternative {
     }
 
     /**
+     * Uses the Base fire Mode for the Electroscythe
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
+    public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
+        generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+    }
+
+    /**
      * Asks the requirements of the Alternative fire mode for the Electroscythe
      * @param currentPlayer current player
      */
     @Override
     public void askAlternativeRequirements(Player currentPlayer) {
-            ArrayList<Player> selectedTargets = getModel().getPlayersInSameSquare(currentPlayer);
+        //finds all the players in the same square of the current player
+        ArrayList<Player> selectedTargets = getModel().getPlayersInSameSquare(currentPlayer);
+        //if there is no possible target to hit, the player is granted a second chance in choosing his
+        //fire mode
         if(selectedTargets.isEmpty()){
             getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
                     currentPlayer.getPlayerColor());
@@ -55,16 +72,6 @@ public class Electroscythe extends WeaponAlternative {
         }
         getModel().getCurrent().setAvailableAlternativeTargets(selectedTargets);
         useAlternativeFireMode(currentPlayer, selectedTargets);
-    }
-
-    /**
-     * Uses the Base fire Mode for the Electroscythe
-     * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the second optional fire Mode
-     */
-    @Override
-    public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
-        generalUse(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
     /**

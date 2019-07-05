@@ -237,11 +237,16 @@ public class Decks {
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo( ((Long)result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long)result2.get("YELLOW")).intValue());
-                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                Ammo baseAmmo = new Ammo( ((Long)result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(),
+                        ((Long)result2.get("YELLOW")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(),
+                        ((Long) result2.get("PYELLOW")).intValue());
                 int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
                 int baseMarks = ((Long) result2.get("MARKS")).intValue();
                 int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
+
+                //adds all base weapons to the deck and sets their 'Weapon Trees' reading from the
+                //corresponding open JSONs
                 if(result2.get("name").equals("HEATSEEKER")) {
                      weaponsDeck.add(new Heatseeker(name,pickUpAmmo,baseAmmo,baseDamage,baseMarks,baseTargetsNumber,model));
                      weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Heatseeker.json"));
@@ -280,57 +285,74 @@ public class Decks {
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long) result2.get("YELLOW")).intValue());
-                Ammo alternativeAmmo = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
-                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(),
+                        ((Long) result2.get("YELLOW")).intValue());
+                Ammo alternativeAmmo = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(),
+                        ((Long) result2.get("YELLOW1")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(),
+                        ((Long) result2.get("PYELLOW")).intValue());
                 int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
                 int alternativeDamage = ((Long) result2.get("DAMAGE1")).intValue();
                 int baseMarks = ((Long) result2.get("MARKS")).intValue();
                 int alternativeMarks = ((Long) result2.get("MARKS1")).intValue();
                 int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
                 int alternativeTargetsNumber = ((Long) result2.get("TARGETSNUMBER1")).intValue();
+
+                //adds all alternative weapons to the deck and sets their 'Weapon Trees' reading from
+                //corresponding open JSONs
                 if(result2.get("name").equals("ELECTROSCYTHE")) {
-                        weaponsDeck.add(new Electroscythe(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                        weaponsDeck.add(new Electroscythe(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                                baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                         weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Electroscythe.json"));
                 }
                 if(result2.get("name").equals("TRACTOR BEAM")) {
-                    weaponsDeck.add(new Tractorbeam(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Tractorbeam(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Tractorbeam.json"));
                 }
                 if(result2.get("name").equals("FURNACE")) {
-                    weaponsDeck.add(new Furnace(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Furnace(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Furnace.json"));
                 }
                 if(result2.get("name").equals("HELLION")) {
-                    weaponsDeck.add(new Hellion(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Hellion(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Hellion.json"));
                 }
                 if(result2.get("name").equals("FLAMETHROWER")) {
-                    weaponsDeck.add(new Flamethrower(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Flamethrower(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Flamethrower.json"));
                 }
                 if(result2.get("name").equals("ZX-2")) {
-                    weaponsDeck.add(new ZX2(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new ZX2(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Zx2.json"));
                 }
                 if(result2.get("name").equals("SHOTGUN")) {
-                    weaponsDeck.add(new Shotgun(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Shotgun(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Shotgun.json"));
                 }
                 if(result2.get("name").equals("POWERGLOVE")) {
-                    weaponsDeck.add(new Powerglove(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Powerglove(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Powerglove.json"));
                 }
                 if(result2.get("name").equals("RAILGUN")) {
-                    weaponsDeck.add(new RailGun(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new RailGun(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Railgun.json"));
                 }
                 if(result2.get("name").equals("SHOCKWAVE")) {
-                    weaponsDeck.add(new Shockwave(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Shockwave(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Shockwave.json"));
                 }
                 if(result2.get("name").equals("SLEDGEHAMMER")) {
-                    weaponsDeck.add(new Sledgehammer(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
+                    weaponsDeck.add(new Sledgehammer(name,pickUpAmmo,baseAmmo,alternativeAmmo,baseDamage,alternativeDamage,
+                            baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Sledgehammer.json"));
                 }
             }
@@ -362,25 +384,34 @@ public class Decks {
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long) result2.get("YELLOW")).intValue());
-                Ammo optionalAmmo1 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
-                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(),
+                        ((Long) result2.get("YELLOW")).intValue());
+                Ammo optionalAmmo1 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(),
+                        ((Long) result2.get("YELLOW1")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(),
+                        ((Long) result2.get("PYELLOW")).intValue());
                 int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
                 int optionalDamage1 = ((Long) result2.get("DAMAGE1")).intValue();
                 int baseMarks = ((Long) result2.get("MARKS")).intValue();
                 int optionalMarks1 = ((Long) result2.get("MARKS1")).intValue();
                 int baseTargetsNumber = ((Long) result2.get("TARGETSNUMBER")).intValue();
                 int optionalTargetsNumber1 = ((Long) result2.get("TARGETSNUMBER1")).intValue();
+
+                //adds all 'single' optional weapons to the deck and sets their 'Weapon Trees' reading from the
+                //corresponding open JSONs
                 if(result2.get("name").equals("LOCK RIFLE")) {
-                    weaponsDeck.add(new LockRifle(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
+                    weaponsDeck.add(new LockRifle(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,
+                            baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Lockrifle.json"));
                 }
                 if(result2.get("name").equals("GRENADE LAUNCHER")) {
-                    weaponsDeck.add(new Grenadelauncher(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
+                    weaponsDeck.add(new Grenadelauncher(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,
+                            baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Grenadelauncher.json"));
                 }
                 if(result2.get("name").equals("VORTEX")) {
-                    weaponsDeck.add(new Vortexcannon(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
+                    weaponsDeck.add(new Vortexcannon(name,pickUpAmmo,baseAmmo,optionalAmmo1,baseDamage,optionalDamage1,
+                            baseMarks,optionalMarks1,baseTargetsNumber,optionalTargetsNumber1,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Vortexcannon.json"));
                 }
             }
@@ -412,10 +443,14 @@ public class Decks {
             for (int i = 0; i < myArray2.size(); i++) {
                 JSONObject result2 = (JSONObject) myArray2.get(i);
                 String name = (String) result2.get("name");
-                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(), ((Long) result2.get("YELLOW")).intValue());
-                Ammo optionalAmmo1 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(), ((Long) result2.get("YELLOW1")).intValue());
-                Ammo optionalAmmo2 = new Ammo(((Long) result2.get("RED2")).intValue(), ((Long) result2.get("BLUE2")).intValue(), ((Long) result2.get("YELLOW2")).intValue());
-                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(), ((Long) result2.get("PYELLOW")).intValue());
+                Ammo baseAmmo = new Ammo(((Long) result2.get("RED")).intValue(), ((Long) result2.get("BLUE")).intValue(),
+                        ((Long) result2.get("YELLOW")).intValue());
+                Ammo optionalAmmo1 = new Ammo(((Long) result2.get("RED1")).intValue(), ((Long) result2.get("BLUE1")).intValue(),
+                        ((Long) result2.get("YELLOW1")).intValue());
+                Ammo optionalAmmo2 = new Ammo(((Long) result2.get("RED2")).intValue(), ((Long) result2.get("BLUE2")).intValue(),
+                        ((Long) result2.get("YELLOW2")).intValue());
+                Ammo pickUpAmmo = new Ammo(((Long) result2.get("PRED")).intValue(), ((Long) result2.get("PBLUE")).intValue(),
+                        ((Long) result2.get("PYELLOW")).intValue());
                 int baseDamage = ((Long) result2.get("DAMAGE")).intValue();
                 int optionalDamage1 = ((Long) result2.get("DAMAGE1")).intValue();
                 int optionalDamage2 = ((Long) result2.get("DAMAGE2")).intValue();
@@ -426,24 +461,36 @@ public class Decks {
                 int optionalTargetsNumber1 = ((Long) result2.get("TARGETSNUMBER1")).intValue();
                 int optionalTargetsNumber2 = ((Long) result2.get("TARGETSNUMBER2")).intValue();
 
+                //adds all 'double' optional weapons to the deck and sets their 'Weapon Trees' reading from the
+                //corresponding open JSONs
                 if(result2.get("name").equals("MACHINE GUN")) {
-                    weaponsDeck.add(new Machinegun(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model));
+                    weaponsDeck.add(new Machinegun(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,
+                            optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,
+                            optionalTargetsNumber1,optionalTargetsNumber2,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Machinegun.json"));
                 }
                 if(result2.get("name").equals("THOR")) {
-                    weaponsDeck.add(new Thor(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model));
+                    weaponsDeck.add(new Thor(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,
+                            optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,
+                            optionalTargetsNumber1,optionalTargetsNumber2,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Thor.json"));
                 }
                 if(result2.get("name").equals("PLASMA GUN")) {
-                    weaponsDeck.add(new Plasmagun(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model));
+                    weaponsDeck.add(new Plasmagun(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,
+                            optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,
+                            optionalTargetsNumber1,optionalTargetsNumber2,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Plasmagun.json"));
                 }
                 if(result2.get("name").equals("ROCKET LAUNCHER")) {
-                    weaponsDeck.add(new Rocketlauncher(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model));
+                    weaponsDeck.add(new Rocketlauncher(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,
+                            optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,
+                            optionalTargetsNumber1,optionalTargetsNumber2,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Rocketlauncher.json"));
                 }
                 if(result2.get("name").equals("CYBERBLADE")) {
-                    weaponsDeck.add(new Cyberblade(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model));
+                    weaponsDeck.add(new Cyberblade(name,pickUpAmmo,baseAmmo,optionalAmmo1,optionalAmmo2,baseDamage,
+                            optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,baseTargetsNumber,
+                            optionalTargetsNumber1,optionalTargetsNumber2,model));
                     weaponsDeck.get(weaponsDeck.size()-1).setWeaponTree(new WeaponTree("src/resources/Cyberblade.json"));
                 }
             }

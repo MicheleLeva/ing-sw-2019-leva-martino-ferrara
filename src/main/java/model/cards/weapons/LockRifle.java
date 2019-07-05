@@ -25,6 +25,7 @@ public class LockRifle extends WeaponOptional1 {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            //gets all visible players by the current player
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             getModel().getCurrent().setAvailableBaseTargets(availableTargets);
             getModel().getCurrent().incrementBaseCounter();
@@ -32,26 +33,6 @@ public class LockRifle extends WeaponOptional1 {
         }
         else {
             useBaseFireMode(currentPlayer, getModel().getCurrent().getSelectedBaseTargets());
-        }
-    }
-
-    /**
-     * Asks the requirements of the first optional fire mode of Lock Rifle
-     * @param currentPlayer current player
-     */
-    @Override
-    public void askOptionalRequirements1(Player currentPlayer){
-        if(getModel().getCurrent().getOptionalCounter1() == 0) {
-            ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
-            if(!getModel().getCurrent().getSelectedBaseTargets().isEmpty())
-                availableTargets.remove(getModel().getCurrent().getSelectedBaseTargets().get(0));
-            getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
-            getModel().getCurrent().incrementOptionalCounter1();
-            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getOptionalTargetsNumber1());
-        }
-        else {
-            useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
-
         }
     }
 
@@ -69,6 +50,27 @@ public class LockRifle extends WeaponOptional1 {
         }
         getModel().checkNextWeaponAction(this, currentPlayer);
 
+    }
+
+    /**
+     * Asks the requirements of the first optional fire mode of Lock Rifle
+     * @param currentPlayer current player
+     */
+    @Override
+    public void askOptionalRequirements1(Player currentPlayer){
+        if(getModel().getCurrent().getOptionalCounter1() == 0) {
+            //gets all visible players by the current player except the one he hit with the base fire mode
+            ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+            if(!getModel().getCurrent().getSelectedBaseTargets().isEmpty())
+                availableTargets.remove(getModel().getCurrent().getSelectedBaseTargets().get(0));
+            getModel().getCurrent().setAvailableOptionalTargets1(availableTargets);
+            getModel().getCurrent().incrementOptionalCounter1();
+            getModel().selectTargets(currentPlayer.getPlayerColor(), availableTargets, this.getOptionalTargetsNumber1());
+        }
+        else {
+            useOptionalFireMode1(currentPlayer, getModel().getCurrent().getSelectedOptionalTargets1());
+
+        }
     }
 
     /**

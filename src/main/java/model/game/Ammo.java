@@ -20,7 +20,7 @@ public class Ammo {
      */
     public Ammo(int red, int blue, int yellow){
         ammo = new HashMap<>();
-        ammo.put(AmmoColor.RED,red);
+        setRed(red);
         setBlue(blue);
         setYellow(yellow);
     }

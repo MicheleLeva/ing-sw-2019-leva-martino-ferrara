@@ -11,69 +11,16 @@ import java.util.ArrayList;
  * @author Marco Maria Ferrara
  */
 public class Rocketlauncher extends WeaponOptional2 {
-    public Rocketlauncher(String name, Ammo picUpCost, Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2, int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,
-                     int optionalMarks1, int optionalMarks2, int baseTargetsNumber, int optionalTargetsNumber1,
-                     int optionalTargetsNumber2, Model model) {
+    public Rocketlauncher(String name, Ammo picUpCost, Ammo baseCost, Ammo optionalCost1, Ammo optionalCost2,
+                          int baseDamage, int optionalDamage1, int optionalDamage2, int baseMarks,
+                          int optionalMarks1, int optionalMarks2, int baseTargetsNumber, int optionalTargetsNumber1,
+                          int optionalTargetsNumber2, Model model) {
 
-        super(name,picUpCost,baseCost,optionalCost1,optionalCost2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,optionalMarks1,optionalMarks2,
-                baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model);
+        super(name,picUpCost,baseCost,optionalCost1,optionalCost2,baseDamage,optionalDamage1,optionalDamage2,baseMarks,
+                optionalMarks1,optionalMarks2,baseTargetsNumber,optionalTargetsNumber1,optionalTargetsNumber2,model);
     }
 
     private Square originalSquare;
-
-    /**
-     * Asks the requirements of the second optional fire mode for the RocketLauncher
-     * @param currentPlayer current player
-     */
-    @Override
-    public void askOptionalRequirements2(Player currentPlayer) {
-        if(getModel().getCurrent().getOptionalCounter2()== 0) {
-            ArrayList<Player> availableTargets = new ArrayList<>();
-            for(Player player : getModel().getAllSpawnedPlayers())
-                if(player.getPosition() == originalSquare && player!=currentPlayer)
-                    availableTargets.add(player);
-            if(!availableTargets.contains(getModel().getCurrent().getSelectedBaseTargets().get(0)))
-                availableTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
-            getModel().getCurrent().setAvailableOptionalTargets2(availableTargets);
-            getModel().getCurrent().incrementOptionalCounter2();
-            useOptionalFireMode2(currentPlayer,availableTargets);
-        }
-    }
-
-    /**
-     * Uses the second optional fire Mode for the RocketLauncher
-     * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the second optional fire Mode
-     */
-    @Override
-    public void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
-    }
-
-    /**
-     * Asks the requirements of the first optional fire mode for the RocketLauncher
-     * @param currentPlayer current player
-     */
-    @Override
-    public void askOptionalRequirements1(Player currentPlayer) {
-        if(getModel().getCurrent().getOptionalCounter1()== 0) {
-            ArrayList<Square> squares = Model.runnableSquare(2, currentPlayer.getPosition());
-            endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
-        }
-
-        else
-            useOptionalFireMode1(currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
-    }
-
-    /**
-     * Uses the first optional fire Mode for the RocketLauncher
-     * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the second optional fire Mode
-     */
-    @Override
-    public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        changePlayerPositionUse(currentPlayer);
-    }
 
     /**
      * Asks the requirements of the Base fire mode for the RocketLauncher
@@ -83,6 +30,7 @@ public class Rocketlauncher extends WeaponOptional2 {
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             originalSquare = null;
+            //gets all players and removes those that are on the current player's square
             ArrayList<Player> sameSquarePlayers = getModel().getPlayersInSameSquare(currentPlayer);
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
             sameSquarePlayers.remove(currentPlayer);
@@ -126,5 +74,62 @@ public class Rocketlauncher extends WeaponOptional2 {
             getModel().notifyShoot(currentPlayer);
         }
     }
+
+    /**
+     * Asks the requirements of the first optional fire mode for the RocketLauncher
+     * @param currentPlayer current player
+     */
+    @Override
+    public void askOptionalRequirements1(Player currentPlayer) {
+        if(getModel().getCurrent().getOptionalCounter1()== 0) {
+            //gets all squares the current player can move to that are 0,1 or 2 moves away from him
+            ArrayList<Square> squares = Model.runnableSquare(2, currentPlayer.getPosition());
+            endAskSquares(currentPlayer,squares,this.getWeaponTree().getLastAction().getData().getType());
+        }
+
+        else
+            useOptionalFireMode1(currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
+    }
+
+    /**
+     * Uses the first optional fire Mode for the RocketLauncher
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
+    public void useOptionalFireMode1(Player currentPlayer, ArrayList<Player> selectedTargets) {
+        changePlayerPositionUse(currentPlayer);
+    }
+
+    /**
+     * Asks the requirements of the second optional fire mode for the RocketLauncher
+     * @param currentPlayer current player
+     */
+    @Override
+    public void askOptionalRequirements2(Player currentPlayer) {
+        if(getModel().getCurrent().getOptionalCounter2()== 0) {
+            ArrayList<Player> availableTargets = new ArrayList<>();
+            //gets all players on the previous target's original position
+            for(Player player : getModel().getAllSpawnedPlayers())
+                if(player.getPosition() == originalSquare && player!=currentPlayer)
+                    availableTargets.add(player);
+            if(!availableTargets.contains(getModel().getCurrent().getSelectedBaseTargets().get(0)))
+                availableTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
+            getModel().getCurrent().setAvailableOptionalTargets2(availableTargets);
+            getModel().getCurrent().incrementOptionalCounter2();
+            useOptionalFireMode2(currentPlayer,availableTargets);
+        }
+    }
+
+    /**
+     * Uses the second optional fire Mode for the RocketLauncher
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
+    public void useOptionalFireMode2(Player currentPlayer, ArrayList<Player> selectedTargets) {
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
+    }
+
 
 }

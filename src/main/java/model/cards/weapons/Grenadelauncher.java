@@ -26,6 +26,8 @@ public class Grenadelauncher extends WeaponOptional1 {
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             ArrayList<Player> availableTargets = getModel().getVisiblePlayers(currentPlayer);
+            //if there is no available target and the current player has yet to use his optional fire mode,
+            //then he is given a chance to do so, otherwise his shoot action is counted as a miss
             if(     availableTargets.isEmpty() &&
                     !this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())){
                 getModel().getGameNotifier().notifyPlayer("No available targets for this base Fire Mode, " +
@@ -55,6 +57,18 @@ public class Grenadelauncher extends WeaponOptional1 {
         else
             useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
     }
+
+
+    /**
+     * Uses the Base fire Mode for the GrenadeLauncher
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
+    public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
+        generalUseWithMove(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
+    }
+
     /**
      * Asks the requirements of the first optional fire mode for the GrenadeLauncher
      * @param currentPlayer current player
@@ -70,6 +84,8 @@ public class Grenadelauncher extends WeaponOptional1 {
                         squares.add(square);
             }
 
+            //if there is no available square and the current player has yet to use his base fire mode,
+            //then he is given a chance to do so, otherwise his shoot action is counted as a miss
             if(squares.isEmpty()){
                 if(!this.getWeaponTree().getRoot().getChildren().contains(this.getWeaponTree().getLastAction())) {
                     getModel().getGameNotifier().notifyPlayer("No available squares, you missed the shot!!!",
@@ -94,16 +110,6 @@ public class Grenadelauncher extends WeaponOptional1 {
         }
         else
             useOptionalFireMode1(currentPlayer,getModel().getCurrent().getSelectedOptionalTargets1());
-    }
-
-    /**
-     * Uses the Base fire Mode for the GrenadeLauncher
-     * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the second optional fire Mode
-     */
-    @Override
-    public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets){
-        generalUseWithMove(currentPlayer,selectedTargets,this,this.getWeaponTree().getLastAction().getData().getType());
     }
 
     /**

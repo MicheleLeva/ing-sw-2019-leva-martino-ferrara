@@ -20,6 +20,57 @@ public class Furnace extends WeaponAlternative {
 
 
     /**
+     * Asks the requirements of the Base fire mode for the Furnace
+     * @param currentPlayer current player
+     */
+    @Override
+    public void askBaseRequirements(Player currentPlayer) {
+        if(getModel().getCurrent().getBaseCounter() == 0) {
+            //finds all players that are not in the current payer's room but that the current player
+            //can see and deduces the squares they are on
+            ArrayList<Square> squares = new ArrayList<>();
+            ArrayList<Player> availableTargets = getModel().getPlayersNotInYourRoom(currentPlayer);
+            for(Player player : availableTargets){
+                if(!squares.contains(player.getPosition()))
+                    squares.add(player.getPosition());
+            }
+            if(squares.isEmpty()){
+                getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
+                        currentPlayer.getPlayerColor());
+                this.getWeaponTree().resetAction();
+                getModel().resetCurrent();
+                getModel().getCurrent().setSelectedWeapon(this);
+                getModel().showFireModes(currentPlayer.getPlayerColor(),this);
+                return;
+            }
+            getModel().getCurrent().setAvailableWeaponSquares(squares);
+            getModel().getCurrent().incrementBaseCounter();
+            getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
+        }
+        else
+            useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
+    }
+
+    /**
+     * Uses the Base fire Mode for the Furnace
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
+    public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
+        ArrayList<Player> allPlayers = getModel().getAllSpawnedPlayers();
+        for(Player target : allPlayers){
+            if(target.getPosition()==getModel().getCurrent().getSelectedWeaponSquare()) {
+                getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
+                getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
+            }
+        }
+
+        getModel().checkNextWeaponAction(this, currentPlayer);
+    }
+
+
+    /**
      * Asks the requirements of the Alternative fire mode for the Furnace
      * @param currentPlayer current player
      */
@@ -29,6 +80,8 @@ public class Furnace extends WeaponAlternative {
             ArrayList<Square> squares = Model.runnableSquare(1,currentPlayer.getPosition());
             ArrayList<Square> squaresCopy = new ArrayList<>(squares);
             squares.remove(currentPlayer.getPosition());
+            //flag used to know whether there is at least one player one the selected square
+            //in squaresCopy. If there is none, the square becomes unavailable
             boolean flag;
             for(Square square : squaresCopy) {
                 flag = false;
@@ -79,54 +132,5 @@ public class Furnace extends WeaponAlternative {
         getModel().payFireMode(currentPlayer,this);
         getModel().checkNextWeaponAction(this, currentPlayer);
     }
-
-    /**
-     * Asks the requirements of the Base fire mode for the Furnace
-     * @param currentPlayer current player
-     */
-    @Override
-    public void askBaseRequirements(Player currentPlayer) {
-        if(getModel().getCurrent().getBaseCounter() == 0) {
-            ArrayList<Square> squares = new ArrayList<>();
-            ArrayList<Player> availableTargets = getModel().getPlayersNotInYourRoom(currentPlayer);
-            for(Player player : availableTargets){
-                if(!squares.contains(player.getPosition()))
-                    squares.add(player.getPosition());
-            }
-            if(squares.isEmpty()){
-                getModel().getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
-                        currentPlayer.getPlayerColor());
-                this.getWeaponTree().resetAction();
-                getModel().resetCurrent();
-                getModel().getCurrent().setSelectedWeapon(this);
-                getModel().showFireModes(currentPlayer.getPlayerColor(),this);
-                return;
-            }
-            getModel().getCurrent().setAvailableWeaponSquares(squares);
-            getModel().getCurrent().incrementBaseCounter();
-            getModel().chooseWeaponSquare(currentPlayer.getPlayerColor(), squares);
-        }
-        else
-            useBaseFireMode(currentPlayer,getModel().getCurrent().getSelectedBaseTargets());
-    }
-
-    /**
-     * Uses the Base fire Mode for the Furnace
-     * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the second optional fire Mode
-     */
-    @Override
-    public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        ArrayList<Player> allPlayers = getModel().getAllSpawnedPlayers();
-        for(Player target : allPlayers){
-            if(target.getPosition()==getModel().getCurrent().getSelectedWeaponSquare()) {
-                getModel().addDamage(currentPlayer.getPlayerColor(), target.getPlayerColor(), this.getBaseDamage());
-                getModel().addMark(currentPlayer.getPlayerColor(), target.getPlayerColor(), getBaseMarks());
-            }
-        }
-
-        getModel().checkNextWeaponAction(this, currentPlayer);
-    }
-
 
 }

@@ -9,43 +9,15 @@ import java.util.ArrayList;
  * @author Marco Maria Ferrara
  */
 public class Shockwave extends WeaponAlternative {
-    public Shockwave(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage, int alternativeDamage, int baseMarks,
-                   int alternativeMarks, int baseTargetsNumber, int alternativeTargetsNumber, Model model){
-        super(name,pickUpCost,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,baseTargetsNumber,alternativeTargetsNumber,model);
+    public Shockwave(String name, Ammo pickUpCost, Ammo baseCost, Ammo alternativeCost, int baseDamage,
+                     int alternativeDamage, int baseMarks, int alternativeMarks, int baseTargetsNumber,
+                     int alternativeTargetsNumber, Model model){
+        super(name,pickUpCost,baseCost,alternativeCost,baseDamage,alternativeDamage,baseMarks,alternativeMarks,
+                baseTargetsNumber,alternativeTargetsNumber,model);
 
     }
 
     private ArrayList<Player > finalTargets = new ArrayList<>();
-
-    /**
-     * Asks the requirements of the Alternative fire mode for the Shockwave
-     * @param currentPlayer current player
-     */
-    @Override
-    public void askAlternativeRequirements(Player currentPlayer) {
-        if(getModel().getCurrent().getAlternativeCounter() == 0) {
-            ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
-            ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
-            for(Player player : temp){
-                availableTargets.remove(player);
-            }
-            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
-            getModel().getCurrent().incrementAlternativeCounter();
-            askAlternativeRequirements(currentPlayer);
-        }
-        else
-            useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
-    }
-
-    /**
-     * Uses the Alternative fire Mode for the Shockwave
-     * @param currentPlayer current player
-     * @param selectedTargets targets chosen for the second optional fire Mode
-     */
-    @Override
-    public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
-        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
-    }
 
     /**
      * Asks the requirements of the Base fire mode for the Shockwave
@@ -55,6 +27,7 @@ public class Shockwave extends WeaponAlternative {
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
             finalTargets.clear();
+            //gets all players at distance one from the current player
             ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
             ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
             for(Player player : temp){
@@ -66,8 +39,11 @@ public class Shockwave extends WeaponAlternative {
 
 
         if(getModel().getCurrent().getBaseCounter() == 1) {
+            //gets the previously selected target
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();
+            //gets all targets at distance one from the current player, except those that are on the same square of
+            //the previously selected target
             for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {
                 boolean flag = false;
                 for (Player player2 : finalTargets)
@@ -90,6 +66,8 @@ public class Shockwave extends WeaponAlternative {
         if(getModel().getCurrent().getBaseCounter() == 2) {
             finalTargets.add(getModel().getCurrent().getSelectedBaseTargets().get(0));
             ArrayList<Player> availableTargets = new ArrayList<>();
+            //gets all targets at distance one from the current player, except those that are on the same square of
+            //one of the previously selected targets
             for(Player player : getModel().getCurrent().getAvailableBaseTargets()) {
                 boolean flag = false;
                 for (Player player2 : finalTargets)
@@ -121,4 +99,37 @@ public class Shockwave extends WeaponAlternative {
         }
         generalUse(currentPlayer, finalTargets, this, this.getWeaponTree().getLastAction().getData().getType());
     }
+
+    /**
+     * Asks the requirements of the Alternative fire mode for the Shockwave
+     * @param currentPlayer current player
+     */
+    @Override
+    public void askAlternativeRequirements(Player currentPlayer) {
+        if(getModel().getCurrent().getAlternativeCounter() == 0) {
+            //gets all players at distance one from the current player
+            ArrayList<Player> availableTargets = getModel().getPlayersAtDistance(1,currentPlayer);
+            ArrayList<Player> temp = getModel().getPlayersInSameSquare(currentPlayer);
+            for(Player player : temp){
+                availableTargets.remove(player);
+            }
+            getModel().getCurrent().setAvailableAlternativeTargets(availableTargets);
+            getModel().getCurrent().incrementAlternativeCounter();
+            askAlternativeRequirements(currentPlayer);
+        }
+        else
+            useAlternativeFireMode(currentPlayer,getModel().getCurrent().getSelectedAlternativeTargets());
+    }
+
+    /**
+     * Uses the Alternative fire Mode for the Shockwave
+     * @param currentPlayer current player
+     * @param selectedTargets targets chosen for the second optional fire Mode
+     */
+    @Override
+    public void useAlternativeFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
+        generalUse(currentPlayer, selectedTargets, this, this.getWeaponTree().getLastAction().getData().getType());
+    }
+
+
 }

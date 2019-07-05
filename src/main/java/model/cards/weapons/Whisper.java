@@ -23,6 +23,7 @@ public class Whisper extends Weapon {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            //gets all visible players that are at least 2 moves away from the current player
             ArrayList<Player> availableTargets = new ArrayList<>();
             ArrayList<Player> visiblePlayers = getModel().getVisiblePlayers(currentPlayer);
             ArrayList<Player> availableTargetsBase = getModel().getPlayersAtDistanceMore(1

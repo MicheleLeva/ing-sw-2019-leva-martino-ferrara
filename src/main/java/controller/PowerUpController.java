@@ -154,7 +154,8 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         char choice = event.getChoice();
         if (choice != 'Y' && choice != 'N') {
             event.getView().reportError("Invalid input");
-            getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor(),getModel().getCurrent().getLastTargetingScope());
+            getModel().getPowerUpNotifier().askTargetingScope(event.getPlayerColor(),getModel().
+                    getCurrent().getLastTargetingScope());
         }
         else {
 
@@ -253,13 +254,17 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         ArrayList<PowerUp> powerUps = player.getResources().getPowerUp();
         int input = tagbackGrenadeEvent.getInput();
         if (input == 0){
-            getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
+            getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().
+                    getPlayer(tagbackGrenadeEvent.getPlayerColor()));
+
             return;
         }
         if (powerUps.get(input - 1) instanceof TagbackGrenade){
             try{
                 ((TagbackGrenade)powerUps.get(input - 1)).usePowerUp(player.getPlayerColor());
-                getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().getPlayer(tagbackGrenadeEvent.getPlayerColor()));
+                getModel().getTurnCurrent().getGrenadePeopleArray().remove(getModel().
+                        getPlayer(tagbackGrenadeEvent.getPlayerColor()));
+
             } catch (TagbackGrenadeException e){
                 e.printStackTrace();
             }
@@ -309,13 +314,16 @@ public class PowerUpController extends Controller implements PowerUpObserver {
         }
 
         Player currentPlayer = getModel().getPlayer(event.getPlayerColor());
-        if((Character.toLowerCase(event.getChoice()) == 'r')&&currentPlayer.getResources().getAvailableAmmo().getRed()>0){
+        if((Character.toLowerCase(event.getChoice()) == 'r') &&
+                currentPlayer.getResources().getAvailableAmmo().getRed()>0){
             currentPlayer.getResources().getAvailableAmmo().remove(new Ammo(1,0,0));
         }
-        else if((Character.toLowerCase(event.getChoice()) == 'b')&&currentPlayer.getResources().getAvailableAmmo().getBlue()>0){
+        else if((Character.toLowerCase(event.getChoice()) == 'b') &&
+                currentPlayer.getResources().getAvailableAmmo().getBlue()>0){
             currentPlayer.getResources().getAvailableAmmo().remove(new Ammo(0,1,0));
         }
-        else if((Character.toLowerCase(event.getChoice()) == 'y')&&currentPlayer.getResources().getAvailableAmmo().getYellow()>0){
+        else if((Character.toLowerCase(event.getChoice()) == 'y') &&
+                currentPlayer.getResources().getAvailableAmmo().getYellow()>0){
             currentPlayer.getResources().getAvailableAmmo().remove(new Ammo(0,0,1));
         }
         else{

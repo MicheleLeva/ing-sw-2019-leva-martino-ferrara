@@ -25,12 +25,9 @@ public class CLI {
     private static final String DAMAGE = "*";
     private static final String CONT_RED = "\u001B[41m";
     private static final String CONT_YELLOW = "\u001B[43m";
-    //private static final String CONT_YELLOW = "\u001B[42m";
     private static final String CONT_BLUE = "\u001B[44m";
     private static final String CONT_GREY = "\u001B[47m";
     private static final String CONT_PURPLE = "\u001B[45m";
-    //private static final String CONT_GREEN = "\u001B[40m";
-
     private static final String CONT_GREEN = "\u001B[42m";
 
     /**

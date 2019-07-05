@@ -23,6 +23,7 @@ public class Heatseeker extends Weapon {
     @Override
     public void askBaseRequirements(Player currentPlayer) {
         if(getModel().getCurrent().getBaseCounter() == 0) {
+            //finds all the players that are not visible by the current player
             ArrayList<Player> availableTargets = getModel().getNonVisiblePlayers(currentPlayer);
             getModel().getCurrent().setAvailableBaseTargets(availableTargets);
             getModel().getCurrent().incrementBaseCounter();

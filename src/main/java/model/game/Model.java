@@ -688,7 +688,8 @@ public class Model {
         String effectType = weapon.getWeaponTree().getLastAction().getData().getType();
         if(availableTargets.isEmpty()){
             if(weapon.getWeaponTree().getRoot().getChildren().contains(weapon.getWeaponTree().getLastAction())){
-                getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",playerColor);
+                getGameNotifier().notifyPlayer("No available targets with this Fire Mode choose another one",
+                                                playerColor);
                 weapon.getWeaponTree().resetAction();
                 resetCurrent();
                 getCurrent().setSelectedWeapon(weapon);
@@ -696,7 +697,8 @@ public class Model {
                 return;
             }
             else{
-                getGameNotifier().notifyPlayer("No available targets with this Fire Mode you didn't hit anybody",playerColor);
+                getGameNotifier().notifyPlayer("No available targets with this Fire Mode you didn't hit anybody",
+                                                playerColor);
                 switch (effectType){
                     case "base":
                         weapon.askBaseRequirements(currentPlayer);
@@ -1120,11 +1122,6 @@ public class Model {
      * @param currentPlayer current player
      */
     public void notifyShoot(Player currentPlayer) {
-        /*Set<Player> set = new LinkedHashSet<Player>(current.getSelectedBaseTargets());
-        set.addAll(current.getSelectedAlternativeTargets());
-        set.addAll(current.getSelectedOptionalTargets1());
-        set.addAll(current.getSelectedOptionalTargets2());
-        ArrayList<Player> targets = new ArrayList<>(set);*/
         ArrayList<Player> targets = getCurrent().getAllShotPlayer();
         targets.remove(currentPlayer);
         ArrayList<Player> allPlayers = turnManager.getAllPlayers();
