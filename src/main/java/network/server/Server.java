@@ -61,6 +61,35 @@ public class Server {
     }
 
     /**
+     * Constructor class of the server. Initializes server parameters from the JSON and the server socket.
+     * @throws IOException Signals that an I/O exception of some sort has occurred
+     */
+    public Server() throws IOException {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject myJo;
+            try {
+                Object obj = parser.parse(new FileReader("src/resources/constants.json"));
+                myJo = (JSONObject) obj;
+            } catch (FileNotFoundException e) {
+                InputStream configStream = this.getClass().getResourceAsStream("/constants.json");
+                myJo = (JSONObject)parser.parse(
+                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
+            }
+            JSONArray myArray = (JSONArray) myJo.get("constants");
+            JSONObject temp = (JSONObject)myArray.get(0);
+            serverTimer = (long) temp.get("ServerTimer");
+            skulls = ((Long) temp.get("Skulls")).intValue();
+            PORT = ((Long)temp.get("serverPort")).intValue();
+
+        } catch (IOException  | ParseException e) {
+            e.printStackTrace();
+        }
+        this.serverSocket = new ServerSocket(PORT);
+        System.out.println(InetAddress.getLocalHost());
+    }
+
+    /**
      * Prints the state of the server lobbies
      */
     private void serverState(){
@@ -220,34 +249,6 @@ public class Server {
         return false;
     }
 
-    /**
-     * Constructor class of the server. Initializes server parameters from the JSON and the server socket.
-     * @throws IOException Signals that an I/O exception of some sort has occurred
-     */
-    public Server() throws IOException {
-        JSONParser parser = new JSONParser();
-        try {
-            JSONObject myJo;
-            try {
-                Object obj = parser.parse(new FileReader("src/resources/constants.json"));
-                myJo = (JSONObject) obj;
-            } catch (FileNotFoundException e) {
-                InputStream configStream = this.getClass().getResourceAsStream("/constants.json");
-                myJo = (JSONObject)parser.parse(
-                        new InputStreamReader(configStream, StandardCharsets.UTF_8));
-            }
-            JSONArray myArray = (JSONArray) myJo.get("constants");
-            JSONObject temp = (JSONObject)myArray.get(0);
-            serverTimer = (long) temp.get("ServerTimer");
-            skulls = ((Long) temp.get("Skulls")).intValue();
-            PORT = ((Long)temp.get("serverPort")).intValue();
-
-        } catch (IOException  | ParseException e) {
-            e.printStackTrace();
-        }
-        this.serverSocket = new ServerSocket(PORT);
-        System.out.println(InetAddress.getLocalHost());
-    }
 
     /**
      * Adds a player to the lobby and the waiting room for a new game.

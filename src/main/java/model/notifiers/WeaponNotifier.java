@@ -51,7 +51,7 @@ public class WeaponNotifier extends ViewObservable<PlayerMessage> {
      */
     public void selectTargets(PlayerColor playerColor, String availableTargets, int targetsNumber){
         String message ="Choose the target";
-        if(targetsNumber>1){message = message + "s";}
+        if(targetsNumber>1){message = message + "s (Insert 0 to terminate selection)";}
         message = message + ":\n";
         message = message+availableTargets;
 

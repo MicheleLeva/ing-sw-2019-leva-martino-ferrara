@@ -328,6 +328,9 @@ public class Turn {
             }
         }
 
+        //Clears the array of people hit by a TagBack Grenade
+        getModel().getTurnCurrent().getGrenadePeopleArray().clear();
+
         //Respawn
         respawnProcedure();
 

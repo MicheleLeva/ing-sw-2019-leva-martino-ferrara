@@ -66,11 +66,13 @@ public class Vortexcannon extends WeaponOptional1 {
             useBaseFireMode(currentPlayer, getModel().getCurrent().getSelectedBaseTargets());
     }
 
+
     /**
      * Uses the Base fire Mode for the VortexCannon
      * @param currentPlayer current player
      * @param selectedTargets targets chosen for the second optional fire Mode
      */
+    @Override
     public void useBaseFireMode(Player currentPlayer, ArrayList<Player> selectedTargets) {
 
         for (Player target : selectedTargets) {
